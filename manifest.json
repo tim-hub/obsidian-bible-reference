@@ -1,10 +1,10 @@
 {
-	"id": "obsidian-sample-plugin",
-	"name": "Sample Plugin",
-	"version": "1.0.1",
+	"id": "obsidian-bible-reference",
+	"name": "Bible Reference",
+	"version": "0.0.1",
 	"minAppVersion": "0.9.12",
-	"description": "This is a sample plugin for Obsidian. This plugin demonstrates some of the capabilities of the Obsidian API.",
-	"author": "Obsidian",
-	"authorUrl": "https://obsidian.md/about",
+	"description": "This is a plugin built for Christian.",
+	"author": "tim",
+	"authorUrl": "https://github.com/tim-hub",
 	"isDesktopOnly": false
 }
