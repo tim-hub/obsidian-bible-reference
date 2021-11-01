@@ -12,7 +12,7 @@ if you want to view the source visit the plugins github repository
 `;
 
 export default {
-  input: 'src/main.ts',
+  input: 'main.ts',
   output: {
     // dir: '.',
     dir: '/Users/tim/Documents/ObsidianRepo/ObsidianNotes/.obsidian/plugins/obsidian-bible-reference/',
