@@ -3,8 +3,8 @@
 	"name": "Bible Reference",
 	"version": "0.0.1",
 	"minAppVersion": "0.9.12",
-	"description": "This is a plugin built for Christian.",
-	"author": "tim",
+	"description": "This is a plugin built for bible study",
+	"author": "tim-hub",
 	"authorUrl": "https://github.com/tim-hub",
 	"isDesktopOnly": false
 }

@@ -1,112 +1,63 @@
-import { App, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
+import { Notice, Plugin } from 'obsidian';
+import { APP_SETTINGS, BibleReferencePluginSettings, DEFAULT_SETTINGS } from './src/constants';
+import { BibleReferenceSettingTab } from './src/BibleReferenceSettingTab';
+import { BibleReferenceModal } from './src/BibleReferenceModal';
 
-interface MyPluginSettings {
-	mySetting: string;
-}
 
-const DEFAULT_SETTINGS: MyPluginSettings = {
-	mySetting: 'default'
-}
+export default class BibleReferencePlugin extends Plugin {
+  settings: BibleReferencePluginSettings;
 
-export default class MyPlugin extends Plugin {
-	settings: MyPluginSettings;
+  async onload() {
+    console.log('loading plugin -', APP_SETTINGS.appName);
 
-	async onload() {
-		console.log('loading plugin');
+    await this.loadSettings();
 
-		await this.loadSettings();
+    this.addRibbonIcon('dice', APP_SETTINGS.appName, () => {
+      new Notice('This is a notice!');
+    });
 
-		this.addRibbonIcon('dice', 'Obsidian Bible Reference', () => {
-			new Notice('This is a notice!');
-		});
+    this.addStatusBarItem().setText(APP_SETTINGS.defaultStatus);
 
-		this.addStatusBarItem().setText('Status Bar Text');
+    this.addCommand({
+      id: 'open-bible-reference-modal',
+      name: 'Open Bible Reference Modal',
+      // callback: () => {
+      // 	console.log('Simple Callback');
+      // },
+      checkCallback: (checking: boolean) => {
+        let leaf = this.app.workspace.activeLeaf;
+        if (leaf) {
+          if (!checking) {
+            new BibleReferenceModal(this.app).open();
+          }
+          return true;
+        }
+        return false;
+      }
+    });
 
-		this.addCommand({
-			id: 'open-sample-modal',
-			name: 'Open Sample Modal',
-			// callback: () => {
-			// 	console.log('Simple Callback');
-			// },
-			checkCallback: (checking: boolean) => {
-				let leaf = this.app.workspace.activeLeaf;
-				if (leaf) {
-					if (!checking) {
-						new SampleModal(this.app).open();
-					}
-					return true;
-				}
-				return false;
-			}
-		});
+    this.addSettingTab(new BibleReferenceSettingTab(this.app, this));
 
-		this.addSettingTab(new SampleSettingTab(this.app, this));
+    this.registerCodeMirror((cm: CodeMirror.Editor) => {
+      console.log('codemirror', cm);
+    });
 
-		this.registerCodeMirror((cm: CodeMirror.Editor) => {
-			console.log('codemirror', cm);
-		});
+    this.registerDomEvent(document, 'click', (evt: MouseEvent) => {
+      console.log('click', evt);
+    });
 
-		this.registerDomEvent(document, 'click', (evt: MouseEvent) => {
-			console.log('click', evt);
-		});
+    this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));
+  }
 
-		this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));
-	}
+  onunload() {
+    console.log('unloading plugin', APP_SETTINGS.appName);
+  }
 
-	onunload() {
-		console.log('unloading plugin');
-	}
+  async loadSettings() {
+    this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+  }
 
-	async loadSettings() {
-		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
-	}
-
-	async saveSettings() {
-		await this.saveData(this.settings);
-	}
-}
-
-class SampleModal extends Modal {
-	constructor(app: App) {
-		super(app);
-	}
-
-	onOpen() {
-		let {contentEl} = this;
-		contentEl.setText('Woah!');
-	}
-
-	onClose() {
-		let {contentEl} = this;
-		contentEl.empty();
-	}
-}
-
-class SampleSettingTab extends PluginSettingTab {
-	plugin: MyPlugin;
-
-	constructor(app: App, plugin: MyPlugin) {
-		super(app, plugin);
-		this.plugin = plugin;
-	}
-
-	display(): void {
-		let {containerEl} = this;
-
-		containerEl.empty();
-
-		containerEl.createEl('h2', {text: 'Settings for my awesome plugin.'});
-
-		new Setting(containerEl)
-			.setName('Setting #1')
-			.setDesc('It\'s a secret')
-			.addText(text => text
-				.setPlaceholder('Enter your secret')
-				.setValue('')
-				.onChange(async (value) => {
-					console.log('Secret: ' + value);
-					this.plugin.settings.mySetting = value;
-					await this.plugin.saveSettings();
-				}));
-	}
+  async saveSettings() {
+    await this.saveData(this.settings);
+  }
 }
