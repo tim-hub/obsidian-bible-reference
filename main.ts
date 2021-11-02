@@ -38,15 +38,31 @@ export default class BibleReferencePlugin extends Plugin {
 
     this.addSettingTab(new BibleReferenceSettingTab(this.app, this));
 
+    // this.registerEvent();
+
     this.registerCodeMirror((cm: CodeMirror.Editor) => {
-      console.log('codemirror', cm);
+      // console.log('codemirror', cm);
+      cm.on('change', (
+        cmEditor: CodeMirror.Editor,
+        changeObj: CodeMirror.EditorChange
+      ):boolean => {
+        console.log('codemirror changed');
+        return true;
+      });
     });
 
-    this.registerDomEvent(document, 'click', (evt: MouseEvent) => {
-      console.log('click', evt);
-    });
+    // this.registerCodeMirror((cm: CodeMirror.Editor) => {
+    //   cm.off("change", (cmEditor: CodeMirror.Editor,
+    //                     changeObj: CodeMirror.EditorChange) => {
+    //     console.log('codemirror changed');
+    //   });
+    // });
 
-    this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));
+    // this.registerDomEvent(document, 'click', (evt: MouseEvent) => {
+    //   console.log('click', evt);
+    // });
+
+    // this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));
   }
 
   onunload() {

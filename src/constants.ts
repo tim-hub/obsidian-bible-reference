@@ -12,3 +12,5 @@ export interface BibleReferencePluginSettings {
 export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
   mySetting: 'default'
 }
+
+export const bibleRefRegex = new RegExp("(?:\\d+ ?)?[a-z]+ ?\\d+(?:(?::\\d+)?(?: ?- ?(?:\\d+ [a-z]+ )?\\d+(?::\\d+)?)?)?");
