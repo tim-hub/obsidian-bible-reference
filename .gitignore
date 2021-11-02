@@ -1,13 +1,14 @@
 # Intellij
 *.iml
 .idea
-
+# vscode
+.vscode
 # npm
 node_modules
 
 # build
 main.js
-*.js.map
+*.map
 
 # obsidian
 data.json
