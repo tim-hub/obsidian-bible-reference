@@ -1,4 +1,3 @@
-https://bible-api.com/
 
 ## Obsidian Sample Plugin
 
@@ -65,6 +64,8 @@ Quick starting guide for new plugin devs:
   - `eslint .\src\`
 
 
-### API Documentation
+### API Documentation and Tips
 
-See https://github.com/obsidianmd/obsidian-api
+- See https://github.com/obsidianmd/obsidian-api
+- https://bible-api.com/
+- upstream is template repo
