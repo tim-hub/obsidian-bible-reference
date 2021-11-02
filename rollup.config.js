@@ -14,8 +14,7 @@ if you want to view the source visit the plugins github repository
 export default {
   input: 'main.ts',
   output: {
-    // dir: '.',
-    dir: '/Users/tim/Documents/ObsidianRepo/ObsidianNotes/.obsidian/plugins/obsidian-bible-reference/',
+    dir: '.',
     sourcemap: 'inline',
     sourcemapExcludeSources: isProd,
     format: 'cjs',

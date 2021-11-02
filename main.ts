@@ -2,6 +2,7 @@ import { Editor, MarkdownView, Notice, Plugin } from 'obsidian';
 import { APP_SETTINGS, BibleReferencePluginSettings, DEFAULT_SETTINGS } from './src/constants';
 import { BibleReferenceSettingTab } from './src/BibleReferenceSettingTab';
 import { BibleReferenceModal } from './src/BibleReferenceModal';
+import { VerseSuggester } from './src/VerseSuggester';
 
 
 export default class BibleReferencePlugin extends Plugin {
@@ -13,7 +14,7 @@ export default class BibleReferencePlugin extends Plugin {
     await this.loadSettings();
 
     // This creates an icon in the left ribbon.
-    const ribbonIconEl = this.addRibbonIcon('dice', 'Sample Plugin', (evt: MouseEvent) => {
+    const ribbonIconEl = this.addRibbonIcon('dice', APP_SETTINGS.appName, (evt: MouseEvent) => {
       // Called when the user clicks the icon.
       new Notice('This is a notice!');
     });
@@ -83,16 +84,18 @@ export default class BibleReferencePlugin extends Plugin {
 
     // this.registerEvent();
 
-    this.registerCodeMirror((cm: CodeMirror.Editor) => {
 
-      cm.on('change', (
-        cmEditor: CodeMirror.Editor,
-        changeObj: CodeMirror.EditorChangeLinkedList
-      ): void => {
-        console.log('codemirror changed', cmEditor);
-      });
-      console.log('register codemirror', cm);
-    });
+
+    // this.registerCodeMirror((cm: CodeMirror.Editor) => {
+    //
+    //   cm.on('change', (
+    //     cmEditor: CodeMirror.Editor,
+    //     changeObj: CodeMirror.EditorChangeLinkedList
+    //   ): void => {
+    //     console.log('codemirror changed', cmEditor);
+    //   });
+    //   console.log('register codemirror', cm);
+    // });
 
     // this.registerEvent(this.app.workspace.on('codemirror', (cm: CodeMirror.Editor) => {
     // 	// Modify CodeMirror here...
@@ -105,6 +108,8 @@ export default class BibleReferencePlugin extends Plugin {
     //     console.log('codemirror changed');
     //   });
     // });
+
+    this.registerEditorSuggest(new VerseSuggester(this));
 
     this.registerDomEvent(document, 'click', (evt: MouseEvent) => {
       console.log('click', evt);
