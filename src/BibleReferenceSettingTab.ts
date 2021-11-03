@@ -1,5 +1,5 @@
 import { App, PluginSettingTab, Setting } from 'obsidian';
-import { APP_SETTINGS } from './constants';
+import { APP_NAMING } from './constants';
 import BibleReferencePlugin from '../main';
 
 export class BibleReferenceSettingTab extends PluginSettingTab {
@@ -15,7 +15,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
 
     containerEl.empty();
 
-    containerEl.createEl('h2', {text: 'Settings for '+APP_SETTINGS.appName});
+    containerEl.createEl('h2', {text: 'Settings for '+APP_NAMING.appName});
 
     new Setting(containerEl)
       .setName('Setting #1')

@@ -1,4 +1,4 @@
-export const APP_SETTINGS = {
+export const APP_NAMING = {
   appName: 'Bible Reference',
   appAuthor: 'tim-hub',
   appUrl: '',
