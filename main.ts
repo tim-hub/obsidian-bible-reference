@@ -1,4 +1,4 @@
-import { Editor, MarkdownView, Notice, Plugin } from 'obsidian';
+import { Editor, EditorPosition, MarkdownView, Notice, Plugin } from 'obsidian';
 import { APP_NAMING, BibleReferencePluginSettings, DEFAULT_SETTINGS } from './src/constants';
 import { BibleReferenceSettingTab } from './src/BibleReferenceSettingTab';
 import { BibleReferenceModal } from './src/BibleReferenceModal';
@@ -82,34 +82,25 @@ export default class BibleReferencePlugin extends Plugin {
 
     this.addSettingTab(new BibleReferenceSettingTab(this.app, this));
 
-    // this.registerEvent();
-
-
-
-    // this.registerCodeMirror((cm: CodeMirror.Editor) => {
-    //
-    //   cm.on('change', (
-    //     cmEditor: CodeMirror.Editor,
-    //     changeObj: CodeMirror.EditorChangeLinkedList
-    //   ): void => {
-    //     console.log('codemirror changed', cmEditor);
-    //   });
-    //   console.log('register codemirror', cm);
-    // });
-
-    // this.registerEvent(this.app.workspace.on('codemirror', (cm: CodeMirror.Editor) => {
-    // 	// Modify CodeMirror here...
-    // 	console.log('codemirror', cm);
-    // }));
-
-    // this.registerCodeMirror((cm: CodeMirror.Editor) => {
-    //   cm.off("change", (cmEditor: CodeMirror.Editor,
-    //                     changeObj: CodeMirror.EditorChange) => {
-    //     console.log('codemirror changed');
-    //   });
-    // });
 
     this.registerEditorSuggest(new VerseSuggester(this));
+    // this.registerEvent(this.app.workspace.on('editor-change', (editor: Editor, markdownView: MarkdownView) => {
+    //   console.log('editor change', editor, markdownView)
+    //
+    //   const cursorPosition:EditorPosition = editor.getCursor();
+    //
+    //   const currentValue = editor.getValue();
+    //   const currentLine = editor.getLine(cursorPosition.line);
+    //   const currentContent = currentLine.substring(0, cursorPosition.ch);
+    //   // editor.setSelection(cursorPosition);
+    //   // editor.replaceSelection('aaa');
+    //   console.log('cursor position', cursorPosition, 'currentValue', currentValue, 'currentLine', currentLine, currentContent);
+    //
+    // }));
+
+    this.registerEvent(this.app.workspace.on('quit', () => {
+      console.log('editor quit');
+    }));
 
     this.registerDomEvent(document, 'click', (evt: MouseEvent) => {
       console.log('click', evt);
