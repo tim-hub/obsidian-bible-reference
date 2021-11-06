@@ -12,3 +12,5 @@ main.js
 
 # obsidian
 data.json
+/coverage/lcov-report/
+/coverage/

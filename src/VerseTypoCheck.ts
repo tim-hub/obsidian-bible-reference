@@ -1,5 +1,5 @@
 /**
- * regular expression to match verse
+ * regular expression to match verseNumber
  *
  * -- John 1:1
  * -- Joh 1
@@ -9,7 +9,7 @@
 const reg = /\-{2}(\ *)(([123]\ )*)(\w{3,})(\ *)\d{0,3}\:*\d{0,3}\-*\d{0,3}$/;
 
 /**
- * check if the given string contains a verse, and return the verse if it does
+ * check if the given string contains a verseNumber, and return the verseNumber if it does
  * @param verse
  * @constructor
  */
