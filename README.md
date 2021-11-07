@@ -1,16 +1,13 @@
 ## Obsidian Bible Reference
+This is a Bible verse suggesting/reference plugin for Bible study and notes taking.
 
-### Development
+![0.1.1 obsidian bible reference demo](demo/bible-reference-0.1.1.gif)
 
+## Development
+- typescript
 
 #### Options
 - [hot reload plugin](https://github.com/pjeby/hot-reload), very handy for development purpose
-
-### Other awesome plugins
-
-\-{2}\ *[0-9|A-z]
-
-([123]\ )*[A-z]+\ \d(\:\d\-\d)*
 
 
 ### References
