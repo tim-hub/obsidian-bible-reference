@@ -6,11 +6,11 @@ export const APP_NAMING = {
 }
 
 export interface BibleReferencePluginSettings {
-  mySetting: string;
+  language: string;
+  version: string;
 }
 
 export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
-  mySetting: 'default'
+  language: 'en',
+  version: 'WEB' //World English Bible
 }
-
-export const bibleRefRegex = new RegExp("(?:\\d+ ?)?[a-z]+ ?\\d+(?:(?::\\d+)?(?: ?- ?(?:\\d+ [a-z]+ )?\\d+(?::\\d+)?)?)?");

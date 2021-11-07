@@ -88,12 +88,6 @@ export default class BibleReferencePlugin extends Plugin {
     this.registerEvent(this.app.workspace.on('quit', () => {
       console.log('editor quit');
     }));
-
-    this.registerDomEvent(document, 'click', (evt: MouseEvent) => {
-      console.log('click', evt);
-    });
-
-    // this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));
   }
 
   onunload() {
