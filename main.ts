@@ -12,7 +12,7 @@ export default class BibleReferencePlugin extends Plugin {
 
     await this.loadSettings();
 
-    this.addSettingTab(new BibleReferenceSettingTab(this.app, this));
+    // this.addSettingTab(new BibleReferenceSettingTab(this.app, this)); // todo enable the setting tab
 
     this.registerEditorSuggest(new VerseSuggester(this));
 
