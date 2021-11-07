@@ -16,14 +16,10 @@ export default class BibleReferencePlugin extends Plugin {
     // This creates an icon in the left ribbon.
     const ribbonIconEl = this.addRibbonIcon('dice', APP_NAMING.appName, (evt: MouseEvent) => {
       // Called when the user clicks the icon.
-      new Notice('This is a notice!');
+      new Notice('Thanks for using '+APP_NAMING.appName);
     });
     // Perform additional things with the ribbon
-    ribbonIconEl.addClass('my-plugin-ribbon-class');
-
-    // This adds a status bar item to the bottom of the app. Does not work on mobile apps.
-    const statusBarItemEl = this.addStatusBarItem();
-    statusBarItemEl.setText('Status Bar Text');
+    ribbonIconEl.addClass('bible-reference-plugin-ribbon-class');
 
     this.addSettingTab(new BibleReferenceSettingTab(this.app, this));
 
