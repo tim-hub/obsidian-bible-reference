@@ -84,19 +84,6 @@ export default class BibleReferencePlugin extends Plugin {
 
 
     this.registerEditorSuggest(new VerseSuggester(this));
-    // this.registerEvent(this.app.workspace.on('editor-change', (editor: Editor, markdownView: MarkdownView) => {
-    //   console.log('editor change', editor, markdownView)
-    //
-    //   const cursorPosition:EditorPosition = editor.getCursor();
-    //
-    //   const currentValue = editor.getValue();
-    //   const currentLine = editor.getLine(cursorPosition.line);
-    //   const currentContent = currentLine.substring(0, cursorPosition.ch);
-    //   // editor.setSelection(cursorPosition);
-    //   // editor.replaceSelection('aaa');
-    //   console.log('cursor position', cursorPosition, 'currentValue', currentValue, 'currentLine', currentLine, currentContent);
-    //
-    // }));
 
     this.registerEvent(this.app.workspace.on('quit', () => {
       console.log('editor quit');
