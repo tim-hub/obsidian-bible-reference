@@ -1,5 +1,6 @@
 ## Obsidian Bible Reference
-Doing Bible Study note taking easily. Generating Bible Verse reference/suggestion in Obsidian.md app.
+- Taking Bible Study note in Obsidian.md application easily.
+- Automatically suggesting Bible Verses as references.
 
 ![0.1.1 obsidian bible reference demo](demo/bible-reference-0.1.1.gif)
 
