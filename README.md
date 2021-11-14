@@ -1,5 +1,5 @@
 ## Obsidian Bible Reference
-This is a Bible verse suggesting/reference plugin for Bible study and notes taking in Obsidian..
+Doing Bible Study note taking easily. Generating Bible Verse reference/suggestion in Obsidian.md app.
 
 ![0.1.1 obsidian bible reference demo](demo/bible-reference-0.1.1.gif)
 
