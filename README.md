@@ -3,9 +3,12 @@ This is a Bible verse suggesting/reference plugin for Bible study and notes taki
 
 ![0.1.1 obsidian bible reference demo](demo/bible-reference-0.1.1.gif)
 
-## Development
+
+## Development and Contribution
+
 - Typescript/Node Development Experience
 - [hot reload plugin](https://github.com/pjeby/hot-reload) (optional, but it isvery handy for development purpose)
+- [Contribution.md](CONTRIBUTION.md)
 
 
 ### References
