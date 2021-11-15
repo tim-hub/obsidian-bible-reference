@@ -15,10 +15,6 @@ export default class BibleReferencePlugin extends Plugin {
     // this.addSettingTab(new BibleReferenceSettingTab(this.app, this)); // todo enable the setting tab
 
     this.registerEditorSuggest(new VerseSuggester(this));
-
-    this.registerEvent(this.app.workspace.on('quit', () => {
-      console.log('editor quit');
-    }));
   }
 
   onunload() {
