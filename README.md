@@ -2,7 +2,7 @@
 - Taking Bible Study note in Obsidian.md application easily.
 - Automatically suggesting Bible Verses as references.
 
-![obsidian bible reference demo](https://github.com/tim-hub/obsidian-bible-reference/blob/master/demo/obsidian-bible-reference-demo.gif)
+![obsidian bible reference demo](https://raw.githubusercontent.com/tim-hub/obsidian-bible-reference/master/demo/obsidian-bible-reference-demo.gif)
 
 > This plugin Bible Verse Query Functionality is powered by [bible-api.com](https://bible-api.com/) (World English Bible version).
 > The back-end API might be changed in the future to support different languages and versions.
