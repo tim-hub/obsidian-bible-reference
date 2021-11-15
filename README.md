@@ -2,14 +2,16 @@
 - Taking Bible Study note in Obsidian.md application easily.
 - Automatically suggesting Bible Verses as references.
 
-![0.1.1 obsidian bible reference demo](demo/bible-reference-0.1.1.gif)
+![obsidian bible reference demo](https://github.com/tim-hub/obsidian-bible-reference/blob/master/demo/obsidian-bible-reference-demo.gif)
+
+> This plugin Bible Verse Query Functionality is powered by [bible-api.com](https://bible-api.com/) (World English Bible version).
+> The back-end API might be changed in the future to support different languages and versions.
 
 
 ## Development and Contribution
-
 - Typescript/Node Development Experience
-- [hot reload plugin](https://github.com/pjeby/hot-reload) (optional, but it isvery handy for development purpose)
-- [Contribution.md](CONTRIBUTION.md)
+- [Hot reload plugin](https://github.com/pjeby/hot-reload) (optional, but it isvery handy for development purpose)
+- [Obsidian Plugin Development](CONTRIBUTION.md)
 
 
 ### References
