@@ -1,6 +1,4 @@
-## Obsidian Sample Plugin
-
-This is a sample plugin for Obsidian (https://obsidian.md).
+## Contribution for Obsidian Bible Reference
 
 This project uses Typescript to provide type checking and documentation.
 The repo depends on the latest plugin API (obsidian.d.ts) in Typescript Definition format, which contains TSDoc comments describing what it does.
@@ -67,3 +65,7 @@ Quick starting guide for new plugin devs:
 
 - See https://github.com/obsidianmd/obsidian-api
 - https://github.com/obsidianmd/obsidian-sample-plugin
+
+
+### Release repo
+- https://github.com/obsidianmd/obsidian-releases

@@ -3,7 +3,7 @@
 	"name": "Bible Reference",
 	"version": "0.1.1",
 	"minAppVersion": "0.9.12",
-	"description": "This is a plugin built for bible study",
+	"description": "Taking Bible Study note in Obsidian.md application easily. Automatically suggesting Bible Verses as references. ",
 	"author": "tim-hub",
 	"authorUrl": "https://github.com/tim-hub",
 	"isDesktopOnly": false
