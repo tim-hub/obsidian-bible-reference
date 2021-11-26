@@ -1,3 +1,5 @@
+import { DEFAULT_SETTINGS } from './constants';
+
 export interface IVerse {
   book_id: string;
   book_name: string;
@@ -14,7 +16,7 @@ export class SuggestingVerse {
   public version: string;
   public language :string;
 
-  constructor(public bookName: string, public chapterNumber: number, public verseNumber: number, public verseNumberEnd?: number, version = 'web',  language = 'en') {
+  constructor(public bookName: string, public chapterNumber: number, public verseNumber: number, public verseNumberEnd?: number, language?:string, version?:string,) {
     this.bookName = bookName;
     this.chapterNumber = chapterNumber;
     this.verseNumber = verseNumber;
@@ -39,10 +41,15 @@ export class SuggestingVerse {
   }
 
   private async getVerses(): Promise<IVerse[]> {
-    const url = `https://bible-api.com/${this.queryString}`;
-    const response = await fetch(url);
-    const data = await response.json();
-    return data.verses;
+    if (this.language === DEFAULT_SETTINGS.language && this.version === DEFAULT_SETTINGS.version) {
+      const url = `https://bible-api.com/${this.queryString}`;
+      const response = await fetch(url);
+      const data = await response.json();
+      return data.verses;
+    } else {
+      console.debug(`Language: ${this.language}`);
+      // todo
+    }
   }
 
   public async fetchAndSetVersesText(): Promise<void> {

@@ -12,5 +12,5 @@ export interface BibleReferencePluginSettings {
 
 export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
   language: 'en',
-  version: 'WEB' //World English Bible
+  version: 'web' //World English Bible
 }

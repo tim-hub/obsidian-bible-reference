@@ -2,16 +2,19 @@ import { Editor, EditorPosition, EditorSuggest, EditorSuggestContext, EditorSugg
 import BibleReferencePlugin from '../main';
 import { VerseTypoCheck } from './VerseTypoCheck';
 import { SuggestingVerse } from './SuggestingVerse';
+import { BibleReferencePluginSettings } from './constants';
 
 /**
  * Extend the EditorSuggest to suggest bible verses.
  */
 export class VerseSuggester extends EditorSuggest<SuggestingVerse> {
   plugin: BibleReferencePlugin;
+  settings: BibleReferencePluginSettings;
 
-  constructor(plugin: BibleReferencePlugin) {
+  constructor(plugin: BibleReferencePlugin, settings: BibleReferencePluginSettings) {
     super(plugin.app);
     this.plugin = plugin;
+    this.settings = settings;
   }
 
   /**
@@ -55,9 +58,9 @@ export class VerseSuggester extends EditorSuggest<SuggestingVerse> {
     const verseEndNumber = numbers.length === 3 ? parseInt(numbers[2]) : undefined;
 
     // todo get version and language from settings
-    const suggestingVerse = new SuggestingVerse(bookName, chapterNumber, verseNumber, verseEndNumber);
+    const suggestingVerse = new SuggestingVerse(bookName, chapterNumber, verseNumber, verseEndNumber, this.settings.language, this.settings.version);
 
-    console.debug(bookName, chapterNumber, verseNumber, verseEndNumber, suggestingVerse);
+    console.debug(bookName, chapterNumber, verseNumber, verseEndNumber, suggestingVerse, this.settings.language, this.settings.version);
     await suggestingVerse.fetchAndSetVersesText();
     return [suggestingVerse];
   }
