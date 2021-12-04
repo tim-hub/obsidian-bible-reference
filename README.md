@@ -1,5 +1,5 @@
 ## Obsidian Bible Reference
-[![CodeQL](https://github.com/tim-hub/obsidian-bible-reference/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/tim-hub/obsidian-bible-reference/actions/workflows/codeql-analysis.yml)
+[![CodeQL](https://github.com/tim-hub/obsidian-bible-reference/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/tim-hub/obsidian-bible-reference/actions/workflows/codeql-analysis.yml)[![Build](https://github.com/tim-hub/obsidian-bible-reference/actions/workflows/build.yml/badge.svg)](https://github.com/tim-hub/obsidian-bible-reference/actions/workflows/build.yml)
 
 - Taking Bible Study note in Obsidian.md application easily.
 - Automatically suggesting Bible Verses as references.
