@@ -19,9 +19,7 @@
 2. Browse the community plugins and search `Bible Reference`
 3. Then install and enable it
 
-## Development and Contribution
-- Typescript/Node Development Experience
-- [Hot reload plugin](https://github.com/pjeby/hot-reload) (optional, but it isvery handy for development purpose)
-- [Obsidian Plugin Development](CONTRIBUTION.md)
-
-
+## Contact, Discussion, and Support
+- If you find any issues feel free to contact on [Discussion about Obsidian Bible Reference](https://github.com/tim-hub/obsidian-bible-reference/discussions)
+- [Issues or Feature Requests of Obsidian Bible Reference](https://github.com/tim-hub/obsidian-bible-reference/issues)
+- [Making contribution](CONTRIBUTION.md)
