@@ -22,4 +22,4 @@
 ## Contact, Discussion, and Support
 - If you find any issues feel free to contact on [Discussion about Obsidian Bible Reference](https://github.com/tim-hub/obsidian-bible-reference/discussions)
 - [Issues or Feature Requests of Obsidian Bible Reference](https://github.com/tim-hub/obsidian-bible-reference/issues)
-- [Making contribution](CONTRIBUTION.md)
+- [Making contributions](CONTRIBUTION.md)
