@@ -1,3 +1,5 @@
+import { BibleLanguageToVersionsCollection } from './data/BibleLanguageToVersionsCollection';
+
 export const APP_NAMING = {
   appName: 'Bible Reference',
   appAuthor: 'tim-hub',
@@ -6,11 +8,12 @@ export const APP_NAMING = {
 }
 
 export interface BibleReferencePluginSettings {
-  language: string;
-  version: string;
+  // language?: string; // we might not need this todo remove it
+  languagePlusVersion: string;
 }
 
+export const LanguageVersionSplitter = '+++@@@+++';
+
 export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
-  language: 'en',
-  version: 'web' //World English Bible
+  languagePlusVersion: `${BibleLanguageToVersionsCollection[0].id}${LanguageVersionSplitter}${BibleLanguageToVersionsCollection[0].versions[0].id}`,
 }

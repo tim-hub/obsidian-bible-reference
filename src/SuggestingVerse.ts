@@ -1,4 +1,4 @@
-import { DEFAULT_SETTINGS } from './constants';
+import { DEFAULT_SETTINGS, LanguageVersionSplitter } from './constants';
 
 export interface IVerse {
   book_id: string;
@@ -9,21 +9,21 @@ export interface IVerse {
 }
 
 /**
- * Get public World Engligh Bible version
+ * Get public World Engligh Bible languagePlusVersion
  */
 export class SuggestingVerse {
   public text: string;
+  public languagePlusVersion : string;
   public version: string;
   public language :string;
 
-  constructor(public bookName: string, public chapterNumber: number, public verseNumber: number, public verseNumberEnd?: number, language?:string, version?:string,) {
+  constructor(public bookName: string, public chapterNumber: number, public verseNumber: number, public verseNumberEnd?: number, languagePlusVersion?:string,) {
     this.bookName = bookName;
     this.chapterNumber = chapterNumber;
     this.verseNumber = verseNumber;
     this.verseNumberEnd = verseNumberEnd;
-
-    this.version = version;
-    this.language = language;
+    this.languagePlusVersion = languagePlusVersion;
+    [this.language, this.version] = languagePlusVersion.split(LanguageVersionSplitter)
   }
 
   /**
@@ -41,15 +41,15 @@ export class SuggestingVerse {
   }
 
   private async getVerses(): Promise<IVerse[]> {
-    if (this.language === DEFAULT_SETTINGS.language && this.version === DEFAULT_SETTINGS.version) {
-      const url = `https://bible-api.com/${this.queryString}`;
-      const response = await fetch(url);
-      const data = await response.json();
-      return data.verses;
-    } else {
-      console.debug(`Language: ${this.language}`);
-      // todo
+    console.debug(this.languagePlusVersion);
+    const url = `https://bible-api.com/${this.queryString}`;
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (this.languagePlusVersion === DEFAULT_SETTINGS.languagePlusVersion) {
+      console.log('match to default language plus version');
     }
+    return data.verses;
   }
 
   public async fetchAndSetVersesText(): Promise<void> {
