@@ -1,4 +1,4 @@
-import { DEFAULT_SETTINGS, LanguageVersionSplitter } from './constants';
+import { DEFAULT_SETTINGS } from './constants';
 import { BibleVersionCollection, IBibleVersion } from './data/BibleLanguageToVersionsCollection';
 
 export interface IVerse {
@@ -15,16 +15,13 @@ export interface IVerse {
 export class SuggestingVerse {
   public text: string;
   public bibleVersion : string;
-  public version: string;
-  public language :string;
 
-  constructor(public bookName: string, public chapterNumber: number, public verseNumber: number, public verseNumberEnd?: number, languagePlusVersion?:string,) {
+  constructor(public bookName: string, public chapterNumber: number, public verseNumber: number, public verseNumberEnd?: number, bibleVersion?:string,) {
     this.bookName = bookName;
     this.chapterNumber = chapterNumber;
     this.verseNumber = verseNumber;
     this.verseNumberEnd = verseNumberEnd;
-    this.bibleVersion = languagePlusVersion;
-    [this.language, this.version] = languagePlusVersion.split(LanguageVersionSplitter)
+    this.bibleVersion = bibleVersion;
   }
 
   /**

@@ -1,14 +1,16 @@
 import { IVerse } from '../SuggestingVerse';
 
+export const LanguageVersionSplitter = '-';
+
 class BibleAPIAdapter {
   protected _language: string;
   protected _version: string;
   protected _apiUrl: string;
 
-  public constructor(versionKey: string, apiUrl: string = 'https://bible-api.com') {
+  public constructor(versionKey: string, apiUrl: string) {
     this._apiUrl = apiUrl;
     try {
-      [this._version, this._language] = versionKey.split('-');
+      [this._version, this._language] = versionKey.split(LanguageVersionSplitter);
     } catch (e) {
       console.error('could not be splitted by -', e);
     }
@@ -46,16 +48,16 @@ export const BibleVersionCollection: IBibleVersion[] = [
   {
     key: 'web-en',
     name: 'World English Bible',
-    adapter: new BibleAPIAdapter('web-en'),
+    adapter: new BibleAPIAdapter('web-en', 'https://bible-api.com'),
   },
   {
     key: 'clementine-en',
     name: 'Clementine Latin Vulgate',
-    adapter: new BibleAPIAdapter('clementine-en'),
+    adapter: new BibleAPIAdapter('clementine-en', 'https://bible-api.com'),
   },
   {
     key: 'kjv-en',
     name: 'King James Version',
-    adapter: new BibleAPIAdapter('kjv-en'),
+    adapter: new BibleAPIAdapter('kjv-en', 'https://bible-api.com'),
   },
 ];

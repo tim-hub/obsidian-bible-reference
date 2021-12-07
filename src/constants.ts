@@ -12,8 +12,6 @@ export interface BibleReferencePluginSettings {
   bibleVersion: string;
 }
 
-export const LanguageVersionSplitter = '-';
-
 export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
   bibleVersion: BibleVersionCollection[0].key,
 }
