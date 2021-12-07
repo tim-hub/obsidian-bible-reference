@@ -1,4 +1,4 @@
-import { BibleLanguageToVersionsCollection } from './data/BibleLanguageToVersionsCollection';
+import { BibleVersionCollection } from './data/BibleLanguageToVersionsCollection';
 
 export const APP_NAMING = {
   appName: 'Bible Reference',
@@ -9,11 +9,11 @@ export const APP_NAMING = {
 
 export interface BibleReferencePluginSettings {
   // language?: string; // we might not need this todo remove it
-  languagePlusVersion: string;
+  bibleVersion: string;
 }
 
-export const LanguageVersionSplitter = '+++@@@+++';
+export const LanguageVersionSplitter = '-';
 
 export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
-  languagePlusVersion: `${BibleLanguageToVersionsCollection[0].id}${LanguageVersionSplitter}${BibleLanguageToVersionsCollection[0].versions[0].id}`,
+  bibleVersion: BibleVersionCollection[0].key,
 }

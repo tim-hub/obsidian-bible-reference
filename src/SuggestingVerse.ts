@@ -1,4 +1,5 @@
 import { DEFAULT_SETTINGS, LanguageVersionSplitter } from './constants';
+import { BibleVersionCollection, IBibleVersion } from './data/BibleLanguageToVersionsCollection';
 
 export interface IVerse {
   book_id: string;
@@ -9,11 +10,11 @@ export interface IVerse {
 }
 
 /**
- * Get public World Engligh Bible languagePlusVersion
+ * Get public World Engligh Bible bibleVersion
  */
 export class SuggestingVerse {
   public text: string;
-  public languagePlusVersion : string;
+  public bibleVersion : string;
   public version: string;
   public language :string;
 
@@ -22,7 +23,7 @@ export class SuggestingVerse {
     this.chapterNumber = chapterNumber;
     this.verseNumber = verseNumber;
     this.verseNumberEnd = verseNumberEnd;
-    this.languagePlusVersion = languagePlusVersion;
+    this.bibleVersion = languagePlusVersion;
     [this.language, this.version] = languagePlusVersion.split(LanguageVersionSplitter)
   }
 
@@ -41,16 +42,14 @@ export class SuggestingVerse {
   }
 
   private async getVerses(): Promise<IVerse[]> {
-    console.debug(this.languagePlusVersion);
-    const url = `https://bible-api.com/${this.queryString}`;
-    const response = await fetch(url);
-    const data = await response.json();
-
-    if (this.languagePlusVersion === DEFAULT_SETTINGS.languagePlusVersion) {
+    console.debug(this.bibleVersion);
+    if (this.bibleVersion === DEFAULT_SETTINGS.bibleVersion) {
       console.log('match to default language plus version');
     }
-    return data.verses;
+    const adapter = BibleVersionCollection.find((bv: IBibleVersion) => bv.key === this.bibleVersion).adapter
+    return adapter.query(this.queryString)
   }
+
 
   public async fetchAndSetVersesText(): Promise<void> {
     // todo add a caching here

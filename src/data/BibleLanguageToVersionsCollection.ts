@@ -1,38 +1,61 @@
-export interface IVersion {
-  id: string;
-  name: string;
+import { IVerse } from '../SuggestingVerse';
+
+class BibleAPIAdapter {
+  protected _language: string;
+  protected _version: string;
+  protected _apiUrl: string;
+
+  public constructor(versionKey: string, apiUrl: string = 'https://bible-api.com') {
+    this._apiUrl = apiUrl;
+    try {
+      [this._version, this._language] = versionKey.split('-');
+    } catch (e) {
+      console.error('could not be splitted by -', e);
+    }
+  }
+
+  public async query(queryString: string): Promise<IVerse[]> {
+    if (!this._version || !this._language) {
+      throw 'version or language not set';
+    }
+
+    try {
+      const url = `${this._apiUrl}/${queryString}?translation=${this._version}`;
+      const response = await fetch(url);
+      const data = await response.json();
+      return this.formatBibleVerses(data.verses);
+    } catch (e) {
+      console.error('error while querying bible-api', e);
+      return await Promise.reject(e);
+    }
+  }
+
+  protected formatBibleVerses(verses: any): IVerse[] {
+    return verses;
+  }
 }
 
-export interface IBibleLanguageToVersions {
-  id: string;
+
+export interface IBibleVersion {
+  key: string;
   name: string;
-  versions: IVersion[];
+  adapter: BibleAPIAdapter;
 }
 
-export const BibleLanguageToVersionsCollection: IBibleLanguageToVersions[] = [
+export const BibleVersionCollection: IBibleVersion[] = [
   {
-    id: 'en',
-    name: 'English',
-    versions:
-      [
-        {
-          id: 'web',
-          name: 'World English Bible',
-        },
-        {
-          id: 'kjv',
-          name: 'King James Version',
-        },
-      ],
+    key: 'web-en',
+    name: 'World English Bible',
+    adapter: new BibleAPIAdapter('web-en'),
   },
   {
-    id: 'latin',
-    name: 'Latin',
-    versions: [
-      {
-        id: 'clementine',
-        name: 'Clementine Latin Vulgate',
-      },
-    ]
+    key: 'clementine-en',
+    name: 'Clementine Latin Vulgate',
+    adapter: new BibleAPIAdapter('clementine-en'),
+  },
+  {
+    key: 'kjv-en',
+    name: 'King James Version',
+    adapter: new BibleAPIAdapter('kjv-en'),
   },
 ];

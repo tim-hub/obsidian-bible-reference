@@ -1,16 +1,10 @@
 import { App, Notice, PluginSettingTab, Setting } from 'obsidian';
-import { APP_NAMING, LanguageVersionSplitter } from './constants';
+import { APP_NAMING } from './constants';
 import BibleReferencePlugin from '../main';
 import {
-  BibleLanguageToVersionsCollection,
-  IBibleLanguageToVersions,
-  IVersion
+  BibleVersionCollection,
+  IBibleVersion,
 } from './data/BibleLanguageToVersionsCollection';
-
-interface ILanguageVersion {
-  versionId: string;
-  displayName: string; // with language
-}
 
 export class BibleReferenceSettingTab extends PluginSettingTab {
   plugin: BibleReferencePlugin;
@@ -20,28 +14,17 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     this.plugin = plugin;
   }
 
-  getAllBibleVersionsWithLanguageNameAlphabetically = (): ILanguageVersion[] => {
+  getAllBibleVersionsWithLanguageNameAlphabetically = (): IBibleVersion[] => {
     return this.getAllBibleVersionsWithLanguageName()
       .sort((a, b) => {
           // sort by displayName alphabetically
-          return a.displayName.localeCompare(b.displayName);
+          return a.name.localeCompare(b.name);
         }
       );
   }
 
-  getAllBibleVersionsWithLanguageName = (): ILanguageVersion[] => {
-    const allVersionOptions = BibleLanguageToVersionsCollection.map(
-      (bibleLanguageToVersion: IBibleLanguageToVersions,) => {
-        return bibleLanguageToVersion.versions.map((version: IVersion) => {
-          return {
-            displayName: `${bibleLanguageToVersion.name} - ${version.name}`, // add language
-            versionId: `${bibleLanguageToVersion.id}${LanguageVersionSplitter}${version.id}`
-          };
-        });
-      }
-    )
-      .flat() // flat two dimension to one
-    return allVersionOptions;
+  getAllBibleVersionsWithLanguageName = (): IBibleVersion[] => {
+    return BibleVersionCollection;
   }
 
   SetUpVersionSettingsAndVersionOptions = (containerEl: HTMLElement): void => {
@@ -51,13 +34,13 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
       .addDropdown(
         (dropdown) => {
           const allVersionOptions = this.getAllBibleVersionsWithLanguageNameAlphabetically();
-          allVersionOptions.forEach((version: ILanguageVersion) => {
-            dropdown.addOption(version.versionId, version.displayName);
+          allVersionOptions.forEach((version: IBibleVersion) => {
+            dropdown.addOption(version.key, version.name);
           });
 
-          dropdown.setValue(this.plugin.settings.languagePlusVersion)
+          dropdown.setValue(this.plugin.settings.bibleVersion)
             .onChange(async (value) => {
-                this.plugin.settings.languagePlusVersion = value;
+                this.plugin.settings.bibleVersion = value;
                 console.log('Bible Version: ' + value);
                 await this.plugin.saveSettings();
                 new Notice('Bible Reference Settings Updated ');
