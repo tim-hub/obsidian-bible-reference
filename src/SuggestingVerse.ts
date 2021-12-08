@@ -1,5 +1,9 @@
 import { DEFAULT_SETTINGS } from './constants';
-import { BibleVersionCollection, IBibleVersion } from './data/BibleLanguageToVersionsCollection';
+import {
+  BibleVersionAPIAdapter,
+  BibleVersionCollection,
+  IBibleVersion
+} from './data/BibleLanguageToVersionsCollection';
 
 export interface IVerse {
   book_id: string;
@@ -13,6 +17,7 @@ export interface IVerse {
  * Get public World Engligh Bible bibleVersion
  */
 export class SuggestingVerse {
+  private bibleVersionApiAdapter: BibleVersionAPIAdapter;
   public text: string;
   public bibleVersion : string;
 
@@ -43,8 +48,11 @@ export class SuggestingVerse {
     if (this.bibleVersion === DEFAULT_SETTINGS.bibleVersion) {
       console.log('match to default language plus version');
     }
-    const adapter = BibleVersionCollection.find((bv: IBibleVersion) => bv.key === this.bibleVersion).adapter
-    return adapter.query(this.queryString)
+    const bibleVersion = BibleVersionCollection.find((bv: IBibleVersion) => bv.key === this.bibleVersion)
+    if (!this.bibleVersionApiAdapter || this.bibleVersionApiAdapter.BibleVersionKey !== bibleVersion.key) {
+      this.bibleVersionApiAdapter =  BibleVersionAPIAdapter.BuildBibleVersionAPIAdapterFromIBibleVersion(bibleVersion);
+    }
+    return this.bibleVersionApiAdapter.query(this.queryString);
   }
 
 

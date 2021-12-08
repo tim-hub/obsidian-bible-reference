@@ -17,8 +17,13 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
   getAllBibleVersionsWithLanguageNameAlphabetically = (): IBibleVersion[] => {
     return this.getAllBibleVersionsWithLanguageName()
       .sort((a, b) => {
-          // sort by displayName alphabetically
-          return a.name.localeCompare(b.name);
+          // sort by language and versionName alphabetically
+          const languageCompare = a.language.localeCompare(b.language);
+          if (languageCompare === 0) {
+            return a.versionName.localeCompare(b.versionName);
+          } else {
+            return languageCompare;
+          }
         }
       );
   }
@@ -35,9 +40,8 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
         (dropdown) => {
           const allVersionOptions = this.getAllBibleVersionsWithLanguageNameAlphabetically();
           allVersionOptions.forEach((version: IBibleVersion) => {
-            dropdown.addOption(version.key, version.name);
+            dropdown.addOption(version.key, `${version.language} - ${version.versionName}`);
           });
-
           dropdown.setValue(this.plugin.settings.bibleVersion)
             .onChange(async (value) => {
                 this.plugin.settings.bibleVersion = value;

@@ -1,28 +1,33 @@
 import { IVerse } from '../SuggestingVerse';
 
-export const LanguageVersionSplitter = '-';
-
-class BibleAPIAdapter {
+export class BibleVersionAPIAdapter {
+  protected _key: string;
   protected _language: string;
-  protected _version: string;
+  protected _versionName: string;
   protected _apiUrl: string;
 
-  public constructor(versionKey: string, apiUrl: string) {
+  protected formatBibleVerses(verses: any): IVerse[] {
+    return verses;
+  }
+
+  public constructor(key: string, versionName: string, language:string, apiUrl: string) {
+    this._key = key;
     this._apiUrl = apiUrl;
-    try {
-      [this._version, this._language] = versionKey.split(LanguageVersionSplitter);
-    } catch (e) {
-      console.error('could not be splitted by -', e);
-    }
+    this._versionName = versionName;
+    this._language = language;
+  }
+
+  public get BibleVersionKey(): string {
+    return this._key;
   }
 
   public async query(queryString: string): Promise<IVerse[]> {
-    if (!this._version || !this._language) {
+    if (!this._versionName || !this._language) {
       throw 'version or language not set';
     }
 
     try {
-      const url = `${this._apiUrl}/${queryString}?translation=${this._version}`;
+      const url = `${this._apiUrl}/${queryString}?translation=${this.BibleVersionKey}`;
       const response = await fetch(url);
       const data = await response.json();
       return this.formatBibleVerses(data.verses);
@@ -32,57 +37,68 @@ class BibleAPIAdapter {
     }
   }
 
-  protected formatBibleVerses(verses: any): IVerse[] {
-    return verses;
+  public static BuildBibleVersionAPIAdapterFromIBibleVersion(bibleVersion: IBibleVersion): BibleVersionAPIAdapter {
+    const { key, versionName, language, apiUrl } = bibleVersion;
+    return new BibleVersionAPIAdapter(key, versionName, language, apiUrl);
   }
+
 }
 
 
 export interface IBibleVersion {
   key: string;
-  name: string;
-  adapter: BibleAPIAdapter;
+  versionName: string;
+  language: string;
+  apiUrl: string;
 }
 
 export const BibleVersionCollection: IBibleVersion[] = [
   {
-    key: 'web-en',
-    name: 'World English Bible',
-    adapter: new BibleAPIAdapter('web-en', 'https://bible-api.com'),
+    key: 'web',
+    versionName: 'World English Bible',
+    language: 'English',
+    apiUrl: 'https://bible-api.com',
   },
   {
-    key: 'clementine-en',
-    name: 'Clementine Latin Vulgate',
-    adapter: new BibleAPIAdapter('clementine-en', 'https://bible-api.com'),
+    key: 'clementine',
+    versionName: 'Clementine Latin Vulgate',
+    language: 'Latin',
+    apiUrl: 'https://bible-api.com',
   },
   {
-    key: 'kjv-en',
-    name: 'King James Version',
-    adapter: new BibleAPIAdapter('kjv-en', 'https://bible-api.com'),
+    key: 'kjv',
+    versionName: 'King James Version',
+    language: 'English',
+    apiUrl: 'https://bible-api.com',
   },
   {
-    key: 'bbe-en',
-    name: 'Bible in Basic English',
-    adapter: new BibleAPIAdapter('bbe-en', 'https://bible-api.com'),
-  },
-  // {
-  //   key: 'oeb-en',
-  //   name: 'Open English Bible, US Edition',
-  //   adapter: new BibleAPIAdapter('oeb-en', 'https://bible-api.com'),
-  // },
-  {
-    key: 'almeida-pt',
-    name: 'João Ferreira de Almeida',
-    adapter: new BibleAPIAdapter('almeida-pt', 'https://bible-api.com'),
+    key: 'bbe',
+    versionName: 'Bible in Basic English',
+    language: 'English',
+    apiUrl: 'https://bible-api.com',
   },
   {
-    key: 'rccv-ro',
-    name: 'Romanian Corrected Cornilescu Version',
-    adapter: new BibleAPIAdapter('rccv-ro', 'https://bible-api.com'),
+    key: 'oeb-us',
+    versionName: 'Open English Bible, US Edition',
+    language: 'English',
+    apiUrl: 'https://bible-api.com',
   },
   {
-    key: 'cherokee-in',
-    name: 'Cherokee New Testament',
-    adapter: new BibleAPIAdapter('cherokee-in', 'https://bible-api.com'),
+    key: 'almeida',
+    versionName: 'João Ferreira de Almeida',
+    language: 'Portuguese',
+    apiUrl: 'https://bible-api.com',
+  },
+  {
+    key: 'rccv',
+    versionName: 'Romanian Corrected Cornilescu Version',
+    language: 'Romanian',
+    apiUrl: 'https://bible-api.com',
+  },
+  {
+    key: 'cherokee',
+    versionName: 'Cherokee New Testament',
+    language: 'Cherokee',
+    apiUrl: 'https://bible-api.com',
   },
 ];
