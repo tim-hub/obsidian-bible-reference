@@ -60,4 +60,29 @@ export const BibleVersionCollection: IBibleVersion[] = [
     name: 'King James Version',
     adapter: new BibleAPIAdapter('kjv-en', 'https://bible-api.com'),
   },
+  {
+    key: 'bbe-en',
+    name: 'Bible in Basic English',
+    adapter: new BibleAPIAdapter('bbe-en', 'https://bible-api.com'),
+  },
+  // {
+  //   key: 'oeb-en',
+  //   name: 'Open English Bible, US Edition',
+  //   adapter: new BibleAPIAdapter('oeb-en', 'https://bible-api.com'),
+  // },
+  {
+    key: 'almeida-pt',
+    name: 'João Ferreira de Almeida',
+    adapter: new BibleAPIAdapter('almeida-pt', 'https://bible-api.com'),
+  },
+  {
+    key: 'rccv-ro',
+    name: 'Romanian Corrected Cornilescu Version',
+    adapter: new BibleAPIAdapter('rccv-ro', 'https://bible-api.com'),
+  },
+  {
+    key: 'cherokee-in',
+    name: 'Cherokee New Testament',
+    adapter: new BibleAPIAdapter('cherokee-in', 'https://bible-api.com'),
+  },
 ];
