@@ -7,7 +7,7 @@
 ![obsidian bible reference demo](https://raw.githubusercontent.com/tim-hub/obsidian-bible-reference/master/demo/obsidian-bible-reference-demo.gif)
 
 ## How to use
-1. Open the note in Obsidian.md application
+1. Open a note in Obsidian.md application
 2. In a note, for example type `--John1:1`
 3. Select the suggestion
 
