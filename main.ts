@@ -1,7 +1,7 @@
 import { Plugin } from 'obsidian';
 import { APP_NAMING, BibleReferencePluginSettings, DEFAULT_SETTINGS } from './src/data/constants';
 import { BibleReferenceSettingTab } from './src/ui/BibleReferenceSettingTab';
-import { VerseSuggester } from './src/VerseSuggester';
+import { VerseEditorSuggestor } from './src/VerseEditorSuggestor';
 
 
 export default class BibleReferencePlugin extends Plugin {
@@ -12,7 +12,7 @@ export default class BibleReferencePlugin extends Plugin {
 
     await this.loadSettings();
     this.addSettingTab(new BibleReferenceSettingTab(this.app, this));
-    this.registerEditorSuggest(new VerseSuggester(this, this.settings));
+    this.registerEditorSuggest(new VerseEditorSuggestor(this, this.settings));
   }
 
   onunload() {

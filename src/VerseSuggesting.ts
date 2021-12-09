@@ -15,7 +15,7 @@ export interface IVerse {
 /**
  * Get public World Engligh Bible bibleVersion
  */
-export class SuggestingVerse {
+export class VerseSuggesting {
   private bibleVersionApiAdapter: BibleVersionAPIAdapter;
   public text: string;
   public bibleVersion : string;

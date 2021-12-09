@@ -1,13 +1,13 @@
 import { Editor, EditorPosition, EditorSuggest, EditorSuggestContext, EditorSuggestTriggerInfo, TFile } from 'obsidian';
 import BibleReferencePlugin from '../main';
 import { VerseTypoCheck } from './VerseTypoCheck';
-import { SuggestingVerse } from './SuggestingVerse';
+import { VerseSuggesting } from './VerseSuggesting';
 import { BibleReferencePluginSettings } from './data/constants';
 
 /**
  * Extend the EditorSuggest to suggest bible verses.
  */
-export class VerseSuggester extends EditorSuggest<SuggestingVerse> {
+export class VerseEditorSuggestor extends EditorSuggest<VerseSuggesting> {
   plugin: BibleReferencePlugin;
   settings: BibleReferencePluginSettings;
 
@@ -45,7 +45,7 @@ export class VerseSuggester extends EditorSuggest<SuggestingVerse> {
    * Suggest bible verses.
    * @param context
    */
-  async getSuggestions(context: EditorSuggestContext): Promise<SuggestingVerse[]> {
+  async getSuggestions(context: EditorSuggestContext): Promise<VerseSuggesting[]> {
     console.debug('get suggestion for query ', context.query.toLowerCase());
 
     const bookName = context.query.match(/[123]*[A-z]{3,}/).first();
@@ -58,19 +58,19 @@ export class VerseSuggester extends EditorSuggest<SuggestingVerse> {
     const verseEndNumber = numbers.length === 3 ? parseInt(numbers[2]) : undefined;
 
     // todo get bibleVersion and language from settings
-    const suggestingVerse = new SuggestingVerse(bookName, chapterNumber, verseNumber, verseEndNumber, this.settings.bibleVersion);
+    const suggestingVerse = new VerseSuggesting(bookName, chapterNumber, verseNumber, verseEndNumber, this.settings.bibleVersion);
 
     console.debug(bookName, chapterNumber, verseNumber, verseEndNumber, suggestingVerse, this.settings.bibleVersion);
     await suggestingVerse.fetchAndSetVersesText();
     return [suggestingVerse];
   }
 
-  renderSuggestion(suggestion: SuggestingVerse, el: HTMLElement): void {
+  renderSuggestion(suggestion: VerseSuggesting, el: HTMLElement): void {
     const outer = el.createDiv({ cls: "obr-suggester-container" });
     outer.createDiv({ cls: "obr-shortcode" }).setText(suggestion.text);
   }
 
-  selectSuggestion(suggestion: SuggestingVerse): void {
+  selectSuggestion(suggestion: VerseSuggesting): void {
     if(this.context) {
       (this.context.editor as Editor).replaceRange(
         suggestion.ReplacementContent,
