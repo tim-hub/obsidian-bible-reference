@@ -24,7 +24,7 @@
 
 ## The Bible API and Bible Source
 - This plugin Bible Verse Query Functionality is currently powered by [bible-api.com](https://bible-api.com/).
-  - It is an open source web app that provides a JSON API for grabbing bible verses and passages.
+  - It is an open source web api that provides a RESTful API for grabbing bible verses and passages.
 > The back-end API might be changed in the future to support more languages and versions.
 
 ### Bible Version Avalable
@@ -41,7 +41,7 @@
 ## Contact, Discussion, and Support
 - If you find any issues feel free to contact on [Discussion about Obsidian Bible Reference](https://github.com/tim-hub/obsidian-bible-reference/discussions)
 - [Issues or Feature Requests of Obsidian Bible Reference](https://github.com/tim-hub/obsidian-bible-reference/issues)
-- [Making contributions](CONTRIBUTION.md)
+- [Making contributions](CONTRIBUTING.md)
 
 
 ## Credits
