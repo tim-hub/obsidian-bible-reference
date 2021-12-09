@@ -1,9 +1,8 @@
-import { DEFAULT_SETTINGS } from './constants';
+import { DEFAULT_SETTINGS } from './data/constants';
 import {
   BibleVersionAPIAdapter,
-  BibleVersionCollection,
-  IBibleVersion
-} from './data/BibleLanguageToVersionsCollection';
+} from './data/BibleVersionApiAdapter';
+import { BibleVersionCollection, IBibleVersion } from './data/BibleVersionCollection';
 
 export interface IVerse {
   book_id: string;

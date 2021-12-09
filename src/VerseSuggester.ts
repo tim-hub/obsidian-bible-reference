@@ -2,7 +2,7 @@ import { Editor, EditorPosition, EditorSuggest, EditorSuggestContext, EditorSugg
 import BibleReferencePlugin from '../main';
 import { VerseTypoCheck } from './VerseTypoCheck';
 import { SuggestingVerse } from './SuggestingVerse';
-import { BibleReferencePluginSettings } from './constants';
+import { BibleReferencePluginSettings } from './data/constants';
 
 /**
  * Extend the EditorSuggest to suggest bible verses.

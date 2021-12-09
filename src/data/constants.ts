@@ -1,4 +1,4 @@
-import { BibleVersionCollection } from './data/BibleLanguageToVersionsCollection';
+import { BibleVersionCollection } from './BibleVersionCollection';
 
 export const APP_NAMING = {
   appName: 'Bible Reference',

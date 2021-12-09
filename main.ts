@@ -1,6 +1,6 @@
 import { Plugin } from 'obsidian';
-import { APP_NAMING, BibleReferencePluginSettings, DEFAULT_SETTINGS } from './src/constants';
-import { BibleReferenceSettingTab } from './src/BibleReferenceSettingTab';
+import { APP_NAMING, BibleReferencePluginSettings, DEFAULT_SETTINGS } from './src/data/constants';
+import { BibleReferenceSettingTab } from './src/ui/BibleReferenceSettingTab';
 import { VerseSuggester } from './src/VerseSuggester';
 
 

@@ -1,10 +1,7 @@
 import { App, Notice, PluginSettingTab, Setting } from 'obsidian';
-import { APP_NAMING } from './constants';
-import BibleReferencePlugin from '../main';
-import {
-  BibleVersionCollection,
-  IBibleVersion,
-} from './data/BibleLanguageToVersionsCollection';
+import { APP_NAMING } from '../data/constants';
+import BibleReferencePlugin from '../../main';
+import { BibleVersionCollection, IBibleVersion } from '../data/BibleVersionCollection';
 
 export class BibleReferenceSettingTab extends PluginSettingTab {
   plugin: BibleReferencePlugin;
