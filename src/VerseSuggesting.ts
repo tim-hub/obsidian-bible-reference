@@ -70,6 +70,6 @@ export class VerseSuggesting {
   }
 
   public get ReplacementContent(): string {
-    return `> ${this.text+`>> ${this.getVerseReference()}`}`
+    return `> ${this.text.trim() + '\n' +`>> ${this.getVerseReference()}`}`
   }
 }
