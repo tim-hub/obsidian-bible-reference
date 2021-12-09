@@ -73,8 +73,9 @@ export class VerseSuggester extends EditorSuggest<SuggestingVerse> {
   selectSuggestion(suggestion: SuggestingVerse): void {
     if(this.context) {
       (this.context.editor as Editor).replaceRange(
-        `> ${suggestion.text+`>> ${suggestion.getVerseReference()}`}`,
-        this.context.start, this.context.end
+        suggestion.ReplacementContent,
+        this.context.start,
+        this.context.end
       );
     }
   }

@@ -6,6 +6,7 @@ export class BibleVersionAPIAdapter {
   protected _language: string;
   protected _versionName: string;
   protected _apiUrl: string;
+  protected _queryString?: string;
 
   protected formatBibleVerses(verses: any): IVerse[] {
     return verses;
@@ -16,19 +17,28 @@ export class BibleVersionAPIAdapter {
     this._apiUrl = apiUrl;
     this._versionName = versionName;
     this._language = language;
+    this._queryString = null;
   }
 
   public get BibleVersionKey(): string {
     return this._key;
   }
 
+  public get VersesUrl(): string {
+    if (this._queryString) {
+      return `${this._apiUrl}/${this._queryString}?translation=${this.BibleVersionKey}`;
+    }
+    console.error('No query string set');
+  }
+
   public async query(queryString: string): Promise<IVerse[]> {
     if (!this._versionName || !this._language) {
       throw 'version or language not set';
     }
+    this._queryString = queryString;
 
     try {
-      const url = `${this._apiUrl}/${queryString}?translation=${this.BibleVersionKey}`;
+      const url = this.VersesUrl;
       const response = await fetch(url);
       const data = await response.json();
       return this.formatBibleVerses(data.verses);

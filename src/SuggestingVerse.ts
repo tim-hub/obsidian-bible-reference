@@ -57,7 +57,6 @@ export class SuggestingVerse {
 
   public async fetchAndSetVersesText(): Promise<void> {
     // todo add a caching here
-
     const verses = await this.getVerses();
     let text = '';
     verses.forEach(verse => {
@@ -67,6 +66,10 @@ export class SuggestingVerse {
   }
 
   public getVerseReference(): string {
-    return `-- ${this.bookName} ${this.chapterNumber}:${this.verseNumber}${this.verseNumberEnd? `-${this.verseNumberEnd}`:''}`;
+    return `-- [${this.bookName} ${this.chapterNumber}:${this.verseNumber}${this.verseNumberEnd? `-${this.verseNumberEnd}`:''}](${this.bibleVersionApiAdapter.VersesUrl})`;
+  }
+
+  public get ReplacementContent(): string {
+    return `> ${this.text+`>> ${this.getVerseReference()}`}`
   }
 }
