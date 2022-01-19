@@ -54,4 +54,16 @@ export const BibleVersionCollection: IBibleVersion[] = [
     language: 'Cherokee',
     apiUrl: 'https://bible-api.com',
   },
+  {
+    key: 'oeb-cw',
+    versionName: 'Open English Bible, Commonwealth Edition',
+    language: 'English (UK)',
+    apiUrl: 'https://bible-api.com',
+  },
+  {
+    key: 'webbe',
+    versionName: 'World English Bible, British Edition',
+    language: 'English (UK)',
+    apiUrl: 'https://bible-api.com',
+  },
 ];
