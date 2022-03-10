@@ -1,4 +1,4 @@
-import { IVerse } from '../SuggestingVerse';
+import { IVerse } from '../VerseSuggesting';
 import { IBibleVersion } from './BibleVersionCollection';
 
 export class BibleVersionAPIAdapter {
