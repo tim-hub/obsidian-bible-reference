@@ -27,19 +27,24 @@
 3. Select the version you want to use
 
 ## The Bible API and Bible Source
-- This plugin Bible Verse Query Functionality is currently powered by [bible-api.com](https://bible-api.com/).
+This plugin Bible Verse Query Functionality is currently powered by 
+- [bible-api.com](https://bible-api.com/) 
   - It is an open source web api that provides a RESTful API for grabbing bible verses and passages.
+- [bolls life bible API](https://bolls.life/api/)
+  - It supports more languages and versions, and it has a WEB UI for bible reading as well.
 > The back-end API might be changed in the future to support more languages and versions.
 
 ### Bible Version Avalable
-- **KJV**: King James Version
-- **Cherokee**: Cherokee New Testament
-- **BBE**: Bible in Basic English
-- **WEB**: World English Bible
-- **OEB**: Open English Bible
-- **Clementine**: Clementine Latin Vulgate
-- **Almeida**: João Ferreira de Almeida
-- **RCCV**: Romanian Corrected Cornilescu Version
+- BibleAPI.com
+  - **KJV**: King James Version
+  - **Cherokee**: Cherokee New Testament
+  - **BBE**: Bible in Basic English
+  - **WEB**: World English Bible
+  - **OEB**: Open English Bible
+  - **Clementine**: Clementine Latin Vulgate
+  - **Almeida**: João Ferreira de Almeida
+  - **RCCV**: Romanian Corrected Cornilescu Version
+- 
 
 
 ## Contact, Discussion, and Support
@@ -50,6 +55,7 @@
 
 ## Credits
 
-| Name | Github Username | Note |
-| :--- | :-----: | ----------- | 
-| Tim Morgan | @seven1m | for the open source bible-api project and the maintenance of bible-api.com. |
+| Name           |               Github Username                | Note                                                                        |
+|:---------------|:--------------------------------------------:|-----------------------------------------------------------------------------| 
+| Tim Morgan     |    [@seven1m](https://github.com/seven1m)    | For the open source bible-api project and the maintenance of bible-api.com. |
+| Bolls Life API | [@bpavlisinec](mailto:bpavlisinec@gmail.com) | For the free public bible API.|
