@@ -1,0 +1,3 @@
+[submodule "biblejs-name-converter"]
+	path = biblejs-name-converter
+	url = https://github.com/tim-hub/biblejs-name-converter.git
