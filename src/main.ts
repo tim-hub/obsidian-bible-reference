@@ -1,7 +1,7 @@
 import { Plugin } from 'obsidian';
-import { APP_NAMING, BibleReferencePluginSettings, DEFAULT_SETTINGS } from './src/data/constants';
-import { BibleReferenceSettingTab } from './src/ui/BibleReferenceSettingTab';
-import { VerseEditorSuggestor } from './src/VerseEditorSuggestor';
+import { APP_NAMING, BibleReferencePluginSettings, DEFAULT_SETTINGS } from './data/constants';
+import { BibleReferenceSettingTab } from './ui/BibleReferenceSettingTab';
+import { VerseEditorSuggestor } from './VerseEditorSuggestor';
 
 
 export default class BibleReferencePlugin extends Plugin {

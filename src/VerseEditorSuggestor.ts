@@ -1,5 +1,5 @@
 import { Editor, EditorPosition, EditorSuggest, EditorSuggestContext, EditorSuggestTriggerInfo, TFile } from 'obsidian';
-import BibleReferencePlugin from '../main';
+import BibleReferencePlugin from './main';
 import { VerseTypoCheck } from './VerseTypoCheck';
 import { VerseSuggesting } from './VerseSuggesting';
 import { BibleReferencePluginSettings } from './data/constants';

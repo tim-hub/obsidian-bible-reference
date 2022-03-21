@@ -3,6 +3,7 @@ import {
   BibleVersionAPIAdapter,
 } from './data/BibleVersionApiAdapter';
 import { BibleVersionCollection, IBibleVersion } from './data/BibleVersionCollection';
+//import { Reference} from '../biblejs-name-converter/index';
 
 export interface IVerse {
   book_id: string;
@@ -49,6 +50,7 @@ export class VerseSuggesting {
     }
     const bibleVersion = BibleVersionCollection.find((bv: IBibleVersion) => bv.key === this.bibleVersion)
     if (!this.bibleVersionApiAdapter || this.bibleVersionApiAdapter.BibleVersionKey !== bibleVersion.key) {
+      // make sure this is only 1 adapter, and it is the same bible version
       this.bibleVersionApiAdapter =  BibleVersionAPIAdapter.BuildBibleVersionAPIAdapterFromIBibleVersion(bibleVersion);
     }
     return this.bibleVersionApiAdapter.query(this.queryString);
