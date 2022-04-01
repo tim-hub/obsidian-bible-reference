@@ -8,7 +8,7 @@
 - Taking Bible Study note in Obsidian.md application easily.
 - Automatically suggesting Bible Verses as references.
 
-![obsidian bible reference demo](https://raw.githubusercontent.com/tim-hub/obsidian-bible-reference/master/demo/obsidian-bible-reference-demo.gif)
+![obsidian bible reference demo](https://raw.githubusercontent.com/tim-hub/obsidian-bible-reference/master/docs/obsidian-bible-reference-demo.gif)
 
 ## How to use
 1. Open a note in Obsidian.md application
