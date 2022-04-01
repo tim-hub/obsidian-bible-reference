@@ -51,7 +51,7 @@ export abstract class BibleProvider {
       const data = await response.json();
       return this.formatBibleVerses(data);
     } catch (e) {
-      console.error('error while querying bible-api', e);
+      console.error('error while querying', e);
       return await Promise.reject(e);
     }
   }

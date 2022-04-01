@@ -5,9 +5,9 @@ import { BibleProvider } from './BibleProvider';
 export class BibleAPIDotComProvider extends BibleProvider {
   public constructor(bibleVersion: IBibleVersion) {
     super();
-    const {key, apiUrl} = bibleVersion;
+    const {key} = bibleVersion;
     this._key = key;
-    this._apiUrl = apiUrl;
+    this._apiUrl = bibleVersion.apiSource.apiUrl;
   }
 
   /**

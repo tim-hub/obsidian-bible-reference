@@ -34,7 +34,13 @@ export class VerseSuggesting implements IVerseSuggesting {
       // make sure this is only 1 adapter, and it is the same bible version
       this.bibleProvider = BibleAPIFactory.Instance.BuildBibleVersionAPIAdapterFromIBibleVersion(bibleVersion);
     }
-    return this.bibleProvider.query(this.bookName, this.chapterNumber, [this.verseNumber, this.verseNumberEnd]);
+    return this.bibleProvider.query(
+      this.bookName,
+      this.chapterNumber,
+      this?.verseNumberEnd
+        ? [this.verseNumber, this.verseNumberEnd]
+        : [this.verseNumber]
+    );
   }
 
   public async fetchAndSetVersesText(): Promise<void> {

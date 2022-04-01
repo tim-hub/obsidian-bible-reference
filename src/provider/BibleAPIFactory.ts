@@ -1,6 +1,8 @@
 import { IBibleVersion } from '../interfaces/IBibleVersion';
 import { BibleAPIDotComProvider } from './BibleAPIDotComProvider';
 import { BibleProvider } from './BibleProvider';
+import { BibleAPISourceCollection } from '../data/BibleApiSourceCollection';
+import { BollyLifeProvider } from './BollyLifeProvider';
 
 /**
  * A factory for Bible API providers.
@@ -32,9 +34,17 @@ export class BibleAPIFactory {
    * @constructor
    */
   public BuildBibleVersionAPIAdapterFromIBibleVersion(bibleVersion: IBibleVersion): BibleProvider {
-    if (bibleVersion.apiUrl === 'https://bible-api.com') {
-      return new BibleAPIDotComProvider(bibleVersion);
+
+    switch (bibleVersion.apiSource) {
+      case BibleAPISourceCollection.bibleApi: {
+        return new BibleAPIDotComProvider(bibleVersion);
+      }
+      case BibleAPISourceCollection.bollsLife: {
+        return new BollyLifeProvider(bibleVersion);
+      }
+      default: {
+        return null;
+      }
     }
-    return null;
   }
 }
