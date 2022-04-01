@@ -1,9 +1,4 @@
-export interface IBibleVersion {
-  key: string;
-  versionName: string;
-  language: string;
-  apiUrl: string;
-}
+import { IBibleVersion } from '../interfaces/IBibleVersion';
 
 export const BibleVersionCollection: IBibleVersion[] = [
   {
