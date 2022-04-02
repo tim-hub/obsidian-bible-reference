@@ -5,7 +5,7 @@ export const BibleAPISourceCollection = {
   },
   bollsLife: {
     name: 'Bolls Life',
-    apiUrl: 'https://bolls.life',
+    apiUrl: 'https://bible-api-bff.bai.uno/bolls-life', // 'https://bolls.life',
   }
 
 }
