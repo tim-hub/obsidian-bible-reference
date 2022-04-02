@@ -44,6 +44,8 @@ This plugin Bible Verse Query Functionality is currently powered by
   - **Clementine**: Clementine Latin Vulgate
   - **Almeida**: João Ferreira de Almeida
   - **RCCV**: Romanian Corrected Cornilescu Version
+  - **NIV**: New International Version, 1984 (Bolls Life)
+  - **NKJV**: New King James Version (Bolls Life)
 - 
 
 

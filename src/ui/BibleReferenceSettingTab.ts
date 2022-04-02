@@ -57,6 +57,8 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     containerEl.empty();
     containerEl.createEl('h2', {text: 'Settings for ' + APP_NAMING.appName});
     this.SetUpVersionSettingsAndVersionOptions(containerEl);
+    containerEl.createEl('br');
+    containerEl.createEl('p', {text: 'The back-end is powered by Bible-Api.com and Bolls.life/API, at current stage the performance from Bolls.life/API might be a bit slow.'});
   }
 }
 
