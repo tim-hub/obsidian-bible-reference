@@ -45,11 +45,12 @@ export abstract class BibleProvider {
     if ((!this._key) && versionName) {
       throw new Error('version (language) not set yet');
     }
-    const url = this.buildRequestURL(bookName, chapter, verse, versionName);
+    const url = this.buildRequestURL(bookName, chapter, verse, versionName || this._key);
+    console.debug(url, 'url to query');
     try {
       const response = await fetch(url);
       const data = await response.json();
-      return this.formatBibleVerses(data);
+      return this.formatBibleVerses(data, bookName, chapter, verse, versionName || this._key);
     } catch (e) {
       console.error('error while querying', e);
       return await Promise.reject(e);
@@ -73,6 +74,10 @@ export abstract class BibleProvider {
   /**
    * Format the response from the bible api, and set the bible reference head
    * @param data
+   * @param bookName
+   * @param chapter
+   * @param verse
+   * @param versionName
    */
-  protected abstract formatBibleVerses(data: any): IVerse[];
+  protected abstract formatBibleVerses(data: any, bookName: string, chapter:number, verse: number[], versionName: string): IVerse[];
 }
