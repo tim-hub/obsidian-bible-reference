@@ -84,5 +84,23 @@ export const BibleVersionCollection: IBibleVersion[] = [
     versionName: 'New International Version, 1984',
     language: 'English',
     apiSource: BibleAPISourceCollection.bollsLife,
+  },
+  {
+    key: 'nrsvce',
+    versionName: 'New Revised Standard Version Catholic Edition (NRSVCE)',
+    language: 'English',
+    apiSource: BibleAPISourceCollection.bollsLife,
+  },
+  {
+    key: 'esv',
+    versionName: 'English Standard Version',
+    language: 'English',
+    apiSource: BibleAPISourceCollection.bollsLife,
+  },
+  {
+    key: 'cuv',
+    versionName: 'Chinese Union Version (Traditional)',
+    language: 'Chinese',
+    apiSource: BibleAPISourceCollection.bollsLife,
   }
 ];
