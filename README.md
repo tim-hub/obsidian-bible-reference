@@ -46,7 +46,9 @@ This plugin Bible Verse Query Functionality is currently powered by
   - **RCCV**: Romanian Corrected Cornilescu Version
   - **NIV**: New International Version, 1984 (Bolls Life)
   - **NKJV**: New King James Version (Bolls Life)
-- 
+  - **CUV**: China Union Version (Bolls Life)
+  - **ESV**: English Standard Version (Bolls Life)
+
 
 
 ## Contact, Discussion, and Support
