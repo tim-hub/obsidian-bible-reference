@@ -1,7 +1,8 @@
 import { App, Notice, PluginSettingTab, Setting } from 'obsidian';
 import { APP_NAMING } from '../data/constants';
-import BibleReferencePlugin from '../../main';
-import { BibleVersionCollection, IBibleVersion } from '../data/BibleVersionCollection';
+import BibleReferencePlugin from './../main';
+import { BibleVersionCollection } from '../data/BibleVersionCollection';
+import { IBibleVersion } from '../interfaces/IBibleVersion';
 
 export class BibleReferenceSettingTab extends PluginSettingTab {
   plugin: BibleReferencePlugin;
@@ -31,7 +32,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
 
   SetUpVersionSettingsAndVersionOptions = (containerEl: HTMLElement): void => {
     new Setting(containerEl)
-      .setName('Bible Version')
+      .setName('Default Bible Version')
       .setDesc('Choose the Bible Version You Prefer')
       .addDropdown(
         (dropdown) => {
@@ -42,7 +43,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
           dropdown.setValue(this.plugin.settings.bibleVersion)
             .onChange(async (value) => {
                 this.plugin.settings.bibleVersion = value;
-                console.log('Bible Version: ' + value);
+                console.debug('Default Bible Version: ' + value);
                 await this.plugin.saveSettings();
                 new Notice('Bible Reference Settings Updated ');
               }
@@ -56,6 +57,11 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     containerEl.empty();
     containerEl.createEl('h2', {text: 'Settings for ' + APP_NAMING.appName});
     this.SetUpVersionSettingsAndVersionOptions(containerEl);
+    containerEl.createEl('br');
+    containerEl.createEl('p', {text: 'The back-end is powered by Bible-Api.com and Bolls.life/API, at current stage the performance from Bolls.life/API might be a bit slow.'});
+    containerEl.createEl('br');
+    containerEl.createEl('p', {text: 'For Chinese CUV Version, at current stage, it is required to use English book name for input.'});
+
   }
 }
 
