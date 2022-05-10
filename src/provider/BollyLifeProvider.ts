@@ -29,6 +29,13 @@ export class BollyLifeProvider extends BibleProvider {
     return this._queryUrl;
   }
 
+  private formatText(text: string, verseOrderNumber: number){
+    if (verseOrderNumber > 0){
+      text = " " + text
+    }
+    return text.replace('<br/>', '\n');
+  }
+
   /**
    * Format response from Bible-Api.com
    * - reference
@@ -47,7 +54,7 @@ export class BollyLifeProvider extends BibleProvider {
     ).map(
       (verse: { text: any; chapter: any; book: any; verse: any; }) => (
         {
-          text: verse.text,
+          text: this.formatText(verse.text, verse.verse - verses[0]),
           chapter: verse.chapter,
           book_id: verse.book,
           book_name: bookName, // this might be different than user typed
