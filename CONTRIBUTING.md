@@ -5,7 +5,7 @@ The repo depends on the latest plugin API (obsidian.d.ts) in Typescript Definiti
 
 ### Development and Contribution
 - Typescript/Node Development Experience + [Obsidian Plugin Development](docs/ObsidianPluginDevelopment.md)
-- [Hot reload plugin](https://github.com/pjeby/hot-reload) (optional, but it isvery handy for development purpose)
+- [Hot reload plugin](https://github.com/pjeby/hot-reload) (optional, but it is very handy for development purpose)
 - [Obsidian Bible Reference Github Project](https://github.com/tim-hub/obsidian-bible-reference/projects/1)
   - There is lack of testing of the project, please help to improve it, if you have the willing
   
