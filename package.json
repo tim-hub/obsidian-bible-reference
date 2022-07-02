@@ -19,43 +19,42 @@
 	"license": "MIT",
 	"devDependencies": {
 		"@types/node": "^16.11.6",
-		"@typescript-eslint/eslint-plugin": "^5.2.0",
-		"@typescript-eslint/parser": "^5.2.0",
-		"builtin-modules": "^3.2.0",
-		"esbuild": "0.13.12",
-		"obsidian": "0.14.6",
-		"ts-node": "^10.4.0",
-		"tslib": "2.3.1",
-		"typescript": "4.4.4"
+		"@typescript-eslint/eslint-plugin": "5.29.0",
+		"@typescript-eslint/parser": "5.29.0",
+		"builtin-modules": "3.3.0",
+		"esbuild": "0.14.47",
+		"obsidian": "latest",
+		"tslib": "2.4.0",
+		"typescript": "4.7.4"
 	},
-	"jest": {
-		"transform": {
-			".(ts|tsx)": "ts-jest"
-		},
-		"testEnvironment": "node",
-		"testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
-		"moduleFileExtensions": [
-			"ts",
-			"tsx",
-			"js"
-		],
-		"coveragePathIgnorePatterns": [
-			"/node_modules/",
-			"/test/"
-		],
-		"coverageThreshold": {
-			"global": {
-				"branches": 60,
-				"functions": 80,
-				"lines": 80,
-				"statements": 80
-			}
-		},
-		"coverageDirectory": "./coverage/",
-		"collectCoverage": true,
-		"modulePathIgnorePatterns": [
-			"<rootDir>/build/",
-			"<rootDir>/docs/"
-		]
-	}
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "ts-jest"
+    },
+    "testEnvironment": "node",
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/test/"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 60,
+        "functions": 80,
+        "lines": 80,
+        "statements": 80
+      }
+    },
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true,
+    "modulePathIgnorePatterns": [
+      "<rootDir>/build/",
+      "<rootDir>/docs/"
+    ]
+  }
 }
