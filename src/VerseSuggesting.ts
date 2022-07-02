@@ -48,7 +48,11 @@ export class VerseSuggesting implements IVerseSuggesting {
     const verses = await this.getVerses();
     let text = '';
     verses.forEach(verse => {
-      text += verse.text;
+      if (verse.text.slice(-2) === '\n') {
+        text += verse.text;
+      } else {
+        text += verse.text + '\n';
+      }
     });
     this.text = text;
   }
