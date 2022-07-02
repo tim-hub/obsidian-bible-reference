@@ -21,7 +21,9 @@ export class VerseSuggesting implements IVerseSuggesting {
   }
 
   public get ReplacementContent(): string {
-    return `> ${this.text.trim() + '\n' + `>> ${this.getVerseReference()}`}`
+    return `> [!Bible] \n`
+      + `> ${this.text.trim()} \n`
+      + `> \n ${this.getVerseReference()}`
   }
 
   public async getVerses(): Promise<IVerse[]> {
@@ -58,6 +60,6 @@ export class VerseSuggesting implements IVerseSuggesting {
   }
 
   public getVerseReference(): string {
-    return `-- [${this.bibleProvider.BibleReferenceHead}](${this.bibleProvider.QueryURL})`;
+    return ` [${this.bibleProvider.BibleReferenceHead}](${this.bibleProvider.QueryURL})`;
   }
 }
