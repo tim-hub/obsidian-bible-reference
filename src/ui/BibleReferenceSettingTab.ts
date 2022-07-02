@@ -38,7 +38,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
         (dropdown) => {
           const allVersionOptions = this.getAllBibleVersionsWithLanguageNameAlphabetically();
           allVersionOptions.forEach((version: IBibleVersion) => {
-            dropdown.addOption(version.key, `${version.language} - ${version.versionName}`);
+            dropdown.addOption(version.key, `${version.language} - ${version.versionName} @${version.apiSource.name}`);
           });
           dropdown.setValue(this.plugin.settings.bibleVersion)
             .onChange(async (value) => {
