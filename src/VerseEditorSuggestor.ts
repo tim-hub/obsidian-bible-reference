@@ -28,7 +28,7 @@ export class VerseEditorSuggestor extends EditorSuggest<VerseSuggesting> {
     const match = VerseTypoCheck(currentContent);
     if (match) {
       console.debug('trigger on', currentContent);
-      const editorSuggestTriggerInfo:EditorSuggestTriggerInfo = {
+      return {
         end: cursor,
         start: {
           line: cursor.line,
@@ -36,7 +36,6 @@ export class VerseEditorSuggestor extends EditorSuggest<VerseSuggesting> {
         },
         query: match,
       };
-      return editorSuggestTriggerInfo;
     }
     return null;
   }
@@ -48,9 +47,14 @@ export class VerseEditorSuggestor extends EditorSuggest<VerseSuggesting> {
   async getSuggestions(context: EditorSuggestContext): Promise<VerseSuggesting[]> {
     console.debug('get suggestion for query ', context.query.toLowerCase());
 
-    const bookName = context.query.match(/[123]*[A-z]{3,}/).first();
+    const bookName = context.query.match(/[123]*[A-z]{3,}/)?.first();
 
-    const numbersPartsOfQueryString = context.query.substring(2+bookName.length);
+    if (!bookName) {
+      console.error(`could not find through query`, context.query);
+      return [];
+    }
+
+    const numbersPartsOfQueryString = context.query.substring(2 + bookName.length);
     const numbers = numbersPartsOfQueryString.split(/[-:]+/);
 
     const chapterNumber = parseInt(numbers[0]);

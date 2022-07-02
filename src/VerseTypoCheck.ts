@@ -21,5 +21,5 @@ const shortReg = /\-{2}([123])*[A-z]{3,}\d{1,3}\:\d{1,3}(\-\d{1,3})*/;
  * @constructor
  */
 export const VerseTypoCheck = (verse: string): string => {
-    return verse.match(shortReg)?.first();
+    return verse.match(shortReg)?.first() ?? '';
 }

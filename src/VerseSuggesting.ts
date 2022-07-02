@@ -32,7 +32,7 @@ export class VerseSuggesting implements IVerseSuggesting {
       console.log('match to default language plus version');
     }
     const bibleVersion = BibleVersionCollection.find((bv: IBibleVersion) => bv.key === this.bibleVersion)
-    if (!this.bibleProvider || this.bibleProvider.BibleVersionKey !== bibleVersion.key) {
+    if (!this.bibleProvider || this.bibleProvider.BibleVersionKey !== bibleVersion?.key) {
       // make sure this is only 1 adapter, and it is the same bible version
       this.bibleProvider = BibleAPIFactory.Instance.BuildBibleVersionAPIAdapterFromIBibleVersion(bibleVersion);
     }
