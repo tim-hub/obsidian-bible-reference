@@ -60,6 +60,6 @@ export class VerseSuggesting implements IVerseSuggesting {
   }
 
   public getVerseReference(): string {
-    return ` [${this.bibleProvider.BibleReferenceHead}](${this.bibleProvider.QueryURL})`;
+    return ` [${this.bibleProvider.BibleReferenceHead} - ${this.bibleVersion.toUpperCase()}](${this.bibleProvider.QueryURL})`;
   }
 }
