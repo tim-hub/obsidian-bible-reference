@@ -8,7 +8,6 @@ export const APP_NAMING = {
 }
 
 export interface BibleReferencePluginSettings {
-  // language?: string; // we might not need this todo remove it
   bibleVersion: string;
 }
 
