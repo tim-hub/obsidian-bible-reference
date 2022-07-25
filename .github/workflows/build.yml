@@ -20,5 +20,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm ci
-      - run: npm build
+      - name: run install
+        uses: pnpm/action-setup@v2.2.2
+        with:
+          version: latest
+      - run: pnpm i --frozen-lockfile
+      - run: pnpm run build
