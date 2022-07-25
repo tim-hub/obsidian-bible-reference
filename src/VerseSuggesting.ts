@@ -17,7 +17,7 @@ export class VerseSuggesting implements IVerseSuggesting {
     this.chapterNumber = chapterNumber;
     this.verseNumber = verseNumber;
     this.verseNumberEnd = verseNumberEnd;
-    this.bibleVersion = bibleVersion;
+    this.bibleVersion = bibleVersion ?? BibleVersionCollection[0].key;
   }
 
   public get ReplacementContent(): string {
@@ -31,7 +31,7 @@ export class VerseSuggesting implements IVerseSuggesting {
     if (this.bibleVersion === DEFAULT_SETTINGS.bibleVersion) {
       console.log('match to default language plus version');
     }
-    const bibleVersion = BibleVersionCollection.find((bv: IBibleVersion) => bv.key === this.bibleVersion)
+    const bibleVersion = BibleVersionCollection.find((bv: IBibleVersion) => bv.key === this.bibleVersion) ?? BibleVersionCollection[0];
     if (!this.bibleProvider || this.bibleProvider.BibleVersionKey !== bibleVersion?.key) {
       // make sure this is only 1 adapter, and it is the same bible version
       this.bibleProvider = BibleAPIFactory.Instance.BuildBibleVersionAPIAdapterFromIBibleVersion(bibleVersion);
@@ -50,16 +50,12 @@ export class VerseSuggesting implements IVerseSuggesting {
     const verses = await this.getVerses();
     let text = '';
     verses.forEach(verse => {
-      if (verse.text.slice(-2) === '\n') {
-        text += verse.text;
-      } else {
-        text += verse.text + '\n';
-      }
+      text += verse.text.replace('\n', '\n>');
     });
     this.text = text;
   }
 
   public getVerseReference(): string {
-    return ` [${this.bibleProvider.BibleReferenceHead} - ${this.bibleVersion.toUpperCase()}](${this.bibleProvider.QueryURL})`;
+    return ` [${this.bibleProvider.BibleReferenceHead} - ${this.bibleVersion.toUpperCase()}](${this.bibleProvider.QueryURL})\n\n`;
   }
 }
