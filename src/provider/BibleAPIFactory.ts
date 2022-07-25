@@ -43,7 +43,7 @@ export class BibleAPIFactory {
         return new BollyLifeProvider(bibleVersion);
       }
       default: {
-        return null;
+        return new BibleAPIDotComProvider(bibleVersion);
       }
     }
   }

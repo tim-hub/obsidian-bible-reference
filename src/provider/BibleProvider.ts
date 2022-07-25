@@ -3,8 +3,8 @@ import { IVerse } from '../interfaces/IVerse';
 export abstract class BibleProvider {
   protected _key: string; // the version selected
   protected _apiUrl: string;
-  protected _queryUrl?: string;
-  protected _bibleReferenceHead?: string;
+  protected _queryUrl: string;
+  protected _bibleReferenceHead: string;
 
   /**
    * Get the Key Identity for the Bible version
@@ -39,7 +39,7 @@ export abstract class BibleProvider {
   public async query(
     bookName: string,
     chapter: number,
-    verse?: number[],
+    verse: number[],
     versionName?: string,
   ): Promise<IVerse[]> {
     if ((!this._key) && versionName) {

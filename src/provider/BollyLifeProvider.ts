@@ -25,7 +25,7 @@ export class BollyLifeProvider extends BibleProvider {
   ): string {
     const baseUrl = this._chapterApiUrl;
     const book = Reference.bookIdFromName(bookName);
-    this._queryUrl = `${baseUrl}/${versionName.toUpperCase()}/${book}/${chapter}/`;
+    this._queryUrl = `${baseUrl}/${versionName?.toUpperCase()}/${book}/${chapter}/`;
     return this._queryUrl;
   }
 

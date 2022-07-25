@@ -20,7 +20,7 @@ export class BibleAPIDotComProvider extends BibleProvider {
   public buildRequestURL(
     bookName: string,
     chapter: number,
-    verses?: number[],
+    verses: number[],
     versionName?: string,
   ): string {
     let queryString = `${bookName}+${chapter}:`;
