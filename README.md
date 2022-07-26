@@ -1,7 +1,9 @@
 ## Obsidian Bible Reference
 [![CodeQL](https://github.com/tim-hub/obsidian-bible-reference/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/tim-hub/obsidian-bible-reference/actions/workflows/codeql-analysis.yml) [![Build](https://github.com/tim-hub/obsidian-bible-reference/actions/workflows/build.yml/badge.svg)](https://github.com/tim-hub/obsidian-bible-reference/actions/workflows/build.yml)
 
-> 👉 `Star` the Project or Provide Feedback in [`Discussion`](https://github.com/tim-hub/obsidian-bible-reference/discussions), that will be very appreciate for the project development. 👍
+> 👉 `Star` the Project | Provide Feedback in [`Discussion`](https://github.com/tim-hub/obsidian-bible-reference/discussions) or on [Twitter](https://twitter.com/TechTim42) 
+>
+> This will be very appreciate for the project development. 👍
 
 
 
