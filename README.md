@@ -1,14 +1,18 @@
 ## Obsidian Bible Reference
 [![CodeQL](https://github.com/tim-hub/obsidian-bible-reference/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/tim-hub/obsidian-bible-reference/actions/workflows/codeql-analysis.yml) [![Build](https://github.com/tim-hub/obsidian-bible-reference/actions/workflows/build.yml/badge.svg)](https://github.com/tim-hub/obsidian-bible-reference/actions/workflows/build.yml)
 
-> 👉 `Star` the Project | Provide Feedback in [`Discussion`](https://github.com/tim-hub/obsidian-bible-reference/discussions) or on [Twitter](https://twitter.com/TechTim42) 
->
-> This will be very appreciate for the project development. 👍
+> These will be very appreciate for the project development. 👍
+> - 👉 `Star` the Project 
+> - ☕️ **Buy me a coffee** @[Github Sponsor](https://github.com/sponsors/tim-hub)
+> - ❤️ Provide Feedback in [`Discussion`](https://github.com/tim-hub/obsidian-bible-reference/discussions) or on [`Twitter`](https://twitter.com/TechTim42) 
 
+---
 
+## About
 
 - Taking Bible Study note in Obsidian.md application easily.
 - Automatically suggesting Bible Verses as references.
+
 
 ![obsidian bible reference demo](https://raw.githubusercontent.com/tim-hub/obsidian-bible-reference/master/docs/obsidian-bible-reference-demo.gif)
 
