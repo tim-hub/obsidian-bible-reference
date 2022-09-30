@@ -62,9 +62,9 @@ export class VerseEditorSuggestor extends EditorSuggest<VerseSuggesting> {
     const verseEndNumber = numbers.length === 3 ? parseInt(numbers[2]) : undefined;
 
     // todo get bibleVersion and language from settings
-    const suggestingVerse = new VerseSuggesting(bookName, chapterNumber, verseNumber, verseEndNumber, this.settings.bibleVersion);
+    const suggestingVerse = new VerseSuggesting(this.settings, bookName, chapterNumber, verseNumber, verseEndNumber);
 
-    console.debug(bookName, chapterNumber, verseNumber, verseEndNumber, suggestingVerse, this.settings.bibleVersion);
+    console.debug(bookName, chapterNumber, verseNumber, verseEndNumber, suggestingVerse, this.settings);
     await suggestingVerse.fetchAndSetVersesText();
     return [suggestingVerse];
   }
