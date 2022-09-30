@@ -15,6 +15,7 @@
 
 
 ![obsidian bible reference demo](https://raw.githubusercontent.com/tim-hub/obsidian-bible-reference/master/docs/obsidian-bible-reference-demo.gif)
+![obsidian bible reference settings](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/dg5ny2j6smml55q39trl.png)
 
 ## How to use
 1. Open a note in Obsidian.md application
