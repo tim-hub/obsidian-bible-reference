@@ -60,7 +60,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     containerEl.createEl('br');
     containerEl.createEl('p', {text: 'The back-end is powered by Bible-Api.com and Bolls.life/API, at current stage the performance from Bolls.life/API might be a bit slow.'});
     containerEl.createEl('br');
-    containerEl.createEl('p', {text: 'For Chinese CUV Version, at current stage, it is required to use English book name for input.'});
+    containerEl.createEl('p', {text: 'For Non-English Bible Versions, at current stage, it is required to use English book name for input.'});
 
   }
 }
