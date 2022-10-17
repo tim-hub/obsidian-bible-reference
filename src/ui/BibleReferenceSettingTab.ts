@@ -90,7 +90,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
               this.plugin.settings.verseFormatting = value as BibleVerseFormat;
               console.debug('Bible Verse Format: ' + value);
               await this.plugin.saveSettings();
-              new Notice('Bible Verse Format Settings Updated ');
+              new Notice('Bible Verse Format Settings Updated');
             }
           )
         }
@@ -111,7 +111,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
               this.plugin.settings.verseNumberFormatting = value as BibleVerseNumberFormat;
               console.debug('Bible Verse Number Format: ' + value);
               await this.plugin.saveSettings();
-              new Notice('Bible Verse Format Number Settings Updated ');
+              new Notice('Bible Verse Format Number Settings Updated');
             }
           )
         }

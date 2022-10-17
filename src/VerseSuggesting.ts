@@ -6,10 +6,13 @@ import { IVerse } from './interfaces/IVerse';
 import { BibleAPIFactory } from './provider/BibleAPIFactory';
 import { BibleProvider } from './provider/BibleProvider';
 import { BibleVerseReferenceLinkPosition } from './data/BibleVerseReferenceLinkPosition';
+import { BibleVerseNumberFormat } from './data/BibleVerseNumberFormat';
+import { BibleVerseFormat } from './data/BibleVerseFormat';
 
 
 export class VerseSuggesting implements IVerseSuggesting {
   public text: string;
+  public verses: string;
   public bibleVersion: string;
   private bibleProvider: BibleProvider;
 
@@ -28,15 +31,15 @@ export class VerseSuggesting implements IVerseSuggesting {
   public get ReplacementContent(): string {
     let head = `> [!Bible] `;
     let bottom = '';
-    if (this.settings.referenceLinkPosition === BibleVerseReferenceLinkPosition.Header || this.settings.referenceLinkPosition ===  BibleVerseReferenceLinkPosition.AllAbove ) {
+    if (this.settings.referenceLinkPosition === BibleVerseReferenceLinkPosition.Header || this.settings.referenceLinkPosition === BibleVerseReferenceLinkPosition.AllAbove) {
       head += this.getVerseReference();
     }
-    if (this.settings.referenceLinkPosition === BibleVerseReferenceLinkPosition.Bottom || this.settings.referenceLinkPosition ===  BibleVerseReferenceLinkPosition.AllAbove) {
+    if (this.settings.referenceLinkPosition === BibleVerseReferenceLinkPosition.Bottom || this.settings.referenceLinkPosition === BibleVerseReferenceLinkPosition.AllAbove) {
       bottom += `> \n ${this.getVerseReference()}`
     }
     return [
       head,
-      `> ${this.text.trim()}`,
+      this.text,
       bottom
     ].join('\n')
   }
@@ -64,10 +67,43 @@ export class VerseSuggesting implements IVerseSuggesting {
     // todo add a caching here, this might not be possible with Obsidian limit
     const verses = await this.getVerses();
     let text = '';
+
+    if (this.settings.verseFormatting === BibleVerseFormat.Paragraph) {
+      text = '> ';
+    } else {
+      text = '';
+    }
     verses.forEach(verse => {
-      text += verse.text.replace('\n', '\n>');
+
+      let verseNumberFormatted
+      switch (this.settings.verseNumberFormatting) {
+        case BibleVerseNumberFormat.Period:
+          verseNumberFormatted = " " + verse.verse + ". "
+          break;
+        case BibleVerseNumberFormat.PeriodParenthesis:
+          verseNumberFormatted = " " + verse.verse + ".) "
+          break;
+        case BibleVerseNumberFormat.Parenthesis:
+          verseNumberFormatted = " " + verse.verse + ") "
+          break;
+        case BibleVerseNumberFormat.Dash:
+          verseNumberFormatted = " " + verse.verse + " - "
+          break;
+        case BibleVerseNumberFormat.None:
+          verseNumberFormatted = " "
+          break;
+
+        default:
+          verseNumberFormatted = verse.verse + ". "
+          break;
+      }
+      if (this.settings.verseFormatting === BibleVerseFormat.Paragraph) {
+        text += verseNumberFormatted + verse.text.trim().replaceAll('\n', ' ');
+      } else {
+        text += "> " + verseNumberFormatted + verse.text.trim() + "\n";
+      }
     });
-    this.text = text;
+    this.text = text.trim();
   }
 
   public getVerseReference(): string {

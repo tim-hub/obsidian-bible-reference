@@ -9,7 +9,7 @@ export class BollyLifeProvider extends BibleProvider {
 
   public constructor(bibleVersion: IBibleVersion) {
     super();
-    const {key} = bibleVersion;
+    const { key } = bibleVersion;
     this._key = key;
     this._apiUrl = bibleVersion.apiSource.apiUrl;
     //this._verseApiUrl = `${this._apiUrl}/get-paralel-verses/`;
