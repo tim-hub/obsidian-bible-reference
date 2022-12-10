@@ -26,8 +26,13 @@ export class VerseSuggesting implements IVerseSuggesting {
    * @constructor
    */
   public get ReplacementContent(): string {
-    let head = `> [!Bible] `;
+    let head = `> [!Bible]`;
     let bottom = '';
+    if (this.settings.collapsibleVerses==true){
+      head += '-';
+    }   
+    head += ' ';
+    
     if (this.settings.referenceLinkPosition === BibleVerseReferenceLinkPosition.Header || this.settings.referenceLinkPosition ===  BibleVerseReferenceLinkPosition.AllAbove ) {
       head += this.getVerseReference();
     }
