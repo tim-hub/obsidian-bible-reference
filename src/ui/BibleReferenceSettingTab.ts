@@ -1,4 +1,4 @@
-import { App, DropdownComponent, Notice, PluginSettingTab, Setting } from 'obsidian';
+import { App, DropdownComponent, Notice, PluginSettingTab, Setting, ToggleComponent } from 'obsidian';
 import { APP_NAMING } from '../data/constants';
 import BibleReferencePlugin from './../main';
 import { BibleVersionCollection } from '../data/BibleVersionCollection';
@@ -74,12 +74,24 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
       )
   }
 
+  SetUpTextoptions = (containerEl: HTMLElement): void => {
+    new Setting(containerEl)
+      .setName('Make Verses Collapsible')
+      .setDesc('Make the inserted verses collapsible')
+      .addToggle(toggle => toggle.setValue(this.plugin.settings.collapsibleVerses)
+      .onChange((value) => {
+        this.plugin.settings.collapsibleVerses = value;
+        this.plugin.saveData(this.plugin.settings);
+      }));
+  }
+
   display(): void {
     let {containerEl} = this;
     containerEl.empty();
     containerEl.createEl('h2', {text: 'Settings for ' + APP_NAMING.appName});
     this.SetUpVersionSettingsAndVersionOptions(containerEl);
     this.SetUpReferenceLinkPositionOptions(containerEl);
+    this.SetUpTextoptions(containerEl);
     containerEl.createEl('br');
     containerEl.createEl('p', {text: 'The back-end is powered by Bible-Api.com and Bolls.life/API, at current stage the performance from Bolls.life/API might be a bit slow.'});
     containerEl.createEl('br');
