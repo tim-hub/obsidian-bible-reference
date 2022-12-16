@@ -66,6 +66,30 @@ export class VerseSuggesting implements IVerseSuggesting {
     );
   }
 
+  private formatVerseNumber(verseNumber: number|string) {
+    let verseNumberFormatted = '';
+    switch (this.settings.verseNumberFormatting) {
+      case BibleVerseNumberFormat.Period:
+        verseNumberFormatted +=  verseNumber + ". "
+        return verseNumberFormatted;
+      case BibleVerseNumberFormat.PeriodParenthesis:
+        verseNumberFormatted +=  verseNumber + ".) "
+        return verseNumberFormatted;
+      case BibleVerseNumberFormat.Parenthesis:
+        verseNumberFormatted +=  verseNumber + ") "
+        return verseNumberFormatted;
+      case BibleVerseNumberFormat.Dash:
+        verseNumberFormatted +=  verseNumber + " - "
+        return verseNumberFormatted;
+      case BibleVerseNumberFormat.None:
+        verseNumberFormatted = " "
+        return verseNumberFormatted;
+      default:
+        verseNumberFormatted += verseNumber + ". "
+        return verseNumberFormatted;
+    }
+  }
+
   public async fetchAndSetVersesText(): Promise<void> {
     // todo add a caching here, this might not be possible with Obsidian limit
     const verses = await this.getVerses();
@@ -78,28 +102,7 @@ export class VerseSuggesting implements IVerseSuggesting {
     }
     verses.forEach(verse => {
 
-      let verseNumberFormatted
-      switch (this.settings.verseNumberFormatting) {
-        case BibleVerseNumberFormat.Period:
-          verseNumberFormatted = " " + verse.verse + ". "
-          break;
-        case BibleVerseNumberFormat.PeriodParenthesis:
-          verseNumberFormatted = " " + verse.verse + ".) "
-          break;
-        case BibleVerseNumberFormat.Parenthesis:
-          verseNumberFormatted = " " + verse.verse + ") "
-          break;
-        case BibleVerseNumberFormat.Dash:
-          verseNumberFormatted = " " + verse.verse + " - "
-          break;
-        case BibleVerseNumberFormat.None:
-          verseNumberFormatted = " "
-          break;
-
-        default:
-          verseNumberFormatted = verse.verse + ". "
-          break;
-      }
+      let verseNumberFormatted = this.formatVerseNumber(verse.verse);
       if (this.settings.verseFormatting === BibleVerseFormat.Paragraph) {
         text += verseNumberFormatted + verse.text.trim().replaceAll('\n', ' ');
       } else {
