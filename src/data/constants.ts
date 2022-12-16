@@ -11,9 +11,11 @@ export const APP_NAMING = {
 export interface BibleReferencePluginSettings {
   bibleVersion: string;
   referenceLinkPosition?: BibleVerseReferenceLinkPosition;
+  collapsibleVerses?: boolean;
 }
 
 export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
   bibleVersion: BibleVersionCollection[0].key,
   referenceLinkPosition: BibleVerseReferenceLinkPosition.Header,
+  collapsibleVerses: false,
 }

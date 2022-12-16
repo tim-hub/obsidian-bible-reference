@@ -78,7 +78,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     new Setting(containerEl)
       .setName('Make Verses Collapsible')
       .setDesc('Make the inserted verses collapsible')
-      .addToggle(toggle => toggle.setValue(this.plugin.settings.collapsibleVerses)
+      .addToggle(toggle => toggle.setValue(!!this.plugin.settings?.collapsibleVerses)
       .onChange((value) => {
         this.plugin.settings.collapsibleVerses = value;
         this.plugin.saveData(this.plugin.settings);
