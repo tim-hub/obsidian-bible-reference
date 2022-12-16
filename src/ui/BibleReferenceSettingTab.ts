@@ -4,6 +4,8 @@ import BibleReferencePlugin from './../main';
 import { BibleVersionCollection } from '../data/BibleVersionCollection';
 import { IBibleVersion } from '../interfaces/IBibleVersion';
 import { BibleVerseReferenceLinkPosition, BibleVerseReferenceLinkPositionCollection } from '../data/BibleVerseReferenceLinkPosition';
+import { BibleVerseFormat, BibleVerseFormatCollection } from '../data/BibleVerseFormat';
+import { BibleVerseNumberFormat, BibleVerseNumberFormatCollection } from '../data/BibleVerseNumberFormat';
 
 export class BibleReferenceSettingTab extends PluginSettingTab {
   plugin: BibleReferencePlugin;
@@ -16,14 +18,14 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
   getAllBibleVersionsWithLanguageNameAlphabetically = (): IBibleVersion[] => {
     return this.getAllBibleVersionsWithLanguageName()
       .sort((a, b) => {
-          // sort by language and versionName alphabetically
-          const languageCompare = a.language.localeCompare(b.language);
-          if (languageCompare === 0) {
-            return a.versionName.localeCompare(b.versionName);
-          } else {
-            return languageCompare;
-          }
+        // sort by language and versionName alphabetically
+        const languageCompare = a.language.localeCompare(b.language);
+        if (languageCompare === 0) {
+          return a.versionName.localeCompare(b.versionName);
+        } else {
+          return languageCompare;
         }
+      }
       );
   }
 
@@ -43,11 +45,11 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
           });
           dropdown.setValue(this.plugin.settings.bibleVersion)
             .onChange(async (value) => {
-                this.plugin.settings.bibleVersion = value;
-                console.debug('Default Bible Version: ' + value);
-                await this.plugin.saveSettings();
-                new Notice('Bible Reference Settings Updated ');
-              }
+              this.plugin.settings.bibleVersion = value;
+              console.debug('Default Bible Version: ' + value);
+              await this.plugin.saveSettings();
+              new Notice('Bible Reference Settings Updated ');
+            }
             );
         }
       );
@@ -59,7 +61,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
       .setDesc('Where to put the bible verse reference link of the bible')
       .addDropdown(
         (dropdown: DropdownComponent) => {
-          BibleVerseReferenceLinkPositionCollection.forEach(({name, description}) => {
+          BibleVerseReferenceLinkPositionCollection.forEach(({ name, description }) => {
             dropdown.addOption(name, description);
           });
           dropdown.setValue(this.plugin.settings.referenceLinkPosition ?? BibleVerseReferenceLinkPosition.Bottom).onChange(
@@ -74,7 +76,49 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
       )
   }
 
-  SetUpTextoptions = (containerEl: HTMLElement): void => {
+  SetUpVerseFormatOptions = (containerEl: HTMLElement): void => {
+    new Setting(containerEl)
+      .setName('Verse Formatting Options')
+      .setDesc('Sets how to format the verses in Obsidian, either line by line or in 1 paragraph')
+      .addDropdown(
+        (dropdown: DropdownComponent) => {
+          BibleVerseFormatCollection.forEach(({ name, description }) => {
+            dropdown.addOption(name, description);
+          });
+          dropdown.setValue(this.plugin.settings.verseFormatting ?? BibleVerseFormat.SingleLine).onChange(
+            async (value) => {
+              this.plugin.settings.verseFormatting = value as BibleVerseFormat;
+              console.debug('Bible Verse Format To: ' + value);
+              await this.plugin.saveSettings();
+              new Notice('Bible Verse Format Settings Updated');
+            }
+          )
+        }
+      )
+  }
+
+  SetUpVerseNumberFormatOptions = (containerEl: HTMLElement): void => {
+    new Setting(containerEl)
+      .setName('Verse Number Formatting Options')
+      .setDesc('Sets how to format the verse numbers in Obsidian')
+      .addDropdown(
+        (dropdown: DropdownComponent) => {
+          BibleVerseNumberFormatCollection.forEach(({ name, description }) => {
+            dropdown.addOption(name, description);
+          });
+          dropdown.setValue(this.plugin.settings.verseNumberFormatting ?? BibleVerseNumberFormat.Period).onChange(
+            async (value) => {
+              this.plugin.settings.verseNumberFormatting = value as BibleVerseNumberFormat;
+              console.debug('Bible Verse Number Format To: ' + value);
+              await this.plugin.saveSettings();
+              new Notice('Bible Verse Format Number Settings Updated');
+            }
+          )
+        }
+      )
+  }
+
+  SetUpTextOptions = (containerEl: HTMLElement): void => {
     new Setting(containerEl)
       .setName('Make Verses Collapsible')
       .setDesc('Make the inserted verses collapsible')
@@ -86,16 +130,18 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
   }
 
   display(): void {
-    let {containerEl} = this;
+    let { containerEl } = this;
     containerEl.empty();
-    containerEl.createEl('h2', {text: 'Settings for ' + APP_NAMING.appName});
+    containerEl.createEl('h2', { text: 'Settings for ' + APP_NAMING.appName });
     this.SetUpVersionSettingsAndVersionOptions(containerEl);
     this.SetUpReferenceLinkPositionOptions(containerEl);
-    this.SetUpTextoptions(containerEl);
+    this.SetUpVerseFormatOptions(containerEl);
+    this.SetUpVerseNumberFormatOptions(containerEl);
+    this.SetUpTextOptions(containerEl);
     containerEl.createEl('br');
-    containerEl.createEl('p', {text: 'The back-end is powered by Bible-Api.com and Bolls.life/API, at current stage the performance from Bolls.life/API might be a bit slow.'});
+    containerEl.createEl('p', { text: 'The back-end is powered by Bible-Api.com and Bolls.life/API, at current stage the performance from Bolls.life/API might be a bit slow.' });
     containerEl.createEl('br');
-    containerEl.createEl('p', {text: 'For Non-English Bible Versions, at current stage, it is required to use English book name for input.'});
+    containerEl.createEl('p', { text: 'For Non-English Bible Versions, at current stage, it is required to use English book name for input.' });
 
   }
 }
