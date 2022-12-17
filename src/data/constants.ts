@@ -15,6 +15,7 @@ export interface BibleReferencePluginSettings {
   referenceLinkPosition?: BibleVerseReferenceLinkPosition;
   verseFormatting?: BibleVerseFormat;
   verseNumberFormatting?: BibleVerseNumberFormat;
+  collapsibleVerses?: boolean;
 }
 
 export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
@@ -22,4 +23,5 @@ export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
   referenceLinkPosition: BibleVerseReferenceLinkPosition.Header,
   verseFormatting: BibleVerseFormat.SingleLine,
   verseNumberFormatting: BibleVerseNumberFormat.Period,
+  collapsibleVerses: false,
 }

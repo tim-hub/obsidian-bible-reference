@@ -18,7 +18,7 @@ export const BibleVerseNumberFormatCollection = [
   {
     name: BibleVerseNumberFormat.Parenthesis,
     description: '1) '
-  }, ,
+  },
   {
     name: BibleVerseNumberFormat.Dash,
     description: '1 - '

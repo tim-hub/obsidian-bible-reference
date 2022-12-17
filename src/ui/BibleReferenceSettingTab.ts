@@ -1,4 +1,4 @@
-import { App, DropdownComponent, Notice, PluginSettingTab, Setting } from 'obsidian';
+import { App, DropdownComponent, Notice, PluginSettingTab, Setting, ToggleComponent } from 'obsidian';
 import { APP_NAMING } from '../data/constants';
 import BibleReferencePlugin from './../main';
 import { BibleVersionCollection } from '../data/BibleVersionCollection';
@@ -79,7 +79,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
   SetUpVerseFormatOptions = (containerEl: HTMLElement): void => {
     new Setting(containerEl)
       .setName('Verse Formatting Options')
-      .setDesc('Sets how to format the verses in Obsidian')
+      .setDesc('Sets how to format the verses in Obsidian, either line by line or in 1 paragraph')
       .addDropdown(
         (dropdown: DropdownComponent) => {
           BibleVerseFormatCollection.forEach(({ name, description }) => {
@@ -88,7 +88,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
           dropdown.setValue(this.plugin.settings.verseFormatting ?? BibleVerseFormat.SingleLine).onChange(
             async (value) => {
               this.plugin.settings.verseFormatting = value as BibleVerseFormat;
-              console.debug('Bible Verse Format: ' + value);
+              console.debug('Bible Verse Format To: ' + value);
               await this.plugin.saveSettings();
               new Notice('Bible Verse Format Settings Updated');
             }
@@ -109,13 +109,24 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
           dropdown.setValue(this.plugin.settings.verseNumberFormatting ?? BibleVerseNumberFormat.Period).onChange(
             async (value) => {
               this.plugin.settings.verseNumberFormatting = value as BibleVerseNumberFormat;
-              console.debug('Bible Verse Number Format: ' + value);
+              console.debug('Bible Verse Number Format To: ' + value);
               await this.plugin.saveSettings();
               new Notice('Bible Verse Format Number Settings Updated');
             }
           )
         }
       )
+  }
+
+  SetUpTextOptions = (containerEl: HTMLElement): void => {
+    new Setting(containerEl)
+      .setName('Make Verses Collapsible')
+      .setDesc('Make the inserted verses collapsible')
+      .addToggle(toggle => toggle.setValue(!!this.plugin.settings?.collapsibleVerses)
+      .onChange((value) => {
+        this.plugin.settings.collapsibleVerses = value;
+        this.plugin.saveData(this.plugin.settings);
+      }));
   }
 
   display(): void {
@@ -126,6 +137,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     this.SetUpReferenceLinkPositionOptions(containerEl);
     this.SetUpVerseFormatOptions(containerEl);
     this.SetUpVerseNumberFormatOptions(containerEl);
+    this.SetUpTextOptions(containerEl);
     containerEl.createEl('br');
     containerEl.createEl('p', { text: 'The back-end is powered by Bible-Api.com and Bolls.life/API, at current stage the performance from Bolls.life/API might be a bit slow.' });
     containerEl.createEl('br');
