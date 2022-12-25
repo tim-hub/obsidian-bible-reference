@@ -102,5 +102,11 @@ export const BibleVersionCollection: IBibleVersion[] = [
     versionName: 'Chinese Union Version (Traditional)',
     language: 'Chinese',
     apiSource: BibleAPISourceCollection.bollsLife,
-  }
+  },
+  {
+    key: "svd",
+    versionName: "Smith and Van Dyke",
+    language: "Arabic العربية",
+    apiSource: BibleAPISourceCollection.bollsLife,
+  },
 ];
