@@ -24,6 +24,7 @@ export class VerseSuggesting implements IVerseSuggesting {
     this.bibleVersion = settings.bibleVersion;
   }
 
+
   /**
    * To get the content of the bible verses
    * @constructor
@@ -116,6 +117,10 @@ export class VerseSuggesting implements IVerseSuggesting {
   }
 
   public getVerseReference(): string {
-    return ` [${this.bibleProvider.BibleReferenceHead} - ${this.bibleVersion.toUpperCase()}](${this.bibleProvider.QueryURL})`;
+    return ` [${this.titleCase(this.bibleProvider.BibleReferenceHead)} - ${this.bibleVersion.toUpperCase()}](${this.bibleProvider.QueryURL})`;
+  }
+
+  private titleCase(text: string) {
+    return text.replace(/\w\S*/g, function (text) { return text.charAt(0).toUpperCase() + text.substr(1).toLowerCase(); });
   }
 }
