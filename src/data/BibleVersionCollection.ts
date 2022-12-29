@@ -1,5 +1,5 @@
 import { IBibleVersion } from '../interfaces/IBibleVersion';
-import { BibleAPISourceCollection} from './BibleApiSourceCollection';
+import { BibleAPISourceCollection } from './BibleApiSourceCollection';
 
 export const BibleVersionCollection: IBibleVersion[] = [
   {
@@ -86,6 +86,12 @@ export const BibleVersionCollection: IBibleVersion[] = [
     apiSource: BibleAPISourceCollection.bollsLife,
   },
   {
+    key: 'nlt',
+    versionName: 'New Living Translation, 2015',
+    language: 'English',
+    apiSource: BibleAPISourceCollection.bollsLife,
+  },
+  {
     key: 'nrsvce',
     versionName: 'New Revised Standard Version Catholic Edition (NRSVCE)',
     language: 'English',
@@ -101,6 +107,18 @@ export const BibleVersionCollection: IBibleVersion[] = [
     key: 'cuv',
     versionName: 'Chinese Union Version (Traditional)',
     language: 'Chinese',
+    apiSource: BibleAPISourceCollection.bollsLife,
+  },
+  {
+    key: 'ubio',
+    versionName: 'Біблія, Іван Іванович Огієнко 1962',
+    language: 'Українська Ukrainian',
+    apiSource: BibleAPISourceCollection.bollsLife,
+  },
+  {
+    key: 'PHIL',
+    versionName: 'Бiблiя. Переклад Патріарха ФІЛАРЕТА (Денисенка), 2004',
+    language: 'Українська Ukrainian',
     apiSource: BibleAPISourceCollection.bollsLife,
   }
 ];
