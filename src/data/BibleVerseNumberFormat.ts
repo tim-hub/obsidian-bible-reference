@@ -3,7 +3,7 @@ export enum BibleVerseNumberFormat {
   PeriodParenthesis = '1.) ',
   Parenthesis = '1) ',
   Dash = '1 - ',
-  NumberOnly = '1 - ',
+  NumberOnly = '1 ',
   None = 'None'
 }
 
