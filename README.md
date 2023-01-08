@@ -78,3 +78,4 @@ This plugin Bible Verse Query Functionality is currently powered by
 |:---------------:|------------------------------------------------------------------| 
 |      @kmf       | Add UK Bible Version                                             |
 |  @SamejSpenser  | For the new Bible Icon style and Bible Verse Reference Link Help |
+|  @JPT62089   | For helping improve the formatting and styling |
