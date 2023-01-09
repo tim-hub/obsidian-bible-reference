@@ -24,6 +24,7 @@ export class VerseSuggesting implements IVerseSuggesting {
     this.bibleVersion = settings.bibleVersion;
   }
 
+
   /**
    * To get the content of the bible verses
    * @constructor
@@ -31,7 +32,7 @@ export class VerseSuggesting implements IVerseSuggesting {
   public get ReplacementContent(): string {
     let head = `> [!Bible]`;
     let bottom = '';
-    if (this.settings?.collapsibleVerses){
+    if (this.settings?.collapsibleVerses) {
       head += '-';
     }
     if (this.settings.referenceLinkPosition === BibleVerseReferenceLinkPosition.Header || this.settings.referenceLinkPosition === BibleVerseReferenceLinkPosition.AllAbove) {
@@ -66,20 +67,23 @@ export class VerseSuggesting implements IVerseSuggesting {
     );
   }
 
-  private formatVerseNumber(verseNumber: number|string) {
+  private formatVerseNumber(verseNumber: number | string) {
     let verseNumberFormatted = '';
     switch (this.settings.verseNumberFormatting) {
       case BibleVerseNumberFormat.Period:
-        verseNumberFormatted +=  verseNumber + ". "
+        verseNumberFormatted += verseNumber + ". "
         return verseNumberFormatted;
       case BibleVerseNumberFormat.PeriodParenthesis:
-        verseNumberFormatted +=  verseNumber + ".) "
+        verseNumberFormatted += verseNumber + ".) "
         return verseNumberFormatted;
       case BibleVerseNumberFormat.Parenthesis:
-        verseNumberFormatted +=  verseNumber + ") "
+        verseNumberFormatted += verseNumber + ") "
         return verseNumberFormatted;
       case BibleVerseNumberFormat.Dash:
-        verseNumberFormatted +=  verseNumber + " - "
+        verseNumberFormatted += verseNumber + " - "
+        return verseNumberFormatted;
+      case BibleVerseNumberFormat.NumberOnly:
+        verseNumberFormatted += verseNumber + " "
         return verseNumberFormatted;
       case BibleVerseNumberFormat.None:
         verseNumberFormatted = " "
@@ -104,7 +108,7 @@ export class VerseSuggesting implements IVerseSuggesting {
 
       let verseNumberFormatted = this.formatVerseNumber(verse.verse);
       if (this.settings.verseFormatting === BibleVerseFormat.Paragraph) {
-        text += verseNumberFormatted + verse.text.trim().replaceAll('\n', ' ');
+        text += " " + verseNumberFormatted + verse.text.trim().replaceAll('\n', ' ');
       } else {
         text += "> " + verseNumberFormatted + verse.text.trim() + "\n";
       }
@@ -113,6 +117,10 @@ export class VerseSuggesting implements IVerseSuggesting {
   }
 
   public getVerseReference(): string {
-    return ` [${this.bibleProvider.BibleReferenceHead} - ${this.bibleVersion.toUpperCase()}](${this.bibleProvider.QueryURL})`;
+    return ` [${this.titleCase(this.bibleProvider.BibleReferenceHead)} - ${this.bibleVersion.toUpperCase()}](${this.bibleProvider.QueryURL})`;
+  }
+
+  private titleCase(text: string) {
+    return text.replace(/\w\S*/g, function (text) { return text.charAt(0).toUpperCase() + text.substr(1).toLowerCase(); });
   }
 }
