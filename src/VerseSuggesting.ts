@@ -107,7 +107,7 @@ export class VerseSuggesting implements IVerseSuggesting {
 
       let verseNumberFormatted = this.formatVerseNumber(verse.verse);
       if (this.settings.verseFormatting === BibleVerseFormat.Paragraph) {
-        text += verseNumberFormatted + verse.text.trim().replaceAll('\n', ' ');
+        text += " " + verseNumberFormatted + verse.text.trim().replaceAll('\n', ' ');
       } else {
         text += "> " + verseNumberFormatted + verse.text.trim() + "\n";
       }
