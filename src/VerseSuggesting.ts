@@ -31,7 +31,7 @@ export class VerseSuggesting implements IVerseSuggesting {
   public get ReplacementContent(): string {
     let head = `> [!Bible]`;
     let bottom = '';
-    if (this.settings?.collapsibleVerses){
+    if (this.settings?.collapsibleVerses) {
       head += '-';
     }
     if (this.settings.referenceLinkPosition === BibleVerseReferenceLinkPosition.Header || this.settings.referenceLinkPosition === BibleVerseReferenceLinkPosition.AllAbove) {
@@ -66,20 +66,20 @@ export class VerseSuggesting implements IVerseSuggesting {
     );
   }
 
-  private formatVerseNumber(verseNumber: number|string) {
+  private formatVerseNumber(verseNumber: number | string) {
     let verseNumberFormatted = '';
     switch (this.settings.verseNumberFormatting) {
       case BibleVerseNumberFormat.Period:
-        verseNumberFormatted +=  verseNumber + ". "
+        verseNumberFormatted += verseNumber + ". "
         return verseNumberFormatted;
       case BibleVerseNumberFormat.PeriodParenthesis:
-        verseNumberFormatted +=  verseNumber + ".) "
+        verseNumberFormatted += verseNumber + ".) "
         return verseNumberFormatted;
       case BibleVerseNumberFormat.Parenthesis:
-        verseNumberFormatted +=  verseNumber + ") "
+        verseNumberFormatted += verseNumber + ") "
         return verseNumberFormatted;
       case BibleVerseNumberFormat.Dash:
-        verseNumberFormatted +=  verseNumber + " - "
+        verseNumberFormatted += verseNumber + " - "
         return verseNumberFormatted;
       case BibleVerseNumberFormat.None:
         verseNumberFormatted = " "
