@@ -81,6 +81,12 @@ export class VerseSuggesting implements IVerseSuggesting {
       case BibleVerseNumberFormat.Dash:
         verseNumberFormatted +=  verseNumber + " - "
         return verseNumberFormatted;
+      case BibleVerseNumberFormat.SuperScript:
+        verseNumberFormatted += "<sup>" + verseNumber + "</sup>"
+        return verseNumberFormatted;
+      case BibleVerseNumberFormat.SuperScriptBold:
+        verseNumberFormatted += "<sup>**" + verseNumber + "**</sup>"
+        return verseNumberFormatted;
       case BibleVerseNumberFormat.None:
         verseNumberFormatted = " "
         return verseNumberFormatted;
