@@ -6,9 +6,6 @@ on:
     tags:
       - "*"
 
-env:
-  PLUGIN_NAME: obsidian-bible-reference
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -34,11 +31,6 @@ jobs:
         run: |
           pnpm install
           pnpm run build
-          mkdir ${{ env.PLUGIN_NAME }}
-          cp ./main.js ${{ env.PLUGIN_NAME }}/main.js
-          cp ./styles.css ${{ env.PLUGIN_NAME }}/styles.css
-          cp ./manifest.json ${{ env.PLUGIN_NAME }}/manifest.json
-          zip -r ${{ env.PLUGIN_NAME }}.zip ${{ env.PLUGIN_NAME }}
           ls
           echo "::set-output name=tag_name::$(git tag --sort version:refname | tail -n 1)"
       - name: Create Release
@@ -52,17 +44,6 @@ jobs:
           release_name: ${{ github.ref }}
           draft: false
           prerelease: false
-
-      - name: Upload zip file
-        id: upload-zip
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./${{ env.PLUGIN_NAME }}.zip
-          asset_name: ${{ env.PLUGIN_NAME }}-${{ steps.build.outputs.tag_name }}.zip
-          asset_content_type: application/zip
 
       - name: Upload main.js
         id: upload-main
