@@ -7,8 +7,8 @@ on:
       - "*"
 
 env:
-  NAME: release
-  RELEASE_FOLDER: ./dist
+  PLUGIN_NAME: obsidian-bible-reference
+  DIST_FOLDER: ./dist
 
 jobs:
   build:
