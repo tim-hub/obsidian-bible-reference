@@ -3,6 +3,7 @@ export enum BibleVerseNumberFormat {
   PeriodParenthesis = '1.) ',
   Parenthesis = '1) ',
   Dash = '1 - ',
+  NumberOnly = '1 ',
   SuperScript = '^1',
   SuperScriptBold = '**^1**',
   None = 'None'
@@ -24,6 +25,10 @@ export const BibleVerseNumberFormatCollection = [
   {
     name: BibleVerseNumberFormat.Dash,
     description: '1 - '
+  },
+  {
+    name: BibleVerseNumberFormat.NumberOnly,
+    description: '1 '
   },
   {
     name: BibleVerseNumberFormat.SuperScript,
