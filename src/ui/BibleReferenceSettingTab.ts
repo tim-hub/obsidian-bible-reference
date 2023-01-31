@@ -132,17 +132,27 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
   display(): void {
     let { containerEl } = this;
     containerEl.empty();
-    containerEl.createEl('h2', { text: 'Settings for ' + APP_NAMING.appName });
+    // Settings main title
+    containerEl.createEl('h2', { text: APP_NAMING.appName })
+
+    containerEl.createEl('p', { text: 'Taking Bible Study note in Obsidian.md application easily. Automatically suggesting Bible Verses as references.' });
+    containerEl.createEl('p', { text: 'The back-end is powered by Bible-Api.com and Bolls.life/API, at current stage the performance from Bolls.life/API might be a bit slow.' });
+    containerEl.createEl('p', { text: 'For Non-English Bible Versions, at current stage, it is required to use English book name for input.' });
+    containerEl.createEl('br');
+
+    // Sponsor link - Thank you!
+    const headingSection = containerEl.createDiv()
+    headingSection.innerHTML = `
+        <iframe src="https://github.com/sponsors/tim-hub/button" title="Sponsor Obsidian Bible Reference" height="35" width="116" style="border: 0;"></iframe>
+    `
+    containerEl.createEl('br');
+
+    containerEl.createEl('h2', { text: 'Settings'});
     this.SetUpVersionSettingsAndVersionOptions(containerEl);
     this.SetUpReferenceLinkPositionOptions(containerEl);
     this.SetUpVerseFormatOptions(containerEl);
     this.SetUpVerseNumberFormatOptions(containerEl);
     this.SetUpTextOptions(containerEl);
-    containerEl.createEl('br');
-    containerEl.createEl('p', { text: 'The back-end is powered by Bible-Api.com and Bolls.life/API, at current stage the performance from Bolls.life/API might be a bit slow.' });
-    containerEl.createEl('br');
-    containerEl.createEl('p', { text: 'For Non-English Bible Versions, at current stage, it is required to use English book name for input.' });
-
   }
 }
 
