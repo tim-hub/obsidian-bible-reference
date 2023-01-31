@@ -6,5 +6,8 @@
 	"description": "Taking Bible Study note in Obsidian.md application easily. Automatically suggesting Bible Verses as references. ",
 	"author": "tim-hub",
 	"authorUrl": "https://github.com/tim-hub",
-	"isDesktopOnly": false
+	"isDesktopOnly": false,
+  "fundingUrl": {
+    "GitHub Sponsor": "https://github.com/sponsors/tim-hub"
+  }
 }
