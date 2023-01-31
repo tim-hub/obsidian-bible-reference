@@ -72,10 +72,4 @@ This plugin Bible Verse Query Functionality is currently powered by
 | Tim Morgan     |    [@seven1m](https://github.com/seven1m)    | For the open source bible-api project and the maintenance of bible-api.com. |
 | Bolls Life API | [@bpavlisinec](mailto:bpavlisinec@gmail.com) | For the free public bible API.|
 
-
-### Contributors
-| Github Username | Note                                                             |
-|:---------------:|------------------------------------------------------------------| 
-|      @kmf       | Add UK Bible Version                                             |
-|  @SamejSpenser  | For the new Bible Icon style and Bible Verse Reference Link Help |
-|  @JPT62089   | For helping improve the formatting and styling, answering questions in PR and Comments |
+> [**All Contributors**](https://github.com/tim-hub/obsidian-bible-reference/graphs/contributors) 👍🙏
