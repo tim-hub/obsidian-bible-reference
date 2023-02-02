@@ -47,3 +47,4 @@ Quick starting guide for new plugin devs:
 - [Release repo](https://github.com/obsidianmd/obsidian-releases)
 - Obsidian Plugin Development Discord
 - [How to release](./How%20to%20release.md)
+- [bible api and source](./bible-api-and-source.md)

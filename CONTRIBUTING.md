@@ -1,7 +1,15 @@
 ## Contribution for Obsidian Bible Reference
 
+All kinds of Contributing is appreciated, not only helping the project development, but also 
+- helping the community to use the plugin,
+- improving the documentation,
+- testing, feedback and feature requests,
+- localization,
+- and so on.
+
 This project uses Typescript to provide type checking and documentation.
 The repo depends on the latest plugin API (obsidian.d.ts) in Typescript Definition format, which contains TSDoc comments describing what it does.
+
 
 ### Development and Contribution
 - Typescript/Node Development Experience + [Obsidian Plugin Development](docs/ObsidianPluginDevelopment.md)
