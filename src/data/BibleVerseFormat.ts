@@ -1,16 +1,15 @@
 export enum BibleVerseFormat {
   SingleLine = 'Single Line',
-  Paragraph = 'Paragraph'
+  Paragraph = 'Paragraph',
 }
 
 export const BibleVerseFormatCollection = [
   {
     name: BibleVerseFormat.SingleLine,
-    description: 'Single Line'
+    description: 'Single Line',
   },
   {
     name: BibleVerseFormat.Paragraph,
-    description: 'Paragraph'
-  }
+    description: 'Paragraph',
+  },
 ]
-

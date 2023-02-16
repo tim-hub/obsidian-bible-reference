@@ -1,8 +1,8 @@
-import { IBibleVersion } from '../interfaces/IBibleVersion';
-import { BibleAPIDotComProvider } from './BibleAPIDotComProvider';
-import { BibleProvider } from './BibleProvider';
-import { BibleAPISourceCollection } from '../data/BibleApiSourceCollection';
-import { BollyLifeProvider } from './BollyLifeProvider';
+import { IBibleVersion } from '../interfaces/IBibleVersion'
+import { BibleAPIDotComProvider } from './BibleAPIDotComProvider'
+import { BibleProvider } from './BibleProvider'
+import { BibleAPISourceCollection } from '../data/BibleApiSourceCollection'
+import { BollyLifeProvider } from './BollyLifeProvider'
 
 /**
  * A factory for Bible API providers.
@@ -10,22 +10,27 @@ import { BollyLifeProvider } from './BollyLifeProvider';
  */
 export class BibleAPIFactory {
   // define a single instance of BibleAPIFactory
-  private static _instance: BibleAPIFactory;
+  private static _instance: BibleAPIFactory
 
   // private constructor
   private constructor() {
     if (BibleAPIFactory._instance) {
-      throw new Error('Error: Instantiation failed: Use BibleAPIFactory.Instance instead of new.');
+      throw new Error(
+        'Error: Instantiation failed: Use BibleAPIFactory.Instance instead of new.'
+      )
     }
-    BibleAPIFactory._instance = this;
+    BibleAPIFactory._instance = this
   }
 
   // get instance of BibleAPIFactory
   public static get Instance(): BibleAPIFactory {
-    if (BibleAPIFactory._instance === null || BibleAPIFactory._instance === undefined) {
-      BibleAPIFactory._instance = new BibleAPIFactory();
+    if (
+      BibleAPIFactory._instance === null ||
+      BibleAPIFactory._instance === undefined
+    ) {
+      BibleAPIFactory._instance = new BibleAPIFactory()
     }
-    return BibleAPIFactory._instance;
+    return BibleAPIFactory._instance
   }
 
   /**
@@ -33,17 +38,18 @@ export class BibleAPIFactory {
    * @param bibleVersion
    * @constructor
    */
-  public BuildBibleVersionAPIAdapterFromIBibleVersion(bibleVersion: IBibleVersion): BibleProvider {
-
+  public BuildBibleVersionAPIAdapterFromIBibleVersion(
+    bibleVersion: IBibleVersion
+  ): BibleProvider {
     switch (bibleVersion.apiSource) {
       case BibleAPISourceCollection.bibleApi: {
-        return new BibleAPIDotComProvider(bibleVersion);
+        return new BibleAPIDotComProvider(bibleVersion)
       }
       case BibleAPISourceCollection.bollsLife: {
-        return new BollyLifeProvider(bibleVersion);
+        return new BollyLifeProvider(bibleVersion)
       }
       default: {
-        return new BibleAPIDotComProvider(bibleVersion);
+        return new BibleAPIDotComProvider(bibleVersion)
       }
     }
   }

@@ -1,13 +1,13 @@
-import { IVerse } from '../interfaces/IVerse';
-import { IBibleVersion } from '../interfaces/IBibleVersion';
-import { BibleProvider } from './BibleProvider';
+import { IVerse } from '../interfaces/IVerse'
+import { IBibleVersion } from '../interfaces/IBibleVersion'
+import { BibleProvider } from './BibleProvider'
 
 export class BibleAPIDotComProvider extends BibleProvider {
   public constructor(bibleVersion: IBibleVersion) {
-    super();
-    const {key} = bibleVersion;
-    this._key = key;
-    this._apiUrl = bibleVersion.apiSource.apiUrl;
+    super()
+    const { key } = bibleVersion
+    this._key = key
+    this._apiUrl = bibleVersion.apiSource.apiUrl
   }
 
   /**
@@ -21,18 +21,24 @@ export class BibleAPIDotComProvider extends BibleProvider {
     bookName: string,
     chapter: number,
     verses: number[],
-    versionName?: string,
+    versionName?: string
   ): string {
-    let queryString = `${bookName}+${chapter}:`;
-    if (verses?.length >= 3 ) {
-      queryString += verses.join('&');
+    let queryString = `${bookName}+${chapter}:`
+    if (verses?.length >= 3) {
+      queryString += verses.join('&')
     } else if (verses?.length === 2 && !!verses[1]) {
-      queryString += `${verses[0]}-${verses[1]}`;
+      queryString += `${verses[0]}-${verses[1]}`
     } else {
-      queryString += `${verses[0]}`;
+      queryString += `${verses[0]}`
     }
-    this._queryUrl = `${this._apiUrl}/${queryString}?translation=${versionName ? versionName : this?.BibleVersionKey ? this.BibleVersionKey : ''}`;
-    return this._queryUrl;
+    this._queryUrl = `${this._apiUrl}/${queryString}?translation=${
+      versionName
+        ? versionName
+        : this?.BibleVersionKey
+        ? this.BibleVersionKey
+        : ''
+    }`
+    return this._queryUrl
   }
 
   /**
@@ -46,8 +52,7 @@ export class BibleAPIDotComProvider extends BibleProvider {
    * @returns {Promise<IVerse[]>}
    */
   protected formatBibleVerses(data: any): IVerse[] {
-    this._bibleReferenceHead = data.reference;
-    return data.verses;
+    this._bibleReferenceHead = data.reference
+    return data.verses
   }
 }
-
