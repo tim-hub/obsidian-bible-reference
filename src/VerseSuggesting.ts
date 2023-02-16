@@ -157,12 +157,4 @@ export class VerseSuggesting implements IVerseSuggesting {
     const outer = el.createDiv({ cls: 'obr-suggester-container' })
     outer.createDiv({ cls: 'obr-shortcode' }).setText(this.text)
   }
-
-  /**
-   * Render for use in editor/modal suggest
-   */
-  public renderSuggestion(el: HTMLElement) {
-    const outer = el.createDiv({ cls: "obr-suggester-container" });
-    outer.createDiv({ cls: "obr-shortcode" }).setText(this.text);
-  }
 }
