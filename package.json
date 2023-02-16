@@ -1,34 +1,37 @@
 {
-	"name": "obsidian-bible-reference",
-	"version": "1.4.3",
-	"description": "Taking Bible Study note in Obsidian.md application easily. Automatically suggesting Bible Verses as references. ",
-	"main": "main.js",
-	"scripts": {
-		"dev": "node scripts/esbuild.config.mjs",
-		"build": "tsc -noEmit -skipLibCheck && node scripts/esbuild.config.mjs production",
-		"version": "node scripts/version-bump.mjs && git add manifest.json versions.json",
+  "name": "obsidian-bible-reference",
+  "version": "1.4.3",
+  "description": "Taking Bible Study note in Obsidian.md application easily. Automatically suggesting Bible Verses as references. ",
+  "main": "main.js",
+  "scripts": {
+    "dev": "node scripts/esbuild.config.mjs",
+    "build": "tsc -noEmit -skipLibCheck && node scripts/esbuild.config.mjs production",
+    "version": "node scripts/version-bump.mjs && git add manifest.json versions.json",
     "lint": "eslint --ext .ts,.tsx .",
-    "lint:fix": "eslint --ext .ts,.tsx . --fix"
-	},
-	"keywords": [
-		"bible",
-		"bible study",
+    "lint:fix": "eslint --ext .ts,.tsx . --fix",
+    "prettier": "prettier --check .",
+    "prettier:fix": "prettier --write ."
+  },
+  "keywords": [
+    "bible",
+    "bible study",
     "obsidian",
     "obsidian.md",
     "obsidian plugin"
-	],
-	"author": "tim-hub",
-	"license": "MIT",
-	"devDependencies": {
-		"@types/node": "^16.11.6",
-		"@typescript-eslint/eslint-plugin": "5.29.0",
-		"@typescript-eslint/parser": "5.29.0",
-		"builtin-modules": "3.3.0",
-		"esbuild": "0.14.47",
-		"obsidian": "0.15.4",
-		"tslib": "2.4.0",
-		"typescript": "4.7.4"
-	},
+  ],
+  "author": "tim-hub",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^16.11.6",
+    "@typescript-eslint/eslint-plugin": "5.29.0",
+    "@typescript-eslint/parser": "5.29.0",
+    "builtin-modules": "3.3.0",
+    "esbuild": "0.14.47",
+    "obsidian": "0.15.4",
+    "prettier": "2.8.4",
+    "tslib": "2.4.0",
+    "typescript": "4.7.4"
+  },
   "jest": {
     "transform": {
       ".(ts|tsx)": "ts-jest"

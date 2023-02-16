@@ -1,0 +1,16 @@
+# Ignore artifacts:
+build
+coverage
+*.js
+*.mjs
+docs
+node_modules
+.github
+.eslintrc
+.prettierrc
+pnpm-lock.yaml
+tsconfig.json
+versions.json
+data.json
+manifest.json
+biblejs-name-converter/
