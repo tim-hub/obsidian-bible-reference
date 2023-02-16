@@ -4,9 +4,7 @@ import {
   Notice,
   PluginSettingTab,
   Setting,
-  ToggleComponent,
 } from 'obsidian'
-import { APP_NAMING } from '../data/constants'
 import BibleReferencePlugin from './../main'
 import { BibleVersionCollection } from '../data/BibleVersionCollection'
 import { IBibleVersion } from '../interfaces/IBibleVersion'
