@@ -1,5 +1,5 @@
 import { App, MarkdownView, SuggestModal } from 'obsidian'
-import { VerseTypoCheck } from '../VerseTypoCheck'
+import { VerseTypoCheck } from '../utils/VerseTypoCheck'
 import { BibleReferencePluginSettings } from '../data/constants'
 import { VerseSuggesting } from '../VerseSuggesting'
 import { getSuggestionsFromQuery } from './getSuggestionsFromQuery'

@@ -7,7 +7,7 @@ import {
   TFile,
 } from 'obsidian'
 import BibleReferencePlugin from '../main'
-import { VerseTypoCheck } from '../VerseTypoCheck'
+import { VerseTypoCheck } from '../utils/VerseTypoCheck'
 import { VerseSuggesting } from '../VerseSuggesting'
 import { BibleReferencePluginSettings } from '../data/constants'
 import { getSuggestionsFromQuery } from './getSuggestionsFromQuery'

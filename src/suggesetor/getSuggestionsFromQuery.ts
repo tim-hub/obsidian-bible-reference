@@ -1,5 +1,6 @@
 import { BibleReferencePluginSettings } from '../data/constants'
 import { VerseSuggesting } from '../VerseSuggesting'
+import { BOOK_REG } from '../utils/regs'
 
 /**
  * Get suggestions from string query
@@ -10,7 +11,7 @@ export async function getSuggestionsFromQuery(
 ): Promise<VerseSuggesting[]> {
   console.debug('get suggestion for query ', query.toLowerCase())
 
-  const bookName = query.match(/[123]*[A-z]{3,}/)?.first()
+  const bookName = query.match(BOOK_REG)?.first()
 
   if (!bookName) {
     console.error(`could not find through query`, query)
