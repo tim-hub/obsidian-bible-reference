@@ -6,12 +6,12 @@ export class BibleReferenceModal extends Modal {
   }
 
   onOpen() {
-    let {contentEl} = this;
+    const {contentEl} = this;
     contentEl.setText('Woah!');
   }
 
   onClose() {
-    let {contentEl} = this;
+    const {contentEl} = this;
     contentEl.empty();
   }
 }

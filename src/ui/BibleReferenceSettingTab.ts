@@ -130,7 +130,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
   }
 
   display(): void {
-    let { containerEl } = this;
+    const { containerEl } = this;
     containerEl.empty();
     const headingSection = containerEl.createDiv()
     headingSection.innerHTML = `
