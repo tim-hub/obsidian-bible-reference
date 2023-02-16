@@ -6,7 +6,9 @@
 	"scripts": {
 		"dev": "node scripts/esbuild.config.mjs",
 		"build": "tsc -noEmit -skipLibCheck && node scripts/esbuild.config.mjs production",
-		"version": "node scripts/version-bump.mjs && git add manifest.json versions.json"
+		"version": "node scripts/version-bump.mjs && git add manifest.json versions.json",
+    "lint": "eslint --ext .ts,.tsx .",
+    "lint:fix": "eslint --ext .ts,.tsx . --fix"
 	},
 	"keywords": [
 		"bible",
