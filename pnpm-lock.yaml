@@ -6,6 +6,7 @@ specifiers:
   '@typescript-eslint/parser': 5.29.0
   builtin-modules: 3.3.0
   esbuild: 0.14.47
+  husky: ^8.0.3
   obsidian: 0.15.4
   prettier: 2.8.4
   tslib: 2.4.0
@@ -17,6 +18,7 @@ devDependencies:
   '@typescript-eslint/parser': 5.29.0_he2ccbldppg44uulnyq4rwocfa
   builtin-modules: 3.3.0
   esbuild: 0.14.47
+  husky: 8.0.3
   obsidian: 0.15.4_oq5hglcpekhamdwjlslst25uxu
   prettier: 2.8.4
   tslib: 2.4.0
@@ -814,6 +816,12 @@ packages:
   /has-flag/4.0.0:
     resolution: {integrity: sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==}
     engines: {node: '>=8'}
+    dev: true
+
+  /husky/8.0.3:
+    resolution: {integrity: sha512-+dQSyqPh4x1hlO1swXBiNb2HzTDN1I2IGLQx1GrBuiqFJfoMrnZWwVmatvSiO+Iz8fBUnf+lekwNo4c2LlXItg==}
+    engines: {node: '>=14'}
+    hasBin: true
     dev: true
 
   /ignore/5.2.0:

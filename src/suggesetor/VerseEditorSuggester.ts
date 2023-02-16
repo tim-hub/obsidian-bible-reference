@@ -71,6 +71,7 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
 
   selectSuggestion(suggestion: VerseSuggesting): void {
     if (this.context) {
+      /* prettier-ignore */
       (this.context.editor as Editor).replaceRange(
         suggestion.ReplacementContent,
         this.context.start,
