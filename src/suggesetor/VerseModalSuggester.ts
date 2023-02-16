@@ -2,9 +2,9 @@ import { App, MarkdownView, SuggestModal } from "obsidian";
 import { VerseTypoCheck } from "../VerseTypoCheck";
 import { BibleReferencePluginSettings } from "../data/constants";
 import { VerseSuggesting } from "../VerseSuggesting";
-import { getSuggestionsFromQuery } from "./VerseSuggestor";
+import { getSuggestionsFromQuery } from "./getSuggestionsFromQuery";
 
-export class VerseSuggestModal extends SuggestModal<VerseSuggesting> {
+export class VerseModalSuggester extends SuggestModal<VerseSuggesting> {
   settings: BibleReferencePluginSettings;
 
   constructor(app: App, settings: BibleReferencePluginSettings) {

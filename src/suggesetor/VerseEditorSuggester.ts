@@ -6,16 +6,16 @@ import {
   EditorSuggestTriggerInfo,
   TFile,
 } from "obsidian";
-import BibleReferencePlugin from "./main";
-import { VerseTypoCheck } from "./VerseTypoCheck";
-import { VerseSuggesting } from "./VerseSuggesting";
-import { BibleReferencePluginSettings } from "./data/constants";
-import { getSuggestionsFromQuery } from "./suggesetor/VerseSuggestor";
+import BibleReferencePlugin from "../main";
+import { VerseTypoCheck } from "../VerseTypoCheck";
+import { VerseSuggesting } from "../VerseSuggesting";
+import { BibleReferencePluginSettings } from "../data/constants";
+import { getSuggestionsFromQuery } from "./getSuggestionsFromQuery";
 
 /**
  * Extend the EditorSuggest to suggest bible verses.
  */
-export class VerseEditorSuggestor extends EditorSuggest<VerseSuggesting> {
+export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
   plugin: BibleReferencePlugin;
   settings: BibleReferencePluginSettings;
 

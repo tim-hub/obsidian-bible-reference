@@ -5,20 +5,20 @@ import {
   DEFAULT_SETTINGS,
 } from "./data/constants";
 import { BibleReferenceSettingTab } from "./ui/BibleReferenceSettingTab";
-import { VerseEditorSuggestor } from "./VerseEditorSuggestor";
-import { VerseSuggestModal } from "./suggesetor/VerseSuggestModal";
+import { VerseEditorSuggester } from "./suggesetor/VerseEditorSuggester";
+import { VerseModalSuggester } from "./suggesetor/VerseModalSuggester";
 
 export default class BibleReferencePlugin extends Plugin {
   settings: BibleReferencePluginSettings;
-  suggestModal: VerseSuggestModal;
+  suggestModal: VerseModalSuggester;
 
   async onload() {
     console.log("loading plugin -", APP_NAMING.appName);
 
     await this.loadSettings();
-    this.suggestModal = new VerseSuggestModal(this.app, this.settings);
+    this.suggestModal = new VerseModalSuggester(this.app, this.settings);
     this.addSettingTab(new BibleReferenceSettingTab(this.app, this));
-    this.registerEditorSuggest(new VerseEditorSuggestor(this, this.settings));
+    this.registerEditorSuggest(new VerseEditorSuggester(this, this.settings));
     this.addCommand({
       id: "obr-lookup",
       name: "Verse Lookup",
