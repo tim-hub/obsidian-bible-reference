@@ -1,20 +1,20 @@
 export enum BibleVerseReferenceLinkPosition {
   Header = 'Header',
   Bottom = 'Bottom',
-  AllAbove = 'Both'
+  AllAbove = 'Both',
 }
 
 export const BibleVerseReferenceLinkPositionCollection = [
   {
     name: BibleVerseReferenceLinkPosition.Header,
-    description: 'Header (Bible Verse Header)'
+    description: 'Header (Bible Verse Header)',
   },
   {
     name: BibleVerseReferenceLinkPosition.Bottom,
-    description: 'Bottom (Bottom of Bible Verse Content)'
+    description: 'Bottom (Bottom of Bible Verse Content)',
   },
   {
     name: BibleVerseReferenceLinkPosition.AllAbove,
-    description: 'Both (Both of Above)'
+    description: 'Both (Both of Above)',
   },
 ]

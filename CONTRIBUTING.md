@@ -1,6 +1,7 @@
 ## Contribution for Obsidian Bible Reference
 
-All kinds of Contributing is appreciated, not only helping the project development, but also 
+All kinds of Contributing is appreciated, not only helping the project development, but also
+
 - helping the community to use the plugin,
 - improving the documentation,
 - testing, feedback and feature requests,
@@ -10,15 +11,15 @@ All kinds of Contributing is appreciated, not only helping the project developme
 This project uses Typescript to provide type checking and documentation.
 The repo depends on the latest plugin API (obsidian.d.ts) in Typescript Definition format, which contains TSDoc comments describing what it does.
 
-
 ### Development and Contribution
+
 - Typescript/Node Development Experience + [Obsidian Plugin Development](docs/ObsidianPluginDevelopment.md)
 - [Hot reload plugin](https://github.com/pjeby/hot-reload) (optional, but it isvery handy for development purpose)
 - [Obsidian Bible Reference Github Project](https://github.com/tim-hub/obsidian-bible-reference/projects/1)
   - There is lack of testing of the project, please help to improve it, if you have the willing
-  
-  
+
 ### References
+
 - inspired by [obsidian emoji shorcodes](https://github.com/phibr0/obsidian-emoji-shortcodes)
 - [upstream](https://github.com/obsidianmd/obsidian-sample-plugin) is template repo as obsidian sample plugin
 

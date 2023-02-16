@@ -1,4 +1,4 @@
 export interface IBibleApiSource {
-  name: string;
-  apiUrl: string;
+  name: string
+  apiUrl: string
 }

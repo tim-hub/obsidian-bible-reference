@@ -1,5 +1,5 @@
-import { IBibleVersion } from '../interfaces/IBibleVersion';
-import { BibleAPISourceCollection} from './BibleApiSourceCollection';
+import { IBibleVersion } from '../interfaces/IBibleVersion'
+import { BibleAPISourceCollection } from './BibleApiSourceCollection'
 
 export const BibleVersionCollection: IBibleVersion[] = [
   {
@@ -102,5 +102,5 @@ export const BibleVersionCollection: IBibleVersion[] = [
     versionName: 'Chinese Union Version (Traditional)',
     language: 'Chinese',
     apiSource: BibleAPISourceCollection.bollsLife,
-  }
-];
+  },
+]

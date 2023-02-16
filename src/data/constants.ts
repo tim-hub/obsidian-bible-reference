@@ -1,7 +1,7 @@
-import { BibleVersionCollection } from './BibleVersionCollection';
-import { BibleVerseReferenceLinkPosition } from './BibleVerseReferenceLinkPosition';
-import { BibleVerseFormat } from './BibleVerseFormat';
-import { BibleVerseNumberFormat } from './BibleVerseNumberFormat';
+import { BibleVersionCollection } from './BibleVersionCollection'
+import { BibleVerseReferenceLinkPosition } from './BibleVerseReferenceLinkPosition'
+import { BibleVerseFormat } from './BibleVerseFormat'
+import { BibleVerseNumberFormat } from './BibleVerseNumberFormat'
 
 export const APP_NAMING = {
   appName: 'Bible Reference',
@@ -11,11 +11,11 @@ export const APP_NAMING = {
 }
 
 export interface BibleReferencePluginSettings {
-  bibleVersion: string;
-  referenceLinkPosition?: BibleVerseReferenceLinkPosition;
-  verseFormatting?: BibleVerseFormat;
-  verseNumberFormatting?: BibleVerseNumberFormat;
-  collapsibleVerses?: boolean;
+  bibleVersion: string
+  referenceLinkPosition?: BibleVerseReferenceLinkPosition
+  verseFormatting?: BibleVerseFormat
+  verseNumberFormatting?: BibleVerseNumberFormat
+  collapsibleVerses?: boolean
 }
 
 export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {

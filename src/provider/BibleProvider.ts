@@ -1,16 +1,16 @@
-import { IVerse } from '../interfaces/IVerse';
+import { IVerse } from '../interfaces/IVerse'
 
 export abstract class BibleProvider {
-  protected _key: string; // the version selected
-  protected _apiUrl: string;
-  protected _queryUrl: string;
-  protected _bibleReferenceHead: string;
+  protected _key: string // the version selected
+  protected _apiUrl: string
+  protected _queryUrl: string
+  protected _bibleReferenceHead: string
 
   /**
    * Get the Key Identity for the Bible version
    */
   public get BibleVersionKey(): string {
-    return this._key;
+    return this._key
   }
 
   /**
@@ -18,7 +18,7 @@ export abstract class BibleProvider {
    * for example, https://api.scripture.api.bible/v1/bibles/de4e0c8c-9c29-44c7-a8c3-c8a9c1b9d6a0/verses/ESV/
    */
   public get QueryURL(): string {
-    return this._queryUrl;
+    return this._queryUrl
   }
 
   /**
@@ -26,7 +26,7 @@ export abstract class BibleProvider {
    * for example, "John 3:16"
    */
   public get BibleReferenceHead(): string {
-    return this._bibleReferenceHead;
+    return this._bibleReferenceHead
   }
 
   /**
@@ -40,20 +40,31 @@ export abstract class BibleProvider {
     bookName: string,
     chapter: number,
     verse: number[],
-    versionName?: string,
+    versionName?: string
   ): Promise<IVerse[]> {
-    if ((!this._key) && versionName) {
-      throw new Error('version (language) not set yet');
+    if (!this._key && versionName) {
+      throw new Error('version (language) not set yet')
     }
-    const url = this.buildRequestURL(bookName, chapter, verse, versionName || this._key);
-    console.debug(url, 'url to query');
+    const url = this.buildRequestURL(
+      bookName,
+      chapter,
+      verse,
+      versionName || this._key
+    )
+    console.debug(url, 'url to query')
     try {
-      const response = await fetch(url);
-      const data = await response.json();
-      return this.formatBibleVerses(data, bookName, chapter, verse, versionName || this._key);
+      const response = await fetch(url)
+      const data = await response.json()
+      return this.formatBibleVerses(
+        data,
+        bookName,
+        chapter,
+        verse,
+        versionName || this._key
+      )
     } catch (e) {
-      console.error('error while querying', e);
-      return await Promise.reject(e);
+      console.error('error while querying', e)
+      return await Promise.reject(e)
     }
   }
 
@@ -68,7 +79,7 @@ export abstract class BibleProvider {
     bookName: string,
     chapter: number,
     verses?: number[],
-    versionName?: string,
+    versionName?: string
   ): string
 
   /**
@@ -79,5 +90,11 @@ export abstract class BibleProvider {
    * @param verse
    * @param versionName
    */
-  protected abstract formatBibleVerses(data: any, bookName: string, chapter:number, verse: number[], versionName: string): IVerse[];
+  protected abstract formatBibleVerses(
+    data: any,
+    bookName: string,
+    chapter: number,
+    verse: number[],
+    versionName: string
+  ): IVerse[]
 }

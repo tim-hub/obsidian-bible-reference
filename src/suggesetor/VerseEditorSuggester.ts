@@ -5,27 +5,27 @@ import {
   EditorSuggestContext,
   EditorSuggestTriggerInfo,
   TFile,
-} from "obsidian";
-import BibleReferencePlugin from "../main";
-import { VerseTypoCheck } from "../VerseTypoCheck";
-import { VerseSuggesting } from "../VerseSuggesting";
-import { BibleReferencePluginSettings } from "../data/constants";
-import { getSuggestionsFromQuery } from "./getSuggestionsFromQuery";
+} from 'obsidian'
+import BibleReferencePlugin from '../main'
+import { VerseTypoCheck } from '../VerseTypoCheck'
+import { VerseSuggesting } from '../VerseSuggesting'
+import { BibleReferencePluginSettings } from '../data/constants'
+import { getSuggestionsFromQuery } from './getSuggestionsFromQuery'
 
 /**
  * Extend the EditorSuggest to suggest bible verses.
  */
 export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
-  plugin: BibleReferencePlugin;
-  settings: BibleReferencePluginSettings;
+  plugin: BibleReferencePlugin
+  settings: BibleReferencePluginSettings
 
   constructor(
     plugin: BibleReferencePlugin,
     settings: BibleReferencePluginSettings
   ) {
-    super(plugin.app);
-    this.plugin = plugin;
-    this.settings = settings;
+    super(plugin.app)
+    this.plugin = plugin
+    this.settings = settings
   }
 
   /**
@@ -39,10 +39,10 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
     editor: Editor,
     _: TFile
   ): EditorSuggestTriggerInfo | null {
-    const currentContent = editor.getLine(cursor.line).substring(0, cursor.ch);
-    const match = VerseTypoCheck(currentContent);
+    const currentContent = editor.getLine(cursor.line).substring(0, cursor.ch)
+    const match = VerseTypoCheck(currentContent)
     if (match) {
-      console.debug("trigger on", currentContent);
+      console.debug('trigger on', currentContent)
       return {
         end: cursor,
         start: {
@@ -50,9 +50,9 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
           ch: currentContent.lastIndexOf(match),
         },
         query: match,
-      };
+      }
     }
-    return null;
+    return null
   }
 
   /**
@@ -62,20 +62,20 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
   async getSuggestions(
     context: EditorSuggestContext
   ): Promise<VerseSuggesting[]> {
-    return getSuggestionsFromQuery(context.query, this.settings);
+    return getSuggestionsFromQuery(context.query, this.settings)
   }
 
   renderSuggestion(suggestion: VerseSuggesting, el: HTMLElement): void {
-    suggestion.renderSuggestion(el);
+    suggestion.renderSuggestion(el)
   }
 
   selectSuggestion(suggestion: VerseSuggesting): void {
     if (this.context) {
-      (this.context.editor as Editor).replaceRange(
+      ;(this.context.editor as Editor).replaceRange(
         suggestion.ReplacementContent,
         this.context.start,
         this.context.end
-      );
+      )
     }
   }
 }

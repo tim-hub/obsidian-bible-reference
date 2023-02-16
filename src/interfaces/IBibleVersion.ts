@@ -1,10 +1,10 @@
-import { IBibleApiSource } from './IBibleApiSource';
+import { IBibleApiSource } from './IBibleApiSource'
 
 export interface IBibleVersion {
-  key: string;
-  versionName: string;
-  language: string;
-  apiSource: IBibleApiSource;
-  infoUrl?: string;
-  apiUrl?: string; //deprecated
+  key: string
+  versionName: string
+  language: string
+  apiSource: IBibleApiSource
+  infoUrl?: string
+  apiUrl?: string //deprecated
 }
