@@ -103,4 +103,10 @@ export const BibleVersionCollection: IBibleVersion[] = [
     language: 'Chinese',
     apiSource: BibleAPISourceCollection.bollsLife,
   },
+  {
+    key: 'NR06',
+    versionName: 'Nuova Riveduta, 2006',
+    language: 'Latin / Italian',
+    apiSource: BibleAPISourceCollection.bollsLife,
+  },
 ]
