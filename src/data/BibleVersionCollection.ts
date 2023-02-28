@@ -104,7 +104,7 @@ export const BibleVersionCollection: IBibleVersion[] = [
     apiSource: BibleAPISourceCollection.bollsLife,
   },
   {
-    key: 'NR06',
+    key: 'nr06',
     versionName: 'Nuova Riveduta, 2006',
     language: 'Latin / Italian',
     apiSource: BibleAPISourceCollection.bollsLife,
