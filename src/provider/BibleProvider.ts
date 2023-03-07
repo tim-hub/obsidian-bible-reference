@@ -18,7 +18,16 @@ export abstract class BibleProvider {
    * for example, https://api.scripture.api.bible/v1/bibles/de4e0c8c-9c29-44c7-a8c3-c8a9c1b9d6a0/verses/ESV/
    */
   public get QueryURL(): string {
-    return this._queryUrl
+    return this._queryUrl;
+  }
+
+  /**
+   * Get the Callout Link URL for the verse query
+   * By default it's the Query URL, but for some API there is a provided web app, so it will link to that.
+   * In the Bolly Life interface, it's just the same URL location except without `/get-text`
+   */
+  public get VerseLinkURL(): string {
+    return this._queryUrl;
   }
 
   /**

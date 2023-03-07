@@ -17,7 +17,7 @@ export class BollyLifeProvider extends BibleProvider {
     this._chapterApiUrl = this._apiUrl
   }
 
-  public get QueryURL(): string {
+  public get VerseLinkURL(): string {
     return this._queryUrl.replace("/get-text", "");
   }
 
