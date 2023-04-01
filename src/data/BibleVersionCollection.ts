@@ -109,4 +109,10 @@ export const BibleVersionCollection: IBibleVersion[] = [
     language: 'Latin / Italian',
     apiSource: BibleAPISourceCollection.bollsLife,
   },
-]
+  {
+    key: "svd",
+    versionName: "Smith and Van Dyke",
+    language: "Arabic العربية",
+    apiSource: BibleAPISourceCollection.bollsLife,
+  },
+];
