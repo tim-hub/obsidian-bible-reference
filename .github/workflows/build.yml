@@ -22,6 +22,6 @@ jobs:
       - name: run install
         uses: pnpm/action-setup@v2.2.2
         with:
-          version: latest
-      - run: pnpm i --frozen-lockfile
+          version: 6 # local version is 7 but it's not supported by the action, this is why the next line we use no-frozen-lockfile
+      - run: pnpm install --no-frozen-lockfile
       - run: pnpm run build
