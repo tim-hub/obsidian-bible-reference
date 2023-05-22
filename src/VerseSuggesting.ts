@@ -11,7 +11,6 @@ import { BibleProvider } from './provider/BibleProvider'
 import { BibleVerseReferenceLinkPosition } from './data/BibleVerseReferenceLinkPosition'
 import { BibleVerseNumberFormat } from './data/BibleVerseNumberFormat'
 import { BibleVerseFormat } from './data/BibleVerseFormat'
-import { BOOK_REG, Book_REG } from './utils/regs'
 
 export class VerseSuggesting implements IVerseSuggesting {
   public text: string
@@ -64,10 +63,10 @@ export class VerseSuggesting implements IVerseSuggesting {
     //  and regex to clean book and chapters that will match
     //  across multiple different search queires
     if (this.settings?.bookBacklinking){
-      head += ` [[${this.bibleProvider.BibleReferenceHead.match(/[123]*[ ]*[A-z]{3,}/)![0].replace(/\s+/g, '')}]]`
+      head += ` [[${this.bibleProvider.BibleReferenceHead.match(/[123]*[ ]*[A-z]{3,}/)![0].replace(/\s+/g, '').toLowerCase()}]]`
     }
     if (this.settings?.chapterBacklinking){
-      head += ` [[${this.bibleProvider.BibleReferenceHead.match(/[123]*[ ]*[A-z]{3,}[ ]*[0-9]*/)![0].replace(/\s+/g, '')}]]`
+      head += ` [[${this.bibleProvider.BibleReferenceHead.match(/[123]*[ ]*[A-z]{3,}[ ]*[0-9]*/)![0].replace(/\s+/g, '').toLowerCase()}]]`
     }
     if (
       this.settings?.bibleTagging ||
@@ -75,8 +74,8 @@ export class VerseSuggesting implements IVerseSuggesting {
       this.settings?.chapterTagging) {
       bottom += ' %%'
       bottom += (this.settings?.bibleTagging) ? ' #bible' : ''
-      bottom += (this.settings?.bookTagging) ? ` #${this.bibleProvider.BibleReferenceHead.match(/[123]*[ ]*[A-z]{3,}/)![0].replace(/\s+/g, '')}` : ''
-      bottom += (this.settings?.chapterTagging) ? ` #${this.bibleProvider.BibleReferenceHead.match(/[123]*[ ]*[A-z]{3,}[ ]*[0-9]*/)![0].replace(/\s+/g, '')}` : ''
+      bottom += (this.settings?.bookTagging) ? ` #${this.bibleProvider.BibleReferenceHead.match(/[123]*[ ]*[A-z]{3,}/)![0].replace(/\s+/g, '').toLowerCase()}` : ''
+      bottom += (this.settings?.chapterTagging) ? ` #${this.bibleProvider.BibleReferenceHead.match(/[123]*[ ]*[A-z]{3,}[ ]*[0-9]*/)![0].replace(/\s+/g, '').toLowerCase()}` : ''
       bottom += ' %%'
     }
 
