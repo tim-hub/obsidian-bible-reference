@@ -11,6 +11,7 @@ import { BibleProvider } from './provider/BibleProvider'
 import { BibleVerseReferenceLinkPosition } from './data/BibleVerseReferenceLinkPosition'
 import { BibleVerseNumberFormat } from './data/BibleVerseNumberFormat'
 import { BibleVerseFormat } from './data/BibleVerseFormat'
+import { BOOK_REG, Book_REG } from './utils/regs'
 
 export class VerseSuggesting implements IVerseSuggesting {
   public text: string
@@ -58,22 +59,27 @@ export class VerseSuggesting implements IVerseSuggesting {
     ) {
       bottom += `> \n ${this.getVerseReference()}`
     }
+
+    // backlinks and tags use the BibleReferenceHeader 
+    //  and regex to clean book and chapters that will match
+    //  across multiple different search queires
+    if (this.settings?.bookBacklinking){
+      head += ` [[${this.bibleProvider.BibleReferenceHead.match(/[123]*[ ]*[A-z]{3,}/)![0].replace(/\s+/g, '')}]]`
+    }
+    if (this.settings?.chapterBacklinking){
+      head += ` [[${this.bibleProvider.BibleReferenceHead.match(/[123]*[ ]*[A-z]{3,}[ ]*[0-9]*/)![0].replace(/\s+/g, '')}]]`
+    }
     if (
       this.settings?.bibleTagging ||
       this.settings?.bookTagging ||
       this.settings?.chapterTagging) {
       bottom += ' %%'
       bottom += (this.settings?.bibleTagging) ? ' #bible' : ''
-      bottom += (this.settings?.bookTagging) ? ` #${this.bookName}` : ''
-      bottom += (this.settings?.chapterTagging) ? ` #${this.bookName}_${this.chapterNumber}` : ''
+      bottom += (this.settings?.bookTagging) ? ` #${this.bibleProvider.BibleReferenceHead.match(/[123]*[ ]*[A-z]{3,}/)![0].replace(/\s+/g, '')}` : ''
+      bottom += (this.settings?.chapterTagging) ? ` #${this.bibleProvider.BibleReferenceHead.match(/[123]*[ ]*[A-z]{3,}[ ]*[0-9]*/)![0].replace(/\s+/g, '')}` : ''
       bottom += ' %%'
     }
-    if (this.settings?.bookBacklinking){
-      bottom += ` [[${this.bookName}]]`
-    }
-    if (this.settings?.chapterBacklinking){
-      bottom += ` [[${this.bookName}_${this.chapterNumber}]]`
-    }
+
     return [head, this.text, bottom].join('\n')
   }
 
