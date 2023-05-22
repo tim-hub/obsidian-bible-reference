@@ -154,6 +154,76 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
       )
   }
 
+  SetUpBibleTagging = (containerEl: HTMLElement): void => {
+    new Setting(containerEl)
+      .setName('Create Bible Tags')
+      .setDesc('Makes hidden #bible tag')
+      .addToggle((toggle) =>
+        toggle
+          .setValue(!!this.plugin.settings?.bibleTagging)
+          .onChange((value) => {
+            this.plugin.settings.bibleTagging = value
+            this.plugin.saveData(this.plugin.settings)
+          })
+      )
+  }
+
+  SetUpBookTagging = (containerEl: HTMLElement): void => {
+    new Setting(containerEl)
+      .setName('Create Book Tags')
+      .setDesc('Makes hidden #{book} tag')
+      .addToggle((toggle) =>
+        toggle
+          .setValue(!!this.plugin.settings?.bookTagging)
+          .onChange((value) => {
+            this.plugin.settings.bookTagging = value
+            this.plugin.saveData(this.plugin.settings)
+          })
+      )
+  }
+
+  SetUpChapterTagging = (containerEl: HTMLElement): void => {
+    new Setting(containerEl)
+      .setName('Create Chapter Tags')
+      .setDesc('Makes hidden #{book_chapter} tag')
+      .addToggle((toggle) =>
+        toggle
+          .setValue(!!this.plugin.settings?.chapterTagging)
+          .onChange((value) => {
+            this.plugin.settings.chapterTagging = value
+            this.plugin.saveData(this.plugin.settings)
+          })
+      )
+  }
+
+  SetUpBookBacklinking = (containerEl: HTMLElement): void => {
+    new Setting(containerEl)
+      .setName('Create Book Backlink')
+      .setDesc('Makes [[{book}]] link')
+      .addToggle((toggle) =>
+        toggle
+          .setValue(!!this.plugin.settings?.bookBacklinking)
+          .onChange((value) => {
+            this.plugin.settings.bookBacklinking = value
+            this.plugin.saveData(this.plugin.settings)
+          })
+      )
+  }
+
+  SetUpChapterBacklinking = (containerEl: HTMLElement): void => {
+    new Setting(containerEl)
+      .setName('Create Chapter Tags')
+      .setDesc('Makes [[{book_chapter}]] link')
+      .addToggle((toggle) =>
+        toggle
+          .setValue(!!this.plugin.settings?.chapterBacklinking)
+          .onChange((value) => {
+            this.plugin.settings.chapterBacklinking = value
+            this.plugin.saveData(this.plugin.settings)
+          })
+      )
+  }
+
   display(): void {
     const { containerEl } = this
     containerEl.empty()
@@ -162,12 +232,18 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
         <iframe src="https://github.com/sponsors/tim-hub/button" title="Sponsor Obsidian Bible Reference" width="116" height="32px" style="margin-right: 2em"/>
     `
 
-    containerEl.createEl('h2', { text: 'Settings' })
+    containerEl.createEl('h2', { text: 'General Settings' })
     this.SetUpVersionSettingsAndVersionOptions(containerEl)
     this.SetUpReferenceLinkPositionOptions(containerEl)
     this.SetUpVerseFormatOptions(containerEl)
     this.SetUpVerseNumberFormatOptions(containerEl)
     this.SetUpTextOptions(containerEl)
+    containerEl.createEl('h2', { text: 'Tagging and Linking Settings' })
+    this.SetUpBibleTagging(containerEl)
+    this.SetUpBookTagging(containerEl)
+    this.SetUpChapterTagging(containerEl)
+    this.SetUpBookBacklinking(containerEl)
+    this.SetUpChapterBacklinking(containerEl)
 
     containerEl.createEl('h2', { text: 'About' })
 

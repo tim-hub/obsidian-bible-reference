@@ -16,6 +16,11 @@ export interface BibleReferencePluginSettings {
   verseFormatting?: BibleVerseFormat
   verseNumberFormatting?: BibleVerseNumberFormat
   collapsibleVerses?: boolean
+  bibleTagging?: boolean
+  bookTagging?: boolean
+  chapterTagging?: boolean
+  bookBacklinking?: boolean
+  chapterBacklinking?: boolean
 }
 
 export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
@@ -24,4 +29,9 @@ export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
   verseFormatting: BibleVerseFormat.SingleLine,
   verseNumberFormatting: BibleVerseNumberFormat.Period,
   collapsibleVerses: false,
+  bibleTagging: false,
+  bookTagging: false,
+  chapterTagging: false,
+  bookBacklinking: false,
+  chapterBacklinking: false,
 }

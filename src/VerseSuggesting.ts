@@ -58,6 +58,22 @@ export class VerseSuggesting implements IVerseSuggesting {
     ) {
       bottom += `> \n ${this.getVerseReference()}`
     }
+    if (
+      this.settings?.bibleTagging ||
+      this.settings?.bookTagging ||
+      this.settings?.chapterTagging) {
+      bottom += ' %%'
+      bottom += (this.settings?.bibleTagging) ? ' #bible' : ''
+      bottom += (this.settings?.bookTagging) ? ` #${this.bookName}` : ''
+      bottom += (this.settings?.chapterTagging) ? ` #${this.bookName}_${this.chapterNumber}` : ''
+      bottom += ' %%'
+    }
+    if (this.settings?.bookBacklinking){
+      bottom += ` [[${this.bookName}]]`
+    }
+    if (this.settings?.chapterBacklinking){
+      bottom += ` [[${this.bookName}_${this.chapterNumber}]]`
+    }
     return [head, this.text, bottom].join('\n')
   }
 
