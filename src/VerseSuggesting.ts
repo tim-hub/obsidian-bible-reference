@@ -12,6 +12,10 @@ import { BibleVerseReferenceLinkPosition } from './data/BibleVerseReferenceLinkP
 import { BibleVerseNumberFormat } from './data/BibleVerseNumberFormat'
 import { BibleVerseFormat } from './data/BibleVerseFormat'
 
+const BOOK_REGEX = /[123]*[ ]*[a-zA-Z]{3,}/
+const CHAPTER_REGEX = /[123]*[ ]*[a-zA-Z]{3,}[ ]*[0-9]*/
+
+
 export class VerseSuggesting implements IVerseSuggesting {
   public text: string
   public verses: string
@@ -63,10 +67,10 @@ export class VerseSuggesting implements IVerseSuggesting {
     //  and regex to clean book and chapters that will match
     //  across multiple different search queires
     if (this.settings?.bookBacklinking){
-      head += ` [[${this.bibleProvider.BibleReferenceHead.match(/[123]*[ ]*[A-z]{3,}/)![0].replace(/\s+/g, '').toLowerCase()}]]`
+      head += ` [[${this.bibleProvider.BibleReferenceHead.match(BOOK_REGEX)![0].replace(/\s+/g, '').toLowerCase()}]]`
     }
     if (this.settings?.chapterBacklinking){
-      head += ` [[${this.bibleProvider.BibleReferenceHead.match(/[123]*[ ]*[A-z]{3,}[ ]*[0-9]*/)![0].replace(/\s+/g, '').toLowerCase()}]]`
+      head += ` [[${this.bibleProvider.BibleReferenceHead.match(CHAPTER_REGEX)![0].replace(/\s+/g, '').toLowerCase()}]]`
     }
     if (
       this.settings?.bibleTagging ||
@@ -74,8 +78,8 @@ export class VerseSuggesting implements IVerseSuggesting {
       this.settings?.chapterTagging) {
       bottom += ' %%'
       bottom += (this.settings?.bibleTagging) ? ' #bible' : ''
-      bottom += (this.settings?.bookTagging) ? ` #${this.bibleProvider.BibleReferenceHead.match(/[123]*[ ]*[A-z]{3,}/)![0].replace(/\s+/g, '').toLowerCase()}` : ''
-      bottom += (this.settings?.chapterTagging) ? ` #${this.bibleProvider.BibleReferenceHead.match(/[123]*[ ]*[A-z]{3,}[ ]*[0-9]*/)![0].replace(/\s+/g, '').toLowerCase()}` : ''
+      bottom += (this.settings?.bookTagging) ? ` #${this.bibleProvider.BibleReferenceHead.match(BOOK_REGEX)![0].replace(/\s+/g, '').toLowerCase()}` : ''
+      bottom += (this.settings?.chapterTagging) ? ` #${this.bibleProvider.BibleReferenceHead.match(CHAPTER_REGEX)![0].replace(/\s+/g, '').toLowerCase()}` : ''
       bottom += ' %%'
     }
 
