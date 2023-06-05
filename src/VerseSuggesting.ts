@@ -170,8 +170,15 @@ export class VerseSuggesting implements IVerseSuggesting {
   }
 
   public getVerseReference(): string {
+    let bibleReferenceTitle = this.bibleProvider.BibleReferenceHead;
+
+    // The bolls life API returns the book name without any spaces - that doesn't look right.
+    if(bibleReferenceTitle.match('^[0-9]\S.*')) {
+      bibleReferenceTitle = bibleReferenceTitle[0] + " " + bibleReferenceTitle.slice(1)
+    }
+    
     return ` [${
-      this.bibleProvider.BibleReferenceHead
+      bibleReferenceTitle
     } - ${this.bibleVersion.toUpperCase()}](${this.bibleProvider.VerseLinkURL})`
   }
 
