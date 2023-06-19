@@ -173,7 +173,7 @@ export class VerseSuggesting implements IVerseSuggesting {
     let bibleReferenceTitle = this.bibleProvider.BibleReferenceHead;
 
     // The bolls life API returns the book name without any spaces - that doesn't look right.
-    if(bibleReferenceTitle.match('^[0-9]\S.*')) {
+    if(bibleReferenceTitle.match('^[0-9]\s.*')) {
       bibleReferenceTitle = bibleReferenceTitle[0] + " " + bibleReferenceTitle.slice(1)
     }
     
