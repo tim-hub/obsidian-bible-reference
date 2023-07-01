@@ -39,6 +39,10 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
     editor: Editor,
     _: TFile
   ): EditorSuggestTriggerInfo | null {
+    // @ts-ignore
+    const suggestEl = (this.suggestEl as HTMLDivElement)
+    suggestEl.createDiv({ cls: 'obr-loading-container' }).hide()
+
     const currentContent = editor.getLine(cursor.line).substring(0, cursor.ch)
     const match = VerseTypoCheck(currentContent)
     if (match) {
@@ -62,7 +66,22 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
   async getSuggestions(
     context: EditorSuggestContext
   ): Promise<VerseSuggesting[]> {
-    return getSuggestionsFromQuery(context.query, this.settings)
+    // @ts-ignore
+    const suggestEl = (this.suggestEl as HTMLDivElement)
+    // @ts-ignore
+    const suggestionsEl = (this.suggestions as any).containerEl as HTMLDivElement
+    suggestionsEl.hide()
+
+    const loadingContainer = (suggestEl.getElementsByClassName('obr-loading-container')[0] as HTMLDivElement)
+    loadingContainer.setText('Waiting on API response...')
+    loadingContainer.show()
+
+    const suggestions = getSuggestionsFromQuery(context.query, this.settings)
+    
+    return suggestions.finally(() => {
+      loadingContainer.hide()
+      suggestionsEl.show()
+    })
   }
 
   renderSuggestion(suggestion: VerseSuggesting, el: HTMLElement): void {
