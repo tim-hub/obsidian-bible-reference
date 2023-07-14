@@ -212,7 +212,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
 
   SetUpChapterBacklinking = (containerEl: HTMLElement): void => {
     new Setting(containerEl)
-      .setName('Create Chapter Tags')
+      .setName('Create Chapter Backlink')
       .setDesc('Makes [[{book_chapter}]] link')
       .addToggle((toggle) =>
         toggle
