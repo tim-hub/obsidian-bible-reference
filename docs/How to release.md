@@ -9,7 +9,7 @@
 > Work is done, the 3 steps below will be done by Github Action of Release.
 
 
-**In case the automic release fails:**
+**In case the automatic release fails:**
 
 Follow the 3 steps below to release manually:
 
