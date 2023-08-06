@@ -9,7 +9,7 @@ import {
 import BibleReferencePlugin from '../main'
 import { VerseTypoCheck } from '../utils/VerseTypoCheck'
 import { VerseSuggesting } from '../VerseSuggesting'
-import { BibleReferencePluginSettings } from '../data/constants'
+import { API_WAITING_LABEL, BibleReferencePluginSettings } from '../data/constants'
 import { getSuggestionsFromQuery } from './getSuggestionsFromQuery'
 
 /**
@@ -73,7 +73,7 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
     suggestionsEl.hide()
 
     const loadingContainer = (suggestEl.getElementsByClassName('obr-loading-container')[0] as HTMLDivElement)
-    loadingContainer.setText('Waiting on API response...')
+    loadingContainer.setText(API_WAITING_LABEL)
     loadingContainer.show()
 
     const suggestions = getSuggestionsFromQuery(context.query, this.settings)
