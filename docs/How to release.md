@@ -3,7 +3,7 @@
 
 
 1. Update your `package.json` with your new version number, such as `1.0.1`, and the minimum Obsidian version required for your latest release.
-2. Run `npm run version`
+2. Run `pnpm run version`
 3. Tag it with `1.0.1` and push the tags `git push --tags`
 
 > Work is done, the 3 steps below will be done by Github Action of Release.
