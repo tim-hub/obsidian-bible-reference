@@ -1,6 +1,7 @@
 import { BibleReferencePluginSettings } from '../data/constants'
 import { VerseSuggesting } from '../VerseSuggesting'
 import { BOOK_REG } from '../utils/regs'
+import { Reference } from '../../biblejs-name-converter'
 
 /**
  * Get suggestions from string query
@@ -11,19 +12,22 @@ export async function getSuggestionsFromQuery(
 ): Promise<VerseSuggesting[]> {
   console.debug('get suggestion for query ', query.toLowerCase())
 
-  const bookName = query.match(BOOK_REG)?.first()
-
-  if (!bookName) {
+  const rawBookName = query.match(BOOK_REG)?.first()
+  
+  if (!rawBookName) {
     console.error(`could not find through query`, query)
     return []
   }
 
-  const numbersPartsOfQueryString = query.substring(2 + bookName.length)
+  const numbersPartsOfQueryString = query.substring(2 + rawBookName.length)
   const numbers = numbersPartsOfQueryString.split(/[-:]+/)
 
-  const chapterNumber = parseInt(numbers[0])
+  const chapterNumber = parseInt(numbers[0].trim())
   const verseNumber = parseInt(numbers[1])
   const verseEndNumber = numbers.length === 3 ? parseInt(numbers[2]) : undefined
+
+  const bookId = Reference.bookIdFromName(rawBookName)
+  const bookName = Reference.bookNameFromId(bookId)
 
   // todo get bibleVersion and language from settings
   const suggestingVerse = new VerseSuggesting(
