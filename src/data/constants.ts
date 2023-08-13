@@ -12,6 +12,10 @@ export const APP_NAMING = {
 
 export interface BibleReferencePluginSettings {
   bibleVersion: string
+  headFormatString: string
+  tailFormatString: string
+
+  // Deprecated
   referenceLinkPosition?: BibleVerseReferenceLinkPosition
   verseFormatting?: BibleVerseFormat
   verseNumberFormatting?: BibleVerseNumberFormat
@@ -25,6 +29,10 @@ export interface BibleReferencePluginSettings {
 
 export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
   bibleVersion: BibleVersionCollection[0].key,
+  headFormatString: '',
+  tailFormatString: '',
+
+  // Deprecated
   referenceLinkPosition: BibleVerseReferenceLinkPosition.Header,
   verseFormatting: BibleVerseFormat.SingleLine,
   verseNumberFormatting: BibleVerseNumberFormat.Period,
@@ -33,7 +41,10 @@ export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
   bookTagging: false,
   chapterTagging: false,
   bookBacklinking: false,
-  chapterBacklinking: false,
+  chapterBacklinking: false
 }
 
 export const API_WAITING_LABEL = 'Loading...';
+
+export const REFERENCE_STRING_EXPLANATION =
+  'Available Formatting: {{bible_version}} {{book}} {{chapter}} {{verse_reference_link}}'

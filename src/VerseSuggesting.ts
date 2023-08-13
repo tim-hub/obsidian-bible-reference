@@ -38,8 +38,10 @@ export class VerseSuggesting implements IVerseSuggesting {
    * @constructor
    */
   public get ReplacementContent(): string {
-    let head = `> [!Bible]`
-    let bottom = ''
+    let head = `> [!Bible]` + this.formatReferenceString(this.settings.headFormatString)
+    let bottom = '>' + this.formatReferenceString(this.settings.tailFormatString)
+
+    /*
     if (this.settings?.collapsibleVerses) {
       head += '-'
     }
@@ -79,6 +81,7 @@ export class VerseSuggesting implements IVerseSuggesting {
       bottom += (this.settings?.chapterTagging) ? ` #${this.bookName+this.chapterNumber}` : ''
       bottom += ' %%'
     }
+    */
 
     return [head, this.text, bottom].join('\n')
   }
@@ -109,6 +112,17 @@ export class VerseSuggesting implements IVerseSuggesting {
         ? [this.verseNumber, this.verseNumberEnd]
         : [this.verseNumber]
     )
+  }
+
+  private formatReferenceString(formatString: string): string {
+    if(!formatString.startsWith('+') && !formatString.startsWith('-')) {
+      formatString = ' ' + formatString
+    }
+    return formatString
+        .replaceAll('{{bible_version}}', this.bibleVersion)
+        .replaceAll('{{book}}', this.bookName)
+        .replaceAll('{{chapter}}', this.chapterNumber.toString())
+        .replaceAll('{{verse_reference_link}}', this.getVerseReference())
   }
 
   private formatVerseNumber(verseNumber: number | string) {

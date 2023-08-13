@@ -20,6 +20,7 @@ import {
   BibleVerseNumberFormat,
   BibleVerseNumberFormatCollection,
 } from '../data/BibleVerseNumberFormat'
+import { REFERENCE_STRING_EXPLANATION } from 'src/data/constants'
 
 export class BibleReferenceSettingTab extends PluginSettingTab {
   plugin: BibleReferencePlugin
@@ -140,86 +141,34 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
       })
   }
 
-  SetUpTextOptions = (containerEl: HTMLElement): void => {
+  SetUpHeaderFormatOptions = (containerEl: HTMLElement): void => {
     new Setting(containerEl)
-      .setName('Make Verses Collapsible')
-      .setDesc('Make the inserted verses collapsible')
-      .addToggle((toggle) =>
-        toggle
-          .setValue(!!this.plugin.settings?.collapsibleVerses)
-          .onChange((value) => {
-            this.plugin.settings.collapsibleVerses = value
-            this.plugin.saveData(this.plugin.settings)
+      .setName('Header Formatting String')
+      .setDesc('Describes how to format the header of the callout.')
+      .addText((text) => 
+        text
+          .setPlaceholder('> [!Bible]')
+          .setValue(this.plugin.settings.headFormatString)
+          .onChange(async (value) => {
+            this.plugin.settings.headFormatString = value;
+            console.debug('Header Format String To:' + value)
+            await this.plugin.saveSettings()
           })
       )
   }
 
-  SetUpBibleTagging = (containerEl: HTMLElement): void => {
+  SetUpFooterFormatOptions = (containerEl: HTMLElement): void => {
     new Setting(containerEl)
-      .setName('Create Bible Tags')
-      .setDesc('Makes hidden #bible tag')
-      .addToggle((toggle) =>
-        toggle
-          .setValue(!!this.plugin.settings?.bibleTagging)
-          .onChange((value) => {
-            this.plugin.settings.bibleTagging = value
-            this.plugin.saveData(this.plugin.settings)
-          })
-      )
-  }
-
-  SetUpBookTagging = (containerEl: HTMLElement): void => {
-    new Setting(containerEl)
-      .setName('Create Book Tags')
-      .setDesc('Makes hidden #{book} tag')
-      .addToggle((toggle) =>
-        toggle
-          .setValue(!!this.plugin.settings?.bookTagging)
-          .onChange((value) => {
-            this.plugin.settings.bookTagging = value
-            this.plugin.saveData(this.plugin.settings)
-          })
-      )
-  }
-
-  SetUpChapterTagging = (containerEl: HTMLElement): void => {
-    new Setting(containerEl)
-      .setName('Create Chapter Tags')
-      .setDesc('Makes hidden #{book_chapter} tag')
-      .addToggle((toggle) =>
-        toggle
-          .setValue(!!this.plugin.settings?.chapterTagging)
-          .onChange((value) => {
-            this.plugin.settings.chapterTagging = value
-            this.plugin.saveData(this.plugin.settings)
-          })
-      )
-  }
-
-  SetUpBookBacklinking = (containerEl: HTMLElement): void => {
-    new Setting(containerEl)
-      .setName('Create Book Backlink')
-      .setDesc('Makes [[{book}]] link')
-      .addToggle((toggle) =>
-        toggle
-          .setValue(!!this.plugin.settings?.bookBacklinking)
-          .onChange((value) => {
-            this.plugin.settings.bookBacklinking = value
-            this.plugin.saveData(this.plugin.settings)
-          })
-      )
-  }
-
-  SetUpChapterBacklinking = (containerEl: HTMLElement): void => {
-    new Setting(containerEl)
-      .setName('Create Chapter Backlink')
-      .setDesc('Makes [[{book_chapter}]] link')
-      .addToggle((toggle) =>
-        toggle
-          .setValue(!!this.plugin.settings?.chapterBacklinking)
-          .onChange((value) => {
-            this.plugin.settings.chapterBacklinking = value
-            this.plugin.saveData(this.plugin.settings)
+      .setName('Footer Formatting String')
+      .setDesc('Describes how to format the footer of the callout.')
+      .addText((text) => 
+        text
+          .setPlaceholder('')
+          .setValue(this.plugin.settings.tailFormatString)
+          .onChange(async (value) => {
+            this.plugin.settings.tailFormatString = value;
+            console.debug('Footer Format String To:' + value)
+            await this.plugin.saveSettings()
           })
       )
   }
@@ -237,13 +186,10 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     this.SetUpReferenceLinkPositionOptions(containerEl)
     this.SetUpVerseFormatOptions(containerEl)
     this.SetUpVerseNumberFormatOptions(containerEl)
-    this.SetUpTextOptions(containerEl)
-    containerEl.createEl('h2', { text: 'Tagging and Linking Settings' })
-    this.SetUpBibleTagging(containerEl)
-    this.SetUpBookTagging(containerEl)
-    this.SetUpChapterTagging(containerEl)
-    this.SetUpBookBacklinking(containerEl)
-    this.SetUpChapterBacklinking(containerEl)
+    containerEl.createEl('h2', { text: 'Header/Footer Format'})
+    containerEl.createEl('p', { text: REFERENCE_STRING_EXPLANATION })
+    this.SetUpHeaderFormatOptions(containerEl)
+    this.SetUpFooterFormatOptions(containerEl)
 
     containerEl.createEl('h2', { text: 'About' })
 
