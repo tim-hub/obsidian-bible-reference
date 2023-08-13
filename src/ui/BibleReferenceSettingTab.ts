@@ -147,7 +147,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
       .setDesc('Describes how to format the header of the callout.')
       .addText((text) => 
         text
-          .setPlaceholder('> [!Bible]')
+          .setPlaceholder('')
           .setValue(this.plugin.settings.headFormatString)
           .onChange(async (value) => {
             this.plugin.settings.headFormatString = value;
