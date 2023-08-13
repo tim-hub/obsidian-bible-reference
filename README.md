@@ -36,6 +36,17 @@
    3. Verse Number Formatting
    4. Collapsible or Not
 
+
+### Header And Footer Formatting Options
+
+| Template String          | Substitution                 |
+|--------------------------|------------------------------|
+| {{bible_version}}        | Current Bible version        |
+| {{book}}                 | Name of the quoted book      |
+| {{chapter}}              | Number of the quoted chapter |
+| {{verse_range}}          | Range of quoted verses       |
+| {{verse_reference_link}} | Link to the API reference    |
+
 ## How to install
 
 1. On the Obsidian's `Settings`

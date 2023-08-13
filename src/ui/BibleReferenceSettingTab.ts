@@ -20,7 +20,7 @@ import {
   BibleVerseNumberFormat,
   BibleVerseNumberFormatCollection,
 } from '../data/BibleVerseNumberFormat'
-import { REFERENCE_STRING_EXPLANATION } from 'src/data/constants'
+import { CalloutFoldFormat, CalloutFoldFormatCollection } from 'src/data/CalloutFoldFormat'
 
 export class BibleReferenceSettingTab extends PluginSettingTab {
   plugin: BibleReferencePlugin
@@ -141,6 +141,27 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
       })
   }
 
+  SetUpFoldOptions = (containerEl: HTMLElement): void => {
+    new Setting(containerEl)
+      .setName('Callout Default Folding')
+      .setDesc('Sets the state of generated callouts upon opening a note')
+      .addDropdown((dropdown: DropdownComponent) => {
+        CalloutFoldFormatCollection.forEach(({ name, description }) => {
+          dropdown.addOption(name, description)
+        });
+        dropdown
+          .setValue(
+            this.plugin.settings.calloutDefaultFold ?? CalloutFoldFormat.NoFold
+          )
+          .onChange(async (value) => {
+            this.plugin.settings.calloutDefaultFold = value as CalloutFoldFormat
+            console.debug('Callout Default Folding To: ' + value)
+            await this.plugin.saveSettings()
+            new Notice('Callout Default Folding Updated')
+          })
+      })
+  }
+
   SetUpHeaderFormatOptions = (containerEl: HTMLElement): void => {
     new Setting(containerEl)
       .setName('Header Formatting String')
@@ -186,8 +207,9 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     this.SetUpReferenceLinkPositionOptions(containerEl)
     this.SetUpVerseFormatOptions(containerEl)
     this.SetUpVerseNumberFormatOptions(containerEl)
+    this.SetUpFoldOptions(containerEl)
     containerEl.createEl('h2', { text: 'Header/Footer Format'})
-    containerEl.createEl('p', { text: REFERENCE_STRING_EXPLANATION })
+    containerEl.createEl('a', { text: 'View Available Formatting', href: 'https://github.com/tim-hub/obsidian-bible-reference#header-and-footer-formatting-options' })
     this.SetUpHeaderFormatOptions(containerEl)
     this.SetUpFooterFormatOptions(containerEl)
 

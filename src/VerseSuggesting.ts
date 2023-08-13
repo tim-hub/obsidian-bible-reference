@@ -11,6 +11,7 @@ import { BibleProvider } from './provider/BibleProvider'
 import { BibleVerseReferenceLinkPosition } from './data/BibleVerseReferenceLinkPosition'
 import { BibleVerseNumberFormat } from './data/BibleVerseNumberFormat'
 import { BibleVerseFormat } from './data/BibleVerseFormat'
+import { CalloutFoldFormat } from './data/CalloutFoldFormat'
 
 
 export class VerseSuggesting implements IVerseSuggesting {
@@ -38,7 +39,16 @@ export class VerseSuggesting implements IVerseSuggesting {
    * @constructor
    */
   public get ReplacementContent(): string {
-    let head = `> [!Bible]` + this.formatReferenceString(this.settings.headFormatString)
+    let head = `> [!Bible]`
+
+    if(this.settings.calloutDefaultFold === CalloutFoldFormat.Expand) {
+      head += '+'
+    } else if(this.settings.calloutDefaultFold === CalloutFoldFormat.Collapse) {
+      head += '-'
+    }
+
+    head += ' ' + this.formatReferenceString(this.settings.headFormatString)
+
     let bottom = '>' + this.formatReferenceString(this.settings.tailFormatString)
 
     /*
@@ -115,13 +125,13 @@ export class VerseSuggesting implements IVerseSuggesting {
   }
 
   private formatReferenceString(formatString: string): string {
-    if(!formatString.startsWith('+') && !formatString.startsWith('-')) {
-      formatString = ' ' + formatString
-    }
+    let verseFormatString = this.verseNumber.toString()
+    if(this.verseNumberEnd != undefined) verseFormatString += '-' + this.verseNumberEnd
     return formatString
         .replaceAll('{{bible_version}}', this.bibleVersion)
         .replaceAll('{{book}}', this.bookName)
         .replaceAll('{{chapter}}', this.chapterNumber.toString())
+        .replaceAll('{{verse_range}}', verseFormatString)
         .replaceAll('{{verse_reference_link}}', this.getVerseReference())
   }
 
