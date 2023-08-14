@@ -21,6 +21,7 @@ import {
   BibleVerseNumberFormatCollection,
 } from '../data/BibleVerseNumberFormat'
 import { CalloutFoldFormat, CalloutFoldFormatCollection } from 'src/data/CalloutFoldFormat'
+import { migrateSettings } from 'src/utils/SettingsMigration'
 
 export class BibleReferenceSettingTab extends PluginSettingTab {
   plugin: BibleReferencePlugin
@@ -194,6 +195,14 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
       )
   }
 
+  SetUpMigrationButton = (containerEl: HTMLElement): void => {
+    let button = containerEl.createEl('button', { text: 'Migrate' })
+    button.onclick = () => {
+      migrateSettings(this.plugin.settings)
+      new Notice('Migated old plugin settings.  Please close and reopen the settings dialogue to see changes.', 0)
+    }
+  }
+
   display(): void {
     const { containerEl } = this
     containerEl.empty()
@@ -212,6 +221,9 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     containerEl.createEl('a', { text: 'View Available Formatting', href: 'https://github.com/tim-hub/obsidian-bible-reference#header-and-footer-formatting-options' })
     this.SetUpHeaderFormatOptions(containerEl)
     this.SetUpFooterFormatOptions(containerEl)
+
+    containerEl.createEl('h2', { text: 'Migrate Old Settings' })
+    this.SetUpMigrationButton(containerEl)
 
     containerEl.createEl('h2', { text: 'About' })
 
