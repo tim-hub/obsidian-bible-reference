@@ -196,6 +196,8 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
   }
 
   SetUpMigrationButton = (containerEl: HTMLElement): void => {
+    let warning = containerEl.createEl('p', { text: 'WARNING: THIS WILL OVERRIDE YOUR CURRENT HEADER AND FOOTER SETTINGS' })
+    warning.style.cssText = 'color:red'
     let button = containerEl.createEl('button', { text: 'Migrate' })
     button.onclick = () => {
       migrateSettings(this.plugin.settings)
