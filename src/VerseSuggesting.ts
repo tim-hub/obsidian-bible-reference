@@ -39,59 +39,9 @@ export class VerseSuggesting implements IVerseSuggesting {
    * @constructor
    */
   public get ReplacementContent(): string {
-    let head = `> [!Bible]`
+    let head = this.formatReferenceString(this.settings.headFormatString)
 
-    if(this.settings.calloutDefaultFold === CalloutFoldFormat.Expand) {
-      head += '+'
-    } else if(this.settings.calloutDefaultFold === CalloutFoldFormat.Collapse) {
-      head += '-'
-    }
-
-    head += ' ' + this.formatReferenceString(this.settings.headFormatString)
-
-    let bottom = '>' + this.formatReferenceString(this.settings.tailFormatString)
-
-    /*
-    if (this.settings?.collapsibleVerses) {
-      head += '-'
-    }
-    if (
-      this.settings.referenceLinkPosition ===
-        BibleVerseReferenceLinkPosition.Header ||
-      this.settings.referenceLinkPosition ===
-        BibleVerseReferenceLinkPosition.AllAbove
-    ) {
-      head += this.getVerseReference()
-    }
-    if (
-      this.settings.referenceLinkPosition ===
-        BibleVerseReferenceLinkPosition.Bottom ||
-      this.settings.referenceLinkPosition ===
-        BibleVerseReferenceLinkPosition.AllAbove
-    ) {
-      bottom += `> \n ${this.getVerseReference()}`
-    }
-
-    // backlinks and tags use the BibleReferenceHeader 
-    //  and regex to clean book and chapters that will match
-    //  across multiple different search queires
-    if (this.settings?.bookBacklinking){
-      head += ` [[${this.bookName}]]`
-    }
-    if (this.settings?.chapterBacklinking){
-      head += ` [[${this.bookName+this.chapterNumber}]]`
-    }
-    if (
-      this.settings?.bibleTagging ||
-      this.settings?.bookTagging ||
-      this.settings?.chapterTagging) {
-      bottom += ' %%'
-      bottom += (this.settings?.bibleTagging) ? ' #bible' : ''
-      bottom += (this.settings?.bookTagging) ? ` #${this.bookName}` : ''
-      bottom += (this.settings?.chapterTagging) ? ` #${this.bookName+this.chapterNumber}` : ''
-      bottom += ' %%'
-    }
-    */
+    let bottom = this.formatReferenceString(this.settings.tailFormatString)
 
     return [head, this.text, bottom].join('\n')
   }

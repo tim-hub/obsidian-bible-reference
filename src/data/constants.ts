@@ -31,8 +31,8 @@ export interface BibleReferencePluginSettings {
 
 export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
   bibleVersion: BibleVersionCollection[0].key,
-  headFormatString: '{{verse_reference_link}}',
-  tailFormatString: '',
+  headFormatString: '> [!Bible] {{verse_reference_link}}',
+  tailFormatString: '>',
   calloutDefaultFold: CalloutFoldFormat.NoFold,
 
   // Deprecated
