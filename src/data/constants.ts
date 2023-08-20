@@ -15,9 +15,10 @@ export interface BibleReferencePluginSettings {
   bibleVersion: string
   headFormatString: string
   tailFormatString: string
-  calloutDefaultFold: CalloutFoldFormat,
+  calloutDefaultFold: CalloutFoldFormat
 
   // Deprecated
+  autoMigrate: boolean
   referenceLinkPosition?: BibleVerseReferenceLinkPosition
   verseFormatting?: BibleVerseFormat
   verseNumberFormatting?: BibleVerseNumberFormat
@@ -36,6 +37,7 @@ export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
   calloutDefaultFold: CalloutFoldFormat.NoFold,
 
   // Deprecated
+  autoMigrate: true,
   referenceLinkPosition: BibleVerseReferenceLinkPosition.Header,
   verseFormatting: BibleVerseFormat.SingleLine,
   verseNumberFormatting: BibleVerseNumberFormat.Period,

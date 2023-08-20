@@ -195,16 +195,6 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
       )
   }
 
-  SetUpMigrationButton = (containerEl: HTMLElement): void => {
-    let warning = containerEl.createEl('p', { text: 'WARNING: THIS WILL OVERRIDE YOUR CURRENT HEADER AND FOOTER SETTINGS' })
-    warning.style.cssText = 'color:red'
-    let button = containerEl.createEl('button', { text: 'Migrate' })
-    button.onclick = () => {
-      migrateSettings(this.plugin.settings)
-      new Notice('Migated old plugin settings.  Please close and reopen the settings dialogue to see changes.', 0)
-    }
-  }
-
   display(): void {
     const { containerEl } = this
     containerEl.empty()
@@ -223,9 +213,6 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     containerEl.createEl('a', { text: 'View Available Formatting', href: 'https://github.com/tim-hub/obsidian-bible-reference#formatting-strings' })
     this.SetUpHeaderFormatOptions(containerEl)
     this.SetUpFooterFormatOptions(containerEl)
-
-    containerEl.createEl('h2', { text: 'Migrate Old Settings' })
-    this.SetUpMigrationButton(containerEl)
 
     containerEl.createEl('h2', { text: 'About' })
 

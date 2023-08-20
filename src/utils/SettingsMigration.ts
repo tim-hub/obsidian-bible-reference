@@ -1,7 +1,7 @@
 import { Notice } from "obsidian";
 import { BibleVerseReferenceLinkPosition } from "src/data/BibleVerseReferenceLinkPosition";
 import { CalloutFoldFormat } from "src/data/CalloutFoldFormat";
-import { BibleReferencePluginSettings } from "src/data/constants";
+import { BibleReferencePluginSettings, DEFAULT_SETTINGS } from "src/data/constants";
 
 export function migrateSettings(settings: BibleReferencePluginSettings) {
   let newHeadFormat: string[] = ['>']
@@ -51,4 +51,10 @@ export function migrateSettings(settings: BibleReferencePluginSettings) {
 
   settings.headFormatString = newHeadFormat.join(' ')
   settings.tailFormatString = newTailFormat.join(' ')
+}
+
+export function autoMigrate(settings: BibleReferencePluginSettings) {
+  settings.autoMigrate = false
+  migrateSettings(settings)
+  new Notice('Automatically migrated old settings.  If this is your first time using the plugin, ignore this message.')
 }
