@@ -31,13 +31,12 @@
 1. Open `Settings`
 2. Click `Bible Version` in Plugin Options section
 3. Select the Bible Version you want to use
-   1. Reference Position (Header, Bottom or Both)
-   2. Formatting in `Paragraph` or `Single Line`
-   3. Verse Number Formatting
-   4. Collapsible or Not
+   1. Formatting in `Paragraph` or `Single Line`
+   2. Verse Number Formatting
 
+### Formatting Strings
 
-### Header And Footer Formatting Options
+These are special substitutions used in the formatting settings.
 
 | Template String          | Substitution                 |
 |--------------------------|------------------------------|

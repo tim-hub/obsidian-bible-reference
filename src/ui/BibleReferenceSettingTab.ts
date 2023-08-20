@@ -220,7 +220,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     this.SetUpVerseNumberFormatOptions(containerEl)
     this.SetUpFoldOptions(containerEl)
     containerEl.createEl('h2', { text: 'Header/Footer Format'})
-    containerEl.createEl('a', { text: 'View Available Formatting', href: 'https://github.com/tim-hub/obsidian-bible-reference#header-and-footer-formatting-options' })
+    containerEl.createEl('a', { text: 'View Available Formatting', href: 'https://github.com/tim-hub/obsidian-bible-reference#formatting-strings' })
     this.SetUpHeaderFormatOptions(containerEl)
     this.SetUpFooterFormatOptions(containerEl)
 
