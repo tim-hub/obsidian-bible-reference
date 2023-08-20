@@ -167,7 +167,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     new Setting(containerEl)
       .setName('Header Formatting String')
       .setDesc('Describes how to format the header of the callout.')
-      .addText((text) => 
+      .addTextArea((text) => 
         text
           .setPlaceholder('')
           .setValue(this.plugin.settings.headFormatString)
@@ -183,7 +183,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     new Setting(containerEl)
       .setName('Footer Formatting String')
       .setDesc('Describes how to format the footer of the callout.')
-      .addText((text) => 
+      .addTextArea((text) => 
         text
           .setPlaceholder('')
           .setValue(this.plugin.settings.tailFormatString)
