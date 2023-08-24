@@ -6,6 +6,6 @@
  */
 import { MODAL_REG, SHORT_REG } from './regs'
 
-export const VerseTypoCheck = (verse: string, modal = false): string => {
-  return verse.match(modal ? MODAL_REG : SHORT_REG)?.first() ?? ''
+export const VerseTypoCheck = (verse: string, isFromModal = false): string => {
+  return verse.match(isFromModal ? MODAL_REG : SHORT_REG)?.first() ?? ''
 }

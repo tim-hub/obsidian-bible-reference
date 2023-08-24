@@ -44,7 +44,13 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
     suggestEl.createDiv({ cls: 'obr-loading-container' }).hide()
 
     const currentContent = editor.getLine(cursor.line).substring(0, cursor.ch)
-    const match = VerseTypoCheck(currentContent)
+
+    if (currentContent === '--vod') {
+      console.debug('# tirgger verse of the day')
+      //  todo call api get verse of day
+    }
+
+    const match = VerseTypoCheck(currentContent, false)
     if (match) {
       console.debug('trigger on', currentContent)
       return {
