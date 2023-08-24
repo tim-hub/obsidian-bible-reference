@@ -167,4 +167,17 @@ export const BibleVersionCollection: IBibleVersion[] = [
     language: "Indonesian",
     apiSource: BibleAPISourceCollection.bollsLife,
   },
+  {
+    key: "bti",
+    versionName: "Библия под ред. М.П. Кулакова и М.М. Кулакова, 2015",
+    language: "Russian",
+    apiSource: BibleAPISourceCollection.bollsLife,
+  },
+  {
+    key: "utt",
+    versionName: "Українська Біблія LXX УБТ Рафаїла Турконяка (2011) 77 книг",
+    language: "Ukrainian",
+    apiSource: BibleAPISourceCollection.bollsLife,
+  },
+
 ];
