@@ -73,5 +73,6 @@ I must say thanks to all of you, for the help and support. 🙇‍
 
 #### Sponsors
 
+**Previous Sponsors**:
 [Patrick McGrath](https://github.com/PatrickMcGrath29), [Chris Gonzales](https://github.com/chrisg32), [aknisly](https://github.com/aknisly)
 
