@@ -10,7 +10,7 @@
 >
 > - 👉 `Star` the Project
 > - ☕️ **Buy me a coffee** @[Github Sponsor](https://github.com/sponsors/tim-hub)
-> - ❤️ Provide Feedback in [`Issues`](https://github.com/tim-hub/obsidian-bible-reference/issues) or on [`Twitter`](https://twitter.com/TechTim42)
+> - ❤️ Provide Feedback in [`Issues`](https://github.com/tim-hub/obsidian-bible-reference/issues) or join [`Discussion`](https://github.com/tim-hub/obsidian-bible-reference/discussions)
 
 ---
 
