@@ -61,9 +61,17 @@
 
 ### Credits
 
+I must say thanks to all of you, for the help and support. 🙇‍
+
 | Name           |               Github Username                | Note                                                                        |
 | :------------- | :------------------------------------------: | --------------------------------------------------------------------------- |
 | Tim Morgan     |    [@seven1m](https://github.com/seven1m)    | For the open source bible-api project and the maintenance of bible-api.com. |
 | Bolls Life API | [@bpavlisinec](mailto:bpavlisinec@gmail.com) | For the free public bible API.                                              |
 
 > [**All Contributors**](https://github.com/tim-hub/obsidian-bible-reference/graphs/contributors) 👍🙏
+
+
+#### Sponsors
+
+[Patrick McGrath](https://github.com/PatrickMcGrath29), [Chris Gonzales](https://github.com/chrisg32), [aknisly](https://github.com/aknisly)
+
