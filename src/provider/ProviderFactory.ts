@@ -3,6 +3,7 @@ import { BibleAPIDotComProvider } from './BibleAPIDotComProvider'
 import { BibleProvider } from './BibleProvider'
 import { BibleAPISourceCollection } from '../data/BibleApiSourceCollection'
 import { BollyLifeProvider } from './BollyLifeProvider'
+import { NetBibleProvider } from './NetBibleProvider';
 
 /**
  * A factory for Bible API providers.
@@ -47,6 +48,9 @@ export class BibleAPIFactory {
       }
       case BibleAPISourceCollection.bollsLife: {
         return new BollyLifeProvider(bibleVersion)
+      }
+      case BibleAPISourceCollection.netBible: {
+        return new NetBibleProvider(bibleVersion)
       }
       default: {
         return new BibleAPIDotComProvider(bibleVersion)

@@ -165,4 +165,12 @@ export const BibleVersionCollection: IBibleVersion[] = [
     language: "Indonesian",
     apiSource: BibleAPISourceCollection.bollsLife,
   },
+
+  // net bible
+  {
+    key: "net-bible",
+    versionName: "Net Bible",
+    language: "English",
+    apiSource: BibleAPISourceCollection.netBible,
+  },
 ];

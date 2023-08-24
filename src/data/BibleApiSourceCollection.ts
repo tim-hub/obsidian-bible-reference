@@ -8,4 +8,8 @@ export const BibleAPISourceCollection = {
     apiUrl: 'https://bolls.life/get-text', // 'https://bolls.life',
   //  self hosted proxy for bolls life api, https://bible-api-bff.bai.uno/bolls-life
   },
+  netBible: {
+    name: 'Net Bible',
+    apiUrl: 'https://labs.bible.org/api/?type=json'
+  }
 }

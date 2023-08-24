@@ -60,10 +60,27 @@ export abstract class BibleProvider {
       verse,
       versionName || this._key
     )
-    console.debug(url, 'url to query')
+    console.debug('url to query', url)
     try {
-      const response = await fetch(url)
-      const data = await response.json()
+      const response = await fetch(url, {
+        method: 'get',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        redirect: "follow", // manual, *follow, error
+        cache: "force-cache",
+      })
+
+
+      const rsp = await response.text()
+      console.debug('###', rsp, response)
+
+
+
+      let data = {}
+      //
+      // data = response.json()
+      // // console.debug('resp data', data)
       return this.formatBibleVerses(
         data,
         bookName,
@@ -71,6 +88,7 @@ export abstract class BibleProvider {
         verse,
         versionName || this._key
       )
+
     } catch (e) {
       console.error('error while querying', e)
       return await Promise.reject(e)
