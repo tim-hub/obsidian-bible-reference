@@ -62,7 +62,14 @@ export abstract class BibleProvider {
     )
     console.debug(url, 'url to query')
     try {
-      const response = await fetch(url)
+      const response = await fetch(url, {
+        method: 'get',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        redirect: "follow", // manual, *follow, error
+        cache: "force-cache",
+      })
       const data = await response.json()
       return this.formatBibleVerses(
         data,
