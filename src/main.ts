@@ -21,7 +21,7 @@ export default class BibleReferencePlugin extends Plugin {
     this.registerEditorSuggest(new VerseEditorSuggester(this, this.settings))
     this.addCommand({
       id: 'obr-lookup',
-      name: 'Verse Lookup',
+      name: 'Bible Verse Lookup',
       callback: () => {
         this.suggestModal.open()
       },
