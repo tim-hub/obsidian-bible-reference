@@ -6,7 +6,7 @@ import { BibleVersionCollection } from './data/BibleVersionCollection'
 import { IBibleVersion } from './interfaces/IBibleVersion'
 import { IVerseSuggesting } from './interfaces/IVerseSuggesting'
 import { IVerse } from './interfaces/IVerse'
-import { BibleAPIFactory } from './provider/BibleAPIFactory'
+import { ProviderFactory } from './provider/ProviderFactory'
 import { BibleProvider } from './provider/BibleProvider'
 import { BibleVerseReferenceLinkPosition } from './data/BibleVerseReferenceLinkPosition'
 import { BibleVerseNumberFormat } from './data/BibleVerseNumberFormat'
@@ -98,7 +98,7 @@ export class VerseSuggesting implements IVerseSuggesting {
     ) {
       // make sure this is only 1 adapter, and it is the same bible version
       this.bibleProvider =
-        BibleAPIFactory.Instance.BuildBibleVersionAPIAdapterFromIBibleVersion(
+        ProviderFactory.Instance.BuildBibleVersionAPIAdapterFromIBibleVersion(
           bibleVersion
         )
     }

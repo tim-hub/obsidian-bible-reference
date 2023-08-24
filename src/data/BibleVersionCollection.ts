@@ -2,6 +2,7 @@ import { IBibleVersion } from '../interfaces/IBibleVersion'
 import { BibleAPISourceCollection } from './BibleApiSourceCollection'
 
 export const BibleVersionCollection: IBibleVersion[] = [
+  // bible api
   {
     key: 'web',
     versionName: 'World English Bible',
@@ -62,6 +63,7 @@ export const BibleVersionCollection: IBibleVersion[] = [
     language: 'English (UK)',
     apiSource: BibleAPISourceCollection.bibleApi,
   },
+  // bolls life
   {
     key: 'nkjv',
     versionName: 'New King James Version',
