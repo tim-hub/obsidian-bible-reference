@@ -13,3 +13,8 @@ If your plugin does not need CSS, delete this file.
 .obr-loading-container {
   padding: 1em;
 }
+
+.modal-contents {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
