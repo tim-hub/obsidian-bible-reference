@@ -1,6 +1,6 @@
 import { IBibleVersion } from '../interfaces/IBibleVersion'
 import { BibleAPIDotComProvider } from './BibleAPIDotComProvider'
-import { BibleProvider } from './BibleProvider'
+import { BaseBibleAPIProvider } from './BaseBibleAPIProvider'
 import { BibleAPISourceCollection } from '../data/BibleApiSourceCollection'
 import { BollyLifeProvider } from './BollyLifeProvider'
 
@@ -40,7 +40,7 @@ export class ProviderFactory {
    */
   public BuildBibleVersionAPIAdapterFromIBibleVersion(
     bibleVersion: IBibleVersion
-  ): BibleProvider {
+  ): BaseBibleAPIProvider {
     switch (bibleVersion.apiSource) {
       case BibleAPISourceCollection.bibleApi: {
         return new BibleAPIDotComProvider(bibleVersion)

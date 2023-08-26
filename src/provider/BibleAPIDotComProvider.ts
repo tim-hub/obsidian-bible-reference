@@ -1,8 +1,8 @@
 import { IVerse } from '../interfaces/IVerse'
 import { IBibleVersion } from '../interfaces/IBibleVersion'
-import { BibleProvider } from './BibleProvider'
+import { BaseBibleAPIProvider } from './BaseBibleAPIProvider'
 
-export class BibleAPIDotComProvider extends BibleProvider {
+export class BibleAPIDotComProvider extends BaseBibleAPIProvider {
   public constructor(bibleVersion: IBibleVersion) {
     super()
     const { key } = bibleVersion

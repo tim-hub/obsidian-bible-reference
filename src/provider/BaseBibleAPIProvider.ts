@@ -1,6 +1,6 @@
 import { IVerse } from '../interfaces/IVerse'
 
-export abstract class BibleProvider {
+export abstract class BaseBibleAPIProvider {
   protected _key: string // the version selected
   protected _apiUrl: string
   protected _queryUrl: string
@@ -84,6 +84,10 @@ export abstract class BibleProvider {
     }
   }
 
+  public getVerseOfTheDay(): Promise<IVerse[]> {
+    return this.query('John', 3, [16])
+  }
+
   /**
    * Build the request URL from the given parameters, and set the _queryUrl
    * @param bookName
@@ -91,7 +95,7 @@ export abstract class BibleProvider {
    * @param verses
    * @param versionName
    */
-  public abstract buildRequestURL(
+  protected abstract buildRequestURL(
     bookName: string,
     chapter: number,
     verses?: number[],
