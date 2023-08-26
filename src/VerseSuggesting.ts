@@ -34,9 +34,8 @@ export class VerseSuggesting implements IVerseSuggesting {
 
   /**
    * To get the content of the bible verses
-   * @constructor
    */
-  public get ReplacementContent(): string {
+  public get versesContent(): string {
     let head = `> [!Bible]`
     let bottom = ''
     if (this.settings?.collapsibleVerses) {

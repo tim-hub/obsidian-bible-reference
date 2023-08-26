@@ -34,6 +34,6 @@ export class VerseLookupSuggestModal extends SuggestModal<VerseSuggesting> {
     if (!editor) {
       return
     }
-    editor.replaceRange(item.ReplacementContent, editor.getCursor())
+    editor.replaceRange(item.versesContent, editor.getCursor())
   }
 }

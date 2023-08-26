@@ -6,7 +6,7 @@ import {
 } from './data/constants'
 import { BibleReferenceSettingTab } from './ui/BibleReferenceSettingTab'
 import { VerseEditorSuggester } from './suggesetor/VerseEditorSuggester'
-import { VerseLookupSuggestModal } from './ui/VerseLookupSuggestModal'
+import { VerseLookupSuggestModal } from './suggesetor/VerseLookupSuggestModal'
 
 export default class BibleReferencePlugin extends Plugin {
   settings: BibleReferencePluginSettings
@@ -19,6 +19,7 @@ export default class BibleReferencePlugin extends Plugin {
     this.suggestModal = new VerseLookupSuggestModal(this.app, this.settings)
     this.addSettingTab(new BibleReferenceSettingTab(this.app, this))
     this.registerEditorSuggest(new VerseEditorSuggester(this, this.settings))
+    // todo register vod suggester here
     this.addCommand({
       id: 'obr-lookup',
       name: 'Verse Lookup',
