@@ -102,9 +102,9 @@ export const BibleVersionCollection: IBibleVersion[] = [
     apiSource: BibleAPISourceCollection.bollsLife,
   },
   {
-    key: "svd",
-    versionName: "Smith and Van Dyke",
-    language: "Arabic العربية",
+    key: 'svd',
+    versionName: 'Smith and Van Dyke',
+    language: 'Arabic العربية',
     apiSource: BibleAPISourceCollection.bollsLife,
   },
   {
@@ -132,9 +132,9 @@ export const BibleVersionCollection: IBibleVersion[] = [
     apiSource: BibleAPISourceCollection.bollsLife,
   },
   {
-    key: "nvi",
-    versionName: "Nueva Version Internacional",
-    language: "Spanish",
+    key: 'nvi',
+    versionName: 'Nueva Version Internacional',
+    language: 'Spanish',
     apiSource: BibleAPISourceCollection.bollsLife,
   },
   {
@@ -144,9 +144,9 @@ export const BibleVersionCollection: IBibleVersion[] = [
     apiSource: BibleAPISourceCollection.bollsLife,
   },
   {
-    key: "lbla",
-    versionName: "La Biblia de Las Americas, 1997",
-    language: "Spanish",
+    key: 'lbla',
+    versionName: 'La Biblia de Las Americas, 1997',
+    language: 'Spanish',
     apiSource: BibleAPISourceCollection.bollsLife,
   },
   {
@@ -156,28 +156,27 @@ export const BibleVersionCollection: IBibleVersion[] = [
     apiSource: BibleAPISourceCollection.bollsLife,
   },
   {
-    key: "bw",
-    versionName: "Biblia warszawska, 1975",
-    language: "Polish",
+    key: 'bw',
+    versionName: 'Biblia warszawska, 1975',
+    language: 'Polish',
     apiSource: BibleAPISourceCollection.bollsLife,
   },
   {
-    key: "tb",
-    versionName: "Terjemahan Baru",
-    language: "Indonesian",
+    key: 'tb',
+    versionName: 'Terjemahan Baru',
+    language: 'Indonesian',
     apiSource: BibleAPISourceCollection.bollsLife,
   },
   {
-    key: "bti",
-    versionName: "Библия под ред. М.П. Кулакова и М.М. Кулакова, 2015",
-    language: "Russian",
+    key: 'bti',
+    versionName: 'Библия под ред. М.П. Кулакова и М.М. Кулакова, 2015',
+    language: 'Russian',
     apiSource: BibleAPISourceCollection.bollsLife,
   },
   {
-    key: "utt",
-    versionName: "Українська Біблія LXX УБТ Рафаїла Турконяка (2011) 77 книг",
-    language: "Ukrainian",
+    key: 'utt',
+    versionName: 'Українська Біблія LXX УБТ Рафаїла Турконяка (2011) 77 книг',
+    language: 'Ukrainian',
     apiSource: BibleAPISourceCollection.bollsLife,
   },
-
-];
+]

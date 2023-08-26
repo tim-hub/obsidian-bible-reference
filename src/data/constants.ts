@@ -36,4 +36,4 @@ export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
   chapterBacklinking: false,
 }
 
-export const API_WAITING_LABEL = 'Loading...';
+export const API_WAITING_LABEL = 'Loading...'

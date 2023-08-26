@@ -13,7 +13,7 @@ export async function getSuggestionsFromQuery(
   console.debug('get suggestion for query ', query.toLowerCase())
 
   const rawBookName = query.match(BOOK_REG)?.first()
-  
+
   if (!rawBookName) {
     console.error(`could not find through query`, query)
     return []

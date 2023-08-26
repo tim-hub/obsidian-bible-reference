@@ -9,7 +9,10 @@ import {
 import BibleReferencePlugin from '../main'
 import { VerseTypoCheck } from '../utils/VerseTypoCheck'
 import { VerseSuggesting } from '../VerseSuggesting'
-import { API_WAITING_LABEL, BibleReferencePluginSettings } from '../data/constants'
+import {
+  API_WAITING_LABEL,
+  BibleReferencePluginSettings,
+} from '../data/constants'
 import { getSuggestionsFromQuery } from './getSuggestionsFromQuery'
 
 /**
@@ -40,7 +43,7 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
     _: TFile
   ): EditorSuggestTriggerInfo | null {
     // @ts-ignore
-    const suggestEl = (this.suggestEl as HTMLDivElement)
+    const suggestEl = this.suggestEl as HTMLDivElement
     suggestEl.createDiv({ cls: 'obr-loading-container' }).hide()
 
     const currentContent = editor.getLine(cursor.line).substring(0, cursor.ch)
@@ -67,17 +70,20 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
     context: EditorSuggestContext
   ): Promise<VerseSuggesting[]> {
     // @ts-ignore
-    const suggestEl = (this.suggestEl as HTMLDivElement)
+    const suggestEl = this.suggestEl as HTMLDivElement
     // @ts-ignore
-    const suggestionsEl = (this.suggestions as any).containerEl as HTMLDivElement
+    const suggestionsEl = (this.suggestions as any)
+      .containerEl as HTMLDivElement
     suggestionsEl.hide()
 
-    const loadingContainer = (suggestEl.getElementsByClassName('obr-loading-container')[0] as HTMLDivElement)
+    const loadingContainer = suggestEl.getElementsByClassName(
+      'obr-loading-container'
+    )[0] as HTMLDivElement
     loadingContainer.setText(API_WAITING_LABEL)
     loadingContainer.show()
 
     const suggestions = getSuggestionsFromQuery(context.query, this.settings)
-    
+
     return suggestions.finally(() => {
       loadingContainer.hide()
       suggestionsEl.show()
