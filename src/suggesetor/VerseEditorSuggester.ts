@@ -7,7 +7,7 @@ import {
   TFile,
 } from 'obsidian'
 import BibleReferencePlugin from '../main'
-import { VerseTypoCheck } from '../utils/VerseTypoCheck'
+import { verseMatch } from '../utils/verseMatch'
 import { VerseSuggesting } from '../VerseSuggesting'
 import {
   API_WAITING_LABEL,
@@ -44,17 +44,23 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
   ): EditorSuggestTriggerInfo | null {
     // @ts-ignore
     const suggestEl = this.suggestEl as HTMLDivElement
-    suggestEl.createDiv({ cls: 'obr-loading-container' }).hide()
+    suggestEl.createDiv({cls: 'obr-loading-container'}).hide()
 
     const currentContent = editor.getLine(cursor.line).substring(0, cursor.ch)
 
     if (currentContent === '--vod') {
-      console.debug('# tirgger verse of the day')
-      //  todo call api get verse of day
+      return {
+        end: cursor,
+        start: {
+          line: cursor.line,
+          ch: currentContent.lastIndexOf('--vod'),
+        },
+        query: '--vod',
+      }
     }
 
-    const match = VerseTypoCheck(currentContent, false)
-    if (match) {
+    const match = verseMatch(currentContent, false)
+    if (match || currentContent === '--vod') {
       console.debug('trigger on', currentContent)
       return {
         end: cursor,
@@ -88,12 +94,10 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
     loadingContainer.setText(API_WAITING_LABEL)
     loadingContainer.show()
 
-    const suggestions = getSuggestionsFromQuery(context.query, this.settings)
-
-    return suggestions.finally(() => {
-      loadingContainer.hide()
-      suggestionsEl.show()
-    })
+    const suggestions = await getSuggestionsFromQuery(context.query, this.settings)
+    loadingContainer.hide()
+    suggestionsEl.show()
+    return suggestions
   }
 
   renderSuggestion(suggestion: VerseSuggesting, el: HTMLElement): void {

@@ -7,7 +7,7 @@ import { IBibleVersion } from './interfaces/IBibleVersion'
 import { IVerseSuggesting } from './interfaces/IVerseSuggesting'
 import { IVerse } from './interfaces/IVerse'
 import { ProviderFactory } from './provider/ProviderFactory'
-import { BibleProvider } from './provider/BibleProvider'
+import { BaseBibleAPIProvider } from './provider/BaseBibleAPIProvider'
 import { BibleVerseReferenceLinkPosition } from './data/BibleVerseReferenceLinkPosition'
 import { BibleVerseNumberFormat } from './data/BibleVerseNumberFormat'
 import { BibleVerseFormat } from './data/BibleVerseFormat'
@@ -16,7 +16,7 @@ export class VerseSuggesting implements IVerseSuggesting {
   public text: string
   public verses: string
   public bibleVersion: string
-  private bibleProvider: BibleProvider
+  private bibleProvider: BaseBibleAPIProvider
 
   constructor(
     public settings: BibleReferencePluginSettings,
@@ -44,17 +44,17 @@ export class VerseSuggesting implements IVerseSuggesting {
     }
     if (
       this.settings.referenceLinkPosition ===
-        BibleVerseReferenceLinkPosition.Header ||
+      BibleVerseReferenceLinkPosition.Header ||
       this.settings.referenceLinkPosition ===
-        BibleVerseReferenceLinkPosition.AllAbove
+      BibleVerseReferenceLinkPosition.AllAbove
     ) {
       head += this.getVerseReference()
     }
     if (
       this.settings.referenceLinkPosition ===
-        BibleVerseReferenceLinkPosition.Bottom ||
+      BibleVerseReferenceLinkPosition.Bottom ||
       this.settings.referenceLinkPosition ===
-        BibleVerseReferenceLinkPosition.AllAbove
+      BibleVerseReferenceLinkPosition.AllAbove
     ) {
       bottom += `> \n ${this.getVerseReference()}`
     }
@@ -85,7 +85,38 @@ export class VerseSuggesting implements IVerseSuggesting {
     return [head, this.text, bottom].join('\n')
   }
 
-  public async getVerses(): Promise<IVerse[]> {
+  public async fetchAndSetVersesText(): Promise<void> {
+    // todo add a caching here, this might not be possible with Obsidian limit
+    const verses = await this.getVerses()
+    let text = ''
+
+    if (this.settings.verseFormatting === BibleVerseFormat.Paragraph) {
+      text = '> '
+    } else {
+      text = ''
+    }
+    verses.forEach((verse) => {
+      const verseNumberFormatted = this.formatVerseNumber(verse.verse)
+      if (this.settings.verseFormatting === BibleVerseFormat.Paragraph) {
+        text +=
+          ' ' + verseNumberFormatted + verse.text.trim().replaceAll('\n', ' ')
+      } else {
+        text += '> ' + verseNumberFormatted + verse.text.trim() + '\n'
+      }
+    })
+    this.text = text.trim()
+  }
+
+  /**
+   * Render for use in editor/modal suggest
+   */
+  public renderSuggestion(el: HTMLElement) {
+    const outer = el.createDiv({cls: 'obr-suggester-container'})
+    // @ts-ignore
+    outer.createDiv({cls: 'obr-shortcode'}).setText(this.text)
+  }
+
+  private async getVerses(): Promise<IVerse[]> {
     console.debug(this.bibleVersion)
     if (this.bibleVersion === DEFAULT_SETTINGS.bibleVersion) {
       console.debug('match to default language plus version')
@@ -146,39 +177,9 @@ export class VerseSuggesting implements IVerseSuggesting {
     }
   }
 
-  public async fetchAndSetVersesText(): Promise<void> {
-    // todo add a caching here, this might not be possible with Obsidian limit
-    const verses = await this.getVerses()
-    let text = ''
-
-    if (this.settings.verseFormatting === BibleVerseFormat.Paragraph) {
-      text = '> '
-    } else {
-      text = ''
-    }
-    verses.forEach((verse) => {
-      const verseNumberFormatted = this.formatVerseNumber(verse.verse)
-      if (this.settings.verseFormatting === BibleVerseFormat.Paragraph) {
-        text +=
-          ' ' + verseNumberFormatted + verse.text.trim().replaceAll('\n', ' ')
-      } else {
-        text += '> ' + verseNumberFormatted + verse.text.trim() + '\n'
-      }
-    })
-    this.text = text.trim()
-  }
-
-  public getVerseReference(): string {
+  private getVerseReference(): string {
     return ` [${
       this.bibleProvider.BibleReferenceHead
     } - ${this.bibleVersion.toUpperCase()}](${this.bibleProvider.VerseLinkURL})`
-  }
-
-  /**
-   * Render for use in editor/modal suggest
-   */
-  public renderSuggestion(el: HTMLElement) {
-    const outer = el.createDiv({ cls: 'obr-suggester-container' })
-    outer.createDiv({ cls: 'obr-shortcode' }).setText(this.text)
   }
 }

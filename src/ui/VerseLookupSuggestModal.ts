@@ -1,5 +1,5 @@
 import { App, MarkdownView, SuggestModal } from 'obsidian'
-import { VerseTypoCheck } from '../utils/VerseTypoCheck'
+import { verseMatch } from '../utils/verseMatch'
 import { BibleReferencePluginSettings } from '../data/constants'
 import { VerseSuggesting } from '../VerseSuggesting'
 import { getSuggestionsFromQuery } from '../suggesetor/getSuggestionsFromQuery'
@@ -16,7 +16,7 @@ export class VerseLookupSuggestModal extends SuggestModal<VerseSuggesting> {
   }
 
   async getSuggestions(query: string): Promise<VerseSuggesting[]> {
-    const match = VerseTypoCheck(query, true)
+    const match = verseMatch(query, true)
     if (match) {
       console.debug('trigger on', query)
       // getSuggestionsFromQuery expects '--Book#:# form'
