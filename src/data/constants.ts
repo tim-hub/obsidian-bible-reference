@@ -19,8 +19,8 @@ export interface BibleReferencePluginSettings {
   bibleTagging?: boolean
   bookTagging?: boolean
   chapterTagging?: boolean
-  bookBacklinking?: boolean
-  chapterBacklinking?: boolean
+  bookBacklinking?: boolean // this is refering to outgoing link
+  chapterBacklinking?: boolean // this is refering to outgoing link
 }
 
 export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
