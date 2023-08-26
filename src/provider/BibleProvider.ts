@@ -18,7 +18,7 @@ export abstract class BibleProvider {
    * for example, https://api.scripture.api.bible/v1/bibles/de4e0c8c-9c29-44c7-a8c3-c8a9c1b9d6a0/verses/ESV/
    */
   public get QueryURL(): string {
-    return this._queryUrl;
+    return this._queryUrl
   }
 
   /**
@@ -27,7 +27,7 @@ export abstract class BibleProvider {
    * In the Bolly Life interface, it's just the same URL location except without `/get-text`
    */
   public get VerseLinkURL(): string {
-    return this._queryUrl;
+    return this._queryUrl
   }
 
   /**
@@ -65,10 +65,10 @@ export abstract class BibleProvider {
       const response = await fetch(url, {
         method: 'get',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-        redirect: "follow", // manual, *follow, error
-        cache: "force-cache",
+        redirect: 'follow', // manual, *follow, error
+        cache: 'force-cache',
       })
       const data = await response.json()
       return this.formatBibleVerses(

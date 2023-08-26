@@ -12,7 +12,6 @@ import { BibleVerseReferenceLinkPosition } from './data/BibleVerseReferenceLinkP
 import { BibleVerseNumberFormat } from './data/BibleVerseNumberFormat'
 import { BibleVerseFormat } from './data/BibleVerseFormat'
 
-
 export class VerseSuggesting implements IVerseSuggesting {
   public text: string
   public verses: string
@@ -60,23 +59,26 @@ export class VerseSuggesting implements IVerseSuggesting {
       bottom += `> \n ${this.getVerseReference()}`
     }
 
-    // backlinks and tags use the BibleReferenceHeader 
+    // backlinks and tags use the BibleReferenceHeader
     //  and regex to clean book and chapters that will match
     //  across multiple different search queires
-    if (this.settings?.bookBacklinking){
+    if (this.settings?.bookBacklinking) {
       head += ` [[${this.bookName}]]`
     }
-    if (this.settings?.chapterBacklinking){
-      head += ` [[${this.bookName+this.chapterNumber}]]`
+    if (this.settings?.chapterBacklinking) {
+      head += ` [[${this.bookName + this.chapterNumber}]]`
     }
     if (
       this.settings?.bibleTagging ||
       this.settings?.bookTagging ||
-      this.settings?.chapterTagging) {
+      this.settings?.chapterTagging
+    ) {
       bottom += ' %%'
-      bottom += (this.settings?.bibleTagging) ? ' #bible' : ''
-      bottom += (this.settings?.bookTagging) ? ` #${this.bookName}` : ''
-      bottom += (this.settings?.chapterTagging) ? ` #${this.bookName+this.chapterNumber}` : ''
+      bottom += this.settings?.bibleTagging ? ' #bible' : ''
+      bottom += this.settings?.bookTagging ? ` #${this.bookName}` : ''
+      bottom += this.settings?.chapterTagging
+        ? ` #${this.bookName + this.chapterNumber}`
+        : ''
       bottom += ' %%'
     }
 

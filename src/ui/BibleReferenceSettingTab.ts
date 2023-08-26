@@ -45,7 +45,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     return BibleVersionCollection
   }
 
-  SetUpVersionSettingsAndVersionOptions = (containerEl: HTMLElement): void => {
+  setUpVersionSettingsAndVersionOptions = (containerEl: HTMLElement): void => {
     new Setting(containerEl)
       .setName('Default Bible Version')
       .setDesc('Choose the Bible version you prefer')
@@ -69,7 +69,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
       })
   }
 
-  SetUpReferenceLinkPositionOptions = (containerEl: HTMLElement): void => {
+  setUpReferenceLinkPositionOptions = (containerEl: HTMLElement): void => {
     new Setting(containerEl)
       .setName('Verse Reference Link Position')
       .setDesc('Where to put the bible verse reference link of the bible')
@@ -94,7 +94,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
       })
   }
 
-  SetUpVerseFormatOptions = (containerEl: HTMLElement): void => {
+  setUpVerseFormatOptions = (containerEl: HTMLElement): void => {
     new Setting(containerEl)
       .setName('Verse Formatting Options')
       .setDesc(
@@ -117,7 +117,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
       })
   }
 
-  SetUpVerseNumberFormatOptions = (containerEl: HTMLElement): void => {
+  setUpVerseNumberFormatOptions = (containerEl: HTMLElement): void => {
     new Setting(containerEl)
       .setName('Verse Number Formatting Options')
       .setDesc('Sets how to format the verse numbers in Obsidian')
@@ -140,10 +140,10 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
       })
   }
 
-  SetUpTextOptions = (containerEl: HTMLElement): void => {
+  setUpCollapsible = (containerEl: HTMLElement): void => {
     new Setting(containerEl)
       .setName('Make Verses Collapsible')
-      .setDesc('Make the inserted verses collapsible')
+      .setDesc('Make the rendered verses collapsible')
       .addToggle((toggle) =>
         toggle
           .setValue(!!this.plugin.settings?.collapsibleVerses)
@@ -154,10 +154,10 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
       )
   }
 
-  SetUpBibleTagging = (containerEl: HTMLElement): void => {
+  setUpBibleTagging = (containerEl: HTMLElement): void => {
     new Setting(containerEl)
-      .setName('Create Bible Tags')
-      .setDesc('Makes hidden #bible tag')
+      .setName('Add a #bible tag')
+      .setDesc('Add a hidden bible tag at bottom, i.e. #bible')
       .addToggle((toggle) =>
         toggle
           .setValue(!!this.plugin.settings?.bibleTagging)
@@ -168,10 +168,10 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
       )
   }
 
-  SetUpBookTagging = (containerEl: HTMLElement): void => {
+  setUpBookTagging = (containerEl: HTMLElement): void => {
     new Setting(containerEl)
-      .setName('Create Book Tags')
-      .setDesc('Makes hidden #{book} tag')
+      .setName('Add a Book Tag')
+      .setDesc('Add a hidden book tag at bottom, for example #John')
       .addToggle((toggle) =>
         toggle
           .setValue(!!this.plugin.settings?.bookTagging)
@@ -182,10 +182,10 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
       )
   }
 
-  SetUpChapterTagging = (containerEl: HTMLElement): void => {
+  setUpChapterTagging = (containerEl: HTMLElement): void => {
     new Setting(containerEl)
-      .setName('Create Chapter Tags')
-      .setDesc('Makes hidden #{book_chapter} tag')
+      .setName('Add a Chapter Tag')
+      .setDesc('Add a hidden chapter tag at bottom, for example #John1')
       .addToggle((toggle) =>
         toggle
           .setValue(!!this.plugin.settings?.chapterTagging)
@@ -196,10 +196,10 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
       )
   }
 
-  SetUpBookBacklinking = (containerEl: HTMLElement): void => {
+  setUpBookOutgoingLinking = (containerEl: HTMLElement): void => {
     new Setting(containerEl)
-      .setName('Create Book Backlink')
-      .setDesc('Makes [[{book}]] link')
+      .setName('Add a Book Outgoing Link')
+      .setDesc('Makes an outgoing link for the book, for example [[John]]')
       .addToggle((toggle) =>
         toggle
           .setValue(!!this.plugin.settings?.bookBacklinking)
@@ -210,10 +210,10 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
       )
   }
 
-  SetUpChapterBacklinking = (containerEl: HTMLElement): void => {
+  setUpChapterOutgoingLinking = (containerEl: HTMLElement): void => {
     new Setting(containerEl)
-      .setName('Create Chapter Backlink')
-      .setDesc('Makes [[{book_chapter}]] link')
+      .setName('Add a Chapter Outgoing Links')
+      .setDesc('Makes an outgoing link for the chaper, for example [[John1]] ')
       .addToggle((toggle) =>
         toggle
           .setValue(!!this.plugin.settings?.chapterBacklinking)
@@ -233,17 +233,24 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     `
 
     containerEl.createEl('h2', { text: 'General Settings' })
-    this.SetUpVersionSettingsAndVersionOptions(containerEl)
-    this.SetUpReferenceLinkPositionOptions(containerEl)
-    this.SetUpVerseFormatOptions(containerEl)
-    this.SetUpVerseNumberFormatOptions(containerEl)
-    this.SetUpTextOptions(containerEl)
+    this.setUpVersionSettingsAndVersionOptions(containerEl)
+    containerEl.createEl('h2', { text: 'Verses Rendering' })
+    this.setUpReferenceLinkPositionOptions(containerEl)
+    this.setUpVerseFormatOptions(containerEl)
+    this.setUpVerseNumberFormatOptions(containerEl)
+    this.setUpCollapsible(containerEl)
     containerEl.createEl('h2', { text: 'Tagging and Linking Settings' })
-    this.SetUpBibleTagging(containerEl)
-    this.SetUpBookTagging(containerEl)
-    this.SetUpChapterTagging(containerEl)
-    this.SetUpBookBacklinking(containerEl)
-    this.SetUpChapterBacklinking(containerEl)
+    containerEl.createSpan({}, (span) => {
+      span.innerHTML = `
+        <small>Only if you want to add tags at the bottom of verses</small>
+      `
+    })
+    this.setUpBibleTagging(containerEl)
+    this.setUpBookTagging(containerEl)
+    this.setUpChapterTagging(containerEl)
+    // todo retire the bottom two settings
+    this.setUpBookOutgoingLinking(containerEl)
+    this.setUpChapterOutgoingLinking(containerEl)
 
     containerEl.createEl('h2', { text: 'About' })
 

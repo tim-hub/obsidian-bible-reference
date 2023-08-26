@@ -1,13 +1,16 @@
 ## Obsidian Bible Reference
 
-[![CodeQL](https://github.com/tim-hub/obsidian-bible-reference/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/tim-hub/obsidian-bible-reference/actions/workflows/codeql-analysis.yml) [![Build](https://github.com/tim-hub/obsidian-bible-reference/actions/workflows/build.yml/badge.svg)](https://github.com/tim-hub/obsidian-bible-reference/actions/workflows/build.yml)
-[![](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/tim-hub)
+[![CodeQL for Obsidain Bible Reference](https://github.com/tim-hub/obsidian-bible-reference/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/tim-hub/obsidian-bible-reference/actions/workflows/codeql-analysis.yml)
+[![Build for Bible Reference Project](https://github.com/tim-hub/obsidian-bible-reference/actions/workflows/build.yml/badge.svg)](https://github.com/tim-hub/obsidian-bible-reference/actions/workflows/build.yml)
+[![obsidian bible reference user discussion forum](https://img.shields.io/badge/Discussion-blue)](https://github.com/tim-hub/obsidian-bible-reference/discussions)
+[![obsidain bible reference project kanban board and roadmap ](<https://img.shields.io/badge/Project(Kanban)-orange>)](https://github.com/users/tim-hub/projects/2/views/1)
+[![support button of obsidian bible reference](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/tim-hub)
 
 > These will be very appreciate for the project development. 👍
 >
 > - 👉 `Star` the Project
 > - ☕️ **Buy me a coffee** @[Github Sponsor](https://github.com/sponsors/tim-hub)
-> - ❤️ Provide Feedback in [`Issues`](https://github.com/tim-hub/obsidian-bible-reference/issues) or on [`Twitter`](https://twitter.com/TechTim42)
+> - ❤️ Provide Feedback in [`Issues`](https://github.com/tim-hub/obsidian-bible-reference/issues) or join [`Discussion`](https://github.com/tim-hub/obsidian-bible-reference/discussions)
 
 ---
 
@@ -70,9 +73,7 @@ I must say thanks to all of you, for the help and support. 🙇‍
 
 > [**All Contributors**](https://github.com/tim-hub/obsidian-bible-reference/graphs/contributors) 👍🙏
 
-
 #### Sponsors
 
 **Previous Sponsors**:
 [Patrick McGrath](https://github.com/PatrickMcGrath29), [Chris Gonzales](https://github.com/chrisg32), [aknisly](https://github.com/aknisly)
-
