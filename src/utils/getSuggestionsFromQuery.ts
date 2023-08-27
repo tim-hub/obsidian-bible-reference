@@ -1,6 +1,6 @@
 import { BibleReferencePluginSettings } from '../data/constants'
 import { VerseSuggesting } from '../verse/VerseSuggesting'
-import { BOOK_REG } from '../utils/regs'
+import { BOOK_REG } from './regs'
 import { Reference } from '../../biblejs-name-converter'
 
 /**

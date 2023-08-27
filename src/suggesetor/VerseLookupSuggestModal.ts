@@ -1,8 +1,8 @@
 import { App, MarkdownView, SuggestModal } from 'obsidian'
 import { verseMatch } from '../utils/verseMatch'
 import { BibleReferencePluginSettings } from '../data/constants'
-import { VerseSuggesting } from '../VerseSuggesting'
-import { getSuggestionsFromQuery } from '../suggesetor/getSuggestionsFromQuery'
+import { VerseSuggesting } from '../verse/VerseSuggesting'
+import { getSuggestionsFromQuery } from '../utils/getSuggestionsFromQuery'
 
 export class VerseLookupSuggestModal extends SuggestModal<VerseSuggesting> {
   settings: BibleReferencePluginSettings

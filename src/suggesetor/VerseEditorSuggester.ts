@@ -8,13 +8,13 @@ import {
 } from 'obsidian'
 import BibleReferencePlugin from '../main'
 import { verseMatch } from '../utils/verseMatch'
-import { VerseSuggesting } from '../VerseSuggesting'
+import { VerseSuggesting } from '../verse/VerseSuggesting'
 import {
   API_WAITING_LABEL,
   BibleReferencePluginSettings,
 } from '../data/constants'
-import { getSuggestionsFromQuery } from './getSuggestionsFromQuery'
-import { getSuggestionFromVod } from './getSuggestionFromVod'
+import { getSuggestionsFromQuery } from '../utils/getSuggestionsFromQuery'
+
 
 /**
  * Extend the EditorSuggest to suggest bible verses.
