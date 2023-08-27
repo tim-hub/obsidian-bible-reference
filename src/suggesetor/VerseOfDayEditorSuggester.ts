@@ -1,12 +1,20 @@
-import { Editor, EditorPosition, EditorSuggest, EditorSuggestContext, EditorSuggestTriggerInfo, TFile } from 'obsidian';
-import BibleReferencePlugin from '../main';
-import { BibleReferencePluginSettings } from '../data/constants';
-import { getVod, VerseOfDayResponse } from '../provider/VODProvider';
+import {
+  Editor,
+  EditorPosition,
+  EditorSuggest,
+  EditorSuggestContext,
+  EditorSuggestTriggerInfo,
+  TFile,
+} from 'obsidian'
+import BibleReferencePlugin from '../main'
+import { BibleReferencePluginSettings } from '../data/constants'
+import { getVod } from '../provider/VODProvider'
+import { VerseOfDaySuggesting } from '../verse/VerseOfDaySuggesting'
+import { splitBibleReference } from '../utils/splitBibleReference'
 
-
-export class VerseOfDayEditorSuggester extends EditorSuggest<string> {
-  private plugin: BibleReferencePlugin;
-  private settings: BibleReferencePluginSettings;
+export class VerseOfDayEditorSuggester extends EditorSuggest<VerseOfDaySuggesting> {
+  private plugin: BibleReferencePlugin
+  private settings: BibleReferencePluginSettings
 
   constructor(
     plugin: BibleReferencePlugin,
@@ -17,9 +25,21 @@ export class VerseOfDayEditorSuggester extends EditorSuggest<string> {
     this.settings = settings
   }
 
-  async getSuggestions(context: EditorSuggestContext): Promise<string[]> {
-    const vodResp = await getVod();
-    return [this.buildSuggestion(vodResp)];
+  async getSuggestions(
+    context: EditorSuggestContext
+  ): Promise<VerseOfDaySuggesting[]> {
+    const vodResp = await getVod()
+
+    const reference = splitBibleReference(vodResp.verse.details.reference)
+    const verseTexts = [vodResp.verse.details.text]
+
+    const vodSuggesting = new VerseOfDaySuggesting(
+      this.settings,
+      reference,
+      verseTexts
+    )
+
+    return [vodSuggesting]
   }
 
   /**
@@ -30,7 +50,11 @@ export class VerseOfDayEditorSuggester extends EditorSuggest<string> {
    * @param editor
    * @param file
    */
-  onTrigger(cursor: EditorPosition, editor: Editor, file: TFile): EditorSuggestTriggerInfo | null {
+  onTrigger(
+    cursor: EditorPosition,
+    editor: Editor,
+    file: TFile
+  ): EditorSuggestTriggerInfo | null {
     const currentContent = editor.getLine(cursor.line).substring(0, cursor.ch)
     if (currentContent === '--vod') {
       return {
@@ -45,26 +69,22 @@ export class VerseOfDayEditorSuggester extends EditorSuggest<string> {
     return null
   }
 
-  renderSuggestion(suggestion: string, el: HTMLElement): void {
-    const outer = el.createDiv({cls: 'obr-suggester-container'})
-    outer.createDiv({cls: 'obr-shortcode'}).setText(suggestion)
+  renderSuggestion(suggestion: VerseOfDaySuggesting, el: HTMLElement): void {
+    const outer = el.createDiv({ cls: 'obr-suggester-container' })
+    outer.createDiv({ cls: 'obr-shortcode' }).setText(suggestion.bodyContent)
   }
 
-  selectSuggestion(suggestion: string, evt: MouseEvent | KeyboardEvent): void {
+  selectSuggestion(
+    suggestion: VerseOfDaySuggesting,
+    evt: MouseEvent | KeyboardEvent
+  ): void {
     if (this.context) {
       /* prettier-ignore */
       (this.context.editor as Editor).replaceRange(
-        suggestion,
+        suggestion.allFormatedContent,
         this.context.start,
         this.context.end
       )
     }
   }
-
-  private buildSuggestion(vod: VerseOfDayResponse): string {
-    return `> [!Bible] ${vod.verse.details.reference}
-> ${vod.verse.details.text}
-    `
-  }
-
 }

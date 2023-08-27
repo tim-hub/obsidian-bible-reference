@@ -7,7 +7,7 @@ import {
 import { BibleReferenceSettingTab } from './ui/BibleReferenceSettingTab'
 import { VerseEditorSuggester } from './suggesetor/VerseEditorSuggester'
 import { VerseLookupSuggestModal } from './suggesetor/VerseLookupSuggestModal'
-import { VerseOfDayEditorSuggester } from './suggesetor/VerseOfDayEditorSuggester';
+import { VerseOfDayEditorSuggester } from './suggesetor/VerseOfDayEditorSuggester'
 
 export default class BibleReferencePlugin extends Plugin {
   settings: BibleReferencePluginSettings
@@ -19,7 +19,9 @@ export default class BibleReferencePlugin extends Plugin {
     await this.loadSettings()
     this.addSettingTab(new BibleReferenceSettingTab(this.app, this))
 
-    this.registerEditorSuggest(new VerseOfDayEditorSuggester(this, this.settings))
+    this.registerEditorSuggest(
+      new VerseOfDayEditorSuggester(this, this.settings)
+    )
     this.registerEditorSuggest(new VerseEditorSuggester(this, this.settings))
 
     this.verseLookUpModal = new VerseLookupSuggestModal(this.app, this.settings)

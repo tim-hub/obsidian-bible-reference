@@ -5,7 +5,7 @@ export type VerseOfDayResponse = {
       reference: string
       version: string
       version_url: string
-    },
+    }
     notice: string
   }
 }
@@ -15,6 +15,8 @@ export type VerseOfDayResponse = {
  * https://ourmanna.readme.io/reference/get-verse-of-the-day
  */
 export const getVod = async (): Promise<VerseOfDayResponse> => {
-  const resp = await fetch('https://beta.ourmanna.com/api/v1/get?format=json&order=daily')
-  return resp.json();
+  const resp = await fetch(
+    'https://beta.ourmanna.com/api/v1/get?format=json&order=daily'
+  )
+  return resp.json()
 }

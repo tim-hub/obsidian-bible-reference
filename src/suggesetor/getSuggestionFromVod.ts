@@ -1,7 +1,3 @@
-import { VerseSuggesting } from '../VerseSuggesting';
+import { VerseSuggesting } from '../VerseSuggesting'
 
-
-export const getSuggestionFromVod = async (
-): Promise<VerseSuggesting[]> => {
-
-}
+export const getSuggestionFromVod = async (): Promise<VerseSuggesting[]> => {}

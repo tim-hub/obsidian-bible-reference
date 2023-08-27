@@ -14,7 +14,7 @@ import {
   BibleReferencePluginSettings,
 } from '../data/constants'
 import { getSuggestionsFromQuery } from './getSuggestionsFromQuery'
-import { getSuggestionFromVod } from './getSuggestionFromVod';
+import { getSuggestionFromVod } from './getSuggestionFromVod'
 
 /**
  * Extend the EditorSuggest to suggest bible verses.
@@ -45,7 +45,7 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
   ): EditorSuggestTriggerInfo | null {
     // @ts-ignore
     const suggestEl = this.suggestEl as HTMLDivElement
-    suggestEl.createDiv({cls: 'obr-loading-container'}).hide()
+    suggestEl.createDiv({ cls: 'obr-loading-container' }).hide()
 
     const currentContent = editor.getLine(cursor.line).substring(0, cursor.ch)
 
@@ -85,12 +85,10 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
     loadingContainer.setText(API_WAITING_LABEL)
     loadingContainer.show()
 
-    if (context.query === '--vod') {
-      // get suggestion from vod
-      return await getSuggestionFromVod()
-    }
-
-    const suggestions = await getSuggestionsFromQuery(context.query, this.settings)
+    const suggestions = await getSuggestionsFromQuery(
+      context.query,
+      this.settings
+    )
     // hide loading and how suggestions todo move to render
     loadingContainer.hide()
     suggestionsEl.show()
@@ -105,7 +103,7 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
     if (this.context) {
       /* prettier-ignore */
       (this.context.editor as Editor).replaceRange(
-        suggestion.versesContent,
+        suggestion.allFormatedContent,
         this.context.start,
         this.context.end
       )
