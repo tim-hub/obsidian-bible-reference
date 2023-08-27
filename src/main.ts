@@ -1,27 +1,32 @@
 import { Editor, MarkdownView, Notice, Plugin } from 'obsidian'
-import { APP_NAMING, BibleReferencePluginSettings, DEFAULT_SETTINGS, } from './data/constants'
+import {
+  APP_NAMING,
+  BibleReferencePluginSettings,
+  DEFAULT_SETTINGS,
+} from './data/constants'
 import { BibleReferenceSettingTab } from './ui/BibleReferenceSettingTab'
 import { VerseEditorSuggester } from './suggesetor/VerseEditorSuggester'
 import { VerseLookupSuggestModal } from './suggesetor/VerseLookupSuggestModal'
 import { VerseOfDayEditorSuggester } from './suggesetor/VerseOfDayEditorSuggester'
-import { VerseOfDayModal } from './suggesetor/VerseOfDayModal';
-import { getVod } from './provider/VODProvider';
-import { splitBibleReference } from './utils/splitBibleReference';
-import { VerseOfDaySuggesting } from './verse/VerseOfDaySuggesting';
+import { VerseOfDayModal } from './suggesetor/VerseOfDayModal'
+import { getVod } from './provider/VODProvider'
+import { splitBibleReference } from './utils/splitBibleReference'
+import { VerseOfDaySuggesting } from './verse/VerseOfDaySuggesting'
 
 export default class BibleReferencePlugin extends Plugin {
   settings: BibleReferencePluginSettings
   verseLookUpModal: VerseLookupSuggestModal
   verseOfDayModal: VerseOfDayModal
   private cachedVerseOfDaySuggesting: {
-    verseOfDaySuggesting: VerseOfDaySuggesting,
-    ttl: number,
+    verseOfDaySuggesting: VerseOfDaySuggesting
+    ttl: number
     timestamp: number
   }
-  private ribbonButton?: HTMLElement;
+  private ribbonButton?: HTMLElement
 
-  private async getAndCacheverseOfDay():Promise<VerseOfDaySuggesting> {
-    const {ttl, timestamp, verseOfDaySuggesting} = this?.cachedVerseOfDaySuggesting || {}
+  private async getAndCacheverseOfDay(): Promise<VerseOfDaySuggesting> {
+    const { ttl, timestamp, verseOfDaySuggesting } =
+      this?.cachedVerseOfDaySuggesting || {}
     if (!verseOfDaySuggesting || timestamp + ttl > Date.now()) {
       const vodResp = await getVod()
       const reference = splitBibleReference(vodResp.verse.details.reference)
@@ -34,7 +39,7 @@ export default class BibleReferencePlugin extends Plugin {
       this.cachedVerseOfDaySuggesting = {
         verseOfDaySuggesting: vodSuggesting,
         ttl: 1000 * 60 * 60 * 6,
-        timestamp: Date.now()
+        timestamp: Date.now(),
       }
     }
     return this.cachedVerseOfDaySuggesting.verseOfDaySuggesting
@@ -50,7 +55,6 @@ export default class BibleReferencePlugin extends Plugin {
       new VerseOfDayEditorSuggester(this, this.settings)
     )
     this.registerEditorSuggest(new VerseEditorSuggester(this, this.settings))
-
 
     this.verseLookUpModal = new VerseLookupSuggestModal(this, this.settings)
     if (this.settings.enableBibleVerseLookupRibbon) {
@@ -92,7 +96,11 @@ export default class BibleReferencePlugin extends Plugin {
       callback: async () => {
         // this.verseOfDayModal.open()
         const verse = await this.getAndCacheverseOfDay()
-        new Notice(`${verse.verseTexts?.join('')} -- ${verse.verseReference.bookName} ${verse.verseReference.chapterNumber}:${verse.verseReference.verseNumber}`)
+        new Notice(
+          `${verse.verseTexts?.join('')} -- ${verse.verseReference.bookName} ${
+            verse.verseReference.chapterNumber
+          }:${verse.verseReference.verseNumber}`
+        )
       },
     })
 
@@ -101,17 +109,21 @@ export default class BibleReferencePlugin extends Plugin {
       name: 'Verse Of The Day - Insert To Current Note',
       editorCallback: async (editor: Editor, view: MarkdownView) => {
         const vodSuggesting = await this.getAndCacheverseOfDay()
-        editor.replaceSelection(vodSuggesting.allFormatedContent);
-      }
-    });
+        editor.replaceSelection(vodSuggesting.allFormatedContent)
+      },
+    })
   }
 
   private addRibbonButton(): void {
     // https://lucide.dev/icons/?search=book
     // Obsidian use Lucide Icons
-    this.ribbonButton = this.addRibbonIcon('book-open', 'Bible Verse Lookup', _evt => {
-      this.verseLookUpModal.open()
-    })
+    this.ribbonButton = this.addRibbonIcon(
+      'book-open',
+      'Bible Verse Lookup',
+      (_evt) => {
+        this.verseLookUpModal.open()
+      }
+    )
   }
 
   private removeRibbonButton(): void {

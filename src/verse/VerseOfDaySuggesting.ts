@@ -11,8 +11,6 @@ export class VerseOfDaySuggesting extends BaseVerseFormatter {
     super(settings, verseReference, verseTexts)
   }
 
-
-
   public getVerseReferenceLink(): string {
     const { bookName, chapterNumber, verseNumber, verseNumberEnd } =
       this.verseReference

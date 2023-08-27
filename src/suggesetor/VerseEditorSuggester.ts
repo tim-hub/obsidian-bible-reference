@@ -15,7 +15,6 @@ import {
 } from '../data/constants'
 import { getSuggestionsFromQuery } from '../utils/getSuggestionsFromQuery'
 
-
 /**
  * Extend the EditorSuggest to suggest bible verses.
  */

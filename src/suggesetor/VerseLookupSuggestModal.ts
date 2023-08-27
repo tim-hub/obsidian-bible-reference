@@ -3,12 +3,15 @@ import { verseMatch } from '../utils/verseMatch'
 import { BibleReferencePluginSettings } from '../data/constants'
 import { VerseSuggesting } from '../verse/VerseSuggesting'
 import { getSuggestionsFromQuery } from '../utils/getSuggestionsFromQuery'
-import BibleReferencePlugin from '../main';
+import BibleReferencePlugin from '../main'
 
 export class VerseLookupSuggestModal extends SuggestModal<VerseSuggesting> {
   settings: BibleReferencePluginSettings
 
-  constructor(plugin: BibleReferencePlugin, settings: BibleReferencePluginSettings) {
+  constructor(
+    plugin: BibleReferencePlugin,
+    settings: BibleReferencePluginSettings
+  ) {
     super(plugin.app)
     this.settings = settings
     this.setInstructions([
