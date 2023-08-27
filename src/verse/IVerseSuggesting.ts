@@ -1,4 +1,4 @@
-import { IVerse } from './IVerse'
+import { IVerse } from '../interfaces/IVerse'
 
 // define the interface of VerseSuggesting class
 export interface IVerseSuggesting {

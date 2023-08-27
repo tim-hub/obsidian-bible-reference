@@ -8,7 +8,7 @@ import { IVerse } from '../interfaces/IVerse'
 import { ProviderFactory } from '../provider/ProviderFactory'
 import { BaseBibleAPIProvider } from '../provider/BaseBibleAPIProvider'
 import { BaseVerseFormatter } from '../verse/BaseVerseFormatter'
-import { IVerseSuggesting } from '../interfaces/IVerseSuggesting'
+import { IVerseSuggesting } from './IVerseSuggesting'
 
 /**
  * Verse Suggesting
