@@ -18,7 +18,7 @@ export abstract class BaseVerseFormatter {
   ) {
     this.settings = settings
     this.verseReference = verseReference
-    const { bookName, chapterNumber, verseNumber, verseNumberEnd } =
+    const {bookName, chapterNumber, verseNumber, verseNumberEnd} =
       this.verseReference
     if (verseNumberEnd && verseNumberEnd - verseNumber !== verseTexts?.length) {
       console.error('Verse text length does not match verse numbers')
@@ -49,14 +49,14 @@ export abstract class BaseVerseFormatter {
       return ''
     }
     let text = ''
-    if (this.settings.verseFormatting === BibleVerseFormat.Paragraph) {
+    if (this.settings?.verseFormatting === BibleVerseFormat.Paragraph) {
       text = '> '
     } else {
       text = ''
     }
     this.verses.forEach((verse) => {
       const verseNumberFormatted = this.formatVerseNumber(verse.verse)
-      if (this.settings.verseFormatting === BibleVerseFormat.Paragraph) {
+      if (this.settings?.verseFormatting === BibleVerseFormat.Paragraph) {
         text +=
           ' ' + verseNumberFormatted + verse.text.trim().replaceAll('\n', ' ')
       } else {
@@ -75,9 +75,9 @@ export abstract class BaseVerseFormatter {
     }
     if (
       this.settings.referenceLinkPosition ===
-        BibleVerseReferenceLinkPosition.Header ||
+      BibleVerseReferenceLinkPosition.Header ||
       this.settings.referenceLinkPosition ===
-        BibleVerseReferenceLinkPosition.AllAbove
+      BibleVerseReferenceLinkPosition.AllAbove
     ) {
       head += this.getVerseReferenceLink()
     }
@@ -89,9 +89,9 @@ export abstract class BaseVerseFormatter {
     let bottom = ''
     if (
       this.settings.referenceLinkPosition ===
-        BibleVerseReferenceLinkPosition.Bottom ||
+      BibleVerseReferenceLinkPosition.Bottom ||
       this.settings.referenceLinkPosition ===
-        BibleVerseReferenceLinkPosition.AllAbove
+      BibleVerseReferenceLinkPosition.AllAbove
     ) {
       bottom += `> \n ${this.getVerseReferenceLink()}`
     }

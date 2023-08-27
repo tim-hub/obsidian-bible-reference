@@ -3,12 +3,13 @@ import { verseMatch } from '../utils/verseMatch'
 import { BibleReferencePluginSettings } from '../data/constants'
 import { VerseSuggesting } from '../verse/VerseSuggesting'
 import { getSuggestionsFromQuery } from '../utils/getSuggestionsFromQuery'
+import BibleReferencePlugin from '../main';
 
 export class VerseLookupSuggestModal extends SuggestModal<VerseSuggesting> {
   settings: BibleReferencePluginSettings
 
-  constructor(app: App, settings: BibleReferencePluginSettings) {
-    super(app)
+  constructor(plugin: BibleReferencePlugin, settings: BibleReferencePluginSettings) {
+    super(plugin.app)
     this.settings = settings
     this.setInstructions([
       { command: '', purpose: 'Select verses to insert, ex: John1:1-3' },
@@ -19,7 +20,6 @@ export class VerseLookupSuggestModal extends SuggestModal<VerseSuggesting> {
     const match = verseMatch(query, true)
     if (match) {
       console.debug('trigger on', query)
-      // getSuggestionsFromQuery expects '--Book#:# form'
       return getSuggestionsFromQuery(`--${query}`, this.settings)
     }
     return []

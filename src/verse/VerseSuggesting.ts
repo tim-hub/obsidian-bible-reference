@@ -81,7 +81,6 @@ export class VerseSuggesting
    */
   public renderSuggestion(el: HTMLElement) {
     const outer = el.createDiv({ cls: 'obr-suggester-container' })
-    console.debug(this.bodyContent)
     // @ts-ignore
     outer.createDiv({ cls: 'obr-shortcode' }).setText(this.bodyContent)
   }
