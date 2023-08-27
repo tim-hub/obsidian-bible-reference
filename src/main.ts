@@ -13,7 +13,32 @@ export default class BibleReferencePlugin extends Plugin {
   settings: BibleReferencePluginSettings
   verseLookUpModal: VerseLookupSuggestModal
   verseOfDayModal: VerseOfDayModal
-  verseOfDaySuggesting: VerseOfDaySuggesting
+  private cachedVerseOfDaySuggesting: {
+    verseOfDaySuggesting: VerseOfDaySuggesting,
+    ttl: number,
+    timestamp: number
+  }
+  private ribbonButton?: HTMLElement;
+
+  private async getAndCacheverseOfDay():Promise<VerseOfDaySuggesting> {
+    const {ttl, timestamp, verseOfDaySuggesting} = this.cachedVerseOfDaySuggesting
+    if (!verseOfDaySuggesting || timestamp + ttl > Date.now()) {
+      const vodResp = await getVod()
+      const reference = splitBibleReference(vodResp.verse.details.reference)
+      const verseTexts = [vodResp.verse.details.text]
+      const vodSuggesting = new VerseOfDaySuggesting(
+        this.settings,
+        reference,
+        verseTexts
+      )
+      this.cachedVerseOfDaySuggesting = {
+        verseOfDaySuggesting: vodSuggesting,
+        ttl: 1000 * 60 * 60 * 6,
+        timestamp: Date.now()
+      }
+    }
+    return this.cachedVerseOfDaySuggesting.verseOfDaySuggesting
+  }
 
   async onload() {
     console.log('loading plugin -', APP_NAMING.appName)
@@ -26,64 +51,15 @@ export default class BibleReferencePlugin extends Plugin {
     )
     this.registerEditorSuggest(new VerseEditorSuggester(this, this.settings))
 
+
     this.verseLookUpModal = new VerseLookupSuggestModal(this, this.settings)
-    this.addCommand({
-      id: 'obr-lookup',
-      name: 'Verse Lookup',
-      callback: () => {
-        this.verseLookUpModal.open()
-      },
-    })
+    if (this.settings.enableBibleVerseLookupRibbon) {
+      this.addRibbonButton()
+    }
+    this.addVerseLookupCommand()
 
     this.verseOfDayModal = new VerseOfDayModal(this, this.settings)
-    this.addCommand({
-      id: 'obr-vod-verses-of-day',
-      name: 'View Verse Of The Day',
-      callback: async () => {
-        // this.verseOfDayModal.open()
-        // todo remove duplication
-        if (!this.verseOfDaySuggesting) {
-
-          const vodResp = await getVod()
-
-          const reference = splitBibleReference(vodResp.verse.details.reference)
-          const verseTexts = [vodResp.verse.details.text]
-
-          const vodSuggesting = new VerseOfDaySuggesting(
-            this.settings,
-            reference,
-            verseTexts
-          )
-          this.verseOfDaySuggesting = vodSuggesting
-        }
-        new Notice(`${this.verseOfDaySuggesting.verseTexts?.join('')} -- ${this.verseOfDaySuggesting.verseReference.bookName} ${this.verseOfDaySuggesting.verseReference.chapterNumber}:${this.verseOfDaySuggesting.verseReference.verseNumber}`)
-      },
-    })
-
-    this.addCommand({
-      id: 'obs-vod-insert-verse-of-day',
-      name: 'Insert Verse Of The Day',
-      editorCallback: async (editor: Editor, view: MarkdownView) => {
-        // todo remove duplication
-        if (this.verseOfDaySuggesting) {
-          editor.replaceSelection(this.verseOfDaySuggesting.allFormatedContent);
-          return
-        }
-        const vodResp = await getVod()
-
-        const reference = splitBibleReference(vodResp.verse.details.reference)
-        const verseTexts = [vodResp.verse.details.text]
-
-        const vodSuggesting = new VerseOfDaySuggesting(
-          this.settings,
-          reference,
-          verseTexts
-        )
-        this.verseOfDaySuggesting = vodSuggesting
-        editor.replaceSelection(vodSuggesting.allFormatedContent);
-      }
-    });
-
+    this.addVerseOfDayCommands()
   }
 
   onunload() {
@@ -97,5 +73,50 @@ export default class BibleReferencePlugin extends Plugin {
 
   async saveSettings() {
     await this.saveData(this.settings)
+  }
+
+  private addVerseLookupCommand(): void {
+    this.addCommand({
+      id: 'obr-lookup',
+      name: 'Verse Lookup',
+      callback: () => {
+        this.verseLookUpModal.open()
+      },
+    })
+  }
+
+  private addVerseOfDayCommands(): void {
+    this.addCommand({
+      id: 'obr-vod-view-verses-of-day',
+      name: 'Verse Of The Day - Notice',
+      callback: async () => {
+        // this.verseOfDayModal.open()
+        const verse = await this.getAndCacheverseOfDay()
+        new Notice(`${verse.verseTexts?.join('')} -- ${verse.verseReference.bookName} ${verse.verseReference.chapterNumber}:${verse.verseReference.verseNumber}`)
+      },
+    })
+
+    this.addCommand({
+      id: 'obs-vod-insert-verse-of-day',
+      name: 'Verse Of The Day - Insert To Current Note',
+      editorCallback: async (editor: Editor, view: MarkdownView) => {
+        const vodSuggesting = await this.getAndCacheverseOfDay()
+        editor.replaceSelection(vodSuggesting.allFormatedContent);
+      }
+    });
+  }
+
+  private addRibbonButton(): void {
+    // https://lucide.dev/icons/?search=book
+    // Obsidian use Lucide Icons
+    this.ribbonButton = this.addRibbonIcon('book-open', 'Bible Verse Lookup', _evt => {
+      this.verseLookUpModal.open()
+    })
+  }
+
+  private removeRibbonButton(): void {
+    if (this.ribbonButton) {
+      this.ribbonButton.parentNode?.removeChild(this.ribbonButton)
+    }
   }
 }
