@@ -21,7 +21,7 @@ export default class BibleReferencePlugin extends Plugin {
   private ribbonButton?: HTMLElement;
 
   private async getAndCacheverseOfDay():Promise<VerseOfDaySuggesting> {
-    const {ttl, timestamp, verseOfDaySuggesting} = this.cachedVerseOfDaySuggesting
+    const {ttl, timestamp, verseOfDaySuggesting} = this?.cachedVerseOfDaySuggesting || {}
     if (!verseOfDaySuggesting || timestamp + ttl > Date.now()) {
       const vodResp = await getVod()
       const reference = splitBibleReference(vodResp.verse.details.reference)
