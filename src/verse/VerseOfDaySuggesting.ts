@@ -5,13 +5,15 @@ import { VerseReference } from '../utils/splitBibleReference'
 export class VerseOfDaySuggesting extends BaseVerseFormatter {
   constructor(
     settings: BibleReferencePluginSettings,
-    verseReference: VerseReference,
-    verseTexts?: string[]
+    public verseReference: VerseReference,
+    public verseTexts?: string[]
   ) {
     super(settings, verseReference, verseTexts)
   }
 
-  protected getVerseReferenceLink(): string {
+
+
+  public getVerseReferenceLink(): string {
     const { bookName, chapterNumber, verseNumber, verseNumberEnd } =
       this.verseReference
     return ` Verse of the Day [${bookName} ${chapterNumber}:${verseNumber}${
