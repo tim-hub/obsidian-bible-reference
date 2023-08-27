@@ -7,24 +7,27 @@ import {
 import { BibleReferenceSettingTab } from './ui/BibleReferenceSettingTab'
 import { VerseEditorSuggester } from './suggesetor/VerseEditorSuggester'
 import { VerseLookupSuggestModal } from './suggesetor/VerseLookupSuggestModal'
+import { VerseOfDayEditorSuggester } from './suggesetor/VerseOfDayEditorSuggester';
 
 export default class BibleReferencePlugin extends Plugin {
   settings: BibleReferencePluginSettings
-  suggestModal: VerseLookupSuggestModal
+  verseLookUpModal: VerseLookupSuggestModal
 
   async onload() {
     console.log('loading plugin -', APP_NAMING.appName)
 
     await this.loadSettings()
-    this.suggestModal = new VerseLookupSuggestModal(this.app, this.settings)
     this.addSettingTab(new BibleReferenceSettingTab(this.app, this))
+
+    this.registerEditorSuggest(new VerseOfDayEditorSuggester(this, this.settings))
     this.registerEditorSuggest(new VerseEditorSuggester(this, this.settings))
-    // todo register vod suggester here
+
+    this.verseLookUpModal = new VerseLookupSuggestModal(this.app, this.settings)
     this.addCommand({
       id: 'obr-lookup',
       name: 'Verse Lookup',
       callback: () => {
-        this.suggestModal.open()
+        this.verseLookUpModal.open()
       },
     })
   }
@@ -35,7 +38,7 @@ export default class BibleReferencePlugin extends Plugin {
 
   async loadSettings() {
     this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData())
-    console.debug(this.settings)
+    console.debug('settings got loaded')
   }
 
   async saveSettings() {

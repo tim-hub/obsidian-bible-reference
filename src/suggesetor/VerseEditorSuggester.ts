@@ -49,19 +49,8 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
 
     const currentContent = editor.getLine(cursor.line).substring(0, cursor.ch)
 
-    if (currentContent === '--vod') {
-      return {
-        end: cursor,
-        start: {
-          line: cursor.line,
-          ch: currentContent.lastIndexOf('--vod'),
-        },
-        query: '--vod',
-      }
-    }
-
     const match = verseMatch(currentContent, false)
-    if (match || currentContent === '--vod') {
+    if (match) {
       console.debug('trigger on', currentContent)
       return {
         end: cursor,
