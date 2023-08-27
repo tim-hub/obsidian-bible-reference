@@ -1,5 +1,5 @@
 import { BibleReferencePluginSettings } from '../data/constants'
-import { VerseSuggesting } from '../VerseSuggesting'
+import { VerseSuggesting } from '../verse/VerseSuggesting'
 import { BOOK_REG } from '../utils/regs'
 import { Reference } from '../../biblejs-name-converter'
 

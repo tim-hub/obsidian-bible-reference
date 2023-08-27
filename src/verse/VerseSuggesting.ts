@@ -1,14 +1,14 @@
 import {
   BibleReferencePluginSettings,
   DEFAULT_SETTINGS,
-} from './data/constants'
-import { BibleVersionCollection } from './data/BibleVersionCollection'
-import { IBibleVersion } from './interfaces/IBibleVersion'
-import { IVerse } from './interfaces/IVerse'
-import { ProviderFactory } from './provider/ProviderFactory'
-import { BaseBibleAPIProvider } from './provider/BaseBibleAPIProvider'
-import { BaseVerseFormatter } from './verse/BaseVerseFormatter'
-import { IVerseSuggesting } from './interfaces/IVerseSuggesting'
+} from '../data/constants'
+import { BibleVersionCollection } from '../data/BibleVersionCollection'
+import { IBibleVersion } from '../interfaces/IBibleVersion'
+import { IVerse } from '../interfaces/IVerse'
+import { ProviderFactory } from '../provider/ProviderFactory'
+import { BaseBibleAPIProvider } from '../provider/BaseBibleAPIProvider'
+import { BaseVerseFormatter } from '../verse/BaseVerseFormatter'
+import { IVerseSuggesting } from '../interfaces/IVerseSuggesting'
 
 /**
  * Verse Suggesting
