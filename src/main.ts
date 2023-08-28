@@ -92,14 +92,14 @@ export default class BibleReferencePlugin extends Plugin {
   private addVerseOfDayCommands(): void {
     this.addCommand({
       id: 'obr-vod-view-verses-of-day',
-      name: 'Verse Of The Day - Notice',
+      name: 'Verse Of The Day - Notice (10 Seconds)',
       callback: async () => {
         // this.verseOfDayModal.open()
         const verse = await this.getAndCacheverseOfDay()
         new Notice(
           `${verse.verseTexts?.join('')} -- ${verse.verseReference.bookName} ${
             verse.verseReference.chapterNumber
-          }:${verse.verseReference.verseNumber}`
+          }:${verse.verseReference.verseNumber}`, 1000*10
         )
       },
     })
