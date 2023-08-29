@@ -12,7 +12,7 @@ import { VerseOfDayModal } from './suggesetor/VerseOfDayModal'
 import { getVod } from './provider/VODProvider'
 import { splitBibleReference } from './utils/splitBibleReference'
 import { VerseOfDaySuggesting } from './verse/VerseOfDaySuggesting'
-import getFlags from './provider/FeatureFlag';
+import getFlags from './provider/FeatureFlag'
 
 export default class BibleReferencePlugin extends Plugin {
   settings: BibleReferencePluginSettings
@@ -56,7 +56,7 @@ export default class BibleReferencePlugin extends Plugin {
     this.verseLookUpModal = new VerseLookupSuggestModal(this, this.settings)
     this.verseOfDayModal = new VerseOfDayModal(this, this.settings)
 
-    const flags = await getFlags();
+    const flags = await getFlags()
     console.debug(flags, flags.isFeatureEnabled('vod'))
     if (flags.isFeatureEnabled('vod')) {
       console.debug('vod feature flag enabled')
@@ -64,13 +64,11 @@ export default class BibleReferencePlugin extends Plugin {
         new VerseOfDayEditorSuggester(this, this.settings)
       )
 
-
       this.addVerseLookupCommand()
       this.addVerseOfDayCommands()
       if (this.settings.enableBibleVerseLookupRibbon) {
         this.addRibbonButton()
       }
-
     }
   }
 
@@ -107,7 +105,8 @@ export default class BibleReferencePlugin extends Plugin {
         new Notice(
           `${verse.verseTexts?.join('')} -- ${verse.verseReference.bookName} ${
             verse.verseReference.chapterNumber
-          }:${verse.verseReference.verseNumber}`, 1000*10
+          }:${verse.verseReference.verseNumber}`,
+          1000 * 10
         )
       },
     })

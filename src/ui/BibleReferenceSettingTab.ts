@@ -20,7 +20,7 @@ import {
   BibleVerseNumberFormat,
   BibleVerseNumberFormatCollection,
 } from '../data/BibleVerseNumberFormat'
-import getFlags from '../provider/FeatureFlag';
+import getFlags from '../provider/FeatureFlag'
 
 export class BibleReferenceSettingTab extends PluginSettingTab {
   plugin: BibleReferencePlugin
@@ -252,7 +252,6 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     // todo retire the bottom two settings
     this.setUpBookOutgoingLinking(containerEl)
     this.setUpChapterOutgoingLinking(containerEl)
-
 
     if ((await getFlags()).isFeatureEnabled('vod')) {
       // todo add vod settings and reflect feature flags
