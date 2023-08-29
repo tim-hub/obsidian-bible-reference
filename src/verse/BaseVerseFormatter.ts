@@ -23,7 +23,7 @@ export abstract class BaseVerseFormatter {
     if (verseNumberEnd && verseNumberEnd - verseNumber !== verseTexts?.length) {
       console.error('Verse text length does not match verse numbers')
     }
-    const verses: IVerse[] = verseTexts?.map((verse, index) => {
+    const verses = verseTexts?.map((verse, index) => {
       return {
         book_name: bookName,
         chapter: chapterNumber,

@@ -7,7 +7,7 @@ import { IBibleVersion } from '../interfaces/IBibleVersion'
 import { IVerse } from '../interfaces/IVerse'
 import { ProviderFactory } from '../provider/ProviderFactory'
 import { BaseBibleAPIProvider } from '../provider/BaseBibleAPIProvider'
-import { BaseVerseFormatter } from '../verse/BaseVerseFormatter'
+import { BaseVerseFormatter } from './BaseVerseFormatter'
 import { IVerseSuggesting } from './IVerseSuggesting'
 
 /**
@@ -96,7 +96,7 @@ export class VerseSuggesting
     } - ${this.bibleVersion.toUpperCase()}](${this.bibleProvider.VerseLinkURL})`
   }
 
-  protected async getVerses(): Promise<IVerse[]> {
+  public async getVerses(): Promise<IVerse[]> {
     console.debug(this.bibleVersion)
     if (this.bibleVersion === DEFAULT_SETTINGS.bibleVersion) {
       console.debug('match to default language plus version')
