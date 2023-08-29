@@ -12,6 +12,7 @@ import { VerseOfDayModal } from './suggesetor/VerseOfDayModal'
 import { getVod } from './provider/VODProvider'
 import { splitBibleReference } from './utils/splitBibleReference'
 import { VerseOfDaySuggesting } from './verse/VerseOfDaySuggesting'
+import getFlags from './provider/FeatureFlag';
 
 export default class BibleReferencePlugin extends Plugin {
   settings: BibleReferencePluginSettings
@@ -24,7 +25,7 @@ export default class BibleReferencePlugin extends Plugin {
   }
   private ribbonButton?: HTMLElement
 
-  private async getAndCacheverseOfDay(): Promise<VerseOfDaySuggesting> {
+  private async getAndCachedVerseOfDay(): Promise<VerseOfDaySuggesting> {
     const { ttl, timestamp, verseOfDaySuggesting } =
       this?.cachedVerseOfDaySuggesting || {}
     if (!verseOfDaySuggesting || timestamp + ttl > Date.now()) {
@@ -50,20 +51,27 @@ export default class BibleReferencePlugin extends Plugin {
 
     await this.loadSettings()
     this.addSettingTab(new BibleReferenceSettingTab(this.app, this))
-
-    this.registerEditorSuggest(
-      new VerseOfDayEditorSuggester(this, this.settings)
-    )
     this.registerEditorSuggest(new VerseEditorSuggester(this, this.settings))
 
     this.verseLookUpModal = new VerseLookupSuggestModal(this, this.settings)
-    if (this.settings.enableBibleVerseLookupRibbon) {
-      this.addRibbonButton()
-    }
-    this.addVerseLookupCommand()
-
     this.verseOfDayModal = new VerseOfDayModal(this, this.settings)
-    this.addVerseOfDayCommands()
+
+    const flags = await getFlags();
+    console.debug(flags, flags.isFeatureEnabled('vod'))
+    if (flags.isFeatureEnabled('vod')) {
+      console.debug('vod feature flag enabled')
+      this.registerEditorSuggest(
+        new VerseOfDayEditorSuggester(this, this.settings)
+      )
+
+
+      this.addVerseLookupCommand()
+      this.addVerseOfDayCommands()
+      if (this.settings.enableBibleVerseLookupRibbon) {
+        this.addRibbonButton()
+      }
+
+    }
   }
 
   onunload() {
@@ -95,7 +103,7 @@ export default class BibleReferencePlugin extends Plugin {
       name: 'Verse Of The Day - Notice (10 Seconds)',
       callback: async () => {
         // this.verseOfDayModal.open()
-        const verse = await this.getAndCacheverseOfDay()
+        const verse = await this.getAndCachedVerseOfDay()
         new Notice(
           `${verse.verseTexts?.join('')} -- ${verse.verseReference.bookName} ${
             verse.verseReference.chapterNumber
@@ -108,7 +116,7 @@ export default class BibleReferencePlugin extends Plugin {
       id: 'obs-vod-insert-verse-of-day',
       name: 'Verse Of The Day - Insert To Current Note',
       editorCallback: async (editor: Editor, view: MarkdownView) => {
-        const vodSuggesting = await this.getAndCacheverseOfDay()
+        const vodSuggesting = await this.getAndCachedVerseOfDay()
         editor.replaceSelection(vodSuggesting.allFormatedContent)
       },
     })

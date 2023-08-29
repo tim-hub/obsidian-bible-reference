@@ -20,6 +20,7 @@ import {
   BibleVerseNumberFormat,
   BibleVerseNumberFormatCollection,
 } from '../data/BibleVerseNumberFormat'
+import getFlags from '../provider/FeatureFlag';
 
 export class BibleReferenceSettingTab extends PluginSettingTab {
   plugin: BibleReferencePlugin
@@ -224,7 +225,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
       )
   }
 
-  display(): void {
+  async display(): Promise<void> {
     const { containerEl } = this
     containerEl.empty()
     const headingSection = containerEl.createDiv()
@@ -251,6 +252,11 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     // todo retire the bottom two settings
     this.setUpBookOutgoingLinking(containerEl)
     this.setUpChapterOutgoingLinking(containerEl)
+
+
+    if ((await getFlags()).isFeatureEnabled('vod')) {
+      // todo add vod settings and reflect feature flags
+    }
 
     containerEl.createEl('h2', { text: 'About' })
 

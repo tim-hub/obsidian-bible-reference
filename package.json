@@ -68,5 +68,8 @@
       "<rootDir>/build/",
       "<rootDir>/docs/"
     ]
+  },
+  "dependencies": {
+    "flagsmith-nodejs": "^3.1.1"
   }
 }
