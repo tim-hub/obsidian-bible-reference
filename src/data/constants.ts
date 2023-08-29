@@ -1,4 +1,4 @@
-import { BibleVersionCollection } from './BibleVersionCollection'
+import { BibleVersionCollection, DEFAULT_BIBLE_VERSION } from './BibleVersionCollection'
 import { BibleVerseReferenceLinkPosition } from './BibleVerseReferenceLinkPosition'
 import { BibleVerseFormat } from './BibleVerseFormat'
 import { BibleVerseNumberFormat } from './BibleVerseNumberFormat'
@@ -27,7 +27,7 @@ export interface BibleReferencePluginSettings {
 }
 
 export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
-  bibleVersion: BibleVersionCollection[0].key,
+  bibleVersion: DEFAULT_BIBLE_VERSION.key,
   referenceLinkPosition: BibleVerseReferenceLinkPosition.Header,
   verseFormatting: BibleVerseFormat.SingleLine,
   verseNumberFormatting: BibleVerseNumberFormat.Period,

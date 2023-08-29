@@ -6,7 +6,7 @@ import {
   Setting,
 } from 'obsidian'
 import BibleReferencePlugin from './../main'
-import { BibleVersionCollection } from '../data/BibleVersionCollection'
+import { BibleVersionCollection, DEFAULT_BIBLE_VERSION } from '../data/BibleVersionCollection'
 import { IBibleVersion } from '../interfaces/IBibleVersion'
 import {
   BibleVerseReferenceLinkPosition,
@@ -21,6 +21,7 @@ import {
   BibleVerseNumberFormatCollection,
 } from '../data/BibleVerseNumberFormat'
 import getFlags from '../provider/FeatureFlag'
+import { BibleAPISourceCollection } from '../data/BibleApiSourceCollection';
 
 export class BibleReferenceSettingTab extends PluginSettingTab {
   plugin: BibleReferencePlugin
@@ -46,14 +47,23 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     return BibleVersionCollection
   }
 
-  setUpVersionSettingsAndVersionOptions = (containerEl: HTMLElement): void => {
+  setUpVersionSettingsAndVersionOptions = (containerEl: HTMLElement, disableBibleAPI?: boolean = false): void => {
+    let allAvailableVersionOptions = this.getAllBibleVersionsWithLanguageNameAlphabetically()
+    if (disableBibleAPI ) {
+      allAvailableVersionOptions = allAvailableVersionOptions.filter(
+        v => {
+          return v.apiSource.name !== BibleAPISourceCollection.bibleApi.name
+        })
+    }
+    if (disableBibleAPI &&  ~allAvailableVersionOptions.find(v => v.key === this.plugin.settings.bibleVersion) ) {
+      this.plugin.settings.bibleVersion = DEFAULT_BIBLE_VERSION.key
+    }
+
     new Setting(containerEl)
       .setName('Default Bible Version')
       .setDesc('Choose the Bible version you prefer')
       .addDropdown((dropdown) => {
-        const allVersionOptions =
-          this.getAllBibleVersionsWithLanguageNameAlphabetically()
-        allVersionOptions.forEach((version: IBibleVersion) => {
+        allAvailableVersionOptions.forEach((version: IBibleVersion) => {
           dropdown.addOption(
             version.key,
             `${version.language} - ${version.versionName} @${version.apiSource.name}`
@@ -76,14 +86,14 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
       .setDesc('Where to put the bible verse reference link of the bible')
       .addDropdown((dropdown: DropdownComponent) => {
         BibleVerseReferenceLinkPositionCollection.forEach(
-          ({ name, description }) => {
+          ({name, description}) => {
             dropdown.addOption(name, description)
           }
         )
         dropdown
           .setValue(
             this.plugin.settings.referenceLinkPosition ??
-              BibleVerseReferenceLinkPosition.Bottom
+            BibleVerseReferenceLinkPosition.Bottom
           )
           .onChange(async (value) => {
             this.plugin.settings.referenceLinkPosition =
@@ -102,7 +112,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
         'Sets how to format the verses in Obsidian, either line by line or in 1 paragraph'
       )
       .addDropdown((dropdown: DropdownComponent) => {
-        BibleVerseFormatCollection.forEach(({ name, description }) => {
+        BibleVerseFormatCollection.forEach(({name, description}) => {
           dropdown.addOption(name, description)
         })
         dropdown
@@ -123,13 +133,13 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
       .setName('Verse Number Formatting Options')
       .setDesc('Sets how to format the verse numbers in Obsidian')
       .addDropdown((dropdown: DropdownComponent) => {
-        BibleVerseNumberFormatCollection.forEach(({ name, description }) => {
+        BibleVerseNumberFormatCollection.forEach(({name, description}) => {
           dropdown.addOption(name, description)
         })
         dropdown
           .setValue(
             this.plugin.settings.verseNumberFormatting ??
-              BibleVerseNumberFormat.Period
+            BibleVerseNumberFormat.Period
           )
           .onChange(async (value) => {
             this.plugin.settings.verseNumberFormatting =
@@ -226,21 +236,23 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
   }
 
   async display(): Promise<void> {
-    const { containerEl } = this
+    const {containerEl} = this
     containerEl.empty()
     const headingSection = containerEl.createDiv()
     headingSection.innerHTML = `
         <iframe src="https://github.com/sponsors/tim-hub/button" title="Sponsor Obsidian Bible Reference" width="116" height="32px" style="margin-right: 2em"/>
     `
 
-    containerEl.createEl('h2', { text: 'General Settings' })
-    this.setUpVersionSettingsAndVersionOptions(containerEl)
-    containerEl.createEl('h2', { text: 'Verses Rendering' })
+    const flags = await getFlags()
+
+    containerEl.createEl('h2', {text: 'General Settings'})
+    this.setUpVersionSettingsAndVersionOptions(containerEl, flags.isFeatureEnabled('disable-bible-api'))
+    containerEl.createEl('h2', {text: 'Verses Rendering'})
     this.setUpReferenceLinkPositionOptions(containerEl)
     this.setUpVerseFormatOptions(containerEl)
     this.setUpVerseNumberFormatOptions(containerEl)
     this.setUpCollapsible(containerEl)
-    containerEl.createEl('h2', { text: 'Tagging and Linking Settings' })
+    containerEl.createEl('h2', {text: 'Tagging and Linking Settings'})
     containerEl.createSpan({}, (span) => {
       span.innerHTML = `
         <small>Only if you want to add tags at the bottom of verses</small>
@@ -253,11 +265,11 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     this.setUpBookOutgoingLinking(containerEl)
     this.setUpChapterOutgoingLinking(containerEl)
 
-    if ((await getFlags()).isFeatureEnabled('vod')) {
+    if (flags.isFeatureEnabled('vod')) {
       // todo add vod settings and reflect feature flags
     }
 
-    containerEl.createEl('h2', { text: 'About' })
+    containerEl.createEl('h2', {text: 'About'})
 
     containerEl.createSpan({}, (span) => {
       span.innerHTML = `

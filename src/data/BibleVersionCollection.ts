@@ -180,3 +180,6 @@ export const BibleVersionCollection: IBibleVersion[] = [
     apiSource: BibleAPISourceCollection.bollsLife,
   },
 ]
+
+
+export const DEFAULT_BIBLE_VERSION = BibleVersionCollection[11];
