@@ -47,7 +47,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     return BibleVersionCollection
   }
 
-  setUpVersionSettingsAndVersionOptions = (containerEl: HTMLElement, disableBibleAPI?: boolean = false): void => {
+  setUpVersionSettingsAndVersionOptions = (containerEl: HTMLElement, disableBibleAPI?: boolean): void => {
     let allAvailableVersionOptions = this.getAllBibleVersionsWithLanguageNameAlphabetically()
     if (disableBibleAPI ) {
       allAvailableVersionOptions = allAvailableVersionOptions.filter(
@@ -55,7 +55,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
           return v.apiSource.name !== BibleAPISourceCollection.bibleApi.name
         })
     }
-    if (disableBibleAPI &&  ~allAvailableVersionOptions.find(v => v.key === this.plugin.settings.bibleVersion) ) {
+    if (disableBibleAPI && !allAvailableVersionOptions.find(v => v.key === this.plugin.settings.bibleVersion) ) {
       this.plugin.settings.bibleVersion = DEFAULT_BIBLE_VERSION.key
     }
 
