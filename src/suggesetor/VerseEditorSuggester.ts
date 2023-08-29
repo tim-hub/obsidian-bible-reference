@@ -7,13 +7,13 @@ import {
   TFile,
 } from 'obsidian'
 import BibleReferencePlugin from '../main'
-import { VerseTypoCheck } from '../utils/VerseTypoCheck'
-import { VerseSuggesting } from '../VerseSuggesting'
+import { verseMatch } from '../utils/verseMatch'
+import { VerseSuggesting } from '../verse/VerseSuggesting'
 import {
   API_WAITING_LABEL,
   BibleReferencePluginSettings,
 } from '../data/constants'
-import { getSuggestionsFromQuery } from './getSuggestionsFromQuery'
+import { getSuggestionsFromQuery } from '../utils/getSuggestionsFromQuery'
 
 /**
  * Extend the EditorSuggest to suggest bible verses.
@@ -47,7 +47,8 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
     suggestEl.createDiv({ cls: 'obr-loading-container' }).hide()
 
     const currentContent = editor.getLine(cursor.line).substring(0, cursor.ch)
-    const match = VerseTypoCheck(currentContent)
+
+    const match = verseMatch(currentContent, false)
     if (match) {
       console.debug('trigger on', currentContent)
       return {
@@ -69,6 +70,7 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
   async getSuggestions(
     context: EditorSuggestContext
   ): Promise<VerseSuggesting[]> {
+    // todo these 2 el could be managed better, move to renderSuggestion
     // @ts-ignore
     const suggestEl = this.suggestEl as HTMLDivElement
     // @ts-ignore
@@ -82,12 +84,14 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
     loadingContainer.setText(API_WAITING_LABEL)
     loadingContainer.show()
 
-    const suggestions = getSuggestionsFromQuery(context.query, this.settings)
-
-    return suggestions.finally(() => {
-      loadingContainer.hide()
-      suggestionsEl.show()
-    })
+    const suggestions = await getSuggestionsFromQuery(
+      context.query,
+      this.settings
+    )
+    // hide loading and how suggestions todo move to render
+    loadingContainer.hide()
+    suggestionsEl.show()
+    return suggestions
   }
 
   renderSuggestion(suggestion: VerseSuggesting, el: HTMLElement): void {
@@ -98,7 +102,7 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
     if (this.context) {
       /* prettier-ignore */
       (this.context.editor as Editor).replaceRange(
-        suggestion.ReplacementContent,
+        suggestion.allFormatedContent,
         this.context.start,
         this.context.end
       )

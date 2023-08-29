@@ -21,6 +21,9 @@ export interface BibleReferencePluginSettings {
   chapterTagging?: boolean
   bookBacklinking?: boolean // this is refering to outgoing link
   chapterBacklinking?: boolean // this is refering to outgoing link
+
+  // add this to ui at some point todo
+  enableBibleVerseLookupRibbon?: boolean
 }
 
 export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
@@ -34,6 +37,7 @@ export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
   chapterTagging: false,
   bookBacklinking: false,
   chapterBacklinking: false,
+  enableBibleVerseLookupRibbon: false,
 }
 
 export const API_WAITING_LABEL = 'Loading...'

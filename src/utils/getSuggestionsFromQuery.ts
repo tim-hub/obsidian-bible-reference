@@ -1,18 +1,19 @@
 import { BibleReferencePluginSettings } from '../data/constants'
-import { VerseSuggesting } from '../VerseSuggesting'
-import { BOOK_REG } from '../utils/regs'
+import { VerseSuggesting } from '../verse/VerseSuggesting'
+import { BOOK_REG } from './regs'
 import { Reference } from '../../biblejs-name-converter'
 
 /**
  * Get suggestions from string query
  */
-export async function getSuggestionsFromQuery(
+export const getSuggestionsFromQuery = async (
   query: string,
   settings: BibleReferencePluginSettings
-): Promise<VerseSuggesting[]> {
+): Promise<VerseSuggesting[]> => {
   console.debug('get suggestion for query ', query.toLowerCase())
 
-  const rawBookName = query.match(BOOK_REG)?.first()
+  const matchResults = query.match(BOOK_REG)
+  const rawBookName = matchResults?.length ? matchResults[0] : undefined
 
   if (!rawBookName) {
     console.error(`could not find through query`, query)
