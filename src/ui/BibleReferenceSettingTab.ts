@@ -165,20 +165,6 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
       )
   }
 
-  setUpBibleTagging = (containerEl: HTMLElement): void => {
-    new Setting(containerEl)
-      .setName('Add a #bible tag')
-      .setDesc('Add a hidden bible tag at bottom, i.e. #bible')
-      .addToggle((toggle) =>
-        toggle
-          .setValue(!!this.plugin.settings?.bibleTagging)
-          .onChange((value) => {
-            this.plugin.settings.bibleTagging = value
-            this.plugin.saveData(this.plugin.settings)
-          })
-      )
-  }
-
   setUpBookTagging = (containerEl: HTMLElement): void => {
     new Setting(containerEl)
       .setName('Add a Book Tag')
@@ -230,7 +216,6 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
         <small>Only if you want to add tags at the bottom of verses</small>
       `
     })
-    this.setUpBibleTagging(containerEl)
     this.setUpBookTagging(containerEl)
     this.setUpChapterTagging(containerEl)
 
