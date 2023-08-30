@@ -27,19 +27,19 @@
 2. In a note, for example type `--John1:1`
 3. Select the suggestion
 
-> Read more about [How to use](docs/howto.md)
+> Read more about [How to use](https://github.com/tim-hub/obsidian-bible-reference/blob/master/docs/howto.md)
 
 ## Contribution and Credits
 
-- [How to Contribute](CONTRIBUTING.md)
-- About [Bible API/Data Source](docs/bible-api-and-source.md)
+- [How to Contribute](https://github.com/tim-hub/obsidian-bible-reference/blob/master/CONTRIBUTING.md)
+- About [Bible API/Data Source](https://github.com/tim-hub/obsidian-bible-reference/blob/master/docs/bible-api-and-source.md)
 
 
 ### Sponsors and Contributors
 
 - [Chris Gonzales](https://github.com/chrisg32)
 ---
-- [_Previous Sponsors_](docs/previous-sponsors.md)
+- [_Previous Sponsors_](https://github.com/tim-hub/obsidian-bible-reference/blob/master/docs/previous-sponsors.md)
 
 ### Contributors
 - [**All Contributors**](https://github.com/tim-hub/obsidian-bible-reference/graphs/contributors) 👍🙏
