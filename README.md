@@ -1,5 +1,9 @@
 ## Obsidian Bible Reference
 
+
+- Simplify your Bible Study note-taking experience with the user-friendly Obsidian.md notes app.
+- Experience the seamless assistance of automated Bible Verse suggestions for effortless referencing.
+
 [![CodeQL for Obsidain Bible Reference](https://github.com/tim-hub/obsidian-bible-reference/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/tim-hub/obsidian-bible-reference/actions/workflows/codeql-analysis.yml)
 [![Build for Bible Reference Project](https://github.com/tim-hub/obsidian-bible-reference/actions/workflows/build.yml/badge.svg)](https://github.com/tim-hub/obsidian-bible-reference/actions/workflows/build.yml)
 [![obsidian bible reference user discussion forum](https://img.shields.io/badge/Discussion-blue)](https://github.com/tim-hub/obsidian-bible-reference/discussions)
@@ -15,9 +19,6 @@
 ---
 
 ## About
-
-- Taking Bible Study note in Obsidian.md application easily.
-- Automatically suggesting Bible Verses as references.
 
 ![obsidian bible reference demo](https://raw.githubusercontent.com/tim-hub/obsidian-bible-reference/master/docs/obsidian-bible-reference-demo.gif)
 
