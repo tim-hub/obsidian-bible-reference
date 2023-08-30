@@ -84,10 +84,6 @@ export abstract class BaseBibleAPIProvider {
     }
   }
 
-  public getVerseOfTheDay(): Promise<IVerse[]> {
-    return this.query('John', 3, [16])
-  }
-
   /**
    * Build the request URL from the given parameters, and set the _queryUrl
    * @param bookName
