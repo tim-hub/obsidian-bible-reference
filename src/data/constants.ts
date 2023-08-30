@@ -19,8 +19,6 @@ export interface BibleReferencePluginSettings {
   bibleTagging?: boolean
   bookTagging?: boolean
   chapterTagging?: boolean
-  bookBacklinking?: boolean // this is refering to outgoing link
-  chapterBacklinking?: boolean // this is refering to outgoing link
 
   // add this to ui at some point todo
   enableBibleVerseLookupRibbon?: boolean
@@ -35,8 +33,6 @@ export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
   bibleTagging: false,
   bookTagging: false,
   chapterTagging: false,
-  bookBacklinking: false,
-  chapterBacklinking: false,
   enableBibleVerseLookupRibbon: false,
 }
 

@@ -38,22 +38,6 @@ export class VerseSuggesting
     this.bibleVersion = settings.bibleVersion
   }
 
-  public get head(): string {
-    let head = super.head
-    // backlinks and tags use the BibleReferenceHeader
-    //  and regex to clean book and chapters that will match
-    //  across multiple different search queires
-    if (this.settings?.bookBacklinking) {
-      head += ` [[${this.verseReference.bookName}]]`
-    }
-    if (this.settings?.chapterBacklinking) {
-      head += ` [[${
-        this.verseReference.bookName + this.verseReference.chapterNumber
-      }]]`
-    }
-    return head
-  }
-
   public get bottom(): string {
     let bottom = super.bottom
     if (
