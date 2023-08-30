@@ -1,4 +1,24 @@
+## About 
+
+> This plugin Bible Verse Query Functionality is currently powered by Public Bible API,
+> Here is about the APIs used here, and what Bible version are supported
+>
+> - [Bible API and Bible Versions](docs/bible-api-and-source.md)
+
+- [Making contributions](CONTRIBUTING.md) All kinds of Contributing is appreciated,
+  - maintaining the project code base,
+  - improving the documentation,
+  - testing, feedback and feature requests,
+  - localization,
+  - and so on
+- [Issues or Feature Requests of Obsidian Bible Reference](https://github.com/tim-hub/obsidian-bible-reference/issues)
+- [Discussion about Obsidian Bible Reference](https://github.com/tim-hub/obsidian-bible-reference/discussions)
+  - This is [a discussion](https://github.com/tim-hub/obsidian-bible-reference/discussions/77) from Jeremy(@JPT62089) regarding Svelte, Localization and other features
+
+
+
 ## Contribution for Obsidian Bible Reference
+
 
 All kinds of Contributing is appreciated, not only helping the project development, but also
 
@@ -10,6 +30,7 @@ All kinds of Contributing is appreciated, not only helping the project developme
 
 This project uses Typescript to provide type checking and documentation.
 The repo depends on the latest plugin API (obsidian.d.ts) in Typescript Definition format, which contains TSDoc comments describing what it does.
+
 
 ### Development and Contribution
 
