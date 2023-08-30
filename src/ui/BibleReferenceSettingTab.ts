@@ -207,34 +207,6 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
       )
   }
 
-  setUpBookOutgoingLinking = (containerEl: HTMLElement): void => {
-    new Setting(containerEl)
-      .setName('Add a Book Outgoing Link')
-      .setDesc('Makes an outgoing link for the book, for example [[John]]')
-      .addToggle((toggle) =>
-        toggle
-          .setValue(!!this.plugin.settings?.bookBacklinking)
-          .onChange((value) => {
-            this.plugin.settings.bookBacklinking = value
-            this.plugin.saveData(this.plugin.settings)
-          })
-      )
-  }
-
-  setUpChapterOutgoingLinking = (containerEl: HTMLElement): void => {
-    new Setting(containerEl)
-      .setName('Add a Chapter Outgoing Links')
-      .setDesc('Makes an outgoing link for the chaper, for example [[John1]] ')
-      .addToggle((toggle) =>
-        toggle
-          .setValue(!!this.plugin.settings?.chapterBacklinking)
-          .onChange((value) => {
-            this.plugin.settings.chapterBacklinking = value
-            this.plugin.saveData(this.plugin.settings)
-          })
-      )
-  }
-
   async display(): Promise<void> {
     const {containerEl} = this
     containerEl.empty()
@@ -261,9 +233,6 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     this.setUpBibleTagging(containerEl)
     this.setUpBookTagging(containerEl)
     this.setUpChapterTagging(containerEl)
-    // todo retire the bottom two settings
-    this.setUpBookOutgoingLinking(containerEl)
-    this.setUpChapterOutgoingLinking(containerEl)
 
     if (flags.isFeatureEnabled('vod')) {
       // todo add vod settings and reflect feature flags
