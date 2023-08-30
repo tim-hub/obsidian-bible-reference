@@ -64,9 +64,9 @@ export abstract class BaseBibleAPIProvider {
     try {
       const response = await fetch(url, {
         method: 'get',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        // headers: {
+        //   'Content-Type': 'application/json',
+        // }, // some provide does not accept this header
         redirect: 'follow', // manual, *follow, error
         cache: 'force-cache',
       })
