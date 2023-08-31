@@ -70,7 +70,6 @@
     ]
   },
   "dependencies": {
-    "flagsmith-nodejs": "^3.1.1",
-    "umami-logger-typescript": "^1.0.8"
+    "flagsmith-nodejs": "^3.1.1"
   }
 }
