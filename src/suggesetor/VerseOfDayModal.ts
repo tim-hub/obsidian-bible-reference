@@ -21,7 +21,7 @@ export class VerseOfDayModal extends Modal {
   async onOpen() {
     super.onOpen()
     const { contentEl } = this
-    EventStats.logEvent('verse-of-day-triggered', 'modal', {trigger: 'open modal'})
+    EventStats.logEvent('verse-triggered', {trigger: 'open modal', place:'modal', type: 'vod'})
     const item = await getVod()
     contentEl.setText(`${item.verse.details.text}
 -- ${item.verse.details.reference}    

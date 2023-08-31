@@ -52,7 +52,7 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
     const match = verseMatch(currentContent, false)
     if (match) {
       console.debug('trigger on', currentContent)
-      EventStats.logEvent('verse-triggered', 'editor', {trigger: match})
+      EventStats.logEvent('verse-triggered',  {trigger: match, place: 'editor'})
       return {
         end: cursor,
         start: {

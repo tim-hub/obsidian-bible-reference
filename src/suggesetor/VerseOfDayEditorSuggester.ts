@@ -58,7 +58,7 @@ export class VerseOfDayEditorSuggester extends EditorSuggest<VerseOfDaySuggestin
   ): EditorSuggestTriggerInfo | null {
     const currentContent = editor.getLine(cursor.line).substring(0, cursor.ch)
     if (currentContent === '--vod') {
-      EventStats.logEvent('verse-of-day-triggered', 'editor', {trigger: '--vod'})
+      EventStats.logEvent('verse-triggered', {trigger: '--vod', place: 'editor', type: 'vod'})
       return {
         end: cursor,
         start: {

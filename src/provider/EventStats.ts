@@ -66,7 +66,7 @@ class UmamiLogger {
    * @param eventName - Name of the event
    * @param eventData - Optional data to attach to the event
    */
-  async logEvent(eventName: string, relativePath:string='', eventData: EventData = {}): Promise<void> {
+  async logEvent(eventName: string, eventData: EventData = {}): Promise<void> {
     if (!this.config || !eventName) return;
 
     // Create payload with event name and data
@@ -76,7 +76,7 @@ class UmamiLogger {
       referrer: document.referrer || '',
       screen: `${window.screen.width}x${window.screen.height}`,
       // title: document.title, // do not use since, this will send user document title to the server
-      url:  ` ${window.location.pathname}/${relativePath}`,
+      url: window.location.pathname,
       website: this.config.websiteId,
       name: eventName,
       data: eventData,

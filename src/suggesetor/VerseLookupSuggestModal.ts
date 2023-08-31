@@ -20,11 +20,16 @@ export class VerseLookupSuggestModal extends SuggestModal<VerseSuggesting> {
     ])
   }
 
+  public onOpen() {
+    super.onOpen();
+    EventStats.logEvent('modal-open',  {place:'look-up-modal'})
+  }
+
   async getSuggestions(query: string): Promise<VerseSuggesting[]> {
     const match = verseMatch(query, true)
     if (match) {
       console.debug('trigger on', query)
-      EventStats.logEvent('verse-lookup-triggered', 'modal', {trigger: match})
+      EventStats.logEvent('verse-triggered',  {trigger: match, place:'look-up-modal'})
       return getSuggestionsFromQuery(`--${query}`, this.settings)
     }
     return []

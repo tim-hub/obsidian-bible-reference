@@ -197,7 +197,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
 
   async display(): Promise<void> {
     const {containerEl} = this
-    EventStats.logEvent('settings-opened', 'settings',  {version: this.plugin.manifest.version})
+    EventStats.logEvent('settings-opened',  {version: this.plugin.manifest.version, place: 'settings'})
     containerEl.empty()
     const headingSection = containerEl.createDiv()
     headingSection.innerHTML = `
