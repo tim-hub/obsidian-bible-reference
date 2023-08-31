@@ -11,6 +11,7 @@ import { BibleReferencePluginSettings } from '../data/constants'
 import { getVod } from '../provider/VODProvider'
 import { VerseOfDaySuggesting } from '../verse/VerseOfDaySuggesting'
 import { splitBibleReference } from '../utils/splitBibleReference'
+import EventStats from '../provider/EventStats';
 
 export class VerseOfDayEditorSuggester extends EditorSuggest<VerseOfDaySuggesting> {
   private plugin: BibleReferencePlugin
@@ -57,6 +58,7 @@ export class VerseOfDayEditorSuggester extends EditorSuggest<VerseOfDaySuggestin
   ): EditorSuggestTriggerInfo | null {
     const currentContent = editor.getLine(cursor.line).substring(0, cursor.ch)
     if (currentContent === '--vod') {
+      EventStats.logEvent('verse-of-day-triggered', 'editor', {trigger: '--vod'})
       return {
         end: cursor,
         start: {

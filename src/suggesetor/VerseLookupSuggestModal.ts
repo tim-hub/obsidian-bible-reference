@@ -4,6 +4,7 @@ import { BibleReferencePluginSettings } from '../data/constants'
 import { VerseSuggesting } from '../verse/VerseSuggesting'
 import { getSuggestionsFromQuery } from '../utils/getSuggestionsFromQuery'
 import BibleReferencePlugin from '../main'
+import EventStats from '../provider/EventStats';
 
 export class VerseLookupSuggestModal extends SuggestModal<VerseSuggesting> {
   settings: BibleReferencePluginSettings
@@ -23,6 +24,7 @@ export class VerseLookupSuggestModal extends SuggestModal<VerseSuggesting> {
     const match = verseMatch(query, true)
     if (match) {
       console.debug('trigger on', query)
+      EventStats.logEvent('verse-lookup-triggered', 'modal', {trigger: match})
       return getSuggestionsFromQuery(`--${query}`, this.settings)
     }
     return []

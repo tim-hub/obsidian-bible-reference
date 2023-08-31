@@ -14,6 +14,7 @@ import {
   BibleReferencePluginSettings,
 } from '../data/constants'
 import { getSuggestionsFromQuery } from '../utils/getSuggestionsFromQuery'
+import EventStats from '../provider/EventStats';
 
 /**
  * Extend the EditorSuggest to suggest bible verses.
@@ -51,6 +52,7 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
     const match = verseMatch(currentContent, false)
     if (match) {
       console.debug('trigger on', currentContent)
+      EventStats.logEvent('verse-triggered', 'editor', {trigger: match})
       return {
         end: cursor,
         start: {
