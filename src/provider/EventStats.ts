@@ -37,6 +37,7 @@ class UmamiLogger {
    */
   initialize(config: UmamiConfig): void {
     this.config = config;
+  //  todo inject settings here
   }
 
   /**
@@ -76,6 +77,7 @@ class UmamiLogger {
       referrer: document.referrer || '',
       screen: `${window.screen.width}x${window.screen.height}`,
       // title: document.title, // do not use since, this will send user document title to the server
+      // todo use modal, settings modal, editor as title here
       url: window.location.pathname,
       website: this.config.websiteId,
       name: eventName,
@@ -83,7 +85,7 @@ class UmamiLogger {
     };
 
     // Send the data
-    this.sendData({payload: payload, type: 'event'});
+    this.sendData({payload: payload, type: 'event'}); // todo get version and some of settings to inject here
   }
 
   /**
