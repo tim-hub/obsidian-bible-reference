@@ -22,6 +22,7 @@ import {
 } from '../data/BibleVerseNumberFormat'
 import getFlags from '../provider/FeatureFlag'
 import { BibleAPISourceCollection } from '../data/BibleApiSourceCollection';
+import EventStats from '../provider/EventStats';
 
 export class BibleReferenceSettingTab extends PluginSettingTab {
   plugin: BibleReferencePlugin
@@ -30,6 +31,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     super(app, plugin)
     this.plugin = plugin
   }
+
 
   getAllBibleVersionsWithLanguageNameAlphabetically = (): IBibleVersion[] => {
     return this.getAllBibleVersionsWithLanguageName().sort((a, b) => {
@@ -195,6 +197,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
 
   async display(): Promise<void> {
     const {containerEl} = this
+    EventStats.logEvent('settings-opened', {version: this.plugin.manifest.version})
     containerEl.empty()
     const headingSection = containerEl.createDiv()
     headingSection.innerHTML = `
