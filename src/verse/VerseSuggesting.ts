@@ -40,23 +40,16 @@ export class VerseSuggesting
 
   public get bottom(): string {
     let bottom = super.bottom
-    if (
-      this.settings?.bibleTagging ||
-      this.settings?.bookTagging ||
-      this.settings?.chapterTagging
-    ) {
-      bottom += ' %%'
-      bottom += this.settings?.bibleTagging ? ' #bible' : ''
-      bottom += this.settings?.bookTagging
-        ? ` #${this.verseReference.bookName}`
-        : ''
-      bottom += this.settings?.chapterTagging
-        ? ` #${
-            this.verseReference.bookName + this.verseReference.chapterNumber
-          }`
-        : ''
-      bottom += ' %%'
-    }
+    bottom += ' %%'
+    bottom += this.settings?.bookTagging
+      ? ` #${this.verseReference.bookName}`
+      : ''
+    bottom += this.settings?.chapterTagging
+      ? ` #${
+        this.verseReference.bookName + this.verseReference.chapterNumber
+      }`
+      : ''
+    bottom += ' %%'
     return bottom
   }
 
