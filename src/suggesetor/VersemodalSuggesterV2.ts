@@ -1,16 +1,18 @@
-import { App, DropdownComponent, Modal, SuggestModal, TextComponent, ToggleComponent } from "obsidian";
-import { VerseSuggesting } from "src/VerseSuggesting";
+import { App, Modal, Setting } from "obsidian";
 import { BibleVersionCollection } from "src/data/BibleVersionCollection";
 import { BibleReferencePluginSettings } from "src/data/constants";
 import { IBibleVersion } from "src/interfaces/IBibleVersion";
+import BibleReferencePlugin from "src/main";
+import { BibleReferenceSettingTab } from "src/ui/BibleReferenceSettingTab";
 
 
 export class VerseModalSuggesterV2 extends Modal {
     settings: BibleReferencePluginSettings
-
-    constructor(app: App, settings: BibleReferencePluginSettings) {
+    plugin: BibleReferencePlugin
+    constructor(app: App, settings: BibleReferencePluginSettings, plugin: BibleReferencePlugin) {
         super(app)
         this.settings = settings
+        this.plugin = plugin
     }
 
     getAllBibleVersionsWithLanguageNameAlphabetically = (): IBibleVersion[] => {
@@ -36,23 +38,30 @@ export class VerseModalSuggesterV2 extends Modal {
     }
 
     onOpen() {
+        this.modalEl.style.width = '40%'
         const { contentEl } = this
+        const settingsInModal = new BibleReferenceSettingTab(this.app, this.plugin)
 
-        const referenceTextBoxDiv = contentEl.createDiv()
-        referenceTextBoxDiv.createEl('div', {text: 'Verse Reference:', cls: 'modal-contents'})
-        new TextComponent (referenceTextBoxDiv)
-            .setPlaceholder('Gen1:1')
+        // Verse Text Box
+        const referenceTextBox = new Setting(contentEl)
+            .setName("Enter Verse Reference:")
+            .addText((text) => text
+                .setPlaceholder('Genesis 1:1')
+                .onChange(async (string) =>{
+                    // Get verses from reference
+                }))
+        
+        // Version Selecter
+        settingsInModal.SetUpVersionSettingsAndVersionOptions(contentEl)
+        
+        // Toggle Version in Reference
+        const versionInReference = new Setting(contentEl)
+            .setName('Include Bible Version in Reference')
+            .setDesc('Include or exclude the Bible translation in the verse citation')
+            .addToggle((toggle) => toggle.setValue(false))
 
-        const translationSelecterDiv = contentEl.createDiv()
-        translationSelecterDiv.createEl('div', {text: 'Select Translation:', cls: 'modal-contents'})
-        new DropdownComponent (translationSelecterDiv)
-            .addOptions(this.formatVersionsIntoObject())
-            .setValue(this.settings.bibleVersion)
-
-        const includeTranslationInReferenceDiv = contentEl.createDiv()
-        includeTranslationInReferenceDiv.createEl('div', {text: 'Include Translation in the Reference:', cls: 'modal-contents'})
-        new ToggleComponent (includeTranslationInReferenceDiv)
-            .setValue(false)
+        // Verse Number Format
+        settingsInModal.SetUpVerseNumberFormatOptions(contentEl)
     }
 
     onClose() {

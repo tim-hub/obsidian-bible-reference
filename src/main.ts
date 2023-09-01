@@ -6,7 +6,7 @@ import {
 } from './data/constants'
 import { BibleReferenceSettingTab } from './ui/BibleReferenceSettingTab'
 import { VerseEditorSuggester } from './suggesetor/VerseEditorSuggester'
-import { VerseModalSuggester } from './suggesetor/VerseModalSuggester'
+// import { VerseModalSuggester } from './suggesetor/VerseModalSuggester'
 import { VerseModalSuggesterV2 } from './suggesetor/VersemodalSuggesterV2'
 
 export default class BibleReferencePlugin extends Plugin {
@@ -17,7 +17,7 @@ export default class BibleReferencePlugin extends Plugin {
     console.log('loading plugin -', APP_NAMING.appName)
 
     await this.loadSettings()
-    this.suggestModal = new VerseModalSuggesterV2(this.app, this.settings)
+    this.suggestModal = new VerseModalSuggesterV2(this.app, this.settings, this)
     this.addSettingTab(new BibleReferenceSettingTab(this.app, this))
     this.registerEditorSuggest(new VerseEditorSuggester(this, this.settings))
     this.addCommand({
