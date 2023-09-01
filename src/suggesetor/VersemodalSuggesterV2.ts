@@ -40,6 +40,7 @@ export class VerseModalSuggesterV2 extends Modal {
     onOpen() {
         this.modalEl.style.width = '40%'
         const { contentEl } = this
+        contentEl.createEl('h3', {text: 'Insert Verse'})
         const settingsInModal = new BibleReferenceSettingTab(this.app, this.plugin)
 
         // Verse Text Box
