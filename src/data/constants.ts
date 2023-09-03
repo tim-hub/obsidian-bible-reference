@@ -13,8 +13,7 @@ export const APP_NAMING = {
 
 export interface BibleReferencePluginSettings {
   bibleVersion: string
-  headFormatString: string
-  tailFormatString: string
+  formatString: string
   calloutDefaultFold: CalloutFoldFormat
 
   // Deprecated
@@ -32,8 +31,7 @@ export interface BibleReferencePluginSettings {
 
 export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
   bibleVersion: BibleVersionCollection[0].key,
-  headFormatString: '> [!Bible] {{verse_reference_link}}',
-  tailFormatString: '>',
+  formatString: '> [!Bible] {{verse_reference_link}}\n{{content}}',
   calloutDefaultFold: CalloutFoldFormat.NoFold,
 
   // Deprecated

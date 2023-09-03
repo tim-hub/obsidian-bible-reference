@@ -163,35 +163,21 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
       })
   }
 
-  SetUpHeaderFormatOptions = (containerEl: HTMLElement): void => {
+  SetUpFormatOptions = (containerEl: HTMLElement): void => {
     new Setting(containerEl)
-      .setName('Header Formatting String')
-      .setDesc('Describes how to format the header of the callout.')
-      .addTextArea((text) => 
-        text
-          .setPlaceholder('')
-          .setValue(this.plugin.settings.headFormatString)
-          .onChange(async (value) => {
-            this.plugin.settings.headFormatString = value;
-            console.debug('Header Format String To:' + value)
-            await this.plugin.saveSettings()
-          })
-      )
-  }
-
-  SetUpFooterFormatOptions = (containerEl: HTMLElement): void => {
-    new Setting(containerEl)
-      .setName('Footer Formatting String')
-      .setDesc('Describes how to format the footer of the callout.')
-      .addTextArea((text) => 
-        text
-          .setPlaceholder('')
-          .setValue(this.plugin.settings.tailFormatString)
-          .onChange(async (value) => {
-            this.plugin.settings.tailFormatString = value;
-            console.debug('Footer Format String To:' + value)
-            await this.plugin.saveSettings()
-          })
+      .setName('Formatting String')
+      .setDesc('Describes how to format the callout.')
+      .addTextArea((text) => {
+         text
+            .setPlaceholder('')
+            .setValue(this.plugin.settings.formatString)
+            .onChange(async (value) => {
+              this.plugin.settings.formatString = value;
+              await this.plugin.saveSettings()
+            })
+          text.inputEl.style.height = '10em'
+          text.inputEl.style.width = '30em'
+        }
       )
   }
 
@@ -208,11 +194,9 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     this.SetUpReferenceLinkPositionOptions(containerEl)
     this.SetUpVerseFormatOptions(containerEl)
     this.SetUpVerseNumberFormatOptions(containerEl)
-    this.SetUpFoldOptions(containerEl)
     containerEl.createEl('h2', { text: 'Header/Footer Format'})
     containerEl.createEl('a', { text: 'View Available Formatting', href: 'https://github.com/tim-hub/obsidian-bible-reference#formatting-strings' })
-    this.SetUpHeaderFormatOptions(containerEl)
-    this.SetUpFooterFormatOptions(containerEl)
+    this.SetUpFormatOptions(containerEl)
 
     containerEl.createEl('h2', { text: 'About' })
 

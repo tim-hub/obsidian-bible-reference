@@ -39,11 +39,9 @@ export class VerseSuggesting implements IVerseSuggesting {
    * @constructor
    */
   public get ReplacementContent(): string {
-    let head = this.formatReferenceString(this.settings.headFormatString)
+    let content = this.formatCallout(this.settings.formatString)
 
-    let bottom = this.formatReferenceString(this.settings.tailFormatString)
-
-    return [head, this.text, bottom].join('\n')
+    return content
   }
 
   public async getVerses(): Promise<IVerse[]> {
@@ -74,7 +72,7 @@ export class VerseSuggesting implements IVerseSuggesting {
     )
   }
 
-  private formatReferenceString(formatString: string): string {
+  private formatCallout(formatString: string): string {
     let verseFormatString = this.verseNumber.toString()
     if(this.verseNumberEnd != undefined) verseFormatString += '-' + this.verseNumberEnd
     return formatString
@@ -83,6 +81,7 @@ export class VerseSuggesting implements IVerseSuggesting {
         .replaceAll('{{chapter}}', this.chapterNumber.toString())
         .replaceAll('{{verse_range}}', verseFormatString)
         .replaceAll('{{verse_reference_link}}', this.getVerseReference())
+        .replaceAll('{{content}}', this.text)
   }
 
   private formatVerseNumber(verseNumber: number | string) {
