@@ -45,6 +45,7 @@ These are special substitutions used in the formatting settings.
 | {{chapter}}              | Number of the quoted chapter |
 | {{verse_range}}          | Range of quoted verses       |
 | {{verse_reference_link}} | Link to the API reference    |
+| {{content}}              | The verse content            |
 
 ## How to install
 
