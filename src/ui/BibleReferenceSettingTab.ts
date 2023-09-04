@@ -22,7 +22,7 @@ import {
 } from '../data/BibleVerseNumberFormat'
 import getFlags from '../provider/FeatureFlag'
 import { BibleAPISourceCollection } from '../data/BibleApiSourceCollection';
-import EventStats from '../provider/EventStats';
+import  { EventStats } from '../provider/EventStats';
 
 export class BibleReferenceSettingTab extends PluginSettingTab {
   plugin: BibleReferencePlugin
@@ -77,7 +77,8 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
             this.plugin.settings.bibleVersion = value
             console.debug('Default Bible Version: ' + value)
             await this.plugin.saveSettings()
-            new Notice('Bible Reference Settings Updated ')
+            new Notice(`Bible Reference - use Version ${value.toUpperCase()}`)
+            EventStats.logSettingChange('changeVersion', {key:value, value:1})
           })
       })
   }
@@ -103,6 +104,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
             console.debug('Bible Verse Reference Link Position: ' + value)
             await this.plugin.saveSettings()
             new Notice('Bible Reference Settings Updated ')
+            EventStats.logSettingChange('changeVerseFormatting', {key:`link-position-${value}`, value:1})
           })
       })
   }
@@ -126,6 +128,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
             console.debug('Bible Verse Format To: ' + value)
             await this.plugin.saveSettings()
             new Notice('Bible Verse Format Settings Updated')
+            EventStats.logSettingChange('changeVerseFormatting', {key:`verse-format-${value}`, value:1})
           })
       })
   }
@@ -149,6 +152,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
             console.debug('Bible Verse Number Format To: ' + value)
             await this.plugin.saveSettings()
             new Notice('Bible Verse Format Number Settings Updated')
+            EventStats.logSettingChange('changeVerseFormatting', {key:`verse-number-format-${value}`, value:1})
           })
       })
   }
@@ -163,6 +167,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
           .onChange((value) => {
             this.plugin.settings.collapsibleVerses = value
             this.plugin.saveData(this.plugin.settings)
+            EventStats.logSettingChange('changeVerseFormatting', {key:`collapsible-${value}`, value:1})
           })
       )
   }
@@ -177,6 +182,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
           .onChange((value) => {
             this.plugin.settings.bookTagging = value
             this.plugin.saveData(this.plugin.settings)
+            EventStats.logSettingChange('changeVerseFormatting', {key:`book-tagging-${value}`, value:1})
           })
       )
   }
@@ -191,13 +197,14 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
           .onChange((value) => {
             this.plugin.settings.chapterTagging = value
             this.plugin.saveData(this.plugin.settings)
+            EventStats.logSettingChange('changeVerseFormatting', {key:`chapter-tagging-${value}`, value:1})
           })
       )
   }
 
   async display(): Promise<void> {
     const {containerEl} = this
-    EventStats.logEvent('settings-opened',  {version: this.plugin.manifest.version, place: 'settings'})
+    EventStats.logUIOpen('settingsOpen', {key: 'open', value: 1})
     containerEl.empty()
     const headingSection = containerEl.createDiv()
     headingSection.innerHTML = `

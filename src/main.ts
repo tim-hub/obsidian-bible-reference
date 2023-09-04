@@ -117,7 +117,7 @@ export default class BibleReferencePlugin extends Plugin {
       name: 'Verse Of The Day - Insert To Current Note',
       editorCallback: async (editor: Editor, view: MarkdownView) => {
         const vodSuggesting = await this.getAndCachedVerseOfDay()
-        editor.replaceSelection(vodSuggesting.allFormatedContent)
+        editor.replaceSelection(vodSuggesting.allFormattedContent)
       },
     })
   }

@@ -1,121 +1,96 @@
 // Configuration interface for Umami
-interface UmamiConfig {
-  baseUrl: string;
-  websiteId: string;
+import { AckeeInstance, AckeeTrackingReturn, ActionAttributes, create } from 'ackee-tracker';
+
+const EVENTS = {
+
+  // key:count value 1
+  settingsOpen: '2b5c608e-a773-4e99-8253-ae466e34ea3c',
+  vodModalOpen: 'd109ceb7-c654-4450-b4c7-b258845dbe6d',
+  vodEditorOpen: 'f814103b-d147-498d-8024-ec9285c5c6c7',
+  lookupEditorOpen: '42abd468-3d86-45de-99bb-856267b6ce61', // got triggered in the editor
+  lookupModalOpen: '63e6a132-2113-4363-8337-e8716c5bcb13',
+
+  // key:john1:1 value: 1
+  verseLookUp: '1e25a766-e81c-4241-aae9-16cfdadf3bd5',
+  vodLookUp: 'ca89d404-8953-4e8a-96aa-bc9dc5f3b12d',
+
+  // settings, NIV 1
+  changeVersion: '4504d174-6535-426e-8d54-c6e49d27d537',
+  changeVerseFormatting: 'af3fb034-a428-4a52-a2c4-556d61f95602',
+  // changeLinkPosition: '',
+  // changeVerseNumberFormatting: '',
+  // changeCollapsible: '',
+  // changeBookTagging: '',
+  // changeChapterTagging: '',
 }
 
-// Generic interface for event data
-interface EventData {
-  [key: string]: any;
-}
 
-class UmamiLogger {
-  // Singleton instance
-  private static instance: UmamiLogger;
+type VerseLookUp = 'verseLookUp' | 'vodLookUp'
+type UIOpen = 'settingsOpen' | 'vodModalOpen' | 'vodEditorOpen' | 'lookupEditorOpen' | 'lookupModalOpen'
+type SettingChange = 'changeVersion' | 'changeVerseFormatting'
+type EventsKeys = VerseLookUp | UIOpen | SettingChange
+type EventsValues = typeof EVENTS[EventsKeys]
 
-  // Configuration object
-  private config?: UmamiConfig;
+class Logger {
+  protected static instance: Logger;
+  public ackeeTracker: AckeeInstance;
+  private server: string
+  private domainId: string
+  private record: AckeeTrackingReturn
 
-  // Private constructor for Singleton pattern
-  private constructor() {
-  }
 
-  /**
-   * Get or create the singleton instance.
-   */
-  static getInstance(): UmamiLogger {
-    if (!UmamiLogger.instance) {
-      UmamiLogger.instance = new UmamiLogger();
+  static getInstance(): Logger {
+    if (!Logger.instance) {
+      Logger.instance = new Logger();
     }
-    return UmamiLogger.instance;
+    return Logger.instance;
   }
 
-  /**
-   * Initialize logger with configuration.
-   *
-   * @param config - Umami configuration object
-   */
-  initialize(config: UmamiConfig): void {
-    this.config = config;
-  //  todo inject settings here
+  init(server: string, domainId: string) {
+    this.server = server;
+    this.domainId = domainId;
+    this.ackeeTracker = create(server, {ignoreLocalhost: true, detailed: true})
+    this.record = Logger.instance.ackeeTracker.record(this.domainId)
+    this.record.stop(); // to not over record
   }
 
-  /**
-   * Track a page view.
-   *
-   * @param overrideUrl - Optional URL to override the default
-   */
-  async trackPageView(overrideUrl?: string): Promise<void> {
-    // Create payload with browser-specific data and optional URL
-    const payload = {
-      hostname: window.location.hostname,
-      language: navigator.language,
-      referrer: document.referrer || '',
-      screen: `${window.screen.width}x${window.screen.height}`,
-      // title: document.title,
-      url: overrideUrl || window.location.pathname,
-      website: this.config?.websiteId,
-    };
-
-    // Send the data
-    this.sendData({payload: payload, type: 'event'});
+  private async fireEvent(eventId: EventsValues, actionAttributes: ActionAttributes): Promise<void> {
+    Logger.instance.ackeeTracker.action(eventId, actionAttributes);
   }
 
-  /**
-   * Log a custom event.
-   *
-   * @param eventName - Name of the event
-   * @param eventData - Optional data to attach to the event
-   */
-  async logEvent(eventName: string, eventData: EventData = {}): Promise<void> {
-    if (!this.config || !eventName) return;
-
-    // Create payload with event name and data
-    const payload = {
-      hostname: window.location.hostname,
-      language: navigator.language,
-      referrer: document.referrer || '',
-      screen: `${window.screen.width}x${window.screen.height}`,
-      // title: document.title, // do not use since, this will send user document title to the server
-      // todo use modal, settings modal, editor as title here
-      url: window.location.pathname,
-      website: this.config.websiteId,
-      name: eventName,
-      data: eventData,
-    };
-
-    // Send the data
-    this.sendData({payload: payload, type: 'event'}); // todo get version and some of settings to inject here
+  logSettingChange = (eventName: SettingChange, actionAttributes: ActionAttributes): void => {
+    this.fireEvent(
+      this.getEventId(eventName),
+      actionAttributes
+    )
   }
 
-  /**
-   * Send data to Umami.
-   *
-   * @param payload - Data to send
-   */
-  private async sendData(payload: any): Promise<void> {
-    const apiUrl = `${this.config?.baseUrl}/api/send`;
+  logLookup = (eventName: VerseLookUp, actionAttributes: ActionAttributes): void => {
+    this.fireEvent(
+      this.getEventId(eventName),
+      actionAttributes
+    )
+  }
 
+  logUIOpen = (eventName: UIOpen, actionAttributes: ActionAttributes): void => {
+    this.fireEvent(
+      this.getEventId(eventName),
+      actionAttributes
+    )
+  }
+
+  private getEventId = (eventName: EventsKeys): string => {
     try {
-      await fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-          "Content-Type": "application/json",
-        },
-        redirect: "follow",
-        body: JSON.stringify(payload),
-      });
-    } catch (error) {
-      console.error('Error sending data:', error);
+      return EVENTS[eventName]
+    } catch (e) {
+      console.error(`EventStats: ${eventName} is not a valid event name`)
     }
   }
+
 }
 
-const EventStats = UmamiLogger.getInstance()
 
-EventStats.initialize({
-  baseUrl: 'https://stats.techtim42.com', // update after domain change
-  websiteId: '54f0ee2c-5bbb-40a9-87dd-4c97b91d5042',
-});
+const tracker = Logger.getInstance()
+tracker.init('https://log.techtim42.com', 'f73c4c66-05ae-4c79-921e-fd0848d15d35')
 
-export default EventStats;
+export const EventStats = tracker

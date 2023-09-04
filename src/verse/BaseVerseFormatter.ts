@@ -23,7 +23,7 @@ export abstract class BaseVerseFormatter {
     if (verseNumberEnd && verseNumberEnd - verseNumber !== verseTexts?.length) {
       console.error('Verse text length does not match verse numbers')
     }
-    const verses = verseTexts?.map((verse, index) => {
+    this.verses = verseTexts?.map((verse, index) => {
       return {
         book_name: bookName,
         chapter: chapterNumber,
@@ -31,13 +31,12 @@ export abstract class BaseVerseFormatter {
         text: verse,
       }
     })
-    this.verses = verses
   }
 
   /**
    * To get the content of the bible verses
    */
-  public get allFormatedContent(): string {
+  public get allFormattedContent(): string {
     if (!this.verses?.length) {
       console.error('No verses found')
     }

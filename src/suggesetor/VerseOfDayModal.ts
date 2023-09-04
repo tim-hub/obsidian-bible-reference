@@ -2,7 +2,8 @@ import { Modal } from 'obsidian'
 import BibleReferencePlugin from '../main'
 import { getVod } from '../provider/VODProvider'
 import { BibleReferencePluginSettings } from '../data/constants'
-import EventStats from '../provider/EventStats';
+import { EventStats } from '../provider/EventStats';
+
 
 export class VerseOfDayModal extends Modal {
   constructor(
@@ -21,10 +22,11 @@ export class VerseOfDayModal extends Modal {
   async onOpen() {
     super.onOpen()
     const { contentEl } = this
-    EventStats.logEvent('verse-triggered', {trigger: 'open modal', place:'modal', type: 'vod'})
+    EventStats.logUIOpen('vodModalOpen', {key: `${this.settings.bibleVersion}-vod-modal`, value: 1})
     const item = await getVod()
     contentEl.setText(`${item.verse.details.text}
 -- ${item.verse.details.reference}    
     `)
+    EventStats.logLookup('vodLookUp', {key: `${this.settings.bibleVersion}-vod`, value: 1})
   }
 }

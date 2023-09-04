@@ -11,7 +11,8 @@ import { BibleReferencePluginSettings } from '../data/constants'
 import { getVod } from '../provider/VODProvider'
 import { VerseOfDaySuggesting } from '../verse/VerseOfDaySuggesting'
 import { splitBibleReference } from '../utils/splitBibleReference'
-import EventStats from '../provider/EventStats';
+import { EventStats } from '../provider/EventStats';
+
 
 export class VerseOfDayEditorSuggester extends EditorSuggest<VerseOfDaySuggesting> {
   private plugin: BibleReferencePlugin
@@ -39,7 +40,7 @@ export class VerseOfDayEditorSuggester extends EditorSuggest<VerseOfDaySuggestin
       reference,
       verseTexts
     )
-
+    EventStats.logLookup('vodLookUp', {key: `${this.settings.bibleVersion}-vod`, value: 1})
     return [vodSuggesting]
   }
 
@@ -58,7 +59,7 @@ export class VerseOfDayEditorSuggester extends EditorSuggest<VerseOfDaySuggestin
   ): EditorSuggestTriggerInfo | null {
     const currentContent = editor.getLine(cursor.line).substring(0, cursor.ch)
     if (currentContent === '--vod') {
-      EventStats.logEvent('verse-triggered', {trigger: '--vod', place: 'editor', type: 'vod'})
+      EventStats.logUIOpen('vodEditorOpen', {key: `${this.settings.bibleVersion}-vod`, value: 1})
       return {
         end: cursor,
         start: {
@@ -83,7 +84,7 @@ export class VerseOfDayEditorSuggester extends EditorSuggest<VerseOfDaySuggestin
     if (this.context) {
       /* prettier-ignore */
       (this.context.editor as Editor).replaceRange(
-        suggestion.allFormatedContent,
+        suggestion.allFormattedContent,
         this.context.start,
         this.context.end
       )

@@ -4,7 +4,8 @@ import { BibleReferencePluginSettings } from '../data/constants'
 import { VerseSuggesting } from '../verse/VerseSuggesting'
 import { getSuggestionsFromQuery } from '../utils/getSuggestionsFromQuery'
 import BibleReferencePlugin from '../main'
-import EventStats from '../provider/EventStats';
+import { EventStats } from '../provider/EventStats';
+
 
 export class VerseLookupSuggestModal extends SuggestModal<VerseSuggesting> {
   settings: BibleReferencePluginSettings
@@ -16,20 +17,20 @@ export class VerseLookupSuggestModal extends SuggestModal<VerseSuggesting> {
     super(plugin.app)
     this.settings = settings
     this.setInstructions([
-      { command: '', purpose: 'Select verses to insert, ex: John1:1-3' },
+      {command: '', purpose: 'Select verses to insert, ex: John1:1-3'},
     ])
   }
 
   public onOpen() {
     super.onOpen();
-    EventStats.logEvent('modal-open',  {place:'look-up-modal'})
+    EventStats.logUIOpen('lookupModalOpen', {key: `${this.settings.bibleVersion}-lookup-modal`, value: 1})
   }
 
   async getSuggestions(query: string): Promise<VerseSuggesting[]> {
     const match = verseMatch(query, true)
     if (match) {
       console.debug('trigger on', query)
-      EventStats.logEvent('verse-triggered',  {trigger: match, place:'look-up-modal'})
+      EventStats.logLookup('verseLookUp', {key: `${this.settings.bibleVersion}-${match}`, value: 1})
       return getSuggestionsFromQuery(`--${query}`, this.settings)
     }
     return []
@@ -44,6 +45,6 @@ export class VerseLookupSuggestModal extends SuggestModal<VerseSuggesting> {
     if (!editor) {
       return
     }
-    editor.replaceRange(item.allFormatedContent, editor.getCursor())
+    editor.replaceRange(item.allFormattedContent, editor.getCursor())
   }
 }

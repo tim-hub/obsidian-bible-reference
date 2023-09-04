@@ -25,6 +25,7 @@
   "author": "tim-hub",
   "license": "MIT",
   "devDependencies": {
+    "@types/ackee-tracker": "^5.0.2",
     "@types/jest": "^29.5.4",
     "@types/node": "18.17.11",
     "@typescript-eslint/eslint-plugin": "5.29.0",
@@ -70,6 +71,7 @@
     ]
   },
   "dependencies": {
+    "ackee-tracker": "^5.1.0",
     "flagsmith-nodejs": "^3.1.1"
   }
 }
