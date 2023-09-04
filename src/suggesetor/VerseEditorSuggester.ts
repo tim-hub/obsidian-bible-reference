@@ -46,7 +46,7 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
       console.debug('trigger on', currentContent)
       EventStats.logUIOpen(
         'lookupEditorOpen',
-        { key: `${this.settings.bibleVersion}-match`, value: 1 },
+        { key: `${this.settings.bibleVersion}`, value: 1 },
         this.settings.optOutToEvents
       )
       return {
@@ -74,7 +74,7 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
     )
     EventStats.logLookup(
       'verseLookUp',
-      { key: `${this.settings.bibleVersion}-${context.query}`, value: 1 },
+      { key: `${this.settings.bibleVersion}-${context.query.toLowerCase()}`, value: 1 },
       this.settings.optOutToEvents
     )
     return suggestions
