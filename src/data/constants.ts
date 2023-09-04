@@ -29,7 +29,6 @@ export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
   verseFormatting: BibleVerseFormat.SingleLine,
   verseNumberFormatting: BibleVerseNumberFormat.Period,
   collapsibleVerses: false,
-  collapsibleExpanded: true,
   bookTagging: false,
   chapterTagging: false,
   enableBibleVerseLookupRibbon: false,
