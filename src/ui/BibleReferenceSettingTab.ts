@@ -23,7 +23,7 @@ import {
   BibleVerseNumberFormat,
   BibleVerseNumberFormatCollection,
 } from '../data/BibleVerseNumberFormat'
-import getFlags from '../provider/FeatureFlag'
+import { FlagService } from '../provider/FeatureFlag'
 import { BibleAPISourceCollection } from '../data/BibleApiSourceCollection'
 import { EventStats } from '../provider/EventStats'
 
@@ -51,12 +51,11 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     return BibleVersionCollection
   }
 
-  setUpVersionSettingsAndVersionOptions = (
-    containerEl: HTMLElement,
-    disableBibleAPI?: boolean
-  ): void => {
+  setUpVersionSettingsAndVersionOptions = (containerEl: HTMLElement): void => {
     let allAvailableVersionOptions =
       this.getAllBibleVersionsWithLanguageNameAlphabetically()
+    const disableBibleAPI =
+      FlagService.instance.isFeatureEnabled('disable-bible-api')
     if (disableBibleAPI) {
       allAvailableVersionOptions = allAvailableVersionOptions.filter((v) => {
         return v.apiSource.name !== BibleAPISourceCollection.bibleApi.name
@@ -272,24 +271,14 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
 
   async display(): Promise<void> {
     const { containerEl } = this
-    EventStats.logUIOpen(
-      'settingsOpen',
-      { key: 'open', value: 1 },
-      this.plugin.settings.optOutToEvents
-    )
     containerEl.empty()
     const headingSection = containerEl.createDiv()
     headingSection.innerHTML = `
         <iframe src="https://github.com/sponsors/tim-hub/button" title="Sponsor Obsidian Bible Reference" width="116" height="32px" style="margin-right: 2em"/>
     `
 
-    const flags = await getFlags()
-
     containerEl.createEl('h2', { text: 'General Settings' })
-    this.setUpVersionSettingsAndVersionOptions(
-      containerEl,
-      flags.isFeatureEnabled('disable-bible-api')
-    )
+    this.setUpVersionSettingsAndVersionOptions(containerEl)
     containerEl.createEl('h2', { text: 'Verses Rendering' })
     this.setUpReferenceLinkPositionOptions(containerEl)
     this.setUpVerseFormatOptions(containerEl)
@@ -304,7 +293,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     this.setUpBookTagging(containerEl)
     this.setUpChapterTagging(containerEl)
 
-    if (flags.isFeatureEnabled('vod')) {
+    if (FlagService.instance.isFeatureEnabled('vod')) {
       // todo add vod settings and reflect feature flags
     }
 
@@ -318,5 +307,10 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
         <a href="https://github.com/tim-hub/obsidian-bible-reference/blob/master/docs/privacy.md">Privacy Policy</a>
       `
     })
+    EventStats.logUIOpen(
+      'settingsOpen',
+      { key: 'open', value: 1 },
+      this.plugin.settings.optOutToEvents
+    )
   }
 }

@@ -63,38 +63,38 @@ class Logger {
     })
   }
 
-  logRecord(optOut?: boolean) {
+  async logRecord(optOut?: boolean) {
     if (!optOut) {
       this.record = Logger.instance.ackeeTracker.record(this.domainId)
       this.record.stop() // to not over record
     }
   }
 
-  logSettingChange = (
+  async logSettingChange(
     eventName: SettingChange,
     actionAttributes: ActionAttributes,
     optOut?: boolean
-  ): void => {
+  ) {
     if (!optOut) {
       this.fireEvent(this.getEventId(eventName), actionAttributes)
     }
   }
 
-  logLookup = (
+  async logLookup(
     eventName: VerseLookUp,
     actionAttributes: ActionAttributes,
     optOut?: boolean
-  ): void => {
+  ) {
     if (!optOut) {
       this.fireEvent(this.getEventId(eventName), actionAttributes)
     }
   }
 
-  logUIOpen = (
+  async logUIOpen(
     eventName: UIOpen,
     actionAttributes: ActionAttributes,
     optOut?: boolean
-  ): void => {
+  ) {
     if (!optOut) {
       this.fireEvent(this.getEventId(eventName), actionAttributes)
     }

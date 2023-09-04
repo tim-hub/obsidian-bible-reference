@@ -12,7 +12,7 @@ import { VerseOfDayModal } from './suggesetor/VerseOfDayModal'
 import { getVod } from './provider/VODProvider'
 import { splitBibleReference } from './utils/splitBibleReference'
 import { VerseOfDaySuggesting } from './verse/VerseOfDaySuggesting'
-import getFlags from './provider/FeatureFlag'
+import { FlagService } from './provider/FeatureFlag'
 import { EventStats } from './provider/EventStats'
 
 export default class BibleReferencePlugin extends Plugin {
@@ -37,9 +37,9 @@ export default class BibleReferencePlugin extends Plugin {
     this.addVerseLookupCommand()
     this.verseOfDayModal = new VerseOfDayModal(this, this.settings)
 
-    const flags = await getFlags()
-    console.debug(flags, flags.isFeatureEnabled('vod'))
-    if (flags.isFeatureEnabled('vod')) {
+    const flagService = FlagService.getInstace()
+    await flagService.init()
+    if (FlagService.instance.isFeatureEnabled('vod')) {
       console.debug('vod feature flag enabled')
       this.registerEditorSuggest(
         new VerseOfDayEditorSuggester(this, this.settings)

@@ -4,8 +4,22 @@ const flagsmith = new Flagsmith({
   environmentKey: 'NJTKgnNToZxbe6TCksAcmD',
 })
 
-const getFlags = async (): Promise<Flags> => {
-  return flagsmith.getEnvironmentFlags()
-}
+export class FlagService {
+  public static instance: FlagService
+  private flags: Flags
 
-export default getFlags
+  public static getInstace(): FlagService {
+    if (!FlagService.instance) {
+      FlagService.instance = new FlagService()
+    }
+    return FlagService.instance
+  }
+
+  public async init() {
+    this.flags = await flagsmith.getEnvironmentFlags()
+  }
+
+  public isFeatureEnabled(feature: string): boolean {
+    return this.flags.isFeatureEnabled(feature)
+  }
+}
