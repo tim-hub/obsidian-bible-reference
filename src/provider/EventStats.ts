@@ -111,7 +111,9 @@ class Logger {
     try {
       return EVENTS[eventName]
     } catch (e) {
-      console.error(`EventStats: ${eventName} is not a valid event name`)
+      const msg = `EventStats: ${eventName} is not a valid event name`
+      console.error(msg)
+      throw new Error(msg)
     }
   }
 }
