@@ -9,10 +9,7 @@ import {
 import BibleReferencePlugin from '../main'
 import { verseMatch } from '../utils/verseMatch'
 import { VerseSuggesting } from '../verse/VerseSuggesting'
-import {
-  API_WAITING_LABEL,
-  BibleReferencePluginSettings,
-} from '../data/constants'
+import { BibleReferencePluginSettings } from '../data/constants'
 import { getSuggestionsFromQuery } from '../utils/getSuggestionsFromQuery'
 import { EventStats } from '../provider/EventStats'
 
@@ -43,12 +40,7 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
     editor: Editor,
     _: TFile
   ): EditorSuggestTriggerInfo | null {
-    // @ts-ignore
-    const suggestEl = this.suggestEl as HTMLDivElement
-    suggestEl.createDiv({ cls: 'obr-loading-container' }).hide()
-
     const currentContent = editor.getLine(cursor.line).substring(0, cursor.ch)
-
     const match = verseMatch(currentContent, false)
     if (match) {
       console.debug('trigger on', currentContent)
@@ -76,27 +68,10 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
   async getSuggestions(
     context: EditorSuggestContext
   ): Promise<VerseSuggesting[]> {
-    // todo these 2 el could be managed better, move to renderSuggestion
-    // @ts-ignore
-    const suggestEl = this.suggestEl as HTMLDivElement
-    // @ts-ignore
-    const suggestionsEl = (this.suggestions as any)
-      .containerEl as HTMLDivElement
-    suggestionsEl.hide()
-
-    const loadingContainer = suggestEl.getElementsByClassName(
-      'obr-loading-container'
-    )[0] as HTMLDivElement
-    loadingContainer.setText(API_WAITING_LABEL)
-    loadingContainer.show()
-
     const suggestions = await getSuggestionsFromQuery(
       context.query,
       this.settings
     )
-    // hide loading and how suggestions todo move to render
-    loadingContainer.hide()
-    suggestionsEl.show()
     EventStats.logLookup(
       'verseLookUp',
       { key: `${this.settings.bibleVersion}-${context.query}`, value: 1 },
