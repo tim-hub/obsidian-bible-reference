@@ -1,6 +1,4 @@
-import {
-  DEFAULT_BIBLE_VERSION,
-} from './BibleVersionCollection'
+import { DEFAULT_BIBLE_VERSION } from './BibleVersionCollection'
 import { BibleVerseReferenceLinkPosition } from './BibleVerseReferenceLinkPosition'
 import { BibleVerseFormat } from './BibleVerseFormat'
 import { BibleVerseNumberFormat } from './BibleVerseNumberFormat'
