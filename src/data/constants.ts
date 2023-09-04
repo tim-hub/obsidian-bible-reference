@@ -16,7 +16,6 @@ export interface BibleReferencePluginSettings {
   verseFormatting?: BibleVerseFormat
   verseNumberFormatting?: BibleVerseNumberFormat
   collapsibleVerses?: boolean
-  collapsibleExpanded?: boolean
   bookTagging?: boolean
   chapterTagging?: boolean
 
