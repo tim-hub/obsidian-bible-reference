@@ -81,7 +81,7 @@ export abstract class BaseBibleAPIProvider {
       )
     } catch (e) {
       console.error('error while querying', e)
-      Notice.error(`Error while querying ${url}`)
+      new Notice(`Error while querying ${url}`)
       return await Promise.reject(e)
     }
   }
