@@ -315,7 +315,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     containerEl.createSpan({}, (span) => {
       span.innerHTML = `
         <a href="https://github.com/tim-hub/obsidian-bible-reference">Github Repo</a> |
-        <a href="https://github.com/tim-hub/obsidian-bible-reference/docs/privacy.md">Privacy Policy</a>
+        <a href="https://github.com/tim-hub/obsidian-bible-reference/blob/master/docs/privacy.md">Privacy Policy</a>
       `
     })
   }

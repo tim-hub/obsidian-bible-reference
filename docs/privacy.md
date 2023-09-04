@@ -1,6 +1,11 @@
-Privacy Policy for Obsidian Bible Reference
+**Privacy Policy for Obsidian Bible Reference**
 
-This Privacy Policy outlines how the Obsidian Bible Reference plugin ("the Plugin") handles user data and information. We are committed to protecting your privacy and ensuring the security of any data collected. Please read this Privacy Policy carefully to understand how we handle your information.
+This Privacy Policy outlines how the Obsidian Bible Reference plugin ("the Plugin") handles user data and information.
+
+> As an open source project, we are committed to protecting your privacy and ensuring the security of any data collected. 
+> The data is not used to track you or build user profiles. It is only used for the purposes of improving user experience and understanding how the Plugin is used.
+
+Please read this Privacy Policy carefully to understand how we handle your information.
 
 1. Information We Collect
 
