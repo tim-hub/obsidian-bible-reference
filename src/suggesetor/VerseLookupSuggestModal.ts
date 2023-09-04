@@ -23,7 +23,6 @@ export class VerseLookupSuggestModal extends SuggestModal<VerseSuggesting> {
 
   public onOpen() {
     super.onOpen();
-    EventStats.logUIOpen('lookupModalOpen', {key: `${this.settings.bibleVersion}-lookup-modal`, value: 1})
   }
 
   async getSuggestions(query: string): Promise<VerseSuggesting[]> {

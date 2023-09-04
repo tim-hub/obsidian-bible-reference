@@ -22,7 +22,6 @@ export class VerseOfDayModal extends Modal {
   async onOpen() {
     super.onOpen()
     const { contentEl } = this
-    EventStats.logUIOpen('vodModalOpen', {key: `${this.settings.bibleVersion}-vod-modal`, value: 1})
     const item = await getVod()
     contentEl.setText(`${item.verse.details.text}
 -- ${item.verse.details.reference}    
