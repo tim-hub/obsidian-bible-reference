@@ -1,6 +1,5 @@
 ## Obsidian Bible Reference
 
-
 - Simplify your Bible Study note-taking experience with the user-friendly Obsidian.md notes app.
 - Experience the seamless assistance of automated Bible Verse suggestions for effortless referencing.
 
@@ -35,12 +34,14 @@
 - [How to Contribute](https://github.com/tim-hub/obsidian-bible-reference/blob/master/CONTRIBUTING.md)
 - About [Bible API/Data Source](https://github.com/tim-hub/obsidian-bible-reference/blob/master/docs/bible-api-and-source.md)
 
-
 ### Sponsors and Contributors
 
 - [Chris Gonzales](https://github.com/chrisg32)
+
 ---
+
 - [_Previous Sponsors_](https://github.com/tim-hub/obsidian-bible-reference/blob/master/docs/previous-sponsors.md)
 
 ### Contributors
+
 - [**All Contributors**](https://github.com/tim-hub/obsidian-bible-reference/graphs/contributors) 👍🙏

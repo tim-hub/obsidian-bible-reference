@@ -45,9 +45,7 @@ export class VerseSuggesting
       ? ` #${this.verseReference.bookName}`
       : ''
     bottom += this.settings?.chapterTagging
-      ? ` #${
-        this.verseReference.bookName + this.verseReference.chapterNumber
-      }`
+      ? ` #${this.verseReference.bookName + this.verseReference.chapterNumber}`
       : ''
     bottom += ' %%'
     return bottom

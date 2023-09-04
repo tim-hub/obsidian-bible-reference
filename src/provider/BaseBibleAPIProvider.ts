@@ -1,5 +1,5 @@
 import { IVerse } from '../interfaces/IVerse'
-import { Notice } from 'obsidian';
+import { Notice } from 'obsidian'
 
 export abstract class BaseBibleAPIProvider {
   protected _key: string // the version selected

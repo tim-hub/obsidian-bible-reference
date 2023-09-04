@@ -181,5 +181,4 @@ export const BibleVersionCollection: IBibleVersion[] = [
   },
 ]
 
-
-export const DEFAULT_BIBLE_VERSION = BibleVersionCollection[11];
+export const DEFAULT_BIBLE_VERSION = BibleVersionCollection[11]

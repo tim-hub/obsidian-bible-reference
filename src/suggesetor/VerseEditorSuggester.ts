@@ -14,7 +14,7 @@ import {
   BibleReferencePluginSettings,
 } from '../data/constants'
 import { getSuggestionsFromQuery } from '../utils/getSuggestionsFromQuery'
-import { EventStats } from '../provider/EventStats';
+import { EventStats } from '../provider/EventStats'
 
 /**
  * Extend the EditorSuggest to suggest bible verses.
@@ -52,7 +52,11 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
     const match = verseMatch(currentContent, false)
     if (match) {
       console.debug('trigger on', currentContent)
-      EventStats.logUIOpen('lookupEditorOpen', {key: `${this.settings.bibleVersion}-match`, value: 1})
+      EventStats.logUIOpen(
+        'lookupEditorOpen',
+        { key: `${this.settings.bibleVersion}-match`, value: 1 },
+        this.settings.optOutToEvents
+      )
       return {
         end: cursor,
         start: {
@@ -93,7 +97,11 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
     // hide loading and how suggestions todo move to render
     loadingContainer.hide()
     suggestionsEl.show()
-    EventStats.logLookup('verseLookUp', {key: `${this.settings.bibleVersion}-${context.query}`, value: 1})
+    EventStats.logLookup(
+      'verseLookUp',
+      { key: `${this.settings.bibleVersion}-${context.query}`, value: 1 },
+      this.settings.optOutToEvents
+    )
     return suggestions
   }
 
