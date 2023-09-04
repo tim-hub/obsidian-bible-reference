@@ -70,7 +70,7 @@ export abstract class BaseVerseFormatter {
     let head = `> [!Bible]`
 
     if (this.settings?.collapsibleVerses) {
-      head += '-'
+      head += '+'
     }
     if (
       this.settings.referenceLinkPosition ===
