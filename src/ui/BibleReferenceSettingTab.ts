@@ -163,17 +163,6 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
             this.plugin.saveData(this.plugin.settings)
           })
       )
-    new Setting(containerEl)
-      .setName("Start Expanded")
-      .setDesc("Toggle whether verses are expanded by default")
-      .addToggle((toggle) =>
-        toggle
-          .setValue(!!this.plugin.settings?.collapsibleExpanded)
-          .onChange((value) => {
-            this.plugin.settings.collapsibleExpanded = value
-            this.plugin.saveData(this.plugin.settings)
-          })
-      )
   }
 
   setUpBookTagging = (containerEl: HTMLElement): void => {
