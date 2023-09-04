@@ -1,7 +1,7 @@
 {
 	"id": "obsidian-bible-reference",
 	"name": "Bible Reference",
-	"version": "2.0.3",
+	"version": "2.0.4",
 	"minAppVersion": "0.12.0",
 	"description": "Taking Bible Study note in Obsidian.md application easily. Automatically suggesting Bible Verses as references. ",
 	"author": "tim-hub",
