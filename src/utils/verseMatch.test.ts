@@ -9,3 +9,8 @@ test('test verse not match', () => {
   const result = verseMatch('-John3:16')
   expect(result).toBe('')
 })
+
+test('test verse not match', () => {
+  const result = verseMatch('John3:16', true)
+  expect(result).toBe('John3:16')
+})
