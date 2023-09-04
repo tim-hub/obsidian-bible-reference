@@ -202,6 +202,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
       )
   }
 
+
   async display(): Promise<void> {
     const {containerEl} = this
     EventStats.logUIOpen('settingsOpen', {key: 'open', value: 1})
@@ -233,11 +234,12 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
       // todo add vod settings and reflect feature flags
     }
 
-    containerEl.createEl('h2', {text: 'About'})
+    containerEl.createEl('h2', {text: 'Others'})
 
     containerEl.createSpan({}, (span) => {
       span.innerHTML = `
-        <a href="https://github.com/tim-hub/obsidian-bible-reference">Github Repo</a>
+        <a href="https://github.com/tim-hub/obsidian-bible-reference">Github Repo</a> |
+        <a href="https://github.com/tim-hub/obsidian-bible-reference/docs/privacy.md">Privacy Policy</a>
       `
     })
   }
