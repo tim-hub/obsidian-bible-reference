@@ -71,11 +71,7 @@ export abstract class BaseVerseFormatter {
     let head = `> [!Bible]`
 
     if (this.settings?.collapsibleVerses) {
-      if (this.settings?.collapsibleExpanded) {
-        head += '+'
-      } else {
-        head += '-'
-      }
+      head += '+'
     }
     if (
       this.settings.referenceLinkPosition ===
