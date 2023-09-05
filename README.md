@@ -6,7 +6,7 @@
 [![CodeQL for Obsidain Bible Reference](https://github.com/tim-hub/obsidian-bible-reference/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/tim-hub/obsidian-bible-reference/actions/workflows/codeql-analysis.yml)
 [![Build for Bible Reference Project](https://github.com/tim-hub/obsidian-bible-reference/actions/workflows/build.yml/badge.svg)](https://github.com/tim-hub/obsidian-bible-reference/actions/workflows/build.yml)
 [![obsidian bible reference user discussion forum](https://img.shields.io/badge/Discussion-blue)](https://github.com/tim-hub/obsidian-bible-reference/discussions)
-[![obsidain bible reference project kanban board and roadmap ](<https://img.shields.io/badge/Project(Kanban)-orange>)](https://github.com/users/tim-hub/projects/2/views/1)
+[![obsidain bible reference project kanban board and roadmap ](https://img.shields.io/badge/Project(Kanban)-orange)](https://github.com/users/tim-hub/projects/2/views/1)
 [![support button of obsidian bible reference](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/tim-hub)
 
 > These will be very appreciate for the project development. 👍
@@ -31,8 +31,8 @@
 
 ## Contribution and Credits
 
-- [How to Contribute](https://github.com/tim-hub/obsidian-bible-reference/blob/master/CONTRIBUTING.md)
-- About [Bible API/Data Source](https://github.com/tim-hub/obsidian-bible-reference/blob/master/docs/bible-api-and-source.md)
+- All different kinds of contributions are welcom, see: [How to Contribute](https://github.com/tim-hub/obsidian-bible-reference/blob/master/CONTRIBUTING.md)
+- Credits: [Bible API/Data Source Providers](https://github.com/tim-hub/obsidian-bible-reference/blob/master/docs/bible-api-and-source.md)
 
 ### Sponsors and Contributors
 
