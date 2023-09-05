@@ -26,6 +26,7 @@ import {
 import { FlagService } from '../provider/FeatureFlag'
 import { BibleAPISourceCollection } from '../data/BibleApiSourceCollection'
 import { EventStats } from '../provider/EventStats'
+import { APP_NAMING } from '../data/constants';
 
 export class BibleReferenceSettingTab extends PluginSettingTab {
   plugin: BibleReferencePlugin
@@ -277,8 +278,9 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
         <iframe src="https://github.com/sponsors/tim-hub/button" title="Sponsor Obsidian Bible Reference" width="116" height="32px" style="margin-right: 2em"/>
     `
 
-    containerEl.createEl('h2', { text: 'General Settings' })
+    containerEl.createEl('h1', { text: APP_NAMING.appName })
     this.setUpVersionSettingsAndVersionOptions(containerEl)
+
     containerEl.createEl('h2', { text: 'Verses Rendering' })
     this.setUpReferenceLinkPositionOptions(containerEl)
     this.setUpVerseFormatOptions(containerEl)
@@ -292,10 +294,6 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     })
     this.setUpBookTagging(containerEl)
     this.setUpChapterTagging(containerEl)
-
-    if (FlagService.instance.isFeatureEnabled('vod')) {
-      // todo add vod settings and reflect feature flags
-    }
 
     containerEl.createEl('h2', { text: 'Others' })
 
