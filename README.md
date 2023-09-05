@@ -36,11 +36,7 @@
 
 ### Sponsors and Contributors
 
-- [Chris Gonzales](https://github.com/chrisg32)
-
----
-
-- [_Previous Sponsors_](https://github.com/tim-hub/obsidian-bible-reference/blob/master/docs/previous-sponsors.md)
+<!-- sponsors --><!-- sponsors -->
 
 ### Contributors
 
