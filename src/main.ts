@@ -35,6 +35,7 @@ export default class BibleReferencePlugin extends Plugin {
 
     this.verseLookUpModal = new VerseLookupSuggestModal(this, this.settings)
     this.addVerseLookupCommand()
+    this.addRibbonButton()
     this.verseOfDayModal = new VerseOfDayModal(this, this.settings)
 
     const flagService = FlagService.getInstace()
@@ -45,9 +46,6 @@ export default class BibleReferencePlugin extends Plugin {
         new VerseOfDayEditorSuggester(this, this.settings)
       )
       this.addVerseOfDayCommands()
-      if (this.settings.enableBibleVerseLookupRibbon) {
-        this.addRibbonButton()
-      }
     }
     EventStats.logRecord(this.settings.optOutToEvents)
   }
