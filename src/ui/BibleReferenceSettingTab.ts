@@ -97,36 +97,6 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
       })
   }
 
-  setUpReferenceLinkPositionOptions = (containerEl: HTMLElement): void => {
-    new Setting(containerEl)
-      .setName('Verse Reference Link Position')
-      .setDesc('Where to put the bible verse reference link of the bible')
-      .addDropdown((dropdown: DropdownComponent) => {
-        BibleVerseReferenceLinkPositionCollection.forEach(
-          ({ name, description }) => {
-            dropdown.addOption(name, description)
-          }
-        )
-        dropdown
-          .setValue(
-            this.plugin.settings.referenceLinkPosition ??
-              BibleVerseReferenceLinkPosition.Bottom
-          )
-          .onChange(async (value) => {
-            this.plugin.settings.referenceLinkPosition =
-              value as BibleVerseReferenceLinkPosition
-            console.debug('Bible Verse Reference Link Position: ' + value)
-            await this.plugin.saveSettings()
-            new Notice('Bible Reference Settings Updated ')
-            EventStats.logSettingChange(
-              'changeVerseFormatting',
-              { key: `link-position-${value}`, value: 1 },
-              this.plugin.settings.optOutToEvents
-            )
-          })
-      })
-  }
-
   setUpVerseFormatOptions = (containerEl: HTMLElement): void => {
     new Setting(containerEl)
       .setName('Verse Formatting Options')
@@ -183,9 +153,9 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
       })
   }
 
-  setUpFormatOptions = (containerEl: HTMLElement): void => {
+  setUpCalloutFormatOptions = (containerEl: HTMLElement): void => {
     new Setting(containerEl)
-      .setName('Formatting String')
+      .setName('Callout Formatting String')
       .setDesc('Describes how to format the callout.')
       .addTextArea((text) => {
          text
@@ -239,23 +209,18 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
         <iframe src="https://github.com/sponsors/tim-hub/button" title="Sponsor Obsidian Bible Reference" width="116" height="32px" style="margin-right: 2em"/>
     `
 
-    containerEl.createEl('h2', { text: 'General Settings' })
-    this.setUpReferenceLinkPositionOptions(containerEl)
-    this.setUpVerseFormatOptions(containerEl)
-    this.setUpVerseNumberFormatOptions(containerEl)
-    containerEl.createEl('h2', { text: 'Header/Footer Format'})
-    containerEl.createEl('a', { text: 'View Available Formatting', href: 'https://github.com/tim-hub/obsidian-bible-reference#formatting-strings' })
-    this.setUpFormatOptions(containerEl)
     containerEl.createEl('h1', { text: APP_NAMING.appName })
     this.setUpVersionSettingsAndVersionOptions(containerEl)
 
+    containerEl.createEl('h2', { text: 'Callout Format'})
+    containerEl.createEl('a', { text: 'View Available Formatting', href: 'https://github.com/tim-hub/obsidian-bible-reference#formatting-strings' })
+    this.setUpCalloutFormatOptions(containerEl)
+
     containerEl.createEl('h2', { text: 'Verses Rendering' })
-    this.setUpReferenceLinkPositionOptions(containerEl)
     this.setUpVerseFormatOptions(containerEl)
     this.setUpVerseNumberFormatOptions(containerEl)
 
     containerEl.createEl('h2', { text: 'Others' })
-
     this.setUpOptOutEventsOptions(containerEl)
 
     containerEl.createSpan({}, (span) => {
