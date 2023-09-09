@@ -42,13 +42,6 @@ export default class BibleReferencePlugin extends Plugin {
         migrateSettings(this.settings)
       }
     })
-    this.addCommand({
-      id: 'obr-settings-automigration',
-      name: 'Auto Migrate Old Settings To Templates',
-      callback: () => {
-        autoMigrate(this.settings)
-      }
-    })
     if(this.settings.autoMigrate) {
       autoMigrate(this.settings)
     }
