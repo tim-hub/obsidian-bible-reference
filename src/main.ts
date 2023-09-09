@@ -33,13 +33,6 @@ export default class BibleReferencePlugin extends Plugin {
     await this.loadSettings()
     this.addSettingTab(new BibleReferenceSettingTab(this.app, this))
     this.registerEditorSuggest(new VerseEditorSuggester(this, this.settings))
-    this.addCommand({
-      id: 'obr-lookup',
-      name: 'Verse Lookup',
-      callback: () => {
-        this.suggestModal.open()
-      },
-    })
 
     // Migration of old settings to templates
     this.addCommand({

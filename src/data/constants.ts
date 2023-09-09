@@ -1,4 +1,4 @@
-import { DEFAULT_BIBLE_VERSION } from './BibleVersionCollection'
+import { BibleVersionCollection } from './BibleVersionCollection'
 import { BibleVerseReferenceLinkPosition } from './BibleVerseReferenceLinkPosition'
 import { BibleVerseFormat } from './BibleVerseFormat'
 import { BibleVerseNumberFormat } from './BibleVerseNumberFormat'
@@ -37,15 +37,12 @@ export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
 
   // Deprecated
   autoMigrate: true,
-  bibleVersion: DEFAULT_BIBLE_VERSION.key,
   referenceLinkPosition: BibleVerseReferenceLinkPosition.Header,
   verseFormatting: BibleVerseFormat.SingleLine,
   verseNumberFormatting: BibleVerseNumberFormat.Period,
   collapsibleVerses: false,
   bookTagging: false,
   chapterTagging: false,
-  bookBacklinking: false,
-  chapterBacklinking: false
   enableBibleVerseLookupRibbon: false,
   optOutToEvents: false,
 }

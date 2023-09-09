@@ -1,7 +1,6 @@
 import { Notice } from "obsidian";
 import { BibleVerseReferenceLinkPosition } from "src/data/BibleVerseReferenceLinkPosition";
-import { CalloutFoldFormat } from "src/data/CalloutFoldFormat";
-import { BibleReferencePluginSettings, DEFAULT_SETTINGS } from "src/data/constants";
+import { BibleReferencePluginSettings } from "src/data/constants";
 
 export function migrateSettings(settings: BibleReferencePluginSettings) {
   let newHeadFormat: string[] = ['>']
@@ -27,16 +26,6 @@ export function migrateSettings(settings: BibleReferencePluginSettings) {
     newTailFormat.push('{{verse_reference}}')
   }
 
-  new Notice('Migrating backlinking settings...')
-  if (settings.bookBacklinking) {
-    new Notice('Book Backlinking')
-    newHeadFormat.push('[[{{book}}]]')
-  }
-
-  if (settings.chapterBacklinking) {
-    newHeadFormat.push('[[{{book}}{{chapter}}]]')
-  }
-
   new Notice('Migrating tagging settings...')
   if (
     this.settings?.bibleTagging ||
@@ -49,8 +38,7 @@ export function migrateSettings(settings: BibleReferencePluginSettings) {
     newTailFormat.push('%%')
   }
 
-  settings.headFormatString = newHeadFormat.join(' ')
-  settings.tailFormatString = newTailFormat.join(' ')
+  settings.formatString = newHeadFormat.join(' ') + '\n{{content}}\n' + newTailFormat.join(' ')
 }
 
 export function autoMigrate(settings: BibleReferencePluginSettings) {

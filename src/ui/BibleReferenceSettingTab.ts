@@ -23,8 +23,6 @@ import {
   BibleVerseNumberFormat,
   BibleVerseNumberFormatCollection,
 } from '../data/BibleVerseNumberFormat'
-import { CalloutFoldFormat, CalloutFoldFormatCollection } from 'src/data/CalloutFoldFormat'
-import { migrateSettings } from 'src/utils/SettingsMigration'
 import { FlagService } from '../provider/FeatureFlag'
 import { BibleAPISourceCollection } from '../data/BibleApiSourceCollection'
 import { EventStats } from '../provider/EventStats'

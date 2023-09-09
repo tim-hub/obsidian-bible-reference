@@ -4,21 +4,19 @@ import {
 } from './data/constants'
 import { BibleVersionCollection } from './data/BibleVersionCollection'
 import { IBibleVersion } from './interfaces/IBibleVersion'
-import { IVerseSuggesting } from './interfaces/IVerseSuggesting'
 import { IVerse } from './interfaces/IVerse'
-import { BibleAPIFactory } from './provider/BibleAPIFactory'
-import { BibleProvider } from './provider/BibleProvider'
-import { BibleVerseReferenceLinkPosition } from './data/BibleVerseReferenceLinkPosition'
 import { BibleVerseNumberFormat } from './data/BibleVerseNumberFormat'
 import { BibleVerseFormat } from './data/BibleVerseFormat'
-import { CalloutFoldFormat } from './data/CalloutFoldFormat'
+import { IVerseSuggesting } from './verse/IVerseSuggesting'
+import { ProviderFactory } from './provider/ProviderFactory'
+import { BaseBibleAPIProvider } from './provider/BaseBibleAPIProvider'
 
 
 export class VerseSuggesting implements IVerseSuggesting {
   public text: string
   public verses: string
   public bibleVersion: string
-  private bibleProvider: BibleProvider
+  private bibleProvider: BaseBibleAPIProvider
 
   constructor(
     public settings: BibleReferencePluginSettings,
@@ -59,7 +57,7 @@ export class VerseSuggesting implements IVerseSuggesting {
     ) {
       // make sure this is only 1 adapter, and it is the same bible version
       this.bibleProvider =
-        BibleAPIFactory.Instance.BuildBibleVersionAPIAdapterFromIBibleVersion(
+        ProviderFactory.Instance.BuildBibleVersionAPIAdapterFromIBibleVersion(
           bibleVersion
         )
     }
