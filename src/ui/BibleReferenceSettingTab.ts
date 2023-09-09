@@ -185,7 +185,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
       })
   }
 
-  SetUpFormatOptions = (containerEl: HTMLElement): void => {
+  setUpFormatOptions = (containerEl: HTMLElement): void => {
     new Setting(containerEl)
       .setName('Formatting String')
       .setDesc('Describes how to format the callout.')
@@ -200,45 +200,6 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
           text.inputEl.style.height = '10em'
           text.inputEl.style.width = '30em'
         }
-      )
-  }
-
-  display(): void {
-  setUpBookTagging = (containerEl: HTMLElement): void => {
-    new Setting(containerEl)
-      .setName('Add a Book Tag')
-      .setDesc('Add a hidden book tag at bottom, for example #John')
-      .addToggle((toggle) =>
-        toggle
-          .setValue(!!this.plugin.settings?.bookTagging)
-          .onChange(async (value) => {
-            this.plugin.settings.bookTagging = value
-            await this.plugin.saveSettings()
-            EventStats.logSettingChange(
-              'changeVerseFormatting',
-              { key: `book-tagging-${value}`, value: 1 },
-              this.plugin.settings.optOutToEvents
-            )
-          })
-      )
-  }
-
-  setUpChapterTagging = (containerEl: HTMLElement): void => {
-    new Setting(containerEl)
-      .setName('Add a Chapter Tag')
-      .setDesc('Add a hidden chapter tag at bottom, for example #John1')
-      .addToggle((toggle) =>
-        toggle
-          .setValue(!!this.plugin.settings?.chapterTagging)
-          .onChange(async (value) => {
-            this.plugin.settings.chapterTagging = value
-            await this.plugin.saveSettings()
-            EventStats.logSettingChange(
-              'changeVerseFormatting',
-              { key: `chapter-tagging-${value}`, value: 1 },
-              this.plugin.settings.optOutToEvents
-            )
-          })
       )
   }
 
@@ -281,13 +242,12 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     `
 
     containerEl.createEl('h2', { text: 'General Settings' })
-    this.SetUpVersionSettingsAndVersionOptions(containerEl)
-    this.SetUpReferenceLinkPositionOptions(containerEl)
-    this.SetUpVerseFormatOptions(containerEl)
-    this.SetUpVerseNumberFormatOptions(containerEl)
+    this.setUpReferenceLinkPositionOptions(containerEl)
+    this.setUpVerseFormatOptions(containerEl)
+    this.setUpVerseNumberFormatOptions(containerEl)
     containerEl.createEl('h2', { text: 'Header/Footer Format'})
     containerEl.createEl('a', { text: 'View Available Formatting', href: 'https://github.com/tim-hub/obsidian-bible-reference#formatting-strings' })
-    this.SetUpFormatOptions(containerEl)
+    this.setUpFormatOptions(containerEl)
     containerEl.createEl('h1', { text: APP_NAMING.appName })
     this.setUpVersionSettingsAndVersionOptions(containerEl)
 
@@ -295,15 +255,6 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     this.setUpReferenceLinkPositionOptions(containerEl)
     this.setUpVerseFormatOptions(containerEl)
     this.setUpVerseNumberFormatOptions(containerEl)
-    this.setUpCollapsible(containerEl)
-    containerEl.createEl('h2', { text: 'Tagging and Linking Settings' })
-    containerEl.createSpan({}, (span) => {
-      span.innerHTML = `
-        <small>Only if you want to add tags at the bottom of verses</small>
-      `
-    })
-    this.setUpBookTagging(containerEl)
-    this.setUpChapterTagging(containerEl)
 
     containerEl.createEl('h2', { text: 'Others' })
 

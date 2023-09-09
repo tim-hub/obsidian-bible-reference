@@ -1,4 +1,3 @@
-import { Notice, Plugin } from 'obsidian'
 import { Editor, MarkdownView, Notice, Plugin } from 'obsidian'
 import {
   APP_NAMING,
@@ -7,7 +6,6 @@ import {
 } from './data/constants'
 import { BibleReferenceSettingTab } from './ui/BibleReferenceSettingTab'
 import { VerseEditorSuggester } from './suggesetor/VerseEditorSuggester'
-import { VerseModalSuggester } from './suggesetor/VerseModalSuggester'
 import { autoMigrate, migrateSettings } from './utils/SettingsMigration'
 import { VerseLookupSuggestModal } from './suggesetor/VerseLookupSuggestModal'
 import { VerseOfDayEditorSuggester } from './suggesetor/VerseOfDayEditorSuggester'
