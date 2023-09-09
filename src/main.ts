@@ -14,6 +14,7 @@ import { splitBibleReference } from './utils/splitBibleReference'
 import { VerseOfDaySuggesting } from './verse/VerseOfDaySuggesting'
 import { FlagService } from './provider/FeatureFlag'
 import { EventStats } from './provider/EventStats'
+import { ExampleView, VIEW_TYPE_EXAMPLE } from './components/ExampleView';
 
 export default class BibleReferencePlugin extends Plugin {
   settings: BibleReferencePluginSettings
@@ -26,8 +27,29 @@ export default class BibleReferencePlugin extends Plugin {
   }
   private ribbonButton?: HTMLElement
 
+  async activateView() {
+    this.app.workspace.detachLeavesOfType(VIEW_TYPE_EXAMPLE);
+
+    await this.app.workspace.getRightLeaf(false).setViewState({
+      type: VIEW_TYPE_EXAMPLE,
+      active: true,
+    });
+
+    this.app.workspace.revealLeaf(
+      this.app.workspace.getLeavesOfType(VIEW_TYPE_EXAMPLE)[0]
+    );
+  }
+
   async onload() {
     console.log('loading plugin -', APP_NAMING.appName)
+    this.registerView(
+      VIEW_TYPE_EXAMPLE,
+      (leaf) => new ExampleView(leaf)
+    );
+
+    this.addRibbonIcon("dice", "Activate view", () => {
+      this.activateView();
+    });
 
     await this.loadSettings()
     this.addSettingTab(new BibleReferenceSettingTab(this.app, this))
