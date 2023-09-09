@@ -1,6 +1,6 @@
 {
   "name": "obsidian-bible-reference",
-  "version": "1.8.0",
+  "version": "2.0.5",
   "description": "Taking Bible Study note in Obsidian.md application easily. Automatically suggesting Bible Verses as references. ",
   "main": "main.js",
   "scripts": {
@@ -12,7 +12,8 @@
     "prettier": "prettier --check .",
     "prettier:fix": "prettier --write .",
     "prepare": "husky install",
-    "precommit": "npm run lint && npm run prettier"
+    "precommit": "npm run lint && npm run prettier",
+    "test": "jest src"
   },
   "keywords": [
     "bible",
@@ -24,16 +25,20 @@
   "author": "tim-hub",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^16.11.6",
+    "@types/ackee-tracker": "^5.0.2",
+    "@types/jest": "^29.5.4",
+    "@types/node": "18.17.11",
     "@typescript-eslint/eslint-plugin": "5.29.0",
     "@typescript-eslint/parser": "5.29.0",
     "builtin-modules": "3.3.0",
     "esbuild": "0.17.3",
     "husky": "^8.0.3",
+    "jest": "^29.6.4",
     "obsidian": "1.1.1",
     "prettier": "2.8.4",
+    "ts-jest": "^29.1.1",
     "tslib": "2.4.0",
-    "typescript": "4.7.4"
+    "typescript": "5.2.2"
   },
   "jest": {
     "transform": {
@@ -64,5 +69,9 @@
       "<rootDir>/build/",
       "<rootDir>/docs/"
     ]
+  },
+  "dependencies": {
+    "ackee-tracker": "^5.1.0",
+    "flagsmith-nodejs": "^3.1.1"
   }
 }

@@ -1,6 +1,7 @@
 import { IVerse } from '../interfaces/IVerse'
+import { Notice } from 'obsidian'
 
-export abstract class BibleProvider {
+export abstract class BaseBibleAPIProvider {
   protected _key: string // the version selected
   protected _apiUrl: string
   protected _queryUrl: string
@@ -18,7 +19,7 @@ export abstract class BibleProvider {
    * for example, https://api.scripture.api.bible/v1/bibles/de4e0c8c-9c29-44c7-a8c3-c8a9c1b9d6a0/verses/ESV/
    */
   public get QueryURL(): string {
-    return this._queryUrl;
+    return this._queryUrl
   }
 
   /**
@@ -27,7 +28,7 @@ export abstract class BibleProvider {
    * In the Bolly Life interface, it's just the same URL location except without `/get-text`
    */
   public get VerseLinkURL(): string {
-    return this._queryUrl;
+    return this._queryUrl
   }
 
   /**
@@ -62,7 +63,14 @@ export abstract class BibleProvider {
     )
     console.debug(url, 'url to query')
     try {
-      const response = await fetch(url)
+      const response = await fetch(url, {
+        method: 'get',
+        // headers: {
+        //   'Content-Type': 'application/json',
+        // }, // some provide does not accept this header
+        redirect: 'follow', // manual, *follow, error
+        cache: 'force-cache',
+      })
       const data = await response.json()
       return this.formatBibleVerses(
         data,
@@ -73,6 +81,7 @@ export abstract class BibleProvider {
       )
     } catch (e) {
       console.error('error while querying', e)
+      new Notice(`Error while querying ${url}`)
       return await Promise.reject(e)
     }
   }
@@ -84,7 +93,7 @@ export abstract class BibleProvider {
    * @param verses
    * @param versionName
    */
-  public abstract buildRequestURL(
+  protected abstract buildRequestURL(
     bookName: string,
     chapter: number,
     verses?: number[],

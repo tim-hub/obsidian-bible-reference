@@ -1,4 +1,4 @@
-import { BibleVersionCollection } from './BibleVersionCollection'
+import { DEFAULT_BIBLE_VERSION } from './BibleVersionCollection'
 import { BibleVerseReferenceLinkPosition } from './BibleVerseReferenceLinkPosition'
 import { BibleVerseFormat } from './BibleVerseFormat'
 import { BibleVerseNumberFormat } from './BibleVerseNumberFormat'
@@ -22,11 +22,12 @@ export interface BibleReferencePluginSettings {
   verseFormatting?: BibleVerseFormat
   verseNumberFormatting?: BibleVerseNumberFormat
   collapsibleVerses?: boolean
-  bibleTagging?: boolean
   bookTagging?: boolean
   chapterTagging?: boolean
-  bookBacklinking?: boolean
-  chapterBacklinking?: boolean
+
+  // add this to ui at some point todo
+  enableBibleVerseLookupRibbon?: boolean
+  optOutToEvents?: boolean
 }
 
 export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
@@ -36,15 +37,17 @@ export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
 
   // Deprecated
   autoMigrate: true,
+  bibleVersion: DEFAULT_BIBLE_VERSION.key,
   referenceLinkPosition: BibleVerseReferenceLinkPosition.Header,
   verseFormatting: BibleVerseFormat.SingleLine,
   verseNumberFormatting: BibleVerseNumberFormat.Period,
   collapsibleVerses: false,
-  bibleTagging: false,
   bookTagging: false,
   chapterTagging: false,
   bookBacklinking: false,
   chapterBacklinking: false
+  enableBibleVerseLookupRibbon: false,
+  optOutToEvents: false,
 }
 
-export const API_WAITING_LABEL = 'Loading...';
+export const API_WAITING_LABEL = 'Loading...'

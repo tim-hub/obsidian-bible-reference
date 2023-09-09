@@ -6,7 +6,10 @@ import {
   Setting,
 } from 'obsidian'
 import BibleReferencePlugin from './../main'
-import { BibleVersionCollection } from '../data/BibleVersionCollection'
+import {
+  BibleVersionCollection,
+  DEFAULT_BIBLE_VERSION,
+} from '../data/BibleVersionCollection'
 import { IBibleVersion } from '../interfaces/IBibleVersion'
 import {
   BibleVerseReferenceLinkPosition,
@@ -22,6 +25,10 @@ import {
 } from '../data/BibleVerseNumberFormat'
 import { CalloutFoldFormat, CalloutFoldFormatCollection } from 'src/data/CalloutFoldFormat'
 import { migrateSettings } from 'src/utils/SettingsMigration'
+import { FlagService } from '../provider/FeatureFlag'
+import { BibleAPISourceCollection } from '../data/BibleApiSourceCollection'
+import { EventStats } from '../provider/EventStats'
+import { APP_NAMING } from '../data/constants';
 
 export class BibleReferenceSettingTab extends PluginSettingTab {
   plugin: BibleReferencePlugin
@@ -47,14 +54,30 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     return BibleVersionCollection
   }
 
-  SetUpVersionSettingsAndVersionOptions = (containerEl: HTMLElement): void => {
+  setUpVersionSettingsAndVersionOptions = (containerEl: HTMLElement): void => {
+    let allAvailableVersionOptions =
+      this.getAllBibleVersionsWithLanguageNameAlphabetically()
+    const disableBibleAPI =
+      FlagService.instance.isFeatureEnabled('disable-bible-api')
+    if (disableBibleAPI) {
+      allAvailableVersionOptions = allAvailableVersionOptions.filter((v) => {
+        return v.apiSource.name !== BibleAPISourceCollection.bibleApi.name
+      })
+    }
+    if (
+      disableBibleAPI &&
+      !allAvailableVersionOptions.find(
+        (v) => v.key === this.plugin.settings.bibleVersion
+      )
+    ) {
+      this.plugin.settings.bibleVersion = DEFAULT_BIBLE_VERSION.key
+    }
+
     new Setting(containerEl)
       .setName('Default Bible Version')
       .setDesc('Choose the Bible version you prefer')
       .addDropdown((dropdown) => {
-        const allVersionOptions =
-          this.getAllBibleVersionsWithLanguageNameAlphabetically()
-        allVersionOptions.forEach((version: IBibleVersion) => {
+        allAvailableVersionOptions.forEach((version: IBibleVersion) => {
           dropdown.addOption(
             version.key,
             `${version.language} - ${version.versionName} @${version.apiSource.name}`
@@ -66,12 +89,17 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
             this.plugin.settings.bibleVersion = value
             console.debug('Default Bible Version: ' + value)
             await this.plugin.saveSettings()
-            new Notice('Bible Reference Settings Updated ')
+            new Notice(`Bible Reference - use Version ${value.toUpperCase()}`)
+            EventStats.logSettingChange(
+              'changeVersion',
+              { key: value, value: 1 },
+              this.plugin.settings.optOutToEvents
+            )
           })
       })
   }
 
-  SetUpReferenceLinkPositionOptions = (containerEl: HTMLElement): void => {
+  setUpReferenceLinkPositionOptions = (containerEl: HTMLElement): void => {
     new Setting(containerEl)
       .setName('Verse Reference Link Position')
       .setDesc('Where to put the bible verse reference link of the bible')
@@ -92,11 +120,16 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
             console.debug('Bible Verse Reference Link Position: ' + value)
             await this.plugin.saveSettings()
             new Notice('Bible Reference Settings Updated ')
+            EventStats.logSettingChange(
+              'changeVerseFormatting',
+              { key: `link-position-${value}`, value: 1 },
+              this.plugin.settings.optOutToEvents
+            )
           })
       })
   }
 
-  SetUpVerseFormatOptions = (containerEl: HTMLElement): void => {
+  setUpVerseFormatOptions = (containerEl: HTMLElement): void => {
     new Setting(containerEl)
       .setName('Verse Formatting Options')
       .setDesc(
@@ -115,11 +148,16 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
             console.debug('Bible Verse Format To: ' + value)
             await this.plugin.saveSettings()
             new Notice('Bible Verse Format Settings Updated')
+            EventStats.logSettingChange(
+              'changeVerseFormatting',
+              { key: `verse-format-${value}`, value: 1 },
+              this.plugin.settings.optOutToEvents
+            )
           })
       })
   }
 
-  SetUpVerseNumberFormatOptions = (containerEl: HTMLElement): void => {
+  setUpVerseNumberFormatOptions = (containerEl: HTMLElement): void => {
     new Setting(containerEl)
       .setName('Verse Number Formatting Options')
       .setDesc('Sets how to format the verse numbers in Obsidian')
@@ -138,27 +176,11 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
             console.debug('Bible Verse Number Format To: ' + value)
             await this.plugin.saveSettings()
             new Notice('Bible Verse Format Number Settings Updated')
-          })
-      })
-  }
-
-  SetUpFoldOptions = (containerEl: HTMLElement): void => {
-    new Setting(containerEl)
-      .setName('Callout Default Folding')
-      .setDesc('Sets the state of generated callouts upon opening a note')
-      .addDropdown((dropdown: DropdownComponent) => {
-        CalloutFoldFormatCollection.forEach(({ name, description }) => {
-          dropdown.addOption(name, description)
-        });
-        dropdown
-          .setValue(
-            this.plugin.settings.calloutDefaultFold ?? CalloutFoldFormat.NoFold
-          )
-          .onChange(async (value) => {
-            this.plugin.settings.calloutDefaultFold = value as CalloutFoldFormat
-            console.debug('Callout Default Folding To: ' + value)
-            await this.plugin.saveSettings()
-            new Notice('Callout Default Folding Updated')
+            EventStats.logSettingChange(
+              'changeVerseFormatting',
+              { key: `verse-number-format-${value}`, value: 1 },
+              this.plugin.settings.optOutToEvents
+            )
           })
       })
   }
@@ -182,6 +204,75 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
   }
 
   display(): void {
+  setUpBookTagging = (containerEl: HTMLElement): void => {
+    new Setting(containerEl)
+      .setName('Add a Book Tag')
+      .setDesc('Add a hidden book tag at bottom, for example #John')
+      .addToggle((toggle) =>
+        toggle
+          .setValue(!!this.plugin.settings?.bookTagging)
+          .onChange(async (value) => {
+            this.plugin.settings.bookTagging = value
+            await this.plugin.saveSettings()
+            EventStats.logSettingChange(
+              'changeVerseFormatting',
+              { key: `book-tagging-${value}`, value: 1 },
+              this.plugin.settings.optOutToEvents
+            )
+          })
+      )
+  }
+
+  setUpChapterTagging = (containerEl: HTMLElement): void => {
+    new Setting(containerEl)
+      .setName('Add a Chapter Tag')
+      .setDesc('Add a hidden chapter tag at bottom, for example #John1')
+      .addToggle((toggle) =>
+        toggle
+          .setValue(!!this.plugin.settings?.chapterTagging)
+          .onChange(async (value) => {
+            this.plugin.settings.chapterTagging = value
+            await this.plugin.saveSettings()
+            EventStats.logSettingChange(
+              'changeVerseFormatting',
+              { key: `chapter-tagging-${value}`, value: 1 },
+              this.plugin.settings.optOutToEvents
+            )
+          })
+      )
+  }
+
+  setUpOptOutEventsOptions = (containerEl: HTMLElement): void => {
+    new Setting(containerEl)
+      .setName('Opt Out of Events Logging')
+      .setDesc(
+        'We used events logging to improve the plugin, this is very helpful for us, but if you want to opt out, you can do it here'
+      )
+      .addToggle((toggle) =>
+        toggle
+          .setValue(!!this.plugin.settings?.optOutToEvents)
+          .onChange(async (value) => {
+            EventStats.logSettingChange(
+              'others',
+              { key: `opt-${value ? 'out' : 'in'}`, value: 1 },
+              this.plugin.settings.optOutToEvents
+            )
+            this.plugin.settings.optOutToEvents = value
+            await this.plugin.saveSettings()
+            if (value) {
+              new Notice(
+                'You have opted out of events logging, we will not log any events from now on'
+              )
+            } else {
+              new Notice(
+                'Thanks for opting in to events logging, this is really valuable for us to improve the plugin'
+              )
+            }
+          })
+      )
+  }
+
+  async display(): Promise<void> {
     const { containerEl } = this
     containerEl.empty()
     const headingSection = containerEl.createDiv()
@@ -197,13 +288,37 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     containerEl.createEl('h2', { text: 'Header/Footer Format'})
     containerEl.createEl('a', { text: 'View Available Formatting', href: 'https://github.com/tim-hub/obsidian-bible-reference#formatting-strings' })
     this.SetUpFormatOptions(containerEl)
+    containerEl.createEl('h1', { text: APP_NAMING.appName })
+    this.setUpVersionSettingsAndVersionOptions(containerEl)
 
-    containerEl.createEl('h2', { text: 'About' })
+    containerEl.createEl('h2', { text: 'Verses Rendering' })
+    this.setUpReferenceLinkPositionOptions(containerEl)
+    this.setUpVerseFormatOptions(containerEl)
+    this.setUpVerseNumberFormatOptions(containerEl)
+    this.setUpCollapsible(containerEl)
+    containerEl.createEl('h2', { text: 'Tagging and Linking Settings' })
+    containerEl.createSpan({}, (span) => {
+      span.innerHTML = `
+        <small>Only if you want to add tags at the bottom of verses</small>
+      `
+    })
+    this.setUpBookTagging(containerEl)
+    this.setUpChapterTagging(containerEl)
+
+    containerEl.createEl('h2', { text: 'Others' })
+
+    this.setUpOptOutEventsOptions(containerEl)
 
     containerEl.createSpan({}, (span) => {
       span.innerHTML = `
-        <a href="https://github.com/tim-hub/obsidian-bible-reference">Github Repo</a>
+        <a href="https://github.com/tim-hub/obsidian-bible-reference">Github Repo</a> |
+        <a href="https://github.com/tim-hub/obsidian-bible-reference/blob/master/docs/privacy.md">Privacy Policy</a>
       `
     })
+    EventStats.logUIOpen(
+      'settingsOpen',
+      { key: 'open', value: 1 },
+      this.plugin.settings.optOutToEvents
+    )
   }
 }

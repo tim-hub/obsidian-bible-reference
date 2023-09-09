@@ -7,10 +7,11 @@ import {
   TFile,
 } from 'obsidian'
 import BibleReferencePlugin from '../main'
-import { VerseTypoCheck } from '../utils/VerseTypoCheck'
-import { VerseSuggesting } from '../VerseSuggesting'
-import { API_WAITING_LABEL, BibleReferencePluginSettings } from '../data/constants'
-import { getSuggestionsFromQuery } from './getSuggestionsFromQuery'
+import { verseMatch } from '../utils/verseMatch'
+import { VerseSuggesting } from '../verse/VerseSuggesting'
+import { BibleReferencePluginSettings } from '../data/constants'
+import { getSuggestionsFromQuery } from '../utils/getSuggestionsFromQuery'
+import { EventStats } from '../provider/EventStats'
 
 /**
  * Extend the EditorSuggest to suggest bible verses.
@@ -39,14 +40,15 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
     editor: Editor,
     _: TFile
   ): EditorSuggestTriggerInfo | null {
-    // @ts-ignore
-    const suggestEl = (this.suggestEl as HTMLDivElement)
-    suggestEl.createDiv({ cls: 'obr-loading-container' }).hide()
-
     const currentContent = editor.getLine(cursor.line).substring(0, cursor.ch)
-    const match = VerseTypoCheck(currentContent)
+    const match = verseMatch(currentContent, false)
     if (match) {
       console.debug('trigger on', currentContent)
+      EventStats.logUIOpen(
+        'lookupEditorOpen',
+        { key: `${this.settings.bibleVersion}`, value: 1 },
+        this.settings.optOutToEvents
+      )
       return {
         end: cursor,
         start: {
@@ -66,22 +68,16 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
   async getSuggestions(
     context: EditorSuggestContext
   ): Promise<VerseSuggesting[]> {
-    // @ts-ignore
-    const suggestEl = (this.suggestEl as HTMLDivElement)
-    // @ts-ignore
-    const suggestionsEl = (this.suggestions as any).containerEl as HTMLDivElement
-    suggestionsEl.hide()
-
-    const loadingContainer = (suggestEl.getElementsByClassName('obr-loading-container')[0] as HTMLDivElement)
-    loadingContainer.setText(API_WAITING_LABEL)
-    loadingContainer.show()
-
-    const suggestions = getSuggestionsFromQuery(context.query, this.settings)
-    
-    return suggestions.finally(() => {
-      loadingContainer.hide()
-      suggestionsEl.show()
-    })
+    const suggestions = await getSuggestionsFromQuery(
+      context.query,
+      this.settings
+    )
+    EventStats.logLookup(
+      'verseLookUp',
+      { key: `${this.settings.bibleVersion}-${context.query.toLowerCase()}`, value: 1 },
+      this.settings.optOutToEvents
+    )
+    return suggestions
   }
 
   renderSuggestion(suggestion: VerseSuggesting, el: HTMLElement): void {
@@ -92,7 +88,7 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
     if (this.context) {
       /* prettier-ignore */
       (this.context.editor as Editor).replaceRange(
-        suggestion.ReplacementContent,
+        suggestion.allFormattedContent,
         this.context.start,
         this.context.end
       )

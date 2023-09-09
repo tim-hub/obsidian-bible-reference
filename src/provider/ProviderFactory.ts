@@ -1,6 +1,6 @@
 import { IBibleVersion } from '../interfaces/IBibleVersion'
 import { BibleAPIDotComProvider } from './BibleAPIDotComProvider'
-import { BibleProvider } from './BibleProvider'
+import { BaseBibleAPIProvider } from './BaseBibleAPIProvider'
 import { BibleAPISourceCollection } from '../data/BibleApiSourceCollection'
 import { BollyLifeProvider } from './BollyLifeProvider'
 
@@ -8,29 +8,29 @@ import { BollyLifeProvider } from './BollyLifeProvider'
  * A factory for Bible API providers.
  * To create provider instance and decide which provider to use.
  */
-export class BibleAPIFactory {
+export class ProviderFactory {
   // define a single instance of BibleAPIFactory
-  private static _instance: BibleAPIFactory
+  private static _instance: ProviderFactory
 
   // private constructor
   private constructor() {
-    if (BibleAPIFactory._instance) {
+    if (ProviderFactory._instance) {
       throw new Error(
         'Error: Instantiation failed: Use BibleAPIFactory.Instance instead of new.'
       )
     }
-    BibleAPIFactory._instance = this
+    ProviderFactory._instance = this
   }
 
   // get instance of BibleAPIFactory
-  public static get Instance(): BibleAPIFactory {
+  public static get Instance(): ProviderFactory {
     if (
-      BibleAPIFactory._instance === null ||
-      BibleAPIFactory._instance === undefined
+      ProviderFactory._instance === null ||
+      ProviderFactory._instance === undefined
     ) {
-      BibleAPIFactory._instance = new BibleAPIFactory()
+      ProviderFactory._instance = new ProviderFactory()
     }
-    return BibleAPIFactory._instance
+    return ProviderFactory._instance
   }
 
   /**
@@ -40,7 +40,7 @@ export class BibleAPIFactory {
    */
   public BuildBibleVersionAPIAdapterFromIBibleVersion(
     bibleVersion: IBibleVersion
-  ): BibleProvider {
+  ): BaseBibleAPIProvider {
     switch (bibleVersion.apiSource) {
       case BibleAPISourceCollection.bibleApi: {
         return new BibleAPIDotComProvider(bibleVersion)

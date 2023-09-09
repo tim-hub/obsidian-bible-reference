@@ -1,25 +1,38 @@
 import { App, MarkdownView, SuggestModal } from 'obsidian'
-import { VerseTypoCheck } from '../utils/VerseTypoCheck'
+import { verseMatch } from '../utils/verseMatch'
 import { BibleReferencePluginSettings } from '../data/constants'
-import { VerseSuggesting } from '../VerseSuggesting'
-import { getSuggestionsFromQuery } from './getSuggestionsFromQuery'
+import { VerseSuggesting } from '../verse/VerseSuggesting'
+import { getSuggestionsFromQuery } from '../utils/getSuggestionsFromQuery'
+import BibleReferencePlugin from '../main'
+import { EventStats } from '../provider/EventStats'
 
-export class VerseModalSuggester extends SuggestModal<VerseSuggesting> {
+export class VerseLookupSuggestModal extends SuggestModal<VerseSuggesting> {
   settings: BibleReferencePluginSettings
 
-  constructor(app: App, settings: BibleReferencePluginSettings) {
-    super(app)
+  constructor(
+    plugin: BibleReferencePlugin,
+    settings: BibleReferencePluginSettings
+  ) {
+    super(plugin.app)
     this.settings = settings
     this.setInstructions([
       { command: '', purpose: 'Select verses to insert, ex: John1:1-3' },
     ])
   }
 
+  public onOpen() {
+    super.onOpen()
+  }
+
   async getSuggestions(query: string): Promise<VerseSuggesting[]> {
-    const match = VerseTypoCheck(query, true)
+    const match = verseMatch(query, true)
     if (match) {
       console.debug('trigger on', query)
-      // getSuggestionsFromQuery expects '--Book#:# form'
+      EventStats.logLookup(
+        'verseLookUp',
+        { key: `${this.settings.bibleVersion}-${match.toLowerCase()}`, value: 1 },
+        this.settings.optOutToEvents
+      )
       return getSuggestionsFromQuery(`--${query}`, this.settings)
     }
     return []
@@ -34,6 +47,6 @@ export class VerseModalSuggester extends SuggestModal<VerseSuggesting> {
     if (!editor) {
       return
     }
-    editor.replaceRange(item.ReplacementContent, editor.getCursor())
+    editor.replaceRange(item.allFormattedContent, editor.getCursor())
   }
 }

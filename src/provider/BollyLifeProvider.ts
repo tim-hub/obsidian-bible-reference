@@ -1,9 +1,9 @@
 import { IVerse } from '../interfaces/IVerse'
 import { IBibleVersion } from '../interfaces/IBibleVersion'
-import { BibleProvider } from './BibleProvider'
+import { BaseBibleAPIProvider } from './BaseBibleAPIProvider'
 import { Reference } from '../../biblejs-name-converter'
 
-export class BollyLifeProvider extends BibleProvider {
+export class BollyLifeProvider extends BaseBibleAPIProvider {
   //private _verseApiUrl: string; // we do not support get verse api yet, but the api supported it
   private _chapterApiUrl: string
 
@@ -18,7 +18,7 @@ export class BollyLifeProvider extends BibleProvider {
   }
 
   public get VerseLinkURL(): string {
-    return this._queryUrl.replace("/get-text", "");
+    return this._queryUrl.replace('/get-text', '')
   }
 
   public buildRequestURL(

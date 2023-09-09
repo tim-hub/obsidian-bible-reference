@@ -2,76 +2,68 @@ import { IBibleVersion } from '../interfaces/IBibleVersion'
 import { BibleAPISourceCollection } from './BibleApiSourceCollection'
 
 export const BibleVersionCollection: IBibleVersion[] = [
+  // bible api
   {
     key: 'web',
     versionName: 'World English Bible',
     language: 'English',
-    apiUrl: 'https://bible-api.com',
     apiSource: BibleAPISourceCollection.bibleApi,
   },
   {
     key: 'clementine',
     versionName: 'Clementine Latin Vulgate',
     language: 'Latin',
-    apiUrl: 'https://bible-api.com',
     apiSource: BibleAPISourceCollection.bibleApi,
   },
   {
     key: 'kjv',
     versionName: 'King James Version',
     language: 'English',
-    apiUrl: 'https://bible-api.com',
     apiSource: BibleAPISourceCollection.bibleApi,
   },
   {
     key: 'bbe',
     versionName: 'Bible in Basic English',
     language: 'English',
-    apiUrl: 'https://bible-api.com',
     apiSource: BibleAPISourceCollection.bibleApi,
   },
   {
     key: 'oeb-us',
     versionName: 'Open English Bible, US Edition',
     language: 'English',
-    apiUrl: 'https://bible-api.com',
     apiSource: BibleAPISourceCollection.bibleApi,
   },
   {
     key: 'almeida',
     versionName: 'João Ferreira de Almeida',
     language: 'Portuguese',
-    apiUrl: 'https://bible-api.com',
     apiSource: BibleAPISourceCollection.bibleApi,
   },
   {
     key: 'rccv',
     versionName: 'Romanian Corrected Cornilescu Version',
     language: 'Romanian',
-    apiUrl: 'https://bible-api.com',
     apiSource: BibleAPISourceCollection.bibleApi,
   },
   {
     key: 'cherokee',
     versionName: 'Cherokee New Testament',
     language: 'Cherokee',
-    apiUrl: 'https://bible-api.com',
     apiSource: BibleAPISourceCollection.bibleApi,
   },
   {
     key: 'oeb-cw',
     versionName: 'Open English Bible, Commonwealth Edition',
     language: 'English (UK)',
-    apiUrl: 'https://bible-api.com',
     apiSource: BibleAPISourceCollection.bibleApi,
   },
   {
     key: 'webbe',
     versionName: 'World English Bible, British Edition',
     language: 'English (UK)',
-    apiUrl: 'https://bible-api.com',
     apiSource: BibleAPISourceCollection.bibleApi,
   },
+  // bolls life
   {
     key: 'nkjv',
     versionName: 'New King James Version',
@@ -110,9 +102,9 @@ export const BibleVersionCollection: IBibleVersion[] = [
     apiSource: BibleAPISourceCollection.bollsLife,
   },
   {
-    key: "svd",
-    versionName: "Smith and Van Dyke",
-    language: "Arabic العربية",
+    key: 'svd',
+    versionName: 'Smith and Van Dyke',
+    language: 'Arabic العربية',
     apiSource: BibleAPISourceCollection.bollsLife,
   },
   {
@@ -140,9 +132,9 @@ export const BibleVersionCollection: IBibleVersion[] = [
     apiSource: BibleAPISourceCollection.bollsLife,
   },
   {
-    key: "nvi",
-    versionName: "Nueva Version Internacional",
-    language: "Spanish",
+    key: 'nvi',
+    versionName: 'Nueva Version Internacional',
+    language: 'Spanish',
     apiSource: BibleAPISourceCollection.bollsLife,
   },
   {
@@ -152,9 +144,9 @@ export const BibleVersionCollection: IBibleVersion[] = [
     apiSource: BibleAPISourceCollection.bollsLife,
   },
   {
-    key: "lbla",
-    versionName: "La Biblia de Las Americas, 1997",
-    language: "Spanish",
+    key: 'lbla',
+    versionName: 'La Biblia de Las Americas, 1997',
+    language: 'Spanish',
     apiSource: BibleAPISourceCollection.bollsLife,
   },
   {
@@ -164,15 +156,29 @@ export const BibleVersionCollection: IBibleVersion[] = [
     apiSource: BibleAPISourceCollection.bollsLife,
   },
   {
-    key: "bw",
-    versionName: "Biblia warszawska, 1975",
-    language: "Polish",
+    key: 'bw',
+    versionName: 'Biblia warszawska, 1975',
+    language: 'Polish',
     apiSource: BibleAPISourceCollection.bollsLife,
   },
   {
-    key: "tb",
-    versionName: "Terjemahan Baru",
-    language: "Indonesian",
+    key: 'tb',
+    versionName: 'Terjemahan Baru',
+    language: 'Indonesian',
     apiSource: BibleAPISourceCollection.bollsLife,
   },
-];
+  {
+    key: 'bti',
+    versionName: 'Библия под ред. М.П. Кулакова и М.М. Кулакова, 2015',
+    language: 'Russian',
+    apiSource: BibleAPISourceCollection.bollsLife,
+  },
+  {
+    key: 'utt',
+    versionName: 'Українська Біблія LXX УБТ Рафаїла Турконяка (2011) 77 книг',
+    language: 'Ukrainian',
+    apiSource: BibleAPISourceCollection.bollsLife,
+  },
+]
+
+export const DEFAULT_BIBLE_VERSION = BibleVersionCollection[11]
