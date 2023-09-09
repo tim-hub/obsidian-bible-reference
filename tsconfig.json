@@ -11,14 +11,15 @@
     "importHelpers": true,
     "isolatedModules": true,
     "esModuleInterop": true,
-	"strictNullChecks": true,
+    "strictNullChecks": true,
     "lib": [
       "DOM",
       "ES5",
       "ES6",
       "ES7",
       "ES2021.String"
-    ]
+    ],
+    "jsx": "preserve",
   },
   "include": [
     "**/*.ts"

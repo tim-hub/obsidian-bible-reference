@@ -28,6 +28,8 @@
     "@types/ackee-tracker": "^5.0.2",
     "@types/jest": "^29.5.4",
     "@types/node": "18.17.11",
+    "@types/react": "^18.2.21",
+    "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "5.29.0",
     "@typescript-eslint/parser": "5.29.0",
     "builtin-modules": "3.3.0",
@@ -72,6 +74,8 @@
   },
   "dependencies": {
     "ackee-tracker": "^5.1.0",
-    "flagsmith-nodejs": "^3.1.1"
+    "flagsmith-nodejs": "^3.1.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }
