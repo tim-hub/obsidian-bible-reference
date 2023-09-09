@@ -34,19 +34,6 @@
 - All different kinds of contributions are welcom, see: [How to Contribute](https://github.com/tim-hub/obsidian-bible-reference/blob/master/CONTRIBUTING.md)
 - Credits: [Bible API/Data Source Providers](https://github.com/tim-hub/obsidian-bible-reference/blob/master/docs/bible-api-and-source.md)
 
-### Formatting Strings
-
-These are special substitutions used in the formatting settings.
-
-| Template String          | Substitution                 |
-|--------------------------|------------------------------|
-| {{bible_version}}        | Current Bible version        |
-| {{book}}                 | Name of the quoted book      |
-| {{chapter}}              | Number of the quoted chapter |
-| {{verse_range}}          | Range of quoted verses       |
-| {{verse_reference_link}} | Link to the API reference    |
-| {{content}}              | The verse content            |
-
 ### Sponsors and Contributors
 
 - [Chris Gonzales](https://github.com/chrisg32)
