@@ -1,5 +1,6 @@
 import { IVerse } from '../interfaces/IVerse'
 import { Notice } from 'obsidian'
+import { EventStats } from './EventStats';
 
 export abstract class BaseBibleAPIProvider {
   protected _key: string // the version selected
@@ -82,6 +83,7 @@ export abstract class BaseBibleAPIProvider {
     } catch (e) {
       console.error('error while querying', e)
       new Notice(`Error while querying ${url}`)
+      EventStats.logError('errors', {key: url, value: 1})
       return await Promise.reject(e)
     }
   }

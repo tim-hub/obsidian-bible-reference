@@ -27,6 +27,8 @@ const EVENTS = {
   // changeCollapsible: '',
   // changeBookTagging: '',
   // changeChapterTagging: '',
+
+  errors: '0d3fad56-4293-4691-b810-9a32cd1f6117'
 }
 
 type VerseLookUp = 'verseLookUp' | 'vodLookUp'
@@ -37,7 +39,7 @@ type UIOpen =
   | 'lookupEditorOpen'
   | 'lookupModalOpen'
 type SettingChange = 'changeVersion' | 'changeVerseFormatting' | 'others'
-type EventsKeys = VerseLookUp | UIOpen | SettingChange
+type EventsKeys = keyof typeof EVENTS
 type EventsValues = (typeof EVENTS)[EventsKeys]
 
 class Logger {
@@ -99,6 +101,14 @@ class Logger {
       this.fireEvent(this.getEventId(eventName), actionAttributes)
     }
   }
+
+  async logError(
+    eventName: 'errors',
+    actionAttributes: ActionAttributes,
+  ) {
+    this.fireEvent(this.getEventId(eventName), actionAttributes)
+  }
+
 
   private async fireEvent(
     eventId: EventsValues,

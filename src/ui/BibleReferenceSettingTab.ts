@@ -244,7 +244,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     new Setting(containerEl)
       .setName('Opt Out of Events Logging')
       .setDesc(
-        'We used events logging to improve the plugin, this is very helpful for us, but if you want to opt out, you can do it here'
+        'We used events logging to improve the plugin, this is very helpful for us, but if you want to opt out, you can do it here. (Excluding Errors Logs))'
       )
       .addToggle((toggle) =>
         toggle
