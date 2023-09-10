@@ -26,7 +26,7 @@ import {
 import { FlagService } from '../provider/FeatureFlag'
 import { BibleAPISourceCollection } from '../data/BibleApiSourceCollection'
 import { EventStats } from '../provider/EventStats'
-import { APP_NAMING } from '../data/constants';
+import { APP_NAMING } from '../data/constants'
 
 export class BibleReferenceSettingTab extends PluginSettingTab {
   plugin: BibleReferencePlugin

@@ -1,5 +1,5 @@
 import Flagsmith, { Flags } from 'flagsmith-nodejs'
-import { EventStats } from './EventStats'; // Add this line if you're using flagsmith via npm
+import { EventStats } from './EventStats' // Add this line if you're using flagsmith via npm
 
 const flagsmith = new Flagsmith({
   environmentKey: 'NJTKgnNToZxbe6TCksAcmD',
@@ -16,7 +16,7 @@ export class FlagService {
     return FlagService.instance
   }
 
-  public async init(id?:string) {
+  public async init(id?: string) {
     if (id) {
       this.flags = await flagsmith.getIdentityFlags(id)
     } else {
@@ -34,7 +34,7 @@ export class FlagService {
       return JSON.parse(value as string)
     } catch (e) {
       console.error('get feature flag value error')
-      EventStats.logError('errors', { key:'featureflag', value: 1 })
+      EventStats.logError('errors', { key: 'featureflag', value: 1 })
     }
   }
 }

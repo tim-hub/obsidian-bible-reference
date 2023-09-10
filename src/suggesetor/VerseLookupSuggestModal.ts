@@ -30,7 +30,10 @@ export class VerseLookupSuggestModal extends SuggestModal<VerseSuggesting> {
       console.debug('trigger on', query)
       EventStats.logLookup(
         'verseLookUp',
-        { key: `${this.settings.bibleVersion}-${match.toLowerCase()}`, value: 1 },
+        {
+          key: `${this.settings.bibleVersion}-${match.toLowerCase()}`,
+          value: 1,
+        },
         this.settings.optOutToEvents
       )
       return getSuggestionsFromQuery(`--${query}`, this.settings)

@@ -1,7 +1,5 @@
 ## About
 
-
-
 - [Making contributions](CONTRIBUTING.md) All kinds of Contributing is appreciated,
   - maintaining the project code base, (more at the section below)
   - recommending the plugin to your friends and connections,
@@ -26,25 +24,26 @@ The repo depends on the latest plugin API (obsidian.d.ts) in Typescript Definiti
 ### Before you start
 
 Feel free to check out
-- [Project Todo Column](https://github.com/users/tim-hub/projects/2) 
-- [Discussion](https://github.com/tim-hub/obsidian-bible-reference/discussions) 
+
+- [Project Todo Column](https://github.com/users/tim-hub/projects/2)
+- [Discussion](https://github.com/tim-hub/obsidian-bible-reference/discussions)
 - [Issues](https://github.com/tim-hub/obsidian-bible-reference/issues)
 
-You can probably get some ideas from there to work on, 
+You can probably get some ideas from there to work on,
 and you can also create a new discussion or issue to discuss your ideas.
 
-
-
 ## References
+
 ### Related Projects
+
 - [find bible verse](https://github.com/tim-hub/FindBibleVerse) in development, this is a local node package for querying bible version
 - [bible name converter](https://github.com/tim-hub/biblejs-name-converter/) Bible JS Name Converter, Normalize bible references, convert them to machine readable formats, query and manipulate them
 - inspiring
   - inspired by [obsidian emoji shortcodes](https://github.com/phibr0/obsidian-emoji-shortcodes)
   - [obsidian sample plugin](https://github.com/obsidianmd/obsidian-sample-plugin) is template repo as obsidian sample plugin
 
-
 ### Bible API and Bible Source
+
 > This plugin Bible Verse Query Functionality is currently powered by Public Bible API,
 > Here is about the APIs used here, and what Bible version are supported
 >

@@ -74,7 +74,10 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
     )
     EventStats.logLookup(
       'verseLookUp',
-      { key: `${this.settings.bibleVersion}-${context.query.toLowerCase()}`, value: 1 },
+      {
+        key: `${this.settings.bibleVersion}-${context.query.toLowerCase()}`,
+        value: 1,
+      },
       this.settings.optOutToEvents
     )
     return suggestions

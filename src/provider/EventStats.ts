@@ -28,7 +28,7 @@ const EVENTS = {
   // changeBookTagging: '',
   // changeChapterTagging: '',
 
-  errors: '0d3fad56-4293-4691-b810-9a32cd1f6117'
+  errors: '0d3fad56-4293-4691-b810-9a32cd1f6117',
 }
 
 type VerseLookUp = 'verseLookUp' | 'vodLookUp'
@@ -102,13 +102,9 @@ class Logger {
     }
   }
 
-  async logError(
-    eventName: 'errors',
-    actionAttributes: ActionAttributes,
-  ) {
+  async logError(eventName: 'errors', actionAttributes: ActionAttributes) {
     this.fireEvent(this.getEventId(eventName), actionAttributes)
   }
-
 
   private async fireEvent(
     eventId: EventsValues,

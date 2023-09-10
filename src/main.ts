@@ -72,8 +72,8 @@ export default class BibleReferencePlugin extends Plugin {
   }
 
   private async getAndCachedVerseOfDay(): Promise<VerseOfDaySuggesting> {
-    const {ttl, timestamp, verseOfDaySuggesting} =
-    this?.cachedVerseOfDaySuggesting || {}
+    const { ttl, timestamp, verseOfDaySuggesting } =
+      this?.cachedVerseOfDaySuggesting || {}
     if (!verseOfDaySuggesting || timestamp + ttl > Date.now()) {
       const vodResp = await getVod()
       const reference = splitBibleReference(vodResp.verse.details.reference)
@@ -99,7 +99,7 @@ export default class BibleReferencePlugin extends Plugin {
       callback: () => {
         EventStats.logUIOpen(
           'lookupModalOpen',
-          {key: `command-lookup`, value: 1},
+          { key: `command-lookup`, value: 1 },
           this.settings.optOutToEvents
         )
         this.verseLookUpModal.open()
@@ -116,7 +116,7 @@ export default class BibleReferencePlugin extends Plugin {
         const verse = await this.getAndCachedVerseOfDay()
         EventStats.logUIOpen(
           'vodEditorOpen',
-          {key: `command-vod`, value: 1},
+          { key: `command-vod`, value: 1 },
           this.settings.optOutToEvents
         )
         new Notice(
@@ -127,7 +127,6 @@ export default class BibleReferencePlugin extends Plugin {
         )
       },
     })
-
   }
 
   private addVerseOfDayInsertCommand(): void {
@@ -138,7 +137,7 @@ export default class BibleReferencePlugin extends Plugin {
         const vodSuggesting = await this.getAndCachedVerseOfDay()
         EventStats.logUIOpen(
           'vodEditorOpen',
-          {key: `command-vod-insert`, value: 1},
+          { key: `command-vod-insert`, value: 1 },
           this.settings.optOutToEvents
         )
         editor.replaceSelection(vodSuggesting.allFormattedContent)
@@ -155,7 +154,7 @@ export default class BibleReferencePlugin extends Plugin {
       (_evt) => {
         EventStats.logUIOpen(
           'lookupModalOpen',
-          {key: `ribbon-click`, value: 1},
+          { key: `ribbon-click`, value: 1 },
           this.settings.optOutToEvents
         )
         this.verseLookUpModal.open()
@@ -167,7 +166,7 @@ export default class BibleReferencePlugin extends Plugin {
     if (this.ribbonButton) {
       EventStats.logUIOpen(
         'lookupModalOpen',
-        {key: `ribbon-remove`, value: 1},
+        { key: `ribbon-remove`, value: 1 },
         this.settings.optOutToEvents
       )
       this.ribbonButton.parentNode?.removeChild(this.ribbonButton)
