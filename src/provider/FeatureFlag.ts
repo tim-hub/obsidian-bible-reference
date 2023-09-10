@@ -15,11 +15,19 @@ export class FlagService {
     return FlagService.instance
   }
 
-  public async init() {
-    this.flags = await flagsmith.getEnvironmentFlags()
+  public async init(id?:string) {
+    if (id) {
+      this.flags = await flagsmith.getIdentityFlags(id)
+    } else {
+      this.flags = await flagsmith.getEnvironmentFlags()
+    }
   }
 
   public isFeatureEnabled(feature: string): boolean {
     return this.flags.isFeatureEnabled(feature)
+  }
+
+  public getFeatureValue(feature: string): any {
+    return JSON.parse(this.flags.getFlag(feature).value as string)
   }
 }

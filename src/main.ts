@@ -36,16 +36,24 @@ export default class BibleReferencePlugin extends Plugin {
     this.verseLookUpModal = new VerseLookupSuggestModal(this, this.settings)
     this.addVerseLookupCommand()
     this.addRibbonButton()
-    this.verseOfDayModal = new VerseOfDayModal(this, this.settings)
 
     const flagService = FlagService.getInstace()
-    await flagService.init()
+    await flagService.init('obsidian-app')
     if (FlagService.instance.isFeatureEnabled('vod')) {
       console.debug('vod feature flag enabled')
-      this.registerEditorSuggest(
-        new VerseOfDayEditorSuggester(this, this.settings)
-      )
-      this.addVerseOfDayCommands()
+      const featureValues = FlagService.instance.getFeatureValue('vod')
+      if (featureValues?.editor) {
+        this.registerEditorSuggest(
+          new VerseOfDayEditorSuggester(this, this.settings)
+        )
+      }
+      if (featureValues?.insert) {
+        this.verseOfDayModal = new VerseOfDayModal(this, this.settings)
+        this.addVerseOfDayInsertCommand()
+      }
+      if (featureValues?.notice) {
+        this.addVerseOfDayNoticeCommand()
+      }
     }
     EventStats.logRecord(this.settings.optOutToEvents)
   }
@@ -64,8 +72,8 @@ export default class BibleReferencePlugin extends Plugin {
   }
 
   private async getAndCachedVerseOfDay(): Promise<VerseOfDaySuggesting> {
-    const { ttl, timestamp, verseOfDaySuggesting } =
-      this?.cachedVerseOfDaySuggesting || {}
+    const {ttl, timestamp, verseOfDaySuggesting} =
+    this?.cachedVerseOfDaySuggesting || {}
     if (!verseOfDaySuggesting || timestamp + ttl > Date.now()) {
       const vodResp = await getVod()
       const reference = splitBibleReference(vodResp.verse.details.reference)
@@ -91,7 +99,7 @@ export default class BibleReferencePlugin extends Plugin {
       callback: () => {
         EventStats.logUIOpen(
           'lookupModalOpen',
-          { key: `command-lookup`, value: 1 },
+          {key: `command-lookup`, value: 1},
           this.settings.optOutToEvents
         )
         this.verseLookUpModal.open()
@@ -99,7 +107,7 @@ export default class BibleReferencePlugin extends Plugin {
     })
   }
 
-  private addVerseOfDayCommands(): void {
+  private addVerseOfDayNoticeCommand(): void {
     this.addCommand({
       id: 'obr-vod-view-verses-of-day',
       name: 'Verse Of The Day - Notice (10 Seconds)',
@@ -108,7 +116,7 @@ export default class BibleReferencePlugin extends Plugin {
         const verse = await this.getAndCachedVerseOfDay()
         EventStats.logUIOpen(
           'vodEditorOpen',
-          { key: `command-vod`, value: 1 },
+          {key: `command-vod`, value: 1},
           this.settings.optOutToEvents
         )
         new Notice(
@@ -120,6 +128,9 @@ export default class BibleReferencePlugin extends Plugin {
       },
     })
 
+  }
+
+  private addVerseOfDayInsertCommand(): void {
     this.addCommand({
       id: 'obs-vod-insert-verse-of-day',
       name: 'Verse Of The Day - Insert To Current Note',
@@ -127,7 +138,7 @@ export default class BibleReferencePlugin extends Plugin {
         const vodSuggesting = await this.getAndCachedVerseOfDay()
         EventStats.logUIOpen(
           'vodEditorOpen',
-          { key: `command-vod-insert`, value: 1 },
+          {key: `command-vod-insert`, value: 1},
           this.settings.optOutToEvents
         )
         editor.replaceSelection(vodSuggesting.allFormattedContent)
@@ -144,7 +155,7 @@ export default class BibleReferencePlugin extends Plugin {
       (_evt) => {
         EventStats.logUIOpen(
           'lookupModalOpen',
-          { key: `ribbon-click`, value: 1 },
+          {key: `ribbon-click`, value: 1},
           this.settings.optOutToEvents
         )
         this.verseLookUpModal.open()
@@ -156,7 +167,7 @@ export default class BibleReferencePlugin extends Plugin {
     if (this.ribbonButton) {
       EventStats.logUIOpen(
         'lookupModalOpen',
-        { key: `ribbon-remove`, value: 1 },
+        {key: `ribbon-remove`, value: 1},
         this.settings.optOutToEvents
       )
       this.ribbonButton.parentNode?.removeChild(this.ribbonButton)
