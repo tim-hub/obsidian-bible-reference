@@ -29,9 +29,14 @@
 
 > Read more about [How to use](https://github.com/tim-hub/obsidian-bible-reference/blob/master/docs/howto.md)
 
+> On iOS devices, there is a known issue about conflict between `Smart Punctuation` and double hyphens `--`.
+>
+> To make it work, Smart Punctuation need to be turned off => [How to use on iOS](https://github.com/tim-hub/obsidian-bible-reference/wiki/How-to-use#how-to-use-on-ios-iphone--ipad)
+
 ## Contribution and Credits
 
-- All different kinds of contributions are welcom, see: [How to Contribute](https://github.com/tim-hub/obsidian-bible-reference/blob/master/CONTRIBUTING.md)
+- All different kinds of contributions are welcom,
+  see: [How to Contribute](https://github.com/tim-hub/obsidian-bible-reference/blob/master/CONTRIBUTING.md)
 - Credits: [Bible API/Data Source Providers](https://github.com/tim-hub/obsidian-bible-reference/blob/master/docs/bible-api-and-source.md)
 
 ### Sponsors and Contributors
