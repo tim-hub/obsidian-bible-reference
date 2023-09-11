@@ -2,10 +2,10 @@
   "files": [
     "README.md"
   ],
-  "imageSize": 100,
+  "imageSize": 65,
   "commit": false,
   "commitType": "docs",
-  "commitConvention": "angular",
+  "commitConvention": "eslint",
   "contributors": [
     {
       "login": "minermaniac447",
@@ -17,10 +17,10 @@
       ]
     }
   ],
-  "contributorsPerLine": 7,
+  "contributorsPerLine": 10,
   "skipCi": true,
   "repoType": "github",
-  "repoHost": "https://github.com",
-  "projectName": "obsidian-bible-reference",
+  "repoHost": "https://github.com/tim-hub/obsidian-bible-reference",
+  "projectName": "Obsidian Bible Reference",
   "projectOwner": "tim-hub"
 }
