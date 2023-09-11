@@ -39,17 +39,11 @@
   see: [How to Contribute](https://github.com/tim-hub/obsidian-bible-reference/blob/master/CONTRIBUTING.md)
 - Credits: [Bible API/Data Source Providers](https://github.com/tim-hub/obsidian-bible-reference/blob/master/docs/bible-api-and-source.md)
 
-### Sponsors and Contributors
 
-- [Chris Gonzales](https://github.com/chrisg32)
 
-<!-- sponsors --><!-- sponsors -->
+--- 
 
----
-
-- [_Previous Sponsors_](https://github.com/tim-hub/obsidian-bible-reference/blob/master/docs/previous-sponsors.md)
-
-### Contributors ✨
+## Sponsors and Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
@@ -83,4 +77,8 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 
-> [**All Contributors**](https://github.com/tim-hub/obsidian-bible-reference/graphs/contributors) 👍🙏
+> Special Thanks for the sponsors [![support button of obsidian bible reference](https://img.shields.io/static/v1?label=SupportMe&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/tim-hub)
+> - [Chris Gonzales](https://github.com/chrisg32)
+
+
+<!-- sponsors --><!-- sponsors -->
