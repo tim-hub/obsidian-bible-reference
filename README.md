@@ -60,6 +60,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tbody>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/minermaniac447"><img src="https://avatars.githubusercontent.com/u/42500591?v=4?s=65" width="65px;" alt="minermaniac447"/><br /><sub><b>minermaniac447</b></sub></a><br /><a href="https://github.com/tim-hub/Obsidian Bible Reference/commits?author=minermaniac447" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/JPT62089"><img src="https://avatars.githubusercontent.com/u/1808107?v=4?s=65" width="65px;" alt="Jeremy Treis"/><br /><sub><b>Jeremy Treis</b></sub></a><br /><a href="https://github.com/tim-hub/Obsidian Bible Reference/commits?author=JPT62089" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
