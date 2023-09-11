@@ -1,16 +1,22 @@
 {
-  "files": [
-    "README.md"
-  ],
-  "imageSize": 65,
-  "commit": false,
-  "commitType": "docs",
-  "commitConvention": "eslint",
-  "contributors": [],
-  "contributorsPerLine": 10,
-  "skipCi": true,
-  "repoType": "github",
-  "repoHost": "https://github.com/tim-hub/obsidian-bible-reference",
   "projectName": "Obsidian Bible Reference",
-  "projectOwner": "tim-hub"
+  "projectOwner": "tim-hub",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": ["README.md"],
+  "imageSize": 65,
+  "commit": true,
+  "commitConvention": "eslint",
+  "contributors": [
+    {
+      "login": "minermaniac447",
+      "name": "minermaniac447",
+      "avatar_url": "https://avatars.githubusercontent.com/u/42500591?v=4",
+      "profile": "https://github.com/minermaniac447",
+      "contributions": ["code"]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "linkToUsage": false
 }
+
