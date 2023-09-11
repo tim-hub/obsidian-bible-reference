@@ -1,0 +1,16 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 65,
+  "commit": false,
+  "commitType": "docs",
+  "commitConvention": "eslint",
+  "contributors": [],
+  "contributorsPerLine": 10,
+  "skipCi": true,
+  "repoType": "github",
+  "repoHost": "https://github.com/tim-hub/obsidian-bible-reference",
+  "projectName": "Obsidian Bible Reference",
+  "projectOwner": "tim-hub"
+}
