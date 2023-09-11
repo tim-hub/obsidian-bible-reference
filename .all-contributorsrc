@@ -1,9 +1,11 @@
 {
-  "projectName": "Obsidian Bible Reference",
+  "projectName": "obsidian-bible-reference",
   "projectOwner": "tim-hub",
   "repoType": "github",
   "repoHost": "https://github.com",
-  "files": ["README.md"],
+  "files": [
+    "README.md"
+  ],
   "imageSize": 65,
   "commit": true,
   "commitConvention": "eslint",
@@ -13,17 +15,31 @@
       "name": "minermaniac447",
       "avatar_url": "https://avatars.githubusercontent.com/u/42500591?v=4",
       "profile": "https://github.com/minermaniac447",
-      "contributions": ["code"]
+      "contributions": [
+        "code"
+      ]
     },
     {
       "login": "JPT62089",
       "name": "Jeremy Treis",
       "avatar_url": "https://avatars.githubusercontent.com/u/1808107?v=4",
       "profile": "https://github.com/JPT62089",
-      "contributions": ["code", "bug"]
+      "contributions": [
+        "code",
+        "bug"
+      ]
+    },
+    {
+      "login": "brennenputh",
+      "name": "Brennen Puth",
+      "avatar_url": "https://avatars.githubusercontent.com/u/99607748?v=4",
+      "profile": "https://github.com/brennenputh",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
-  "linkToUsage": false
+  "linkToUsage": false,
+  "commitType": "docs"
 }
-
