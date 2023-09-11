@@ -9,6 +9,20 @@
   "commitConvention": "eslint",
   "contributors": [
     {
+      "login": "chrisg32",
+      "name": "Chris Gonzales",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1832474?v=4",
+      "profile": "http://www.chrisg.ninja/",
+      "contributions": ["financial", "ideas"]
+    },
+    {
+      "login": "JPT62089",
+      "name": "Jeremy Treis",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1808107?v=4",
+      "profile": "https://github.com/JPT62089",
+      "contributions": ["code", "bug", "ideas"]
+    },
+    {
       "login": "minermaniac447",
       "name": "minermaniac447",
       "avatar_url": "https://avatars.githubusercontent.com/u/42500591?v=4",
@@ -16,11 +30,11 @@
       "contributions": ["code"]
     },
     {
-      "login": "JPT62089",
-      "name": "Jeremy Treis",
-      "avatar_url": "https://avatars.githubusercontent.com/u/1808107?v=4",
-      "profile": "https://github.com/JPT62089",
-      "contributions": ["code", "bug"]
+      "login": "brennenputh",
+      "name": "Brennen Puth",
+      "avatar_url": "https://avatars.githubusercontent.com/u/99607748?v=4",
+      "profile": "https://github.com/brennenputh",
+      "contributions": ["code", "ideas"]
     },
     {
       "login": "joey-kilgore",
@@ -36,13 +50,7 @@
       "profile": "https://github.com/RandomUserWithInternet",
       "contributions": ["doc"]
     },
-    {
-      "login": "brennenputh",
-      "name": "Brennen Puth",
-      "avatar_url": "https://avatars.githubusercontent.com/u/99607748?v=4",
-      "profile": "https://github.com/brennenputh",
-      "contributions": ["code"]
-    },
+
     {
       "login": "Bill77",
       "name": "Bill Chen",
