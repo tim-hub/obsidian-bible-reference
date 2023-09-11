@@ -21,6 +21,76 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/1808107?v=4",
       "profile": "https://github.com/JPT62089",
       "contributions": ["code", "bug"]
+    },
+    {
+      "login": "joey-kilgore",
+      "name": "Joey Kilgore",
+      "avatar_url": "https://avatars.githubusercontent.com/u/22432499?v=4",
+      "profile": "https://github.com/joey-kilgore",
+      "contributions": ["code"]
+    },
+    {
+      "login": "RandomUserWithInternet",
+      "name": "Ben Vanderhoff",
+      "avatar_url": "https://avatars.githubusercontent.com/u/88126013?v=4",
+      "profile": "https://github.com/RandomUserWithInternet",
+      "contributions": ["doc"]
+    },
+    {
+      "login": "brennenputh",
+      "name": "Brennen Puth",
+      "avatar_url": "https://avatars.githubusercontent.com/u/99607748?v=4",
+      "profile": "https://github.com/brennenputh",
+      "contributions": ["code"]
+    },
+    {
+      "login": "Bill77",
+      "name": "Bill Chen",
+      "avatar_url": "https://avatars.githubusercontent.com/u/7854207?v=4",
+      "profile": "https://github.com/Bill77",
+      "contributions": ["code"]
+    },
+    {
+      "login": "grnsmn",
+      "name": "GScriptS",
+      "avatar_url": "https://avatars.githubusercontent.com/u/26894838?v=4",
+      "profile": "https://github.com/grnsmn",
+      "contributions": ["code"]
+    },
+    {
+      "login": "afriedel",
+      "name": "Aaron Friedel",
+      "avatar_url": "https://avatars.githubusercontent.com/u/450610?v=4",
+      "profile": "https://github.com/afriedel",
+      "contributions": ["code"]
+    },
+    {
+      "login": "benjayahari",
+      "name": "benjayahari",
+      "avatar_url": "https://avatars.githubusercontent.com/u/71566025?v=4",
+      "profile": "https://github.com/benjayahari",
+      "contributions": ["translation"]
+    },
+    {
+      "login": "kajogo777",
+      "name": "George",
+      "avatar_url": "https://avatars.githubusercontent.com/u/10531031?v=4",
+      "profile": "https://github.com/kajogo777",
+      "contributions": ["translation"]
+    },
+    {
+      "login": "OfficerHalf",
+      "name": "Nathan",
+      "avatar_url": "https://avatars.githubusercontent.com/u/4851889?v=4",
+      "profile": "https://github.com/OfficerHalf",
+      "contributions": ["code"]
+    },
+    {
+      "login": "kmf",
+      "name": "Karl Fischer",
+      "avatar_url": "https://avatars.githubusercontent.com/u/78700?v=4",
+      "profile": "http://kmf.co/",
+      "contributions": ["translation"]
     }
   ],
   "contributorsPerLine": 7,
