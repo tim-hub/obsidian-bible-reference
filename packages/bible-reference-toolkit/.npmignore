@@ -2,6 +2,7 @@ node_modules
 coverage
 .github
 src
+!*/src
 .eslintrc.js
 .gitignore
 .prettierrc
