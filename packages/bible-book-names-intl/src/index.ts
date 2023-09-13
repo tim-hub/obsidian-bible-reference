@@ -1,10 +1,10 @@
 import {
   generateOrdinalNameVariations,
-  readJSONFilesInDirectory,
 } from './utils/utils';
 
 import baseData from './data/base.json';
-import path from 'path';
+import en from './data/translations/en.json'
+import it from './data/translations/it.json'
 
 type Book = {
   names: string[];
@@ -15,9 +15,10 @@ type Book = {
 
 const BookWithNamesAndChapterVersesCount: Book[] = [];
 
-const allWesternTranslations = readJSONFilesInDirectory(
-  path.join(__dirname, './data/translations/')
-);
+const allWesternTranslations = [
+  en,
+  it,
+]
 
 for (let i = 0; i < 66; i++) {
   const book = (baseData as any)['' + (i + 1)];
