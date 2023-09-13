@@ -8,6 +8,12 @@ dependencies:
   ackee-tracker:
     specifier: ^5.1.0
     version: 5.1.0
+  bible-book-names-intl:
+    specifier: ^2.0.8
+    version: 2.0.8
+  bible-reference-toolkit:
+    specifier: ^2.0.8
+    version: 2.0.8
   flagsmith-nodejs:
     specifier: ^3.1.1
     version: 3.1.1
@@ -1368,6 +1374,16 @@ packages:
 
   /base64-js@1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
+    dev: false
+
+  /bible-book-names-intl@2.0.8:
+    resolution: {integrity: sha512-s9HaW8tFPFCTxnAb53UgZ4MkMiLX1EKH0km4ECRZ2l45BM/HCb6zUwssNkkxcCUE6Q9/GZcLIMFzVaknwd33gA==}
+    dev: false
+
+  /bible-reference-toolkit@2.0.8:
+    resolution: {integrity: sha512-G9vN+2cn2wf2euVUbSQBkljZRRexb+5Z8hlPh8ouimjOF+K4DfPvulbr/ThiVlP8K79tg/vMkvU11RasJSt94Q==}
+    dependencies:
+      bible-book-names-intl: 2.0.8
     dev: false
 
   /big-integer@1.6.51:

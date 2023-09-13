@@ -1,7 +1,9 @@
 import { BibleReferencePluginSettings } from '../data/constants'
 import { VerseSuggesting } from '../verse/VerseSuggesting'
 import { BOOK_REG } from './regs'
-import { Reference } from '../../biblejs-name-converter'
+import * as Tool from 'bible-reference-toolkit/'
+
+const { Reference } = Tool
 
 /**
  * Get suggestions from string query
