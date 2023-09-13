@@ -1,3 +1,3 @@
-import BibleBooks from 'bible-books'
+import BibleBooks from 'bible-books';
 
-export default BibleBooks
+export default BibleBooks;
