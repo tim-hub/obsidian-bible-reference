@@ -1,6 +1,6 @@
 {
   "name": "bible-book-names-intl",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "Bible Book Names in Multiple Languages",
   "repository": {
     "type": "git",
@@ -26,7 +26,7 @@
     "typescript": "^5.2.2"
   },
   "scripts": {
-    "build": "tsc --build --force",
+    "build": "rimraf dist && tsc",
     "test": "bun test src/**/*.test.ts ",
     "prettier": "prettier . --check",
     "prettier:fix": "prettier . --write"
