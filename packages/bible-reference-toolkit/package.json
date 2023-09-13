@@ -6,6 +6,9 @@
     "type": "git",
     "url": "https://github.com/tim-hub/bible-reference-toolkit"
   },
+  "files": [
+    "dist"
+  ],
   "author": "@tim-hub",
   "license": "MIT",
   "bugs": {
