@@ -1,6 +1,6 @@
-import Reference from './lib/reference';
-import Range from './lib/range';
-import Books from './lib/books';
+import Reference from './src/lib/reference';
+import Range from './src/lib/range';
+import Books from './src/lib/books';
 
 export default {
   Reference,
