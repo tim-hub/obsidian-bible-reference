@@ -25,6 +25,9 @@
     "prettier": "^3.0.3",
     "typescript": "^5.2.2"
   },
+  "depencencies": {
+    "bible-book-names-intl": "*"
+  },
   "scripts": {
     "test": "bun test src/test/*.test.ts ",
     "build": "tsc --build --force",
@@ -32,6 +35,6 @@
     "prettier:fix": "prettier . --write"
   },
   "dependencies": {
-    "bible-books": "*"
+    "bible-book-names-intl": "*"
   }
 }

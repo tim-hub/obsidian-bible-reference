@@ -1,7 +1,7 @@
 {
-  "name": "bible-books",
-  "version": "1.0.0",
-  "description": "Normalize bible references, convert them to machine readable formats, query and manipulate them",
+  "name": "bible-book-names-intl",
+  "version": "2.0.5",
+  "description": "Bible Book Names in Multiple Languages",
   "repository": {
     "type": "git",
     "url": "https://github.com/tim-hub/bible-reference-toolkit"
