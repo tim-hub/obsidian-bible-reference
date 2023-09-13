@@ -2,6 +2,23 @@
   "name": "bible-reference-toolkit",
   "version": "2.0.3",
   "description": "Normalize bible references, convert them to machine readable formats, query and manipulate them",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tim-hub/bible-reference-toolkit"
+  },
+  "author": "@tim-hub",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tim-hub/bible-reference-toolkit/issues"
+  },
+  "homepage": "https://github.com/tim-hub/bible-reference-toolkit",
+  "keywords": [
+    "bible",
+    "biblejs",
+    "bible query",
+    "bible reference",
+    "bible reference toolkit"
+  ],
   "main": "dist/index.js",
   "devDependencies": {
     "bun-types": "^1.0.1",
@@ -14,21 +31,7 @@
     "prettier": "prettier . --check",
     "prettier:fix": "prettier . --write"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/tim-hub/bible-reference-toolkit"
-  },
-  "keywords": [
-    "bible",
-    "biblejs",
-    "bible query",
-    "bible reference",
-    "bible reference toolkit"
-  ],
-  "author": "@tim-hub",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/tim-hub/bible-reference-toolkit/issues"
-  },
-  "homepage": "https://github.com/tim-hub/bible-reference-toolkit"
+  "dependencies": {
+    "bible-books": "*"
+  }
 }
