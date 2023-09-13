@@ -20,9 +20,9 @@
     "sourceMap": true,
     /* Generates corresponding '.map' file. */
     "outDir": "dist",
-    "outFile": "dist/index.js",  /* Concatenate and emit output to single file. */
+//    "outFile": "dist/index.js",  /* Concatenate and emit output to single file. */
     /* Redirect output structure to the directory. */
-    "rootDir": "./",
+//    "rootDir": "./",
     /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */
     // "composite": true,                     /* Enable project compilation */
     // "removeComments": true,                /* Do not emit comments to output. */
@@ -82,7 +82,8 @@
     ]
   },
   "include": [
-    "src/"
+    "src/**/*.ts",
+    "src/**/*.json"
   ],
   "exclude": [
     "node_modules",

@@ -112,7 +112,7 @@ class Reference implements IReference {
     }
     throw new Error(
       'There was a problem creating the a reference from chapter id ' +
-        chapterId
+      chapterId
     );
   }
 
@@ -148,7 +148,7 @@ class Reference implements IReference {
 
   // Get the number of verses in the given book id
   public static versesInBookId(bookId: number): number {
-    return books[bookId - 1].verses.reduce(function sum(a, b) {
+    return books[bookId - 1].verses.reduce(function sum(a: number, b: number) {
       return a + b;
     });
   }
@@ -212,8 +212,8 @@ class Reference implements IReference {
     } else {
       throw new Error(
         'Unknown unit ' +
-          unit +
-          ' supplied to startOf() - supported units are: "book", "chapter"'
+        unit +
+        ' supplied to startOf() - supported units are: "book", "chapter"'
       );
     }
     return clone;

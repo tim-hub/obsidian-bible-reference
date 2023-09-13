@@ -1,7 +1,7 @@
 import {
   generateOrdinalNameVariations,
   readJSONFilesInDirectory,
-} from './utils';
+} from './utils/utils';
 
 import baseData from './data/base.json';
 import path from 'path';
