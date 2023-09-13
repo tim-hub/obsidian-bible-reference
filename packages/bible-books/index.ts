@@ -1,9 +1,9 @@
 import {
   generateOrdinalNameVariations,
   readJSONFilesInDirectory,
-} from './utils/utils';
+} from './src/utils/utils';
 
-import baseData from './data/base.json';
+import baseData from './src/data/base.json';
 import path from 'path';
 
 type Book = {
@@ -16,15 +16,13 @@ type Book = {
 const BookWithNamesAndChapterVersesCount: Book[] = [];
 
 const allWesternTranslations = readJSONFilesInDirectory(
-  path.join(__dirname, '../data/translations/')
+  path.join(__dirname, './src/data/translations/')
 );
 
 for (let i = 0; i < 66; i++) {
-  // @ts-ignore
-  const book = baseData['' + (i + 1)];
+  const book = (baseData as any)['' + (i + 1)];
 
-  // @ts-ignore
-  (await allWesternTranslations).forEach((translation: any) => {
+  allWesternTranslations.forEach((translation: any) => {
     let newNames = translation[i];
     if (book?.names?.length) {
       newNames = book.names.concat(translation[i]);
@@ -33,6 +31,8 @@ for (let i = 0; i < 66; i++) {
   });
   BookWithNamesAndChapterVersesCount.push(book);
 }
+
+// todo support non western translations
 
 BookWithNamesAndChapterVersesCount.forEach((book, index) => {
   if (book?.startNumber && book?.startNumber > 0) {

@@ -26,7 +26,9 @@
     "typescript": "^5.2.2"
   },
   "scripts": {
-    "build": "tsc",
-    "test": "bun test ./**/*.test.ts "
+    "build": "tsc --build --force",
+    "test": "bun test src/**/*.test.ts ",
+    "prettier": "prettier . --check",
+    "prettier:fix": "prettier . --write"
   }
 }

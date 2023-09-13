@@ -4,7 +4,7 @@ import path from 'path';
 describe('test translation structure', () => {
   test('test english', async () => {
     // read the file
-    const en = await import('./translations/en.json');
+    const en = await import('../data/translations/en.json');
 
     // check if it is an array
     expect(Array.isArray(en.default)).toBe(true);
@@ -22,9 +22,9 @@ describe('test all translations', () => {
     8, 9, 10, 11, 12, 13, 45, 46, 51, 52, 53, 54, 59, 60, 61, 62, 63,
   ]);
 
-  test('test all translations', async () => {
-    const allTranslations = await readJSONFilesInDirectory(
-      path.join(__dirname, './translations/')
+  test('test all translations', () => {
+    const allTranslations = readJSONFilesInDirectory(
+      path.join(__dirname, '../data/translations/')
     );
 
     // check if it is an array
