@@ -3,7 +3,6 @@ import { IBibleVersion } from '../interfaces/IBibleVersion'
 import { BaseBibleAPIProvider } from './BaseBibleAPIProvider'
 import Reference from 'bible-reference-toolkit/dist/lib/reference'
 
-
 export class BollyLifeProvider extends BaseBibleAPIProvider {
   //private _verseApiUrl: string; // we do not support get verse api yet, but the api supported it
   private _chapterApiUrl: string
