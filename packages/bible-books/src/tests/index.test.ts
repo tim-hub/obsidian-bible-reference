@@ -1,4 +1,4 @@
-import books from '../../index';
+import books from '../index';
 
 describe('test book names', () => {
   test('books count is 66', () => {
