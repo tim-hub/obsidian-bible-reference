@@ -22,7 +22,7 @@
     "outDir": "dist",
     //    "outFile": "dist/index.js",  /* Concatenate and emit output to single file. */
     /* Redirect output structure to the directory. */
-    "rootDir": "./",
+    "rootDir": "src",
     /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */
     // "composite": true,                     /* Enable project compilation */
     // "removeComments": true,                /* Do not emit comments to output. */
@@ -79,6 +79,6 @@
       "es2015.promise"
     ]
   },
-  "include": ["src/", "index.ts"],
+  "include": ["src/**/*.ts", "index.ts"],
   "exclude": ["node_modules", "**/*.test.ts"]
 }
