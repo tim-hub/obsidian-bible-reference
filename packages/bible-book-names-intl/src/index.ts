@@ -20,17 +20,17 @@ type Book = {
   startNumber?: number;
 };
 
-type BookWithNameAndShortNames = Book & {
+export type BookWithFullNameAndShortNames = Book & {
   fullName: string;
   shortNames: string[];
 }
 
 
-const translationsDict = new Map<string, BookWithNameAndShortNames[]>()
+const translationsDict = new Map<string, BookWithFullNameAndShortNames[]>()
 
 allTranslations.forEach(
   (translation) => {
-    const books: BookWithNameAndShortNames[] = [];
+    const books: BookWithFullNameAndShortNames[] = [];
     for (let i = 0; i < 66; i++) {
       const rawBookInfo = (translation as any)['' + (i + 1)];
       const bookBaseData: { verses: number[] } = (baseData as any)['' + (i + 1)];
@@ -61,19 +61,24 @@ export const getTranslationBooks = (language: string) => {
 }
 
 
-const MultipleLanguageBibleBooks: Book[] = [];
+const MultipleLanguageBibleBooks: BookWithFullNameAndShortNames[] = [];
 
 
 for (let i = 0; i < 66; i++) {
   const book = {
     // @ts-ignore
+    fullName: translationsDict?.get('en')[i].fullName as string,
+    // @ts-ignore
     verses: translationsDict?.get('en')[i].verses as number[],
     names: [] as string[],
+    shortNames: [] as string[],
   }
 
   translationsDict.forEach((books) => {
-    book['names'] = [...(new Set(book['names'].concat(books[i].names)))]
+    // concat all names from different translations
+    book['shortNames'] = [...(new Set(book['shortNames'].concat(books[i].shortNames)))]
   })
+  book['names'] = [book['fullName'], ...book['shortNames']]
   MultipleLanguageBibleBooks.push(book);
 }
 
