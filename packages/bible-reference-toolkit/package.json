@@ -29,7 +29,7 @@
     "typescript": "^5.2.2"
   },
   "depencencies": {
-    "bible-book-names-intl": "*"
+    "bible-book-names-intl": "latest"
   },
   "scripts": {
     "test": "bun test src/test/*.test.ts ",

@@ -30,6 +30,7 @@
   },
   "scripts": {
     "build": "rimraf dist && tsc",
+    "start": "bun run src/index.ts",
     "test": "bun test src/**/*.test.ts ",
     "prettier": "prettier . --check",
     "prettier:fix": "prettier . --write"

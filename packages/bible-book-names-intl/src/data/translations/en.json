@@ -1,68 +1,586 @@
-[
-  ["Genesis", "Ge", "Gen"],
-  ["Exodus", "Ex", "Exo"],
-  ["Leviticus", "Le", "Lev"],
-  ["Numbers", "Nu", "Num"],
-  ["Deuteronomy", "Dt", "Deut", "Deu", "De"],
-  ["Joshua", "Js", "Jos", "Josh"],
-  ["Judges", "Jg", "Jud", "Jdg", "Ju", "Jdgs", "Judg"],
-  ["Ruth", "Ru", "Rut"],
-  ["Samuel", "Sa", "Sam"],
-  ["Samuel", "Sa", "Sam"],
-  ["Kings", "Ki", "King", "Kin", "Kngs"],
-  ["Kings", "Ki", "King", "Kin", "Kngs"],
-  ["Chronicles", "Ch", "Chr", "Chron"],
-  ["Chronicles", "Ch", "Chr", "Chron"],
-  ["Ezra", "Ez", "Ezr"],
-  ["Nehemiah", "Ne", "Neh"],
-  ["Esther", "Es", "Est", "Esth", "Ester"],
-  ["Job", "Jb"],
-  ["Psalm", "Ps", "Psa", "Pss", "Psalms"],
-  ["Proverbs", "Pr", "Prov", "Pro"],
-  ["Ecclesiastes", "Ec", "Ecc"],
-  ["Song of Solomon", "SOS", "Song of Songs", "SongOfSongs"],
-  ["Isaiah", "Isa"],
-  ["Jeremiah", "Je", "Jer"],
-  ["Lamentations", "La", "Lam", "Lament"],
-  ["Ezekiel", "Ek", "Ezek", "Eze"],
-  ["Daniel", "Da", "Dan", "Dl", "Dnl"],
-  ["Hosea", "Ho", "Hos"],
-  ["Joel", "Jl", "Joe"],
-  ["Amos", "Am", "Amo"],
-  ["Obadiah", "Ob", "Oba", "Obd", "Odbh"],
-  ["Jonah", "Jh", "Jon", "Jnh"],
-  ["Micah", "Mi", "Mic"],
-  ["Nahum", "Na", "Nah"],
-  ["Habakkuk", "Hb", "Hab", "Hk", "Habk"],
-  ["Zephaniah", "Zp", "Zep", "Zeph", "Ze"],
-  ["Haggai", "Ha", "Hag", "Hagg"],
-  ["Zechariah", "Zc", "Zech", "Zec"],
-  ["Malachi", "Ml", "Mal", "Mlc"],
-  ["Matthew", "Mt", "Matt", "Mat"],
-  ["Mark", "Mk", "Mrk"],
-  ["Luke", "Lk", "Luk", "Lu"],
-  ["John", "Jn", "Joh", "Jo"],
-  ["Acts", "Ac", "Act"],
-  ["Romans", "Ro", "Rom", "Rmn", "Rmns"],
-  ["Corinthians", "Co", "Cor"],
-  ["Corinthians", "Co", "Cor"],
-  ["Galatians", "Ga", "Gal", "Gltns"],
-  ["Ephesians", "Ep", "Eph", "Ephn"],
-  ["Philippians", "Phi", "Phil"],
-  ["Colossians", "Co", "Col", "Colo", "Cln", "Clns"],
-  ["Thessalonians", "Th", "Thess", "Thes"],
-  ["Thessalonians", "Th", "Thess", "Thes"],
-  ["Timothy", "Ti", "Tim"],
-  ["Timothy", "Ti", "Tim"],
-  ["Titus", "Ti", "Tit", "Tt", "Ts"],
-  ["Philemon", "Pm", "Phile", "Philm"],
-  ["Hebrews", "He", "Heb", "Hw"],
-  ["James", "Jm", "Jam", "Jas", "Ja"],
-  ["Peter", "Pe", "Pet", "P"],
-  ["Peter", "Pe", "Pet", "P"],
-  ["John", "Joh", "Jo", "Jn", "J"],
-  ["John", "Joh", "Jo", "Jn", "J"],
-  ["John", "Joh", "Jo", "Jn", "J"],
-  ["Jude"],
-  ["Revelation", "Re", "Rev", "Rvltn"]
-]
+{
+  "language": "en",
+  "1": {
+    "name": "Genesis",
+    "shortNames": [
+      "Ge",
+      "Gen"
+    ],
+    "startNumber": 0
+  },
+  "2": {
+    "name": "Exodus",
+    "shortNames": [
+      "Ex",
+      "Exo"
+    ],
+    "startNumber": 0
+  },
+  "3": {
+    "name": "Leviticus",
+    "shortNames": [
+      "Le",
+      "Lev"
+    ],
+    "startNumber": 0
+  },
+  "4": {
+    "name": "Numbers",
+    "shortNames": [
+      "Nu",
+      "Num"
+    ],
+    "startNumber": 0
+  },
+  "5": {
+    "name": "Deuteronomy",
+    "shortNames": [
+      "Dt",
+      "Deut",
+      "Deu",
+      "De"
+    ],
+    "startNumber": 0
+  },
+  "6": {
+    "name": "Joshua",
+    "shortNames": [
+      "Js",
+      "Jos",
+      "Josh"
+    ],
+    "startNumber": 0
+  },
+  "7": {
+    "name": "Judges",
+    "shortNames": [
+      "Jg",
+      "Jud",
+      "Jdg",
+      "Ju",
+      "Jdgs",
+      "Judg"
+    ],
+    "startNumber": 0
+  },
+  "8": {
+    "name": "Ruth",
+    "shortNames": [
+      "Ru",
+      "Rut"
+    ],
+    "startNumber": 0
+  },
+  "9": {
+    "name": "Samuel",
+    "shortNames": [
+      "Sa",
+      "Sam"
+    ],
+    "startNumber": 1
+  },
+  "10": {
+    "name": "Samuel",
+    "shortNames": [
+      "Sa",
+      "Sam"
+    ],
+    "startNumber": 2
+  },
+  "11": {
+    "name": "Kings",
+    "shortNames": [
+      "Ki",
+      "King",
+      "Kin",
+      "Kngs"
+    ],
+    "startNumber": 1
+  },
+  "12": {
+    "name": "Kings",
+    "shortNames": [
+      "Ki",
+      "King",
+      "Kin",
+      "Kngs"
+    ],
+    "startNumber": 2
+  },
+  "13": {
+    "name": "Chronicles",
+    "shortNames": [
+      "Ch",
+      "Chr",
+      "Chron"
+    ],
+    "startNumber": 1
+  },
+  "14": {
+    "name": "Chronicles",
+    "shortNames": [
+      "Ch",
+      "Chr",
+      "Chron"
+    ],
+    "startNumber": 2
+  },
+  "15": {
+    "name": "Ezra",
+    "shortNames": [
+      "Ez",
+      "Ezr"
+    ],
+    "startNumber": 0
+  },
+  "16": {
+    "name": "Nehemiah",
+    "shortNames": [
+      "Ne",
+      "Neh"
+    ],
+    "startNumber": 0
+  },
+  "17": {
+    "name": "Esther",
+    "shortNames": [
+      "Es",
+      "Est",
+      "Esth",
+      "Ester"
+    ],
+    "startNumber": 0
+  },
+  "18": {
+    "name": "Job",
+    "shortNames": [
+      "Jb"
+    ],
+    "startNumber": 0
+  },
+  "19": {
+    "name": "Psalm",
+    "shortNames": [
+      "Ps",
+      "Psa",
+      "Pss",
+      "Psalms"
+    ],
+    "startNumber": 0
+  },
+  "20": {
+    "name": "Proverbs",
+    "shortNames": [
+      "Pr",
+      "Prov",
+      "Pro"
+    ],
+    "startNumber": 0
+  },
+  "21": {
+    "name": "Ecclesiastes",
+    "shortNames": [
+      "Ec",
+      "Ecc"
+    ],
+    "startNumber": 0
+  },
+  "22": {
+    "name": "Song of Solomon",
+    "shortNames": [
+      "SOS",
+      "Song of Songs",
+      "SongOfSongs"
+    ],
+    "startNumber": 0
+  },
+  "23": {
+    "name": "Isaiah",
+    "shortNames": [
+      "Isa"
+    ],
+    "startNumber": 0
+  },
+  "24": {
+    "name": "Jeremiah",
+    "shortNames": [
+      "Je",
+      "Jer"
+    ],
+    "startNumber": 0
+  },
+  "25": {
+    "name": "Lamentations",
+    "shortNames": [
+      "La",
+      "Lam",
+      "Lament"
+    ],
+    "startNumber": 0
+  },
+  "26": {
+    "name": "Ezekiel",
+    "shortNames": [
+      "Ek",
+      "Ezek",
+      "Eze"
+    ],
+    "startNumber": 0
+  },
+  "27": {
+    "name": "Daniel",
+    "shortNames": [
+      "Da",
+      "Dan",
+      "Dl",
+      "Dnl"
+    ],
+    "startNumber": 0
+  },
+  "28": {
+    "name": "Hosea",
+    "shortNames": [
+      "Ho",
+      "Hos"
+    ],
+    "startNumber": 0
+  },
+  "29": {
+    "name": "Joel",
+    "shortNames": [
+      "Jl",
+      "Joe"
+    ],
+    "startNumber": 0
+  },
+  "30": {
+    "name": "Amos",
+    "shortNames": [
+      "Am",
+      "Amo"
+    ],
+    "startNumber": 0
+  },
+  "31": {
+    "name": "Obadiah",
+    "shortNames": [
+      "Ob",
+      "Oba",
+      "Obd",
+      "Odbh"
+    ],
+    "startNumber": 0
+  },
+  "32": {
+    "name": "Jonah",
+    "shortNames": [
+      "Jh",
+      "Jon",
+      "Jnh"
+    ],
+    "startNumber": 0
+  },
+  "33": {
+    "name": "Micah",
+    "shortNames": [
+      "Mi",
+      "Mic"
+    ],
+    "startNumber": 0
+  },
+  "34": {
+    "name": "Nahum",
+    "shortNames": [
+      "Na",
+      "Nah"
+    ],
+    "startNumber": 0
+  },
+  "35": {
+    "name": "Habakkuk",
+    "shortNames": [
+      "Hb",
+      "Hab",
+      "Hk",
+      "Habk"
+    ],
+    "startNumber": 0
+  },
+  "36": {
+    "name": "Zephaniah",
+    "shortNames": [
+      "Zp",
+      "Zep",
+      "Zeph",
+      "Ze"
+    ],
+    "startNumber": 0
+  },
+  "37": {
+    "name": "Haggai",
+    "shortNames": [
+      "Ha",
+      "Hag",
+      "Hagg"
+    ],
+    "startNumber": 0
+  },
+  "38": {
+    "name": "Zechariah",
+    "shortNames": [
+      "Zc",
+      "Zech",
+      "Zec"
+    ],
+    "startNumber": 0
+  },
+  "39": {
+    "name": "Malachi",
+    "shortNames": [
+      "Ml",
+      "Mal",
+      "Mlc"
+    ],
+    "startNumber": 0
+  },
+  "40": {
+    "name": "Matthew",
+    "shortNames": [
+      "Mt",
+      "Matt",
+      "Mat"
+    ],
+    "startNumber": 0
+  },
+  "41": {
+    "name": "Mark",
+    "shortNames": [
+      "Mk",
+      "Mrk"
+    ],
+    "startNumber": 0
+  },
+  "42": {
+    "name": "Luke",
+    "shortNames": [
+      "Lk",
+      "Luk",
+      "Lu"
+    ],
+    "startNumber": 0
+  },
+  "43": {
+    "name": "John",
+    "shortNames": [
+      "Jn",
+      "Joh",
+      "Jo"
+    ],
+    "startNumber": 0
+  },
+  "44": {
+    "name": "Acts",
+    "shortNames": [
+      "Ac",
+      "Act"
+    ],
+    "startNumber": 0
+  },
+  "45": {
+    "name": "Romans",
+    "shortNames": [
+      "Ro",
+      "Rom",
+      "Rmn",
+      "Rmns"
+    ],
+    "startNumber": 0
+  },
+  "46": {
+    "name": "Corinthians",
+    "shortNames": [
+      "Co",
+      "Cor"
+    ],
+    "startNumber": 1
+  },
+  "47": {
+    "name": "Corinthians",
+    "shortNames": [
+      "Co",
+      "Cor"
+    ],
+    "startNumber": 2
+  },
+  "48": {
+    "name": "Galatians",
+    "shortNames": [
+      "Ga",
+      "Gal",
+      "Gltns"
+    ],
+    "startNumber": 0
+  },
+  "49": {
+    "name": "Ephesians",
+    "shortNames": [
+      "Ep",
+      "Eph",
+      "Ephn"
+    ],
+    "startNumber": 0
+  },
+  "50": {
+    "name": "Philippians",
+    "shortNames": [
+      "Phi",
+      "Phil"
+    ],
+    "startNumber": 0
+  },
+  "51": {
+    "name": "Colossians",
+    "shortNames": [
+      "Co",
+      "Col",
+      "Colo",
+      "Cln",
+      "Clns"
+    ],
+    "startNumber": 0
+  },
+  "52": {
+    "name": "Thessalonians",
+    "shortNames": [
+      "Th",
+      "Thess",
+      "Thes"
+    ],
+    "startNumber": 1
+  },
+  "53": {
+    "name": "Thessalonians",
+    "shortNames": [
+      "Th",
+      "Thess",
+      "Thes"
+    ],
+    "startNumber": 2
+  },
+  "54": {
+    "name": "Timothy",
+    "shortNames": [
+      "Ti",
+      "Tim"
+    ],
+    "startNumber": 1
+  },
+  "55": {
+    "name": "Timothy",
+    "shortNames": [
+      "Ti",
+      "Tim"
+    ],
+    "startNumber": 2
+  },
+  "56": {
+    "name": "Titus",
+    "shortNames": [
+      "Ti",
+      "Tit",
+      "Tt",
+      "Ts"
+    ],
+    "startNumber": 0
+  },
+  "57": {
+    "name": "Philemon",
+    "shortNames": [
+      "Pm",
+      "Phile",
+      "Philm"
+    ],
+    "startNumber": 0
+  },
+  "58": {
+    "name": "Hebrews",
+    "shortNames": [
+      "He",
+      "Heb",
+      "Hw"
+    ],
+    "startNumber": 0
+  },
+  "59": {
+    "name": "James",
+    "shortNames": [
+      "Jm",
+      "Jam",
+      "Jas",
+      "Ja"
+    ],
+    "startNumber": 0
+  },
+  "60": {
+    "name": "Peter",
+    "shortNames": [
+      "Pe",
+      "Pet",
+      "P"
+    ],
+    "startNumber": 1
+  },
+  "61": {
+    "name": "Peter",
+    "shortNames": [
+      "Pe",
+      "Pet",
+      "P"
+    ],
+    "startNumber": 2
+  },
+  "62": {
+    "name": "John",
+    "shortNames": [
+      "Joh",
+      "Jo",
+      "Jn",
+      "J"
+    ],
+    "startNumber": 1
+  },
+  "63": {
+    "name": "John",
+    "shortNames": [
+      "Joh",
+      "Jo",
+      "Jn",
+      "J"
+    ],
+    "startNumber": 2
+  },
+  "64": {
+    "name": "John",
+    "shortNames": [
+      "Joh",
+      "Jo",
+      "Jn",
+      "J"
+    ],
+    "startNumber": 3
+  },
+  "65": {
+    "name": "Jude",
+    "shortNames": [],
+    "startNumber": 0
+  },
+  "66": {
+    "name": "Revelation",
+    "shortNames": [
+      "Re",
+      "Rev",
+      "Rvltn"
+    ],
+    "startNumber": 0
+  }
+}
