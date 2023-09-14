@@ -64,6 +64,7 @@ const MultipleLanguageBibleBooks: Book[] = [];
 
 for (let i = 0; i < 66; i++) {
   const book = {
+    // @ts-ignore
     verses: translationsDict?.get('en')[i].verses as number[],
     names: [] as string[],
   }
