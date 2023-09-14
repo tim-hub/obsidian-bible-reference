@@ -77,8 +77,9 @@ for (let i = 0; i < 66; i++) {
   translationsDict.forEach((books) => {
     // concat all names from different translations
     book['shortNames'] = [...(new Set(book['shortNames'].concat(books[i].shortNames)))]
+    book['names'] = [...(new Set(book['names'].concat(books[i].fullName)))] // add full names to list
   })
-  book['names'] = [book['fullName'], ...book['shortNames']]
+  book['names'] = [...book['names'], ...book['shortNames']] // combine them (full and short) together as names
   MultipleLanguageBibleBooks.push(book);
 }
 
