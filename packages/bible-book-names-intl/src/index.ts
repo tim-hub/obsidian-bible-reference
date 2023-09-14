@@ -5,10 +5,12 @@ import {
 import baseData from './data/base.json';
 import en from './data/translations/en.json'
 import it from './data/translations/it.json'
+import jp from './data/translations/jp.json'
 
 const allTranslations = [
   en,
   it,
+  jp,
 ]
 
 
