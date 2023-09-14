@@ -1,3 +1,4 @@
-import BibleBooks from 'bible-book-names-intl';
+import Books from 'bible-book-names-intl';
 
-export default BibleBooks;
+export { getTranslationBooks } from 'bible-book-names-intl';
+export const BibleBooks = Books;

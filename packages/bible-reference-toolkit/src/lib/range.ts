@@ -1,6 +1,6 @@
 import Reference, { IReference } from './reference';
 
-class Range {
+export class Range {
   private start: Reference;
   private end: Reference;
 

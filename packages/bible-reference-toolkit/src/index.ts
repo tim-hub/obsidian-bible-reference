@@ -1,9 +1,9 @@
-import Reference from './lib/reference';
-import Range from './lib/range';
-import Books from './lib/books';
+import { Reference } from './lib/reference';
 
-export default {
-  Reference,
-  Range,
-  Books,
-};
+export { Reference, IReference } from './lib/reference';
+export { Range } from './lib/range';
+export { getTranslationBooks, BibleBooks } from './lib/books';
+
+
+export default Reference
+

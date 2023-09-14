@@ -1,4 +1,4 @@
-import books from './books';
+import { BibleBooks as books } from './books';
 // Internally, no strings are stored - only numbers.
 //
 // "id"s are UIDs, numbers are relative to parent unit; e.g.
@@ -10,7 +10,7 @@ export interface IReference {
   verse?: number;
 }
 
-class Reference implements IReference {
+export class Reference implements IReference {
   public book: number;
   public chapter: number;
   public verse?: number;
@@ -112,7 +112,7 @@ class Reference implements IReference {
     }
     throw new Error(
       'There was a problem creating the a reference from chapter id ' +
-        chapterId
+      chapterId
     );
   }
 
@@ -212,8 +212,8 @@ class Reference implements IReference {
     } else {
       throw new Error(
         'Unknown unit ' +
-          unit +
-          ' supplied to startOf() - supported units are: "book", "chapter"'
+        unit +
+        ' supplied to startOf() - supported units are: "book", "chapter"'
       );
     }
     return clone;
@@ -230,7 +230,7 @@ class Reference implements IReference {
   }
 
   public toString(): string {
-    const bookName = books[this.book - 1].names[0];
+    const bookName = books[this.book - 1].fullName;
     let tmpString = bookName + ' ' + this.chapter;
     if (this.verse) {
       tmpString += ':' + this.verse;
