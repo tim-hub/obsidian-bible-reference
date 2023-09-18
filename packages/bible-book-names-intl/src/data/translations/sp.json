@@ -3,42 +3,36 @@
   "1": {
     "name": "Génesis",
     "shortNames": [
-      "Gen"
     ],
     "startNumber": 0
   },
   "2": {
     "name": "Éxodo",
     "shortNames": [
-      "Exo"
     ],
     "startNumber": 0
   },
   "3": {
     "name": "Levítico",
     "shortNames": [
-      "Lev"
     ],
     "startNumber": 0
   },
   "4": {
     "name": "Números",
     "shortNames": [
-      "Num"
     ],
     "startNumber": 0
   },
   "5": {
     "name": "Deuteronomio",
     "shortNames": [
-      "Deu"
     ],
     "startNumber": 0
   },
   "6": {
     "name": "Josué",
     "shortNames": [
-      "Jos"
     ],
     "startNumber": 0
   },
@@ -52,21 +46,18 @@
   "8": {
     "name": "Rut",
     "shortNames": [
-      "Rut"
     ],
     "startNumber": 0
   },
   "9": {
     "name": "Samuel",
     "shortNames": [
-      "Sam"
     ],
     "startNumber": 1
   },
   "10": {
     "name": "Samuel",
     "shortNames": [
-      "Sam"
     ],
     "startNumber": 2
   },
@@ -104,21 +95,18 @@
   "16": {
     "name": "Nehemías",
     "shortNames": [
-      "Neh"
     ],
     "startNumber": 0
   },
   "17": {
     "name": "Ester",
     "shortNames": [
-      "Est"
     ],
     "startNumber": 0
   },
   "18": {
     "name": "Job",
     "shortNames": [
-      "Job"
     ],
     "startNumber": 0
   },
@@ -132,7 +120,6 @@
   "20": {
     "name": "Proverbios",
     "shortNames": [
-      "Pro"
     ],
     "startNumber": 0
   },
@@ -154,35 +141,30 @@
   "23": {
     "name": "Isaías",
     "shortNames": [
-      "Isa"
     ],
     "startNumber": 0
   },
   "24": {
     "name": "Jeremías",
     "shortNames": [
-      "Jer"
     ],
     "startNumber": 0
   },
   "25": {
     "name": "Lamentaciones",
     "shortNames": [
-      "Lam"
     ],
     "startNumber": 0
   },
   "26": {
     "name": "Ezequiel",
     "shortNames": [
-      "Eze"
     ],
     "startNumber": 0
   },
   "27": {
     "name": "Daniel",
     "shortNames": [
-      "Dan"
     ],
     "startNumber": 0
   },
@@ -196,14 +178,12 @@
   "29": {
     "name": "Joel",
     "shortNames": [
-      "Joe", "Jl"
     ],
     "startNumber": 0
   },
   "30": {
     "name": "Amós",
     "shortNames": [
-      "Amo"
     ],
     "startNumber": 0
   },
@@ -216,7 +196,7 @@
   },
   "32": {
     "name": "Jonás",
-    "shortNames": ["Jon"],
+    "shortNames": [],
     "startNumber": 0
   },
   "33": {
@@ -229,14 +209,12 @@
   "34": {
     "name": "Nahúm",
     "shortNames": [
-      "Nah"
     ],
     "startNumber": 0
   },
   "35": {
     "name": "Habacuc",
     "shortNames": [
-      "Hab"
     ],
     "startNumber": 0
   },
@@ -250,7 +228,6 @@
   "37": {
     "name": "Hageo",
     "shortNames": [
-      "Hag"
     ],
     "startNumber": 0
   },
@@ -264,14 +241,12 @@
   "39": {
     "name": "Malaquías",
     "shortNames": [
-      "Mal"
     ],
     "startNumber": 0
   },
   "40": {
     "name": "Mateo",
     "shortNames": [
-      "Mat"
     ],
     "startNumber": 0
   },
@@ -292,7 +267,7 @@
   "43": {
     "name": "Juan",
     "shortNames": [
-      "Jua", "Jn"
+      "Jua"
     ],
     "startNumber": 0
   },
@@ -306,28 +281,24 @@
   "45": {
     "name": "Romanos",
     "shortNames": [
-      "Rom"
     ],
     "startNumber": 0
   },
   "46": {
     "name": "Corintios",
     "shortNames": [
-      "Cor"
     ],
     "startNumber": 1
   },
   "47": {
     "name": "Corintios",
     "shortNames": [
-      "Cor"
     ],
     "startNumber": 2
   },
   "48": {
     "name": "Gálatas",
     "shortNames": [
-      "Gal"
     ],
     "startNumber": 0
   },
@@ -348,7 +319,6 @@
   "51": {
     "name": "Colosenses",
     "shortNames": [
-      "Col"
     ],
     "startNumber": 0
   },
@@ -369,33 +339,30 @@
   "54": {
     "name": "Timoteo",
     "shortNames": [
-      "Tim"
     ],
     "startNumber": 1
   },
   "55": {
     "name": "Timoteo",
     "shortNames": [
-      "Tim"
     ],
     "startNumber": 2
   },
   "56": {
     "name": "Tito",
-    "shortNames": ["Tit"],
+    "shortNames": [],
     "startNumber": 0
   },
   "57": {
     "name": "Filemón",
     "shortNames": [
-      "Filem"
+      "Flm"
     ],
     "startNumber": 0
   },
   "58": {
     "name": "Hebreos",
     "shortNames": [
-      "Heb"
     ],
     "startNumber": 0
   },
@@ -416,28 +383,27 @@
   "61": {
     "name": "Pedro",
     "shortNames": [
-      "Pe"
     ],
     "startNumber": 2
   },
   "62": {
     "name": "Juan",
     "shortNames": [
-      "Jua", "Jn"
+      "Jua"
     ],
     "startNumber": 1
   },
   "63": {
     "name": "Juan",
     "shortNames": [
-      "Jua", "Jn"
+      "Jua"
     ],
     "startNumber": 2
   },
   "64": {
     "name": "Juan",
     "shortNames": [
-      "Jua", "Jn"
+      "Jua"
     ],
     "startNumber": 3
   },
