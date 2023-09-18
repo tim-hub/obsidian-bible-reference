@@ -67,7 +67,7 @@ export abstract class BaseVerseFormatter {
   }
 
   protected get head(): string {
-    let head = `> [!Bible]`
+    let head = `> [!bible]`
 
     if (this.settings?.collapsibleVerses) {
       head += '+'
