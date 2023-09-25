@@ -1,6 +1,6 @@
 {
   "name": "bible-reference-toolkit",
-  "version": "2.1.1",
+  "version": "2.2.2",
   "description": "Normalize bible references, convert them to machine readable formats, query and manipulate them",
   "repository": {
     "type": "git",
