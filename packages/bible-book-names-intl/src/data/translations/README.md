@@ -1,8 +1,10 @@
-This is the source of Bible books names in different languages.
+## How to Add More Languages
+> Add abbreviation of Bible books names in different languages.
 
-- it includes all 66 books of the Bible
-- it includes books names and abbreviations
+This folder is the source of Bible Book names and abbreviations in different languages.
 
+
+### Structure of the JSON file
 It is in this structure 
 
 ```json
@@ -33,5 +35,11 @@ It is in this structure
   // more ...
 }
 ```
+
+- it includes all 66 books of the Bible
+- it includes books names and abbreviations
+- if there is no abbreviation for the book, leave short names can be empty array (do not keep it as the same as the book name)
+- books short names (abbreviations) have to be unique to each other.
+
 
 Please follow this structure to add more books names in different languages.
