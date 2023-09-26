@@ -89,6 +89,54 @@ export const BibleVersionCollection: IBibleVersion[] = [
     language: 'English',
     apiSource: BibleAPISourceCollection.bollsLife,
   },
+   {
+    key: "nasb",
+    versionName: "New American Standard Bible (1995)",
+    language: "English",
+    apiSource: BibleAPISourceCollection.bollsLife
+  },
+  {
+    key: "elb",
+    versionName: "Elberfelder Bibel (1871)",
+    language: "German Deutsch",
+    apiSource: BibleAPISourceCollection.bollsLife
+  },
+  {
+    key: "lut",
+    versionName: "Luther (1912)",
+    language: "German Deutsch",
+    apiSource: BibleAPISourceCollection.bollsLife
+  },
+  {
+    key: "ntgt",
+    versionName: "Greek NT: Tischendorf 8th Ed.",
+    language: "Greek Ελληνικά",
+    apiSource: BibleAPISourceCollection.bollsLife
+  },
+  {
+    key: "tr",
+    versionName: "Elzevir Textus Receptus (1624)",
+    language: "Greek Ελληνικά",
+    apiSource: BibleAPISourceCollection.bollsLife
+  },
+  {
+    key: "lxx",
+    versionName: "Septuagint",
+    language: "Greek Ελληνικά",
+    apiSource: BibleAPISourceCollection.bollsLife
+  },
+  {
+    key: "wlc",
+    versionName: "Westminster Leningrad Codex (with Vowels)",
+    language: "Hebrew עברית",
+    apiSource: BibleAPISourceCollection.bollsLife
+  },
+  {
+    key: "dhnt",
+    versionName: "Delitzsch's Hebrew New Testament 1877, 1998 (with Vowels)",
+    language: "Hebrew עברית",
+    apiSource: BibleAPISourceCollection.bollsLife
+  },
   {
     key: 'cuv',
     versionName: 'Chinese Union Version (Traditional)',
