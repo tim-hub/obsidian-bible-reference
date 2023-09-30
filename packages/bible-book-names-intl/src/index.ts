@@ -6,11 +6,13 @@ import baseData from './data/base.json';
 import en from './data/translations/en.json'
 import it from './data/translations/it.json'
 import jp from './data/translations/jp.json'
+import sp from './data/translations/sp.json'
 
 const allTranslations = [
   en,
   it,
   jp,
+  sp,
 ]
 
 
