@@ -17,22 +17,22 @@ const allTranslations = [
 
 
 type OriginalBookType = {
-  names: string[];
+  names?: string[]; // deprecated
   verses: number[];
   startNumber?: number;
 };
 
-export type BookWithFullNameAndShortNames = OriginalBookType & {
+export type BookWithAbbreviations = OriginalBookType & {
   fullName: string;
   abbreviations: string[];
 }
 
 
-const translationsDict = new Map<string, BookWithFullNameAndShortNames[]>()
+const translationsDict = new Map<string, BookWithAbbreviations[]>()
 
 allTranslations.forEach(
   (translation) => {
-    const books: BookWithFullNameAndShortNames[] = [];
+    const books: BookWithAbbreviations[] = [];
     for (let i = 0; i < 66; i++) {
       const rawBookInfo = (translation as any)['' + (i + 1)];
       const bookBaseData: { verses: number[] } = (baseData as any)['' + (i + 1)];
@@ -53,7 +53,7 @@ allTranslations.forEach(
   }
 )
 
-export const getTranslationBooks = (language: string) => {
+export const getTranslationBooks = (language: string): BookWithAbbreviations[] => {
   if (!translationsDict.has(language)) {
     const msg = `No translation found for language ${language}`
     console.error(msg)
@@ -63,11 +63,11 @@ export const getTranslationBooks = (language: string) => {
 }
 
 
-const MultipleLanguageBibleBooks: BookWithFullNameAndShortNames[] = [];
+const MultipleLanguageBibleBooks: BookWithAbbreviations[] = [];
 
 
 for (let i = 0; i < 66; i++) {
-  const book: BookWithFullNameAndShortNames = {
+  const book: BookWithAbbreviations = {
     fullName: translationsDict?.get('en')[i].fullName as string,
     verses: translationsDict?.get('en')[i].verses as number[],
     names: [] as string[],
@@ -77,7 +77,8 @@ for (let i = 0; i < 66; i++) {
   translationsDict.forEach((books) => {
     // concat all names from different translations
     book['abbreviations'] = [...(new Set(book['abbreviations'].concat(books[i].abbreviations)))]
-    book['names'] = [...(new Set(book['names'].concat(books[i].fullName)))] // add full names to list
+    // @ts-ignore
+    book['names'] = [...(new Set(book['names'].concat(books[i].fullName as string)))] // add full names to list
   })
   book['names'] = [...book['names'], ...book['abbreviations']] // combine them (full and short) together as names
   MultipleLanguageBibleBooks.push(book);
