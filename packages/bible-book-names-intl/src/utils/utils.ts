@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
+// todo delete this
 export const generateOrdinalNameVariations = (
   startNumber: number,
   names: string[]

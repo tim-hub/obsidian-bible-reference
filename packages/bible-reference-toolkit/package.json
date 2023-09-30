@@ -35,6 +35,6 @@
     "prettier:fix": "prettier . --write"
   },
   "dependencies": {
-    "bible-book-names-intl": "^2.1.4"
+    "bible-book-names-intl": "^3.0.1"
   }
 }

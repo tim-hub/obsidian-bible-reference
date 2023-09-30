@@ -1,4 +1,6 @@
-import { BibleBooks as books } from './books';
+import books, { getTranslationBooks, BookWithAbbreviations } from 'bible-book-names-intl';
+import { generateOrdinalNameVariations } from './utils';
+
 // Internally, no strings are stored - only numbers.
 //
 // "id"s are UIDs, numbers are relative to parent unit; e.g.
@@ -69,22 +71,20 @@ export class Reference implements IReference {
     this.verse = verse;
   }
 
-  // Given a string of a book name (shortened or full length), get the book id
-  public static bookIdFromName(name: string): number {
-    name = name.toLowerCase();
-    const relativeBooks = (books as any[]).filter((book) => {
-      const bookNames = book.names.map((n: string) => {
-        return n.toLowerCase();
-      });
-      return bookNames.indexOf(name) > -1;
-    });
-    if (relativeBooks?.length) {
-      return books.indexOf(relativeBooks[0]) + 1;
-    }
-    throw new Error('No book matched "' + name + '"');
+  /**
+   * Get the book id from a book name
+   * @param language, en, jp sp, it etc
+   * @param nameInTranslation
+   */
+  public static bookIdFromTranslationAndName(language: string, nameInTranslation: string): number {
+    const booksInTranslation = getTranslationBooks(language.toLowerCase());
+    return Reference.getBookIdFromTranslationAndName(booksInTranslation, nameInTranslation);
   }
 
-  // Like moment.js startOf - ref.startOf('chapter') sets the ref to the first
+  // Given a string of a book name (shortened or full length), get the book id
+  public static bookIdFromName(nameInAnySupportedTranslation: string): number {
+    return Reference.getBookIdFromTranslationAndName(books, nameInAnySupportedTranslation);
+  }
 
   // Given a book id, get the full length book name
   public static bookNameFromId(id: number): string {
@@ -94,6 +94,8 @@ export class Reference implements IReference {
     }
     return book.names[0];
   }
+
+  // Like moment.js startOf - ref.startOf('chapter') sets the ref to the first
 
   // that number chapter
   public static fromChapterId(chapterId: number): Reference {
@@ -195,6 +197,25 @@ export class Reference implements IReference {
       booksLeft -= 1;
     }
     return count;
+  }
+
+  private static getBookIdFromTranslationAndName(books: BookWithAbbreviations[], name: string): number {
+    const lowerName = name.toLowerCase();
+    const relativeBooks = books.filter((book) => {
+      let bookNames = [...book.abbreviations, book.fullName].map((name) => name.toLowerCase());
+      if (book?.startNumber > 0) {
+        bookNames = generateOrdinalNameVariations(book.startNumber, bookNames);
+      } // todo instead of get all books from the lib, use the getfunction and map here to get all books
+      console.log('bookNames', book);
+      return bookNames.indexOf(lowerName) > -1;
+    });
+    console.log('relativeBooks', relativeBooks, name);
+    if (relativeBooks?.length) {
+      return books.indexOf(relativeBooks[0]) + 1;
+    }
+    const msg = `No book matched "${name}"`;
+    console.error(msg);
+    throw new Error(msg);
   }
 
   // Is a Chapter level reference (no verse)
