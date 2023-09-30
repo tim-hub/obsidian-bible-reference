@@ -31,7 +31,7 @@ export type BookWithAbbreviations = OriginalBookType & {
 const translationsDict = new Map<string, BookWithAbbreviations[]>()
 
 allTranslations.forEach(
-  (translation) => {
+  (translation: any) => {
     const books: BookWithAbbreviations[] = [];
     for (let i = 0; i < 66; i++) {
       const rawBookInfo = (translation as any)['' + (i + 1)];
