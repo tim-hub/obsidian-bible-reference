@@ -59,7 +59,7 @@ export const getTranslationBooks = (language: string): BookWithAbbreviations[] =
     console.error(msg)
     throw new Error(msg)
   }
-  return translationsDict.get(language)
+  return translationsDict.get(language) as BookWithAbbreviations[]
 }
 
 
@@ -68,7 +68,9 @@ const MultipleLanguageBibleBooks: BookWithAbbreviations[] = [];
 
 for (let i = 0; i < 66; i++) {
   const book: BookWithAbbreviations = {
+    // @ts-ignore
     fullName: translationsDict?.get('en')[i].fullName as string,
+    // @ts-ignore
     verses: translationsDict?.get('en')[i].verses as number[],
     names: [] as string[],
     abbreviations: [] as string[],
@@ -80,6 +82,7 @@ for (let i = 0; i < 66; i++) {
     // @ts-ignore
     book['names'] = [...(new Set(book['names'].concat(books[i].fullName as string)))] // add full names to list
   })
+  // @ts-ignore
   book['names'] = [...book['names'], ...book['abbreviations']] // combine them (full and short) together as names
   MultipleLanguageBibleBooks.push(book);
 }
