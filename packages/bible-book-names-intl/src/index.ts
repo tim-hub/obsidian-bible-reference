@@ -14,15 +14,15 @@ const allTranslations = [
 ]
 
 
-type Book = {
+type OriginalBookType = {
   names: string[];
   verses: number[];
   startNumber?: number;
 };
 
-export type BookWithFullNameAndShortNames = Book & {
+export type BookWithFullNameAndShortNames = OriginalBookType & {
   fullName: string;
-  shortNames: string[];
+  abbreviations: string[];
 }
 
 
@@ -42,7 +42,7 @@ allTranslations.forEach(
       books.push({
         ...bookBaseData,
         fullName: rawBookInfo.name,
-        shortNames: rawBookInfo.shortNames,
+        abbreviations: rawBookInfo.shortNames,
         startNumber: rawBookInfo?.startNumber, // should not be used anymore
         names: newCombinedNames,
       })
@@ -65,21 +65,19 @@ const MultipleLanguageBibleBooks: BookWithFullNameAndShortNames[] = [];
 
 
 for (let i = 0; i < 66; i++) {
-  const book = {
-    // @ts-ignore
+  const book: BookWithFullNameAndShortNames = {
     fullName: translationsDict?.get('en')[i].fullName as string,
-    // @ts-ignore
     verses: translationsDict?.get('en')[i].verses as number[],
     names: [] as string[],
-    shortNames: [] as string[],
+    abbreviations: [] as string[],
   }
 
   translationsDict.forEach((books) => {
     // concat all names from different translations
-    book['shortNames'] = [...(new Set(book['shortNames'].concat(books[i].shortNames)))]
+    book['abbreviations'] = [...(new Set(book['abbreviations'].concat(books[i].abbreviations)))]
     book['names'] = [...(new Set(book['names'].concat(books[i].fullName)))] // add full names to list
   })
-  book['names'] = [...book['names'], ...book['shortNames']] // combine them (full and short) together as names
+  book['names'] = [...book['names'], ...book['abbreviations']] // combine them (full and short) together as names
   MultipleLanguageBibleBooks.push(book);
 }
 
