@@ -21,6 +21,7 @@ type OriginalBookType = {
 };
 
 export type BookWithAbbreviations = OriginalBookType & {
+  name: string;
   fullName: string;
   abbreviations: string[];
 }
@@ -35,11 +36,13 @@ const getLanguageToBookWithAbbreviationsDict = (): Map<string, BookWithAbbreviat
       for (let i = 0; i < 66; i++) {
         const rawBookInfo = (translation as any)['' + (i + 1)];
         const bookBaseData: { verses: number[] } = (baseData as any)['' + (i + 1)];
+        const {startNumber, name, shortNames} = rawBookInfo;
         books.push({
           ...bookBaseData,
-          fullName: rawBookInfo.name,
-          abbreviations: rawBookInfo.shortNames,
-          startNumber: rawBookInfo?.startNumber, // should not be used anymore
+          name,
+          fullName: startNumber > 1 ? `${startNumber} ${name}` : name,
+          abbreviations: shortNames,
+          startNumber: startNumber,
         } as BookWithAbbreviations);
       }
       languageToBookWithAbbreviationsDict.set(translation.language, books)
