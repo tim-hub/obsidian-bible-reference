@@ -1,18 +1,31 @@
 import { IVerse } from '../interfaces/IVerse'
 import { Notice } from 'obsidian'
 import { EventStats } from './EventStats'
+import { IBibleVersion } from '../interfaces/IBibleVersion';
 
 export abstract class BaseBibleAPIProvider {
-  protected _key: string // the version selected
+  protected _versionKey: string // the version selected, for example kjv
   protected _apiUrl: string
   protected _queryUrl: string
   protected _bibleReferenceHead: string
+  protected _bibleVersiopn: IBibleVersion
+
+  constructor(bibleVersion: IBibleVersion) {
+    this._bibleVersiopn = bibleVersion
+    const { key } = bibleVersion
+    this._versionKey = key
+    this._apiUrl = bibleVersion.apiSource.apiUrl
+  }
+
+  protected get LanguageShortCode(): string|undefined {
+    return this._bibleVersiopn.code
+  }
 
   /**
    * Get the Key Identity for the Bible version
    */
   public get BibleVersionKey(): string {
-    return this._key
+    return this._versionKey
   }
 
   /**
@@ -53,14 +66,14 @@ export abstract class BaseBibleAPIProvider {
     verse: number[],
     versionName?: string
   ): Promise<IVerse[]> {
-    if (!this._key && versionName) {
+    if (!this._versionKey && versionName) {
       throw new Error('version (language) not set yet')
     }
     const url = this.buildRequestURL(
       bookName,
       chapter,
       verse,
-      versionName || this._key
+      versionName || this._versionKey
     )
     console.debug(url, 'url to query')
     try {
@@ -78,7 +91,7 @@ export abstract class BaseBibleAPIProvider {
         bookName,
         chapter,
         verse,
-        versionName || this._key
+        versionName || this._versionKey
       )
     } catch (e) {
       console.error('error while querying', e)

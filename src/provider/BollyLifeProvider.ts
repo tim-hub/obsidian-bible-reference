@@ -1,17 +1,14 @@
 import { IVerse } from '../interfaces/IVerse'
 import { IBibleVersion } from '../interfaces/IBibleVersion'
 import { BaseBibleAPIProvider } from './BaseBibleAPIProvider'
-import Reference from 'bible-reference-toolkit/dist/lib/reference'
+import { getBookIdFromBookName } from '../utils/bookNameReference';
 
 export class BollyLifeProvider extends BaseBibleAPIProvider {
   //private _verseApiUrl: string; // we do not support get verse api yet, but the api supported it
   private _chapterApiUrl: string
 
   public constructor(bibleVersion: IBibleVersion) {
-    super()
-    const { key } = bibleVersion
-    this._key = key
-    this._apiUrl = bibleVersion.apiSource.apiUrl
+    super(bibleVersion)
     //this._verseApiUrl = `${this._apiUrl}/get-paralel-verses/`;
     //this._chapterApiUrl = `${this._apiUrl}/get-chapter/`;
     this._chapterApiUrl = this._apiUrl
@@ -28,8 +25,8 @@ export class BollyLifeProvider extends BaseBibleAPIProvider {
     versionName?: string
   ): string {
     const baseUrl = this._chapterApiUrl
-    const book = Reference.bookIdFromName(bookName)
-    this._queryUrl = `${baseUrl}/${versionName?.toUpperCase()}/${book}/${chapter}/`
+    const bookId = getBookIdFromBookName(bookName, this._bibleVersiopn.code)
+    this._queryUrl = `${baseUrl}/${versionName?.toUpperCase()}/${bookId}/${chapter}/`
     return this._queryUrl
   }
 

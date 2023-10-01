@@ -4,10 +4,7 @@ import { BaseBibleAPIProvider } from './BaseBibleAPIProvider'
 
 export class BibleAPIDotComProvider extends BaseBibleAPIProvider {
   public constructor(bibleVersion: IBibleVersion) {
-    super()
-    const { key } = bibleVersion
-    this._key = key
-    this._apiUrl = bibleVersion.apiSource.apiUrl
+    super(bibleVersion)
   }
 
   /**
