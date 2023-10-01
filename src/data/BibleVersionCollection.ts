@@ -1,6 +1,11 @@
 import { IBibleVersion } from '../interfaces/IBibleVersion'
 import { BibleAPISourceCollection } from './BibleApiSourceCollection'
 
+/**
+ * Please note to support the abbreviation of the translation
+ * "code" need to be added
+ * And the Abbreviation source need to be updated too See this repo. https://github.com/AntiochTechnology/bible-reference-toolkit/tree/master/packages/bible-book-names-intl
+ */
 export const BibleVersionCollection: IBibleVersion[] = [
   // bible api
   {
@@ -94,18 +99,21 @@ export const BibleVersionCollection: IBibleVersion[] = [
     key: "nasb",
     versionName: "New American Standard Bible (1995)",
     language: "English",
+   code: 'en',
     apiSource: BibleAPISourceCollection.bollsLife
   },
   {
     key: "elb",
     versionName: "Elberfelder Bibel (1871)",
     language: "German Deutsch",
+    code: 'de',
     apiSource: BibleAPISourceCollection.bollsLife
   },
   {
     key: "lut",
     versionName: "Luther (1912)",
     language: "German Deutsch",
+    code: 'de',
     apiSource: BibleAPISourceCollection.bollsLife
   },
   {
