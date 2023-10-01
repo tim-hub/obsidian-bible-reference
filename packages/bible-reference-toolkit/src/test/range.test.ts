@@ -1,6 +1,5 @@
 import Reference from '../lib/reference';
 import Range from '../lib/range';
-
 describe('test range', () => {
   let start = new Reference('Genesis 1:1');
   let end = new Reference('Exodus 1:1');

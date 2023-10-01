@@ -1,5 +1,6 @@
-import books, { getTranslationBooks, BookWithAbbreviations } from 'bible-book-names-intl';
+import { getTranslationBooks, BookWithAbbreviations } from 'bible-book-names-intl';
 import { generateOrdinalNameVariations } from './utils';
+import { AllBibleBooksInAllSupportedLanguages as AllBooks } from './books';
 
 // Internally, no strings are stored - only numbers.
 //
@@ -83,16 +84,28 @@ export class Reference implements IReference {
 
   // Given a string of a book name (shortened or full length), get the book id
   public static bookIdFromName(nameInAnySupportedTranslation: string): number {
-    return Reference.getBookIdFromTranslationAndName(books, nameInAnySupportedTranslation);
+    return Reference.getBookIdFromTranslationAndName(AllBooks, nameInAnySupportedTranslation);
   }
 
   // Given a book id, get the full length book name
-  public static bookNameFromId(id: number): string {
-    const book = books[id - 1];
+  public static bookEnglishFullNameFromId(id: number): string {
+    return Reference.bookNameFromTranslationAndId('en', id);
+  }
+
+  public static bookNameFromTranslationAndId(language: string, id: number): string {
+    const book = getTranslationBooks(language.toLowerCase())[id - 1];
     if (!book) {
       throw new Error('Book id out of range (no such book)');
     }
-    return book.names[0];
+    return book.fullName;
+  }
+
+  /**
+   * Get full book name from Book Id in English
+   * @param id
+   */
+  public static bookNameFromId(id: number): string {
+    return Reference.bookEnglishFullNameFromId(id);
   }
 
   // Like moment.js startOf - ref.startOf('chapter') sets the ref to the first
@@ -102,7 +115,7 @@ export class Reference implements IReference {
     let chaptersRemaining = chapterId;
     let bookIndex = 0;
     while (chaptersRemaining > 0) {
-      const chaptersInThisBook = books[bookIndex].verses.length;
+      const chaptersInThisBook = AllBooks[bookIndex].verses.length;
       if (chaptersRemaining - chaptersInThisBook <= 0) {
         return new Reference({
           book: bookIndex + 1,
@@ -125,7 +138,7 @@ export class Reference implements IReference {
     while (versesRemaining > 0) {
       const versesInThisBook = Reference.versesInBookId(bookIndex + 1);
       if (versesRemaining - versesInThisBook < 0) {
-        const book = books[bookIndex];
+        const book = AllBooks[bookIndex];
         let chapterIndex = 0;
         while (versesRemaining > 0) {
           const versesInThisChapter = book.verses[chapterIndex];
@@ -150,7 +163,7 @@ export class Reference implements IReference {
 
   // Get the number of verses in the given book id
   public static versesInBookId(bookId: number): number {
-    return books[bookId - 1].verses.reduce(function sum(a: number, b: number) {
+    return AllBooks[bookId - 1].verses.reduce(function sum(a: number, b: number) {
       return a + b;
     });
   }
@@ -158,12 +171,12 @@ export class Reference implements IReference {
   // Get the number of verses in the given chapter id
   public static versesInChapterId(chapterId: number): number {
     const reference = Reference.fromChapterId(chapterId);
-    return books[reference.book - 1].verses[reference.chapter - 1];
+    return AllBooks[reference.book - 1].verses[reference.chapter - 1];
   }
 
   // Get the number of chapters in the given book id
   public static chaptersInBookId(bookId: number): number {
-    return books[bookId - 1].verses.length;
+    return AllBooks[bookId - 1].verses.length;
   }
 
   // Get the number of verses up to the start of the given book id
@@ -202,14 +215,12 @@ export class Reference implements IReference {
   private static getBookIdFromTranslationAndName(books: BookWithAbbreviations[], name: string): number {
     const lowerName = name.toLowerCase();
     const relativeBooks = books.filter((book) => {
-      let bookNames = [...book.abbreviations, book.fullName].map((name) => name.toLowerCase());
-      if (book?.startNumber > 0) {
+      let bookNames = [book.name, ...book.abbreviations];
+      if (book?.startNumber && book.startNumber > 0) {
         bookNames = generateOrdinalNameVariations(book.startNumber, bookNames);
       } // todo instead of get all books from the lib, use the getfunction and map here to get all books
-      console.log('bookNames', book);
-      return bookNames.indexOf(lowerName) > -1;
+      return [book.fullName, ...bookNames].map((name) => name.toLowerCase()).indexOf(lowerName) > -1;
     });
-    console.log('relativeBooks', relativeBooks, name);
     if (relativeBooks?.length) {
       return books.indexOf(relativeBooks[0]) + 1;
     }
@@ -220,7 +231,7 @@ export class Reference implements IReference {
 
   // Is a Chapter level reference (no verse)
   public isChapter(): boolean {
-    return this.verse == null;
+    return !this.verse;
   }
 
   // go to start of given unit, will make change to this reference
@@ -251,7 +262,7 @@ export class Reference implements IReference {
   }
 
   public toString(): string {
-    const bookName = books[this.book - 1].fullName;
+    const bookName = AllBooks[this.book - 1].fullName;
     let tmpString = bookName + ' ' + this.chapter;
     if (this.verse) {
       tmpString += ':' + this.verse;
@@ -270,7 +281,7 @@ export class Reference implements IReference {
     var chapterIndex = this.chapter - 1;
     while (chapterIndex >= 1) {
       verseCount += Reference.versesInBookId(bookIndex);
-      verseCount += books[this.book - 1].verses[chapterIndex];
+      verseCount += AllBooks[this.book - 1].verses[chapterIndex];
     }
     if (this.verse != null) {
       verseCount += this.verse;
