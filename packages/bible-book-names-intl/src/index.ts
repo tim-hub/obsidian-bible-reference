@@ -40,7 +40,7 @@ const getLanguageToBookWithAbbreviationsDict = (): Map<string, BookWithAbbreviat
         books.push({
           ...bookBaseData,
           name,
-          fullName: startNumber > 1 ? `${startNumber} ${name}` : name,
+          fullName: startNumber && startNumber >= 1 ? `${startNumber} ${name}` : name,
           abbreviations: shortNames,
           startNumber: startNumber,
         } as BookWithAbbreviations);
