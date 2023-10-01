@@ -66,6 +66,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/kajogo777"><img src="https://avatars.githubusercontent.com/u/10531031?v=4?s=65" width="65px;" alt="George"/><br /><sub><b>George</b></sub></a><br /><a href="#translation-kajogo777" title="Translation">🌍</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/OfficerHalf"><img src="https://avatars.githubusercontent.com/u/4851889?v=4?s=65" width="65px;" alt="Nathan"/><br /><sub><b>Nathan</b></sub></a><br /><a href="https://github.com/tim-hub/obsidian-bible-reference/commits?author=OfficerHalf" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="http://kmf.co/"><img src="https://avatars.githubusercontent.com/u/78700?v=4?s=65" width="65px;" alt="Karl Fischer"/><br /><sub><b>Karl Fischer</b></sub></a><br /><a href="#translation-kmf" title="Translation">🌍</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/OfirSinn"><img src="https://avatars.githubusercontent.com/u/81870040?v=4?s=65" width="65px;" alt="OfirSinn"/><br /><sub><b>OfirSinn</b></sub></a><br /><a href="#translation-OfirSinn" title="Translation">🌍</a></td>
     </tr>
   </tbody>
 </table>
