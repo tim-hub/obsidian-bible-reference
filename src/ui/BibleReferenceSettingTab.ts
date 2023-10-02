@@ -84,22 +84,22 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
       if (this.plugin.settings.advancedSettings) {
         this.displayExpertSettings();
       } else {
-        this.expertSettingContainer.empty();
+        this.expertSettingContainer && this.expertSettingContainer.empty();
       }
     })
   }
 
   private displayExpertSettings(): void {
-    this.expertSettingContainer.createEl('hr')
-    this.expertSettingContainer.createEl('h2', {text: 'Expert Settings'})
-    this.expertSettingContainer.createEl('h5', {text: 'Tagging and Linking Settings'})
-    this.expertSettingContainer.createSpan({}, (span) => {
-      span.innerHTML = `
+    if (this.expertSettingContainer) {
+      this.expertSettingContainer.createEl('hr')
+      this.expertSettingContainer.createEl('h2', {text: 'Expert Settings'})
+      this.expertSettingContainer.createEl('h5', {text: 'Tagging and Linking Settings'})
+      this.expertSettingContainer.createSpan({}, (span) => {
+        span.innerHTML = `
         <small>Only if you want to add tags at the bottom of verses</small>
       `
-    })
+      })
 
-    if (this.expertSettingContainer) {
       new Setting(this.expertSettingContainer)
         .setName('Add a Book Tag')
         .setDesc('Add a hidden book tag at bottom, for example #John')
@@ -144,8 +144,8 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
               dropdown.addOption(name, name)
             }
           )
-          const defaultPosition = this.plugin.settings?.bookBacklinking === true ? OutgoingLinkPositionEnum.Header : OutgoingLinkPositionEnum.None
-          const value: string = (this.plugin.settings?.bookBacklinking && this.plugin.settings?.bookBacklinking !== true ? this.plugin.settings.bookBacklinking : defaultPosition) as string
+          const defaultPosition = this.plugin.settings?.bookBacklinking as any === true ? OutgoingLinkPositionEnum.Header : OutgoingLinkPositionEnum.None
+          const value: string = (this.plugin.settings?.bookBacklinking && this.plugin.settings?.bookBacklinking as any !== true ? this.plugin.settings.bookBacklinking : defaultPosition) as string
           dropdown.setValue(value)
           dropdown.onChange(async (value) => {
             this.plugin.settings.bookBacklinking = value as OutgoingLinkPositionEnum
@@ -162,8 +162,8 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
               dropdown.addOption(name, name)
             }
           )
-          const defaultPosition = this.plugin.settings?.chapterBacklinking === true ? OutgoingLinkPositionEnum.Header : OutgoingLinkPositionEnum.None
-          const value: string = (this.plugin.settings?.chapterBacklinking && this.plugin.settings?.chapterBacklinking !== true ? this.plugin.settings.chapterBacklinking : defaultPosition) as string
+          const defaultPosition = this.plugin.settings?.chapterBacklinking as any === true ? OutgoingLinkPositionEnum.Header : OutgoingLinkPositionEnum.None
+          const value: string = (this.plugin.settings?.chapterBacklinking && this.plugin.settings?.chapterBacklinking as any !== true ? this.plugin.settings.chapterBacklinking : defaultPosition) as string
           dropdown.setValue(value)
           dropdown.onChange(async (value) => {
             this.plugin.settings.chapterBacklinking = value as OutgoingLinkPositionEnum
