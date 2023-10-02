@@ -137,6 +137,17 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
             })
         )
 
+      const getOutgoingLinkPosition = (linkingPostion: string | OutgoingLinkPositionEnum | undefined) => {
+        let value = linkingPostion
+        if (!value) {
+          value = OutgoingLinkPositionEnum.None
+        } else if (value as any === true) {
+          value = OutgoingLinkPositionEnum.Header
+        }
+        // otherwise no change
+        return value as string;
+      }
+
       new Setting(this.expertSettingContainer)
         .setName('Add a Book Outgoing Link')
         .setDesc('Makes an outgoing link for the book, for example [[John]]')
@@ -144,16 +155,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
           Object.keys(OutgoingLinkPositionEnum).forEach((name) => {
             dropdown.addOption(name, name)
           })
-          const defaultPosition =
-            (this.plugin.settings?.bookBacklinking as any) === true
-              ? OutgoingLinkPositionEnum.Header
-              : OutgoingLinkPositionEnum.None
-          const value: string = (
-            this.plugin.settings?.bookBacklinking &&
-            (this.plugin.settings?.bookBacklinking as any) !== true
-              ? this.plugin.settings.bookBacklinking
-              : defaultPosition
-          ) as string
+          const value = getOutgoingLinkPosition(this.plugin.settings?.bookBacklinking)
           dropdown.setValue(value)
           dropdown.onChange(async (value) => {
             this.plugin.settings.bookBacklinking =
@@ -171,16 +173,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
           Object.keys(OutgoingLinkPositionEnum).forEach((name) => {
             dropdown.addOption(name, name)
           })
-          const defaultPosition =
-            (this.plugin.settings?.chapterBacklinking as any) === true
-              ? OutgoingLinkPositionEnum.Header
-              : OutgoingLinkPositionEnum.None
-          const value: string = (
-            this.plugin.settings?.chapterBacklinking &&
-            (this.plugin.settings?.chapterBacklinking as any) !== true
-              ? this.plugin.settings.chapterBacklinking
-              : defaultPosition
-          ) as string
+          const value = getOutgoingLinkPosition(this.plugin.settings?.chapterBacklinking)
           dropdown.setValue(value)
           dropdown.onChange(async (value) => {
             this.plugin.settings.chapterBacklinking =
