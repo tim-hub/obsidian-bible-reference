@@ -10,6 +10,12 @@ export const APP_NAMING = {
   defaultStatus: '',
 }
 
+export enum OutgoingLinkPositionEnum {
+  Header = BibleVerseReferenceLinkPosition.Header,
+  Bottom = BibleVerseReferenceLinkPosition.Bottom,
+  None = BibleVerseReferenceLinkPosition.None,
+}
+
 export interface BibleReferencePluginSettings {
   bibleVersion: string
   referenceLinkPosition?: BibleVerseReferenceLinkPosition
@@ -18,10 +24,14 @@ export interface BibleReferencePluginSettings {
   collapsibleVerses?: boolean
   bookTagging?: boolean
   chapterTagging?: boolean
+  bookBacklinking?: OutgoingLinkPositionEnum // this is refering to outgoing link
+  chapterBacklinking?: OutgoingLinkPositionEnum // this is refering to outgoing link
 
   // add this to ui at some point todo
   enableBibleVerseLookupRibbon?: boolean
   optOutToEvents?: boolean
+
+  advancedSettings?: boolean;
 }
 
 export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
@@ -34,6 +44,8 @@ export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
   chapterTagging: false,
   enableBibleVerseLookupRibbon: false,
   optOutToEvents: false,
+  bookBacklinking: OutgoingLinkPositionEnum.None,
+  chapterBacklinking: OutgoingLinkPositionEnum.None,
 }
 
 export const API_WAITING_LABEL = 'Loading...'

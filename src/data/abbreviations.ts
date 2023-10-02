@@ -1,6 +1,7 @@
 /**
  * better https://www.logos.com/bible-book-abbreviations
  * https://github.com/TehShrike/books-of-the-bible/blob/master/index.json
+ * This is not used so far, todo consider delete this or use this
  */
 export const books = [
   {
