@@ -26,7 +26,7 @@ import {
 import { FlagService } from '../provider/FeatureFlag'
 import { BibleAPISourceCollection } from '../data/BibleApiSourceCollection'
 import { EventStats } from '../provider/EventStats'
-import { APP_NAMING } from '../data/constants'
+import { APP_NAMING, OutgoingLinkPositionEnum } from '../data/constants'
 import { pluginEvent } from '../obsidian/PluginEvent';
 
 export class BibleReferenceSettingTab extends PluginSettingTab {
@@ -67,15 +67,15 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     `
     })
 
+    this.expertSettingContainer = this.containerEl.createDiv()
+    if (this.plugin.settings.advancedSettings) {
+      this.displayExpertSettings();
+    }
     EventStats.logUIOpen(
       'settingsOpen',
       {key: 'open', value: 1},
       this.plugin.settings.optOutToEvents
     )
-    this.expertSettingContainer = this.containerEl.createDiv()
-    if (this.plugin.settings.advancedSettings) {
-      this.displayExpertSettings();
-    }
   }
 
   private startListeningToEvents(): void {
@@ -134,6 +134,42 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
               }
             )
         )
+
+      new Setting(this.expertSettingContainer)
+        .setName('Add a Book Outgoing Link')
+        .setDesc('Makes an outgoing link for the book, for example [[John]]')
+        .addDropdown((dropdown) => {
+          Object.keys(OutgoingLinkPositionEnum).forEach(
+            (name) => {
+              dropdown.addOption(name, name)
+            }
+          )
+          const defaultPosition = this.plugin.settings?.bookBacklinking === true ? OutgoingLinkPositionEnum.Header : OutgoingLinkPositionEnum.None
+          const value: string = (this.plugin.settings?.bookBacklinking && this.plugin.settings?.bookBacklinking !== true ? this.plugin.settings.bookBacklinking : defaultPosition) as string
+          dropdown.setValue(value)
+          dropdown.onChange(async (value) => {
+            this.plugin.settings.bookBacklinking = value as OutgoingLinkPositionEnum
+            await this.plugin.saveSettings()
+          })
+        })
+
+      new Setting(this.expertSettingContainer)
+        .setName('Add a Chapter Outgoing Links')
+        .setDesc('Makes an outgoing link for the chapter, for example [[John1]] ')
+        .addDropdown((dropdown) => {
+          Object.keys(OutgoingLinkPositionEnum).forEach(
+            (name) => {
+              dropdown.addOption(name, name)
+            }
+          )
+          const defaultPosition = this.plugin.settings?.chapterBacklinking === true ? OutgoingLinkPositionEnum.Header : OutgoingLinkPositionEnum.None
+          const value: string = (this.plugin.settings?.chapterBacklinking && this.plugin.settings?.chapterBacklinking !== true ? this.plugin.settings.chapterBacklinking : defaultPosition) as string
+          dropdown.setValue(value)
+          dropdown.onChange(async (value) => {
+            this.plugin.settings.chapterBacklinking = value as OutgoingLinkPositionEnum
+            await this.plugin.saveSettings()
+          })
+        })
     }
   }
 
@@ -290,7 +326,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
   private setUpExpertSettings(): void {
     new Setting(this.containerEl)
       .setName('Expert Settings')
-      .setDesc('Display or Hide Expert Settings')
+      .setDesc('Display or Hide Expert Settings, such as Tagging and Linking settings')
       .addToggle((toggle) =>
         toggle
           .setValue(!!this.plugin.settings?.advancedSettings)

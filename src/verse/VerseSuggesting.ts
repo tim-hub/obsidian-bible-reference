@@ -1,4 +1,4 @@
-import { BibleReferencePluginSettings, DEFAULT_SETTINGS, } from '../data/constants'
+import { BibleReferencePluginSettings, DEFAULT_SETTINGS, OutgoingLinkPositionEnum, } from '../data/constants'
 import { getBibleVersion } from '../data/BibleVersionCollection'
 import { IVerse } from '../interfaces/IVerse'
 import { ProviderFactory } from '../provider/ProviderFactory'
@@ -33,6 +33,13 @@ export class VerseSuggesting
     this.bibleVersion = settings.bibleVersion
   }
 
+  public get head(): string {
+    let content = super.head;
+    content += this.settings?.bookBacklinking === OutgoingLinkPositionEnum.Header ? ` [[${this.verseReference.bookName}]]` : ''
+    content += this.settings?.chapterBacklinking === OutgoingLinkPositionEnum.Header ? ` [[${this.verseReference.bookName} ${this.verseReference.chapterNumber}]]` : ''
+    return content;
+  }
+
   public get bottom(): string {
     let bottom = super.bottom
     if (this.settings?.bookTagging || this.settings?.chapterTagging) {
@@ -44,6 +51,11 @@ export class VerseSuggesting
         ? ` #${this.verseReference.bookName + this.verseReference.chapterNumber}`
         : ''
       bottom += ' %%'
+    }
+    if (this.settings?.bookBacklinking === OutgoingLinkPositionEnum.Bottom || this.settings?.chapterBacklinking === OutgoingLinkPositionEnum.Bottom) {
+      bottom += '>\n '
+      bottom += this.settings?.bookBacklinking === OutgoingLinkPositionEnum.Bottom ? ` [[${this.verseReference.bookName}]]` : ''
+      bottom += this.settings?.chapterBacklinking === OutgoingLinkPositionEnum.Bottom ? ` [[${this.verseReference.bookName} ${this.verseReference.chapterNumber}]]` : ''
     }
     return bottom
   }
