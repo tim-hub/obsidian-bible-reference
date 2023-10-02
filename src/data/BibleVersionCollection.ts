@@ -95,11 +95,11 @@ export const BibleVersionCollection: IBibleVersion[] = [
     language: 'English', code: 'en',
     apiSource: BibleAPISourceCollection.bollsLife,
   },
-   {
+  {
     key: "nasb",
     versionName: "New American Standard Bible (1995)",
     language: "English",
-   code: 'en',
+    code: 'en',
     apiSource: BibleAPISourceCollection.bollsLife
   },
   {
@@ -247,3 +247,13 @@ export const DEFAULT_BIBLE_VERSION = BibleVersionCollection[11]
 export const getBibleVersion = (key: string): IBibleVersion => {
   return BibleVersionCollection.find(bibleVersion => bibleVersion.key === key) ?? DEFAULT_BIBLE_VERSION
 }
+
+export const allBibleVersionsWithLanguageNameAlphabetically: IBibleVersion[] = BibleVersionCollection.sort((a, b) => {
+  // sort by language and versionName alphabetically
+  const languageCompare = a.language.localeCompare(b.language)
+  if (languageCompare === 0) {
+    return a.versionName.localeCompare(b.versionName)
+  } else {
+    return languageCompare
+  }
+})

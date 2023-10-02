@@ -7,7 +7,7 @@ import {
 } from 'obsidian'
 import BibleReferencePlugin from './../main'
 import {
-  BibleVersionCollection,
+  allBibleVersionsWithLanguageNameAlphabetically,
   DEFAULT_BIBLE_VERSION,
 } from '../data/BibleVersionCollection'
 import { IBibleVersion } from '../interfaces/IBibleVersion'
@@ -30,32 +30,115 @@ import { APP_NAMING } from '../data/constants'
 import { pluginEvent } from '../obsidian/PluginEvent';
 
 export class BibleReferenceSettingTab extends PluginSettingTab {
-  plugin: BibleReferencePlugin
+  private plugin: BibleReferencePlugin
+  private expertSettingContainer?: HTMLElement;
 
   constructor(app: App, plugin: BibleReferencePlugin) {
     super(app, plugin)
     this.plugin = plugin
   }
 
-  getAllBibleVersionsWithLanguageNameAlphabetically = (): IBibleVersion[] => {
-    return this.getAllBibleVersionsWithLanguageName().sort((a, b) => {
-      // sort by language and versionName alphabetically
-      const languageCompare = a.language.localeCompare(b.language)
-      if (languageCompare === 0) {
-        return a.versionName.localeCompare(b.versionName)
+  public async display(): Promise<void> {
+    this.containerEl.empty()
+    this.startListeningToEvents()
+    const headingSection = this.containerEl.createDiv()
+    headingSection.innerHTML = `
+        <iframe src="https://github.com/sponsors/tim-hub/button" title="Sponsor Obsidian Bible Reference" width="116" height="32px" style="margin-right: 2em"/>
+    `
+
+    this.containerEl.createEl('h1', {text: APP_NAMING.appName})
+    this.setUpVersionSettingsAndVersionOptions()
+
+    this.containerEl.createEl('h2', {text: 'Verses Rendering'})
+    this.setUpReferenceLinkPositionOptions()
+    this.setUpVerseFormatOptions()
+    this.setUpVerseNumberFormatOptions()
+    this.setUpCollapsible()
+    this.setUpExpertSettings();
+    this.containerEl.createEl('h2', {text: 'Others'})
+
+    this.setUpOptOutEventsOptions()
+
+    this.containerEl.createSpan({}, (span) => {
+      span.innerHTML = `
+<a href="https://github.com/tim-hub/obsidian-bible-reference">Github Repo</a> |
+<a href="https://github.com/tim-hub/obsidian-bible-reference/blob/master/docs/privacy.md">Privacy Policy</a> |
+<a href="https://github.com/sponsors/tim-hub/button">Support</a>
+    `
+    })
+
+    EventStats.logUIOpen(
+      'settingsOpen',
+      {key: 'open', value: 1},
+      this.plugin.settings.optOutToEvents
+    )
+    this.expertSettingContainer = this.containerEl.createDiv()
+    if (this.plugin.settings.advancedSettings) {
+      this.displayExpertSettings();
+    }
+  }
+
+  private startListeningToEvents(): void {
+    pluginEvent.on('bible-reference:settings:advanced', (value: boolean) => {
+      console.log('advanced', value)
+      if (this.plugin.settings.advancedSettings) {
+        this.displayExpertSettings();
       } else {
-        return languageCompare
+        this.expertSettingContainer.empty();
       }
     })
   }
 
-  getAllBibleVersionsWithLanguageName = (): IBibleVersion[] => {
-    return BibleVersionCollection
+  private displayExpertSettings(): void {
+    this.expertSettingContainer.createEl('hr')
+    this.expertSettingContainer.createEl('h2', {text: 'Expert Settings'})
+    this.expertSettingContainer.createEl('h5', {text: 'Tagging and Linking Settings'})
+    this.expertSettingContainer.createSpan({}, (span) => {
+      span.innerHTML = `
+        <small>Only if you want to add tags at the bottom of verses</small>
+      `
+    })
+
+    if (this.expertSettingContainer) {
+      new Setting(this.expertSettingContainer)
+        .setName('Add a Book Tag')
+        .setDesc('Add a hidden book tag at bottom, for example #John')
+        .addToggle((toggle) =>
+          toggle
+            .setValue(!!this.plugin.settings?.bookTagging)
+            .onChange(async (value) => {
+                this.plugin.settings.bookTagging = value
+                await this.plugin.saveSettings()
+                EventStats.logSettingChange(
+                  'changeVerseFormatting',
+                  {key: `book-tagging-${value}`, value: 1},
+                  this.plugin.settings.optOutToEvents
+                )
+              }
+            )
+        )
+      new Setting(this.expertSettingContainer)
+        .setName('Add a Chapter Tag')
+        .setDesc('Add a hidden chapter tag at bottom, for example #John1')
+        .addToggle((toggle) =>
+          toggle
+            .setValue(!!this.plugin.settings?.chapterTagging)
+            .onChange(async (value) => {
+                this.plugin.settings.chapterTagging = value
+                await this.plugin.saveSettings()
+                EventStats.logSettingChange(
+                  'changeVerseFormatting',
+                  {key: `chapter-tagging-${value}`, value: 1},
+                  this.plugin.settings.optOutToEvents
+                )
+              }
+            )
+        )
+    }
   }
 
-  setUpVersionSettingsAndVersionOptions = (containerEl: HTMLElement): void => {
-    let allAvailableVersionOptions =
-      this.getAllBibleVersionsWithLanguageNameAlphabetically()
+  private setUpVersionSettingsAndVersionOptions(): void {
+    let allAvailableVersionOptions = allBibleVersionsWithLanguageNameAlphabetically
     const disableBibleAPI =
       FlagService.instance.isFeatureEnabled('disable-bible-api')
     if (disableBibleAPI) {
@@ -72,7 +155,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
       this.plugin.settings.bibleVersion = DEFAULT_BIBLE_VERSION.key
     }
 
-    new Setting(containerEl)
+    new Setting(this.containerEl)
       .setName('Default Bible Version')
       .setDesc('Choose the Bible version you prefer')
       .addDropdown((dropdown) => {
@@ -92,27 +175,27 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
             new Notice(`Bible Reference - use Version ${value.toUpperCase()}`)
             EventStats.logSettingChange(
               'changeVersion',
-              { key: value, value: 1 },
+              {key: value, value: 1},
               this.plugin.settings.optOutToEvents
             )
           })
       })
   }
 
-  setUpReferenceLinkPositionOptions = (containerEl: HTMLElement): void => {
-    new Setting(containerEl)
+  private setUpReferenceLinkPositionOptions(): void {
+    new Setting(this.containerEl)
       .setName('Verse Reference Link Position')
       .setDesc('Where to put the reference link of the Bible')
       .addDropdown((dropdown: DropdownComponent) => {
         BibleVerseReferenceLinkPositionCollection.forEach(
-          ({ name, description }) => {
+          ({name, description}) => {
             dropdown.addOption(name, description)
           }
         )
         dropdown
           .setValue(
             this.plugin.settings.referenceLinkPosition ??
-              BibleVerseReferenceLinkPosition.None
+            BibleVerseReferenceLinkPosition.None
           )
           .onChange(async (value) => {
             this.plugin.settings.referenceLinkPosition =
@@ -122,21 +205,21 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
             new Notice('Bible Reference Settings Updated ')
             EventStats.logSettingChange(
               'changeVerseFormatting',
-              { key: `link-position-${value}`, value: 1 },
+              {key: `link-position-${value}`, value: 1},
               this.plugin.settings.optOutToEvents
             )
           })
       })
   }
 
-  setUpVerseFormatOptions = (containerEl: HTMLElement): void => {
-    new Setting(containerEl)
+  private setUpVerseFormatOptions(): void {
+    new Setting(this.containerEl)
       .setName('Verse Formatting Options')
       .setDesc(
         'Sets how to format the verses in Obsidian, either line by line or in 1 paragraph'
       )
       .addDropdown((dropdown: DropdownComponent) => {
-        BibleVerseFormatCollection.forEach(({ name, description }) => {
+        BibleVerseFormatCollection.forEach(({name, description}) => {
           dropdown.addOption(name, description)
         })
         dropdown
@@ -150,25 +233,25 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
             new Notice('Bible Verse Format Settings Updated')
             EventStats.logSettingChange(
               'changeVerseFormatting',
-              { key: `verse-format-${value}`, value: 1 },
+              {key: `verse-format-${value}`, value: 1},
               this.plugin.settings.optOutToEvents
             )
           })
       })
   }
 
-  setUpVerseNumberFormatOptions = (containerEl: HTMLElement): void => {
-    new Setting(containerEl)
+  private setUpVerseNumberFormatOptions(): void {
+    new Setting(this.containerEl)
       .setName('Verse Number Formatting Options')
       .setDesc('Sets how to format the verse numbers in Obsidian')
       .addDropdown((dropdown: DropdownComponent) => {
-        BibleVerseNumberFormatCollection.forEach(({ name, description }) => {
+        BibleVerseNumberFormatCollection.forEach(({name, description}) => {
           dropdown.addOption(name, description)
         })
         dropdown
           .setValue(
             this.plugin.settings.verseNumberFormatting ??
-              BibleVerseNumberFormat.Period
+            BibleVerseNumberFormat.Period
           )
           .onChange(async (value) => {
             this.plugin.settings.verseNumberFormatting =
@@ -178,15 +261,15 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
             new Notice('Bible Verse Format Number Settings Updated')
             EventStats.logSettingChange(
               'changeVerseFormatting',
-              { key: `verse-number-format-${value}`, value: 1 },
+              {key: `verse-number-format-${value}`, value: 1},
               this.plugin.settings.optOutToEvents
             )
           })
       })
   }
 
-  setUpCollapsible = (containerEl: HTMLElement): void => {
-    new Setting(containerEl)
+  private setUpCollapsible(): void {
+    new Setting(this.containerEl)
       .setName('Make Verses Collapsible')
       .setDesc('Make the rendered verses collapsible')
       .addToggle((toggle) =>
@@ -197,15 +280,31 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
             await this.plugin.saveSettings()
             EventStats.logSettingChange(
               'changeVerseFormatting',
-              { key: `collapsible-${value}`, value: 1 },
+              {key: `collapsible-${value}`, value: 1},
               this.plugin.settings.optOutToEvents
             )
           })
       )
   }
 
-  setUpBookTagging = (containerEl: HTMLElement): void => {
-    new Setting(containerEl)
+  private setUpExpertSettings(): void {
+    new Setting(this.containerEl)
+      .setName('Expert Settings')
+      .setDesc('Display or Hide Expert Settings')
+      .addToggle((toggle) =>
+        toggle
+          .setValue(!!this.plugin.settings?.advancedSettings)
+          .onChange(async (value) => {
+            this.plugin.settings.advancedSettings = value
+            await this.plugin.saveSettings()
+            pluginEvent.trigger('bible-reference:settings:advanced', [value])
+            // todo add event log stats fire
+          })
+      )
+  }
+
+  private setUpBookTagging(): void {
+    this.expertSettingContainer && new Setting(this.expertSettingContainer)
       .setName('Add a Book Tag')
       .setDesc('Add a hidden book tag at bottom, for example #John')
       .addToggle((toggle) =>
@@ -216,15 +315,15 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
             await this.plugin.saveSettings()
             EventStats.logSettingChange(
               'changeVerseFormatting',
-              { key: `book-tagging-${value}`, value: 1 },
+              {key: `book-tagging-${value}`, value: 1},
               this.plugin.settings.optOutToEvents
             )
           })
       )
   }
 
-  setUpChapterTagging = (containerEl: HTMLElement): void => {
-    new Setting(containerEl)
+  private setUpChapterTagging(): void {
+    this.expertSettingContainer && new Setting(this.expertSettingContainer)
       .setName('Add a Chapter Tag')
       .setDesc('Add a hidden chapter tag at bottom, for example #John1')
       .addToggle((toggle) =>
@@ -235,15 +334,15 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
             await this.plugin.saveSettings()
             EventStats.logSettingChange(
               'changeVerseFormatting',
-              { key: `chapter-tagging-${value}`, value: 1 },
+              {key: `chapter-tagging-${value}`, value: 1},
               this.plugin.settings.optOutToEvents
             )
           })
       )
   }
 
-  setUpOptOutEventsOptions = (containerEl: HTMLElement): void => {
-    new Setting(containerEl)
+  private setUpOptOutEventsOptions(): void {
+    new Setting(this.containerEl)
       .setName('Opt Out of Events Logging')
       .setDesc(
         'We used events logging to improve the plugin, this is very helpful for us, but if you want to opt out, you can do it here. (Excluding Errors Logs))'
@@ -254,7 +353,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
           .onChange(async (value) => {
             EventStats.logSettingChange(
               'others',
-              { key: `opt-${value ? 'out' : 'in'}`, value: 1 },
+              {key: `opt-${value ? 'out' : 'in'}`, value: 1},
               this.plugin.settings.optOutToEvents
             )
             this.plugin.settings.optOutToEvents = value
@@ -270,47 +369,5 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
             }
           })
       )
-  }
-
-  async display(): Promise<void> {
-    const { containerEl } = this
-    containerEl.empty()
-    const headingSection = containerEl.createDiv()
-    headingSection.innerHTML = `
-        <iframe src="https://github.com/sponsors/tim-hub/button" title="Sponsor Obsidian Bible Reference" width="116" height="32px" style="margin-right: 2em"/>
-    `
-
-    containerEl.createEl('h1', { text: APP_NAMING.appName })
-    this.setUpVersionSettingsAndVersionOptions(containerEl)
-
-    containerEl.createEl('h2', { text: 'Verses Rendering' })
-    this.setUpReferenceLinkPositionOptions(containerEl)
-    this.setUpVerseFormatOptions(containerEl)
-    this.setUpVerseNumberFormatOptions(containerEl)
-    this.setUpCollapsible(containerEl)
-    containerEl.createEl('h2', { text: 'Tagging and Linking Settings' })
-    containerEl.createSpan({}, (span) => {
-      span.innerHTML = `
-        <small>Only if you want to add tags at the bottom of verses</small>
-      `
-    })
-    this.setUpBookTagging(containerEl)
-    this.setUpChapterTagging(containerEl)
-
-    containerEl.createEl('h2', { text: 'Others' })
-
-    this.setUpOptOutEventsOptions(containerEl)
-
-    containerEl.createSpan({}, (span) => {
-      span.innerHTML = `
-        <a href="https://github.com/tim-hub/obsidian-bible-reference">Github Repo</a> |
-        <a href="https://github.com/tim-hub/obsidian-bible-reference/blob/master/docs/privacy.md">Privacy Policy</a>
-      `
-    })
-    EventStats.logUIOpen(
-      'settingsOpen',
-      { key: 'open', value: 1 },
-      this.plugin.settings.optOutToEvents
-    )
   }
 }

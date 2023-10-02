@@ -22,6 +22,8 @@ export interface BibleReferencePluginSettings {
   // add this to ui at some point todo
   enableBibleVerseLookupRibbon?: boolean
   optOutToEvents?: boolean
+
+  advancedSettings?: boolean;
 }
 
 export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {

@@ -188,16 +188,18 @@ export default class BibleReferencePlugin extends Plugin {
   private initStatusBarInidactor(): void {
     // This adds a status bar item to the bottom of the app. Does not work on mobile apps.
     this.removeStatusBarIndicator();
+    const bibleVersion = getBibleVersion(this.settings.bibleVersion)
     this.statusBarIndicator = this.addStatusBarItem()
     // todo add an icon
     this.statusBarIndicator.createEl('span', {
       text: `${bibleVersion.versionName}(${bibleVersion.language})`,
       cls: 'bible-version-indicator'
     });
-    const versionChangeEventRef = pluginEvent.on('bible-reference:settings:version', () => {
+    // create event listener for the update
+    pluginEvent.on('bible-reference:settings:version', () => {
       this.updateStatusBarIndicator()
     })
-    this.registerEvent(versionChangeEventRef)
+    // this.registerEvent(versionChangeEventRef) // somehow this is not necessary
   }
 
 
@@ -210,7 +212,9 @@ export default class BibleReferencePlugin extends Plugin {
 
   private updateStatusBarIndicator(): void {
     const bibleVersion = getBibleVersion(this.settings.bibleVersion)
-    // @ts-ignore
-    this.statusBarIndicator?.getElementsByClassName('bible-version-indicator')[0].innerText = `${bibleVersion.versionName}(${bibleVersion.language})`
+    if (this.statusBarIndicator && 'getElementsByClassName' in this.statusBarIndicator) {
+      const el = this.statusBarIndicator.getElementsByClassName('bible-version-indicator')[0]
+      el.innerHTML = `${bibleVersion.versionName}(${bibleVersion.language})`
+    }
   }
 }
