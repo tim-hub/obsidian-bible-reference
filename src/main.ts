@@ -14,8 +14,8 @@ import { splitBibleReference } from './utils/splitBibleReference'
 import { VerseOfDaySuggesting } from './verse/VerseOfDaySuggesting'
 import { FlagService } from './provider/FeatureFlag'
 import { EventStats } from './provider/EventStats'
-import { getBibleVersion } from './data/BibleVersionCollection';
-import { pluginEvent } from './obsidian/PluginEvent';
+import { getBibleVersion } from './data/BibleVersionCollection'
+import { pluginEvent } from './obsidian/PluginEvent'
 
 export default class BibleReferencePlugin extends Plugin {
   settings: BibleReferencePluginSettings
@@ -67,7 +67,7 @@ export default class BibleReferencePlugin extends Plugin {
     console.debug('unloading plugin', APP_NAMING.appName)
     this.removeRibbonButton()
     this.removeStatusBarIndicator()
-    pluginEvent.offAll(); // so that we don't have to worry about off ref in multiple places
+    pluginEvent.offAll() // so that we don't have to worry about off ref in multiple places
   }
 
   async loadSettings() {
@@ -80,8 +80,8 @@ export default class BibleReferencePlugin extends Plugin {
   }
 
   private async getAndCachedVerseOfDay(): Promise<VerseOfDaySuggesting> {
-    const {ttl, timestamp, verseOfDaySuggesting} =
-    this?.cachedVerseOfDaySuggesting || {}
+    const { ttl, timestamp, verseOfDaySuggesting } =
+      this?.cachedVerseOfDaySuggesting || {}
     if (!verseOfDaySuggesting || timestamp + ttl > Date.now()) {
       const vodResp = await getVod()
       const reference = splitBibleReference(vodResp.verse.details.reference)
@@ -107,7 +107,7 @@ export default class BibleReferencePlugin extends Plugin {
       callback: () => {
         EventStats.logUIOpen(
           'lookupModalOpen',
-          {key: `command-lookup`, value: 1},
+          { key: `command-lookup`, value: 1 },
           this.settings.optOutToEvents
         )
         this.verseLookUpModal.open()
@@ -124,7 +124,7 @@ export default class BibleReferencePlugin extends Plugin {
         const verse = await this.getAndCachedVerseOfDay()
         EventStats.logUIOpen(
           'vodEditorOpen',
-          {key: `command-vod`, value: 1},
+          { key: `command-vod`, value: 1 },
           this.settings.optOutToEvents
         )
         new Notice(
@@ -145,7 +145,7 @@ export default class BibleReferencePlugin extends Plugin {
         const vodSuggesting = await this.getAndCachedVerseOfDay()
         EventStats.logUIOpen(
           'vodEditorOpen',
-          {key: `command-vod-insert`, value: 1},
+          { key: `command-vod-insert`, value: 1 },
           this.settings.optOutToEvents
         )
         editor.replaceSelection(vodSuggesting.allFormattedContent)
@@ -162,7 +162,7 @@ export default class BibleReferencePlugin extends Plugin {
       (_evt) => {
         EventStats.logUIOpen(
           'lookupModalOpen',
-          {key: `ribbon-click`, value: 1},
+          { key: `ribbon-click`, value: 1 },
           this.settings.optOutToEvents
         )
         this.verseLookUpModal.open()
@@ -174,7 +174,7 @@ export default class BibleReferencePlugin extends Plugin {
     if (this.ribbonButton) {
       EventStats.logUIOpen(
         'lookupModalOpen',
-        {key: `ribbon-remove`, value: 1},
+        { key: `ribbon-remove`, value: 1 },
         this.settings.optOutToEvents
       )
       this.ribbonButton.parentNode?.removeChild(this.ribbonButton)
@@ -187,14 +187,14 @@ export default class BibleReferencePlugin extends Plugin {
    */
   private initStatusBarInidactor(): void {
     // This adds a status bar item to the bottom of the app. Does not work on mobile apps.
-    this.removeStatusBarIndicator();
+    this.removeStatusBarIndicator()
     const bibleVersion = getBibleVersion(this.settings.bibleVersion)
     this.statusBarIndicator = this.addStatusBarItem()
     // todo add an icon
     this.statusBarIndicator.createEl('span', {
       text: `${bibleVersion.versionName}(${bibleVersion.language})`,
-      cls: 'bible-version-indicator'
-    });
+      cls: 'bible-version-indicator',
+    })
     // create event listener for the update
     pluginEvent.on('bible-reference:settings:version', () => {
       this.updateStatusBarIndicator()
@@ -202,18 +202,21 @@ export default class BibleReferencePlugin extends Plugin {
     // this.registerEvent(versionChangeEventRef) // somehow this is not necessary
   }
 
-
   private removeStatusBarIndicator(): void {
     if (this.statusBarIndicator) {
       this.statusBarIndicator.parentNode?.removeChild(this.statusBarIndicator)
     }
   }
 
-
   private updateStatusBarIndicator(): void {
     const bibleVersion = getBibleVersion(this.settings.bibleVersion)
-    if (this.statusBarIndicator && 'getElementsByClassName' in this.statusBarIndicator) {
-      const el = this.statusBarIndicator.getElementsByClassName('bible-version-indicator')[0]
+    if (
+      this.statusBarIndicator &&
+      'getElementsByClassName' in this.statusBarIndicator
+    ) {
+      const el = this.statusBarIndicator.getElementsByClassName(
+        'bible-version-indicator'
+      )[0]
       el.innerHTML = `${bibleVersion.versionName}(${bibleVersion.language})`
     }
   }

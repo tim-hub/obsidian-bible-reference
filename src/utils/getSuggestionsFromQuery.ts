@@ -1,8 +1,8 @@
 import { BibleReferencePluginSettings } from '../data/constants'
 import { VerseSuggesting } from '../verse/VerseSuggesting'
 import { BOOK_REG } from './regs'
-import { getFullBookName } from './bookNameReference';
-import { getBibleVersion } from '../data/BibleVersionCollection';
+import { getFullBookName } from './bookNameReference'
+import { getBibleVersion } from '../data/BibleVersionCollection'
 
 /**
  * Get suggestions from string query

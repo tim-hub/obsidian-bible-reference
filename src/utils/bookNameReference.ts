@@ -1,7 +1,9 @@
 import Reference from 'bible-reference-toolkit'
 
-
-export const getBookIdFromBookName = (bookName: string, langaugeCode: string = 'en'): number => {
+export const getBookIdFromBookName = (
+  bookName: string,
+  langaugeCode: string = 'en'
+): number => {
   try {
     return Reference.bookIdFromTranslationAndName(langaugeCode, bookName)
   } catch (e) {
@@ -10,7 +12,10 @@ export const getBookIdFromBookName = (bookName: string, langaugeCode: string = '
   }
 }
 
-export const getFullBookName = (name: string, langaugeCode: string = 'en'): string => {
+export const getFullBookName = (
+  name: string,
+  langaugeCode: string = 'en'
+): string => {
   console.debug('getFullBookName', name, langaugeCode)
   const bookId = getBookIdFromBookName(name, langaugeCode)
   try {

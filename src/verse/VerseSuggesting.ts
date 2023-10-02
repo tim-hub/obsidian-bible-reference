@@ -1,4 +1,8 @@
-import { BibleReferencePluginSettings, DEFAULT_SETTINGS, OutgoingLinkPositionEnum, } from '../data/constants'
+import {
+  BibleReferencePluginSettings,
+  DEFAULT_SETTINGS,
+  OutgoingLinkPositionEnum,
+} from '../data/constants'
 import { getBibleVersion } from '../data/BibleVersionCollection'
 import { IVerse } from '../interfaces/IVerse'
 import { ProviderFactory } from '../provider/ProviderFactory'
@@ -12,7 +16,8 @@ import { IVerseSuggesting } from './IVerseSuggesting'
  */
 export class VerseSuggesting
   extends BaseVerseFormatter
-  implements IVerseSuggesting {
+  implements IVerseSuggesting
+{
   public bibleVersion: string
   private bibleProvider: BaseBibleAPIProvider
 
@@ -34,10 +39,16 @@ export class VerseSuggesting
   }
 
   public get head(): string {
-    let content = super.head;
-    content += this.settings?.bookBacklinking === OutgoingLinkPositionEnum.Header ? ` [[${this.verseReference.bookName}]]` : ''
-    content += this.settings?.chapterBacklinking === OutgoingLinkPositionEnum.Header ? ` [[${this.verseReference.bookName} ${this.verseReference.chapterNumber}]]` : ''
-    return content;
+    let content = super.head
+    content +=
+      this.settings?.bookBacklinking === OutgoingLinkPositionEnum.Header
+        ? ` [[${this.verseReference.bookName}]]`
+        : ''
+    content +=
+      this.settings?.chapterBacklinking === OutgoingLinkPositionEnum.Header
+        ? ` [[${this.verseReference.bookName} ${this.verseReference.chapterNumber}]]`
+        : ''
+    return content
   }
 
   public get bottom(): string {
@@ -48,14 +59,25 @@ export class VerseSuggesting
         ? ` #${this.verseReference.bookName}`
         : ''
       bottom += this.settings?.chapterTagging
-        ? ` #${this.verseReference.bookName + this.verseReference.chapterNumber}`
+        ? ` #${
+            this.verseReference.bookName + this.verseReference.chapterNumber
+          }`
         : ''
       bottom += ' %%'
     }
-    if (this.settings?.bookBacklinking === OutgoingLinkPositionEnum.Bottom || this.settings?.chapterBacklinking === OutgoingLinkPositionEnum.Bottom) {
+    if (
+      this.settings?.bookBacklinking === OutgoingLinkPositionEnum.Bottom ||
+      this.settings?.chapterBacklinking === OutgoingLinkPositionEnum.Bottom
+    ) {
       bottom += '>\n '
-      bottom += this.settings?.bookBacklinking === OutgoingLinkPositionEnum.Bottom ? ` [[${this.verseReference.bookName}]]` : ''
-      bottom += this.settings?.chapterBacklinking === OutgoingLinkPositionEnum.Bottom ? ` [[${this.verseReference.bookName} ${this.verseReference.chapterNumber}]]` : ''
+      bottom +=
+        this.settings?.bookBacklinking === OutgoingLinkPositionEnum.Bottom
+          ? ` [[${this.verseReference.bookName}]]`
+          : ''
+      bottom +=
+        this.settings?.chapterBacklinking === OutgoingLinkPositionEnum.Bottom
+          ? ` [[${this.verseReference.bookName} ${this.verseReference.chapterNumber}]]`
+          : ''
     }
     return bottom
   }
@@ -64,9 +86,9 @@ export class VerseSuggesting
    * Render for use in editor/modal suggest
    */
   public renderSuggestion(el: HTMLElement) {
-    const outer = el.createDiv({cls: 'obr-suggester-container'})
+    const outer = el.createDiv({ cls: 'obr-suggester-container' })
     // @ts-ignore
-    outer.createDiv({cls: 'obr-shortcode'}).setText(this.bodyContent)
+    outer.createDiv({ cls: 'obr-shortcode' }).setText(this.bodyContent)
   }
 
   public async fetchAndSetVersesText(): Promise<void> {
@@ -79,8 +101,7 @@ export class VerseSuggesting
     if (this.bibleVersion === DEFAULT_SETTINGS.bibleVersion) {
       console.debug('match to default language plus version')
     }
-    const bibleVersion =
-      getBibleVersion(this.bibleVersion)
+    const bibleVersion = getBibleVersion(this.bibleVersion)
     if (
       !this.bibleProvider ||
       this.bibleProvider.BibleVersionKey !== bibleVersion?.key

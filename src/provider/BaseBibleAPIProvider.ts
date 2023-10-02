@@ -1,7 +1,7 @@
 import { IVerse } from '../interfaces/IVerse'
 import { Notice } from 'obsidian'
 import { EventStats } from './EventStats'
-import { IBibleVersion } from '../interfaces/IBibleVersion';
+import { IBibleVersion } from '../interfaces/IBibleVersion'
 
 export abstract class BaseBibleAPIProvider {
   protected _versionKey: string // the version selected, for example kjv
@@ -17,7 +17,7 @@ export abstract class BaseBibleAPIProvider {
     this._apiUrl = bibleVersion.apiSource.apiUrl
   }
 
-  protected get LanguageShortCode(): string|undefined {
+  protected get LanguageShortCode(): string | undefined {
     return this._bibleVersiopn.code
   }
 

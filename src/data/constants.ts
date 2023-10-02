@@ -31,7 +31,7 @@ export interface BibleReferencePluginSettings {
   enableBibleVerseLookupRibbon?: boolean
   optOutToEvents?: boolean
 
-  advancedSettings?: boolean;
+  advancedSettings?: boolean
 }
 
 export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
