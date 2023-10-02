@@ -1,9 +1,5 @@
-import {
-  BibleReferencePluginSettings,
-  DEFAULT_SETTINGS,
-} from '../data/constants'
-import { BibleVersionCollection } from '../data/BibleVersionCollection'
-import { IBibleVersion } from '../interfaces/IBibleVersion'
+import { BibleReferencePluginSettings, DEFAULT_SETTINGS, } from '../data/constants'
+import { getBibleVersion } from '../data/BibleVersionCollection'
 import { IVerse } from '../interfaces/IVerse'
 import { ProviderFactory } from '../provider/ProviderFactory'
 import { BaseBibleAPIProvider } from '../provider/BaseBibleAPIProvider'
@@ -16,8 +12,7 @@ import { IVerseSuggesting } from './IVerseSuggesting'
  */
 export class VerseSuggesting
   extends BaseVerseFormatter
-  implements IVerseSuggesting
-{
+  implements IVerseSuggesting {
   public bibleVersion: string
   private bibleProvider: BaseBibleAPIProvider
 
@@ -57,20 +52,14 @@ export class VerseSuggesting
    * Render for use in editor/modal suggest
    */
   public renderSuggestion(el: HTMLElement) {
-    const outer = el.createDiv({ cls: 'obr-suggester-container' })
+    const outer = el.createDiv({cls: 'obr-suggester-container'})
     // @ts-ignore
-    outer.createDiv({ cls: 'obr-shortcode' }).setText(this.bodyContent)
+    outer.createDiv({cls: 'obr-shortcode'}).setText(this.bodyContent)
   }
 
   public async fetchAndSetVersesText(): Promise<void> {
     // todo add a caching here, this might not be possible with Obsidian limit
     this.verses = await this.getVerses()
-  }
-
-  protected getVerseReferenceLink(): string {
-    return ` [${
-      this.bibleProvider.BibleReferenceHead
-    } - ${this.bibleVersion.toUpperCase()}](${this.bibleProvider.VerseLinkURL})`
   }
 
   public async getVerses(): Promise<IVerse[]> {
@@ -79,9 +68,7 @@ export class VerseSuggesting
       console.debug('match to default language plus version')
     }
     const bibleVersion =
-      BibleVersionCollection.find(
-        (bv: IBibleVersion) => bv.key === this.bibleVersion
-      ) ?? BibleVersionCollection[0]
+      getBibleVersion(this.bibleVersion)
     if (
       !this.bibleProvider ||
       this.bibleProvider.BibleVersionKey !== bibleVersion?.key
@@ -99,5 +86,11 @@ export class VerseSuggesting
         ? [this.verseReference.verseNumber, this.verseReference.verseNumberEnd]
         : [this.verseReference.verseNumber]
     )
+  }
+
+  protected getVerseReferenceLink(): string {
+    return ` [${
+      this.bibleProvider.BibleReferenceHead
+    } - ${this.bibleVersion.toUpperCase()}](${this.bibleProvider.VerseLinkURL})`
   }
 }
