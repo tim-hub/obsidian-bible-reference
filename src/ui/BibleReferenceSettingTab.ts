@@ -27,6 +27,7 @@ import { FlagService } from '../provider/FeatureFlag'
 import { BibleAPISourceCollection } from '../data/BibleApiSourceCollection'
 import { EventStats } from '../provider/EventStats'
 import { APP_NAMING } from '../data/constants'
+import { pluginEvent } from '../obsidian/PluginEvent';
 
 export class BibleReferenceSettingTab extends PluginSettingTab {
   plugin: BibleReferencePlugin
@@ -87,6 +88,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
             this.plugin.settings.bibleVersion = value
             console.debug('Default Bible Version: ' + value)
             await this.plugin.saveSettings()
+            pluginEvent.trigger('bible-reference:settings:version', [value])
             new Notice(`Bible Reference - use Version ${value.toUpperCase()}`)
             EventStats.logSettingChange(
               'changeVersion',
