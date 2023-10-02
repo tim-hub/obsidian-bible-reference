@@ -2,9 +2,14 @@ export enum BibleVerseReferenceLinkPosition {
   Header = 'Header',
   Bottom = 'Bottom',
   AllAbove = 'Both',
+  None = 'None',
 }
 
 export const BibleVerseReferenceLinkPositionCollection = [
+  {
+    name: BibleVerseReferenceLinkPosition.None,
+    description: 'Hide (Clean and Simple)',
+  },
   {
     name: BibleVerseReferenceLinkPosition.Header,
     description: 'Header (Bible Verse Header)',
@@ -15,6 +20,6 @@ export const BibleVerseReferenceLinkPositionCollection = [
   },
   {
     name: BibleVerseReferenceLinkPosition.AllAbove,
-    description: 'Both (Both of Above)',
+    description: 'Both Header and Bottom',
   },
 ]

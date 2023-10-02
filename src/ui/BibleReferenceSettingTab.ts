@@ -100,7 +100,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
   setUpReferenceLinkPositionOptions = (containerEl: HTMLElement): void => {
     new Setting(containerEl)
       .setName('Verse Reference Link Position')
-      .setDesc('Where to put the bible verse reference link of the bible')
+      .setDesc('Where to put the reference link of the Bible')
       .addDropdown((dropdown: DropdownComponent) => {
         BibleVerseReferenceLinkPositionCollection.forEach(
           ({ name, description }) => {
@@ -110,7 +110,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
         dropdown
           .setValue(
             this.plugin.settings.referenceLinkPosition ??
-              BibleVerseReferenceLinkPosition.Bottom
+              BibleVerseReferenceLinkPosition.None
           )
           .onChange(async (value) => {
             this.plugin.settings.referenceLinkPosition =
