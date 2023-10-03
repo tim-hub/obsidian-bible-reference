@@ -24,7 +24,8 @@ describe('test book names', () => {
   });
 
   test('test book 1 John', () => {
-    expect(books[61].fullName).toBe('John');
+    expect(books[61].fullName).toBe('1 John');
+    expect(books[61].name).toBe('John');
     expect(books[61].startNumber).toBe(1);
     expect(books[61].verses.length).toBe(5);
     expect(books[61].verses[0]).toBe(10);
