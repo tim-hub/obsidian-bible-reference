@@ -79,7 +79,7 @@ export class VerseSuggesting
           ? ` [[${this.verseReference.bookName} ${this.verseReference.chapterNumber}]]`
           : ''
     }
-    return bottom
+    return bottom + '\n'
   }
 
   /**
