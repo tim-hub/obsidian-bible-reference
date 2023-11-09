@@ -20,7 +20,7 @@ export class BibleAPIDotComProvider extends BaseBibleAPIProvider {
     verses: number[],
     versionName?: string
   ): string {
-    let queryString = `${bookName}+${chapter}:`
+    let queryString = encodeURIComponent(`${bookName}+${chapter}:`)
     if (verses?.length >= 3) {
       queryString += verses.join('&')
     } else if (verses?.length === 2 && !!verses[1]) {
