@@ -14,6 +14,12 @@ describe('Reference get book id from name', () => {
     expect(Reference.bookIdFromTranslationAndName('en', '1 Timothy')).toBe(54);
   })
 
+  test('Get Book Id for 1 Tim', () => {
+    expect(Reference.bookIdFromTranslationAndName('en', '1Tim')).toBe(54);
+  })
+
+
+
   test('Get Book Id for 2 Timothy', () => {
     expect(Reference.bookIdFromTranslationAndName('en', '2 Timothy')).toBe(55);
   })
@@ -33,6 +39,10 @@ describe('Reference get book id from name', () => {
 describe('Reference Original Test in Other Languages', () => {
   test('Get Book Id From Book Name For Spanish', () => {
     expect(Reference.bookIdFromTranslationAndName('sp', 'Génesis')).toBe(1);
+  })
+
+  test('Get Book Id From Book Name For Spanish With Short Name', () => {
+    expect(Reference.bookIdFromTranslationAndName('sp', 'gn')).toBe(1);
   })
 
   test('Get Book Id for 3 John in Japanese', () => {
