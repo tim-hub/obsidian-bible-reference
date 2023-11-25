@@ -140,6 +140,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "diatche",
+      "name": "Pavel Diatchenko",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5573638?v=4",
+      "profile": "https://www.linkedin.com/in/diatche",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,

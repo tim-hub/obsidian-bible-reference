@@ -68,6 +68,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="http://kmf.co/"><img src="https://avatars.githubusercontent.com/u/78700?v=4?s=65" width="65px;" alt="Karl Fischer"/><br /><sub><b>Karl Fischer</b></sub></a><br /><a href="#translation-kmf" title="Translation">🌍</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/OfirSinn"><img src="https://avatars.githubusercontent.com/u/81870040?v=4?s=65" width="65px;" alt="OfirSinn"/><br /><sub><b>OfirSinn</b></sub></a><br /><a href="#translation-OfirSinn" title="Translation">🌍</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://www.linkedin.com/in/diatche"><img src="https://avatars.githubusercontent.com/u/5573638?v=4?s=65" width="65px;" alt="Pavel Diatchenko"/><br /><sub><b>Pavel Diatchenko</b></sub></a><br /><a href="https://github.com/tim-hub/obsidian-bible-reference/commits?author=diatche" title="Code">💻</a></td>
+    </tr>
   </tbody>
 </table>
 
