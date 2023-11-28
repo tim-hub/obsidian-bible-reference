@@ -26,7 +26,11 @@ import {
 import { FlagService } from '../provider/FeatureFlag'
 import { BibleAPISourceCollection } from '../data/BibleApiSourceCollection'
 import { EventStats } from '../provider/EventStats'
-import { APP_NAMING, OutgoingLinkPositionEnum } from '../data/constants'
+import {
+  APP_NAMING,
+  BibleVersionNameLengthEnum,
+  OutgoingLinkPositionEnum,
+} from '../data/constants'
 import { pluginEvent } from '../obsidian/PluginEvent'
 
 export class BibleReferenceSettingTab extends PluginSettingTab {
@@ -54,6 +58,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     this.setUpVerseFormatOptions()
     this.setUpVerseNumberFormatOptions()
     this.setUpCollapsible()
+    this.setUpStatusIndicationOptions()
     this.containerEl.createEl('h2', { text: 'Others' })
     this.setUpExpertSettings()
 
@@ -227,9 +232,48 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
       })
   }
 
+  private setUpStatusIndicationOptions(): void {
+    new Setting(this.containerEl)
+      .setName('Display Selected Version at Status Bar')
+      .setDesc('The way of display the selected Bible Version at status bar')
+      .addDropdown((dropdown: DropdownComponent) => {
+        dropdown.addOption(
+          BibleVersionNameLengthEnum.Full,
+          BibleVersionNameLengthEnum.Full
+        )
+        dropdown.addOption(
+          BibleVersionNameLengthEnum.Short,
+          BibleVersionNameLengthEnum.Short
+        )
+        dropdown.addOption(
+          BibleVersionNameLengthEnum.Hide,
+          BibleVersionNameLengthEnum.Hide
+        )
+        dropdown
+          .setValue(
+            this.plugin.settings.bibleVersionStatusIndicator ??
+              BibleVersionNameLengthEnum.Short
+          )
+          .onChange(async (value) => {
+            this.plugin.settings.bibleVersionStatusIndicator =
+              value as BibleVersionNameLengthEnum
+            await this.plugin.saveSettings()
+            // re-fire the bible version, so that the indicator will reflect the change
+            pluginEvent.trigger('bible-reference:settings:version', [
+              this.plugin.settings.bibleVersion,
+            ])
+            EventStats.logSettingChange(
+              'others',
+              { key: `version-status-indicator-${value}`, value: 1 },
+              this.plugin.settings.optOutToEvents
+            )
+          })
+      })
+  }
+
   private setUpReferenceLinkPositionOptions(): void {
     new Setting(this.containerEl)
-      .setName('Verse Reference Link Position')
+      .setName('Verse Reference Position')
       .setDesc('Where to put the reference link of the Bible')
       .addDropdown((dropdown: DropdownComponent) => {
         BibleVerseReferenceLinkPositionCollection.forEach(
