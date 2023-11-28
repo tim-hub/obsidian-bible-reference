@@ -16,6 +16,12 @@ export enum OutgoingLinkPositionEnum {
   None = BibleVerseReferenceLinkPosition.None,
 }
 
+export enum BibleVersionNameLengthEnum {
+  Full = 'Full',
+  Short = 'Short',
+  Hide = 'Hide',
+}
+
 export interface BibleReferencePluginSettings {
   bibleVersion: string
   referenceLinkPosition?: BibleVerseReferenceLinkPosition
@@ -32,6 +38,7 @@ export interface BibleReferencePluginSettings {
   optOutToEvents?: boolean
 
   advancedSettings?: boolean
+  bibleVersionStatusIndicator?: BibleVersionNameLengthEnum
 }
 
 export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
@@ -46,6 +53,7 @@ export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
   optOutToEvents: false,
   bookBacklinking: OutgoingLinkPositionEnum.None,
   chapterBacklinking: OutgoingLinkPositionEnum.None,
+  bibleVersionStatusIndicator: BibleVersionNameLengthEnum.Short,
 }
 
 export const API_WAITING_LABEL = 'Loading...'

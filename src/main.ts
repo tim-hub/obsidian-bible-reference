@@ -2,6 +2,7 @@ import { Editor, MarkdownView, Notice, Plugin } from 'obsidian'
 import {
   APP_NAMING,
   BibleReferencePluginSettings,
+  BibleVersionNameLengthEnum,
   DEFAULT_SETTINGS,
 } from './data/constants'
 import { BibleReferenceSettingTab } from './ui/BibleReferenceSettingTab'
@@ -59,14 +60,14 @@ export default class BibleReferencePlugin extends Plugin {
       }
     }
 
-    this.initStatusBarInidactor()
+    this.initStatusBarIndicator()
     EventStats.logRecord(this.settings.optOutToEvents)
   }
 
   onunload() {
     console.debug('unloading plugin', APP_NAMING.appName)
     this.removeRibbonButton()
-    this.removeStatusBarIndicator()
+    this.tryRemoveStatusBarIndicator()
     pluginEvent.offAll() // so that we don't have to worry about off ref in multiple places
   }
 
@@ -181,18 +182,34 @@ export default class BibleReferencePlugin extends Plugin {
     }
   }
 
+  private getStatusBatLabel(): string {
+    const selectedVersion = getBibleVersion(this.settings.bibleVersion)
+    if (
+      this.settings.bibleVersionStatusIndicator ===
+      BibleVersionNameLengthEnum.Short
+    ) {
+      return `${selectedVersion.key.toUpperCase()}`
+    } else if (
+      this.settings.bibleVersionStatusIndicator ===
+      BibleVersionNameLengthEnum.Full
+    ) {
+      return `${selectedVersion.versionName}(${selectedVersion.language})`
+    } else {
+      return ''
+    }
+  }
+
   /**
    * To indicate user the Bible version selected
    * @private
    */
-  private initStatusBarInidactor(): void {
+  private initStatusBarIndicator(): void {
     // This adds a status bar item to the bottom of the app. Does not work on mobile apps.
-    this.removeStatusBarIndicator()
-    const bibleVersion = getBibleVersion(this.settings.bibleVersion)
+    this.tryRemoveStatusBarIndicator()
     this.statusBarIndicator = this.addStatusBarItem()
     // todo add an icon
     this.statusBarIndicator.createEl('span', {
-      text: `${bibleVersion.versionName}(${bibleVersion.language})`,
+      text: this.getStatusBatLabel(),
       cls: 'bible-version-indicator',
     })
     // create event listener for the update
@@ -202,14 +219,13 @@ export default class BibleReferencePlugin extends Plugin {
     // this.registerEvent(versionChangeEventRef) // somehow this is not necessary
   }
 
-  private removeStatusBarIndicator(): void {
+  private tryRemoveStatusBarIndicator(): void {
     if (this.statusBarIndicator) {
       this.statusBarIndicator.parentNode?.removeChild(this.statusBarIndicator)
     }
   }
 
   private updateStatusBarIndicator(): void {
-    const bibleVersion = getBibleVersion(this.settings.bibleVersion)
     if (
       this.statusBarIndicator &&
       'getElementsByClassName' in this.statusBarIndicator
@@ -217,7 +233,7 @@ export default class BibleReferencePlugin extends Plugin {
       const el = this.statusBarIndicator.getElementsByClassName(
         'bible-version-indicator'
       )[0]
-      el.innerHTML = `${bibleVersion.versionName}(${bibleVersion.language})`
+      el.innerHTML = this.getStatusBatLabel()
     }
   }
 }

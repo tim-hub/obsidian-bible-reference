@@ -26,7 +26,11 @@ import {
 import { FlagService } from '../provider/FeatureFlag'
 import { BibleAPISourceCollection } from '../data/BibleApiSourceCollection'
 import { EventStats } from '../provider/EventStats'
-import { APP_NAMING, OutgoingLinkPositionEnum } from '../data/constants'
+import {
+  APP_NAMING,
+  BibleVersionNameLengthEnum,
+  OutgoingLinkPositionEnum,
+} from '../data/constants'
 import { pluginEvent } from '../obsidian/PluginEvent'
 
 export class BibleReferenceSettingTab extends PluginSettingTab {
@@ -46,18 +50,17 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
         <iframe src="https://github.com/sponsors/tim-hub/button" title="Sponsor Obsidian Bible Reference" width="116" height="32px" style="margin-right: 2em"/>
     `
 
-    this.containerEl.createEl('h1', {text: APP_NAMING.appName})
+    this.containerEl.createEl('h1', { text: APP_NAMING.appName })
     this.setUpVersionSettingsAndVersionOptions()
 
-    this.containerEl.createEl('h2', {text: 'Verses Rendering'})
+    this.containerEl.createEl('h2', { text: 'Verses Rendering' })
     this.setUpReferenceLinkPositionOptions()
     this.setUpVerseFormatOptions()
     this.setUpVerseNumberFormatOptions()
     this.setUpCollapsible()
+    this.setUpStatusIndicationOptions()
+    this.containerEl.createEl('h2', { text: 'Others' })
     this.setUpExpertSettings()
-    this.containerEl.createEl('h2', {text: 'Others'})
-
-    this.setUpOptOutEventsOptions()
 
     this.containerEl.createSpan({}, (span) => {
       span.innerHTML = `
@@ -74,7 +77,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     }
     EventStats.logUIOpen(
       'settingsOpen',
-      {key: 'open', value: 1},
+      { key: 'open', value: 1 },
       this.plugin.settings.optOutToEvents
     )
   }
@@ -93,16 +96,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
   private displayExpertSettings(): void {
     if (this.expertSettingContainer) {
       this.expertSettingContainer.empty()
-      this.expertSettingContainer.createEl('hr')
-      this.expertSettingContainer.createEl('h2', {text: 'Expert Settings'})
-      this.expertSettingContainer.createEl('h5', {
-        text: 'Tagging and Linking Settings',
-      })
-      this.expertSettingContainer.createSpan({}, (span) => {
-        span.innerHTML = `
-        <small>Only if you want to add tags at the bottom of verses</small>
-      `
-      })
+      this.expertSettingContainer.createEl('h2', { text: 'Expert Settings' })
 
       new Setting(this.expertSettingContainer)
         .setName('Add a Book Tag')
@@ -115,7 +109,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
               await this.plugin.saveSettings()
               EventStats.logSettingChange(
                 'changeVerseFormatting',
-                {key: `book-tagging-${value}`, value: 1},
+                { key: `book-tagging-${value}`, value: 1 },
                 this.plugin.settings.optOutToEvents
               )
             })
@@ -131,21 +125,23 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
               await this.plugin.saveSettings()
               EventStats.logSettingChange(
                 'changeVerseFormatting',
-                {key: `chapter-tagging-${value}`, value: 1},
+                { key: `chapter-tagging-${value}`, value: 1 },
                 this.plugin.settings.optOutToEvents
               )
             })
         )
 
-      const getOutgoingLinkPosition = (linkingPostion: string | OutgoingLinkPositionEnum | undefined) => {
+      const getOutgoingLinkPosition = (
+        linkingPostion: string | OutgoingLinkPositionEnum | undefined
+      ) => {
         let value = linkingPostion
         if (!value) {
           value = OutgoingLinkPositionEnum.None
-        } else if (value as any === true) {
+        } else if ((value as any) === true) {
           value = OutgoingLinkPositionEnum.Header
         }
         // otherwise no change
-        return value as string;
+        return value as string
       }
 
       new Setting(this.expertSettingContainer)
@@ -155,7 +151,9 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
           Object.keys(OutgoingLinkPositionEnum).forEach((name) => {
             dropdown.addOption(name, name)
           })
-          const value = getOutgoingLinkPosition(this.plugin.settings?.bookBacklinking)
+          const value = getOutgoingLinkPosition(
+            this.plugin.settings?.bookBacklinking
+          )
           dropdown.setValue(value)
           dropdown.onChange(async (value) => {
             this.plugin.settings.bookBacklinking =
@@ -173,7 +171,9 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
           Object.keys(OutgoingLinkPositionEnum).forEach((name) => {
             dropdown.addOption(name, name)
           })
-          const value = getOutgoingLinkPosition(this.plugin.settings?.chapterBacklinking)
+          const value = getOutgoingLinkPosition(
+            this.plugin.settings?.chapterBacklinking
+          )
           dropdown.setValue(value)
           dropdown.onChange(async (value) => {
             this.plugin.settings.chapterBacklinking =
@@ -181,6 +181,8 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
             await this.plugin.saveSettings()
           })
         })
+
+      this.setUpOptOutEventsOptions(this.expertSettingContainer)
     }
   }
 
@@ -223,7 +225,46 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
             new Notice(`Bible Reference - use Version ${value.toUpperCase()}`)
             EventStats.logSettingChange(
               'changeVersion',
-              {key: value, value: 1},
+              { key: value, value: 1 },
+              this.plugin.settings.optOutToEvents
+            )
+          })
+      })
+  }
+
+  private setUpStatusIndicationOptions(): void {
+    new Setting(this.containerEl)
+      .setName('Display Selected Version at Status Bar')
+      .setDesc('The way of display the selected Bible Version at status bar')
+      .addDropdown((dropdown: DropdownComponent) => {
+        dropdown.addOption(
+          BibleVersionNameLengthEnum.Full,
+          BibleVersionNameLengthEnum.Full
+        )
+        dropdown.addOption(
+          BibleVersionNameLengthEnum.Short,
+          BibleVersionNameLengthEnum.Short
+        )
+        dropdown.addOption(
+          BibleVersionNameLengthEnum.Hide,
+          BibleVersionNameLengthEnum.Hide
+        )
+        dropdown
+          .setValue(
+            this.plugin.settings.bibleVersionStatusIndicator ??
+              BibleVersionNameLengthEnum.Short
+          )
+          .onChange(async (value) => {
+            this.plugin.settings.bibleVersionStatusIndicator =
+              value as BibleVersionNameLengthEnum
+            await this.plugin.saveSettings()
+            // re-fire the bible version, so that the indicator will reflect the change
+            pluginEvent.trigger('bible-reference:settings:version', [
+              this.plugin.settings.bibleVersion,
+            ])
+            EventStats.logSettingChange(
+              'others',
+              { key: `version-status-indicator-${value}`, value: 1 },
               this.plugin.settings.optOutToEvents
             )
           })
@@ -232,18 +273,18 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
 
   private setUpReferenceLinkPositionOptions(): void {
     new Setting(this.containerEl)
-      .setName('Verse Reference Link Position')
+      .setName('Verse Reference Position')
       .setDesc('Where to put the reference link of the Bible')
       .addDropdown((dropdown: DropdownComponent) => {
         BibleVerseReferenceLinkPositionCollection.forEach(
-          ({name, description}) => {
+          ({ name, description }) => {
             dropdown.addOption(name, description)
           }
         )
         dropdown
           .setValue(
             this.plugin.settings.referenceLinkPosition ??
-            BibleVerseReferenceLinkPosition.None
+              BibleVerseReferenceLinkPosition.None
           )
           .onChange(async (value) => {
             this.plugin.settings.referenceLinkPosition =
@@ -253,7 +294,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
             new Notice('Bible Reference Settings Updated ')
             EventStats.logSettingChange(
               'changeVerseFormatting',
-              {key: `link-position-${value}`, value: 1},
+              { key: `link-position-${value}`, value: 1 },
               this.plugin.settings.optOutToEvents
             )
           })
@@ -267,7 +308,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
         'Sets how to format the verses in Obsidian, either line by line or in 1 paragraph'
       )
       .addDropdown((dropdown: DropdownComponent) => {
-        BibleVerseFormatCollection.forEach(({name, description}) => {
+        BibleVerseFormatCollection.forEach(({ name, description }) => {
           dropdown.addOption(name, description)
         })
         dropdown
@@ -281,7 +322,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
             new Notice('Bible Verse Format Settings Updated')
             EventStats.logSettingChange(
               'changeVerseFormatting',
-              {key: `verse-format-${value}`, value: 1},
+              { key: `verse-format-${value}`, value: 1 },
               this.plugin.settings.optOutToEvents
             )
           })
@@ -293,13 +334,13 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
       .setName('Verse Number Formatting Options')
       .setDesc('Sets how to format the verse numbers in Obsidian')
       .addDropdown((dropdown: DropdownComponent) => {
-        BibleVerseNumberFormatCollection.forEach(({name, description}) => {
+        BibleVerseNumberFormatCollection.forEach(({ name, description }) => {
           dropdown.addOption(name, description)
         })
         dropdown
           .setValue(
             this.plugin.settings.verseNumberFormatting ??
-            BibleVerseNumberFormat.Period
+              BibleVerseNumberFormat.Period
           )
           .onChange(async (value) => {
             this.plugin.settings.verseNumberFormatting =
@@ -309,7 +350,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
             new Notice('Bible Verse Format Number Settings Updated')
             EventStats.logSettingChange(
               'changeVerseFormatting',
-              {key: `verse-number-format-${value}`, value: 1},
+              { key: `verse-number-format-${value}`, value: 1 },
               this.plugin.settings.optOutToEvents
             )
           })
@@ -328,7 +369,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
             await this.plugin.saveSettings()
             EventStats.logSettingChange(
               'changeVerseFormatting',
-              {key: `collapsible-${value}`, value: 1},
+              { key: `collapsible-${value}`, value: 1 },
               this.plugin.settings.optOutToEvents
             )
           })
@@ -339,7 +380,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     new Setting(this.containerEl)
       .setName('Expert Settings')
       .setDesc(
-        'Display or Hide Expert Settings, such as Tagging and Linking settings'
+        'Display or Hide Expert Settings, such as Tagging, Linking, Events Logging settings'
       )
       .addToggle((toggle) =>
         toggle
@@ -355,46 +396,48 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
 
   private setUpBookTagging(): void {
     this.expertSettingContainer &&
-    new Setting(this.expertSettingContainer)
-      .setName('Add a Book Tag')
-      .setDesc('Add a hidden book tag at bottom, for example #John')
-      .addToggle((toggle) =>
-        toggle
-          .setValue(!!this.plugin.settings?.bookTagging)
-          .onChange(async (value) => {
-            this.plugin.settings.bookTagging = value
-            await this.plugin.saveSettings()
-            EventStats.logSettingChange(
-              'changeVerseFormatting',
-              {key: `book-tagging-${value}`, value: 1},
-              this.plugin.settings.optOutToEvents
-            )
-          })
-      )
+      new Setting(this.expertSettingContainer)
+        .setName('Add a Book Tag')
+        .setDesc('Add a hidden book tag at bottom, for example #John')
+        .addToggle((toggle) =>
+          toggle
+            .setValue(!!this.plugin.settings?.bookTagging)
+            .onChange(async (value) => {
+              this.plugin.settings.bookTagging = value
+              await this.plugin.saveSettings()
+              EventStats.logSettingChange(
+                'changeVerseFormatting',
+                { key: `book-tagging-${value}`, value: 1 },
+                this.plugin.settings.optOutToEvents
+              )
+            })
+        )
   }
 
   private setUpChapterTagging(): void {
     this.expertSettingContainer &&
-    new Setting(this.expertSettingContainer)
-      .setName('Add a Chapter Tag')
-      .setDesc('Add a hidden chapter tag at bottom, for example #John1')
-      .addToggle((toggle) =>
-        toggle
-          .setValue(!!this.plugin.settings?.chapterTagging)
-          .onChange(async (value) => {
-            this.plugin.settings.chapterTagging = value
-            await this.plugin.saveSettings()
-            EventStats.logSettingChange(
-              'changeVerseFormatting',
-              {key: `chapter-tagging-${value}`, value: 1},
-              this.plugin.settings.optOutToEvents
-            )
-          })
-      )
+      new Setting(this.expertSettingContainer)
+        .setName('Add a Chapter Tag')
+        .setDesc('Add a hidden chapter tag at bottom, for example #John1')
+        .addToggle((toggle) =>
+          toggle
+            .setValue(!!this.plugin.settings?.chapterTagging)
+            .onChange(async (value) => {
+              this.plugin.settings.chapterTagging = value
+              await this.plugin.saveSettings()
+              EventStats.logSettingChange(
+                'changeVerseFormatting',
+                { key: `chapter-tagging-${value}`, value: 1 },
+                this.plugin.settings.optOutToEvents
+              )
+            })
+        )
   }
 
-  private setUpOptOutEventsOptions(): void {
-    new Setting(this.containerEl)
+  private setUpOptOutEventsOptions(
+    container: HTMLElement = this.containerEl
+  ): void {
+    new Setting(container)
       .setName('Opt Out of Events Logging')
       .setDesc(
         'We used events logging to improve the plugin, this is very helpful for us, but if you want to opt out, you can do it here. (Excluding Errors Logs))'
@@ -405,7 +448,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
           .onChange(async (value) => {
             EventStats.logSettingChange(
               'others',
-              {key: `opt-${value ? 'out' : 'in'}`, value: 1},
+              { key: `opt-${value ? 'out' : 'in'}`, value: 1 },
               this.plugin.settings.optOutToEvents
             )
             this.plugin.settings.optOutToEvents = value
