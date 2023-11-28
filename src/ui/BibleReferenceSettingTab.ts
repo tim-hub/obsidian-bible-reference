@@ -54,10 +54,8 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     this.setUpVerseFormatOptions()
     this.setUpVerseNumberFormatOptions()
     this.setUpCollapsible()
-    this.setUpExpertSettings()
     this.containerEl.createEl('h2', {text: 'Others'})
-
-    this.setUpOptOutEventsOptions()
+    this.setUpExpertSettings()
 
     this.containerEl.createSpan({}, (span) => {
       span.innerHTML = `
@@ -93,16 +91,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
   private displayExpertSettings(): void {
     if (this.expertSettingContainer) {
       this.expertSettingContainer.empty()
-      this.expertSettingContainer.createEl('hr')
       this.expertSettingContainer.createEl('h2', {text: 'Expert Settings'})
-      this.expertSettingContainer.createEl('h5', {
-        text: 'Tagging and Linking Settings',
-      })
-      this.expertSettingContainer.createSpan({}, (span) => {
-        span.innerHTML = `
-        <small>Only if you want to add tags at the bottom of verses</small>
-      `
-      })
 
       new Setting(this.expertSettingContainer)
         .setName('Add a Book Tag')
@@ -181,6 +170,8 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
             await this.plugin.saveSettings()
           })
         })
+
+      this.setUpOptOutEventsOptions(this.expertSettingContainer)
     }
   }
 
@@ -339,7 +330,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     new Setting(this.containerEl)
       .setName('Expert Settings')
       .setDesc(
-        'Display or Hide Expert Settings, such as Tagging and Linking settings'
+        'Display or Hide Expert Settings, such as Tagging, Linking, Events Logging settings'
       )
       .addToggle((toggle) =>
         toggle
@@ -393,8 +384,8 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
       )
   }
 
-  private setUpOptOutEventsOptions(): void {
-    new Setting(this.containerEl)
+  private setUpOptOutEventsOptions(container: HTMLElement = this.containerEl): void {
+    new Setting(container)
       .setName('Opt Out of Events Logging')
       .setDesc(
         'We used events logging to improve the plugin, this is very helpful for us, but if you want to opt out, you can do it here. (Excluding Errors Logs))'
