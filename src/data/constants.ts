@@ -39,6 +39,7 @@ export interface BibleReferencePluginSettings {
 
   advancedSettings?: boolean
   bibleVersionStatusIndicator?: BibleVersionNameLengthEnum
+  displayBibleIconPrefixAtHeader?: boolean
 }
 
 export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
@@ -54,6 +55,7 @@ export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
   bookBacklinking: OutgoingLinkPositionEnum.None,
   chapterBacklinking: OutgoingLinkPositionEnum.None,
   bibleVersionStatusIndicator: BibleVersionNameLengthEnum.Short,
+  displayBibleIconPrefixAtHeader: true,
 }
 
 export const API_WAITING_LABEL = 'Loading...'
