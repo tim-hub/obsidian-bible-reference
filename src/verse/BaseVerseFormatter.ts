@@ -67,11 +67,17 @@ export abstract class BaseVerseFormatter {
   }
 
   protected get head(): string {
-    let head = `> [!bible]`
+    let head = `> `
 
-    if (this.settings?.collapsibleVerses) {
-      head += '+'
+    if (this.settings.displayBibleIconPrefixAtHeader) {
+      head += '[!bible]'
+
+      if (this.settings?.collapsibleVerses) {
+        head += '+'
+      }
+
     }
+
     if (
       this.settings.referenceLinkPosition ===
         BibleVerseReferenceLinkPosition.Header ||
