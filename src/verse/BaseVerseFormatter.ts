@@ -75,7 +75,6 @@ export abstract class BaseVerseFormatter {
       if (this.settings?.collapsibleVerses) {
         head += '+'
       }
-
     }
 
     if (
