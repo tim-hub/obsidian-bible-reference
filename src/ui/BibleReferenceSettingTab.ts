@@ -57,6 +57,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     this.setUpReferenceLinkPositionOptions()
     this.setUpVerseFormatOptions()
     this.setUpVerseNumberFormatOptions()
+    this.setUpBibleIconPrefixToggle()
     this.setUpCollapsibleToggle()
     this.setUpStatusIndicationOptions()
     this.containerEl.createEl('h2', {text: 'Others'})
@@ -90,6 +91,11 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
       } else {
         this?.expertSettingContainer && this.expertSettingContainer.empty()
       }
+    })
+
+    pluginEvent.on('bible-reference:settings:re-render', (value: boolean) => {
+      console.log('re-render', value)
+      this.display()
     })
   }
 
@@ -358,10 +364,15 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
   }
 
   private setUpCollapsibleToggle(): void {
-    new Setting(this.containerEl)
-      .setName('Make Verses Collapsible')
-      .setDesc('Make the rendered verses collapsible')
-      .addToggle((toggle) =>
+    const setting = new Setting(this.containerEl)
+      .setName('Make Verses Collapsible *')
+      .setDesc('Make the rendered verses collapsible, (This option will be disabled if Bible Icon Prefix option above is disabled)')
+    setting.setTooltip('This will make the rendered verses collapsible, so that you can hide them when you don\'t need them')
+    setting.addToggle((toggle) => {
+        if (!this.plugin.settings?.displayBibleIconPrefixAtHeader) {
+          toggle.setDisabled(true)
+          toggle.setTooltip('')
+        }
         toggle
           .setValue(!!this.plugin.settings?.collapsibleVerses)
           .onChange(async (value) => {
@@ -373,19 +384,26 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
               this.plugin.settings.optOutToEvents
             )
           })
-      )
+      }
+    )
+
   }
 
   private setUpBibleIconPrefixToggle(): void {
     new Setting(this.containerEl)
-      .setName('Show Bible Icon Prefix `[!Bible]`')
-      .setDesc('When this is true, it will render a Bible icon in Obsidian, disable this if you want to have standard Markdown')
+      .setName('Show Bible Icon Prefix "[!Bible]" *')
+      .setDesc('When this is true, it will render a Bible icon in Obsidian, disable this if you want to hide it or use standard Markdown. (This will disable the Collapsible option below)')
       .addToggle((toggle) =>
         toggle
           .setValue(!!this.plugin.settings?.displayBibleIconPrefixAtHeader)
           .onChange(async (value) => {
             this.plugin.settings.displayBibleIconPrefixAtHeader = value
             await this.plugin.saveSettings()
+            if (!value) {
+              this.plugin.settings.collapsibleVerses = false
+              await this.plugin.saveSettings()
+            }
+            pluginEvent.trigger('bible-reference:settings:re-render', [])
             EventStats.logSettingChange(
               'others',
               {key: `displayBibleIconPrefix-${value}`, value: 1},

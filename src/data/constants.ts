@@ -27,7 +27,7 @@ export interface BibleReferencePluginSettings {
   referenceLinkPosition?: BibleVerseReferenceLinkPosition
   verseFormatting?: BibleVerseFormat
   verseNumberFormatting?: BibleVerseNumberFormat
-  collapsibleVerses?: boolean
+  collapsibleVerses?: boolean // this is binging to displayBibleIconPrefixAtHeader option
   bookTagging?: boolean
   chapterTagging?: boolean
   bookBacklinking?: OutgoingLinkPositionEnum // this is refering to outgoing link
@@ -39,7 +39,7 @@ export interface BibleReferencePluginSettings {
 
   advancedSettings?: boolean
   bibleVersionStatusIndicator?: BibleVersionNameLengthEnum
-  displayBibleIconPrefixAtHeader?: boolean
+  displayBibleIconPrefixAtHeader?: boolean // this is binding to to header collapsible option
 }
 
 export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
