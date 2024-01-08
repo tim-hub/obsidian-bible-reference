@@ -260,6 +260,12 @@ export const BibleVersionCollection: IBibleVersion[] = [
     language: 'Ukrainian',
     apiSource: BibleAPISourceCollection.bollsLife,
   },
+  {
+    key: 'nbs',
+    versionName: 'Nouvelle Bible Segond, 2002',
+    language: 'French',
+    apiSource: BibleAPISourceCollection.bollsLife,
+  }
 ]
 
 export const DEFAULT_BIBLE_VERSION = BibleVersionCollection[11]
