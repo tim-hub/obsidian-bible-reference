@@ -110,6 +110,9 @@ describe('test all translations', () => {
           uniqueBookNames.add(book.name);
           for (const name of book.shortNames) {
             // console.log(name, uniqueBookNames)
+            if (uniqueBookNames.has(name)) {
+              console.error(`${name} is duplicated among other books`)
+            }
             expect(uniqueBookNames.has(name)).toBe(false);
             uniqueBookNames.add(name);
           }
