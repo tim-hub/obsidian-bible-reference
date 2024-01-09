@@ -130,6 +130,20 @@ export const BibleVersionCollection: IBibleVersion[] = [
     apiSource: BibleAPISourceCollection.bollsLife,
   },
   {
+    key: 'sch',
+    versionName: 'Schlachter (1951)',
+    language: 'German Deutsch',
+    code: 'de',
+    apiSource: BibleAPISourceCollection.bollsLife,
+  },
+  {
+    key: 'mb',
+    versionName: 'Menge-Bibel',
+    language: 'German Deutsch',
+    code: 'de',
+    apiSource: BibleAPISourceCollection.bollsLife,
+  },
+  {
     key: 'ntgt',
     versionName: 'Greek NT: Tischendorf 8th Ed.',
     language: 'Greek Ελληνικά',
