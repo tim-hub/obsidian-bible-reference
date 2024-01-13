@@ -1,51 +1,57 @@
 {
   "language": "de",
   "1": {
-    "name": "Mose",
+    "name": "Genesis",
     "shortNames": [
+      "1. Mose",
       "Ge",
       "Gen",
-      "Mo"
+      "1. Mo"
     ],
-    "startNumber": 1
+    "startNumber": 0
   },
   "2": {
-    "name": "Mose",
+    "name": "Exodus",
     "shortNames": [
+      "2. Mose",
       "Ex",
       "Exo",
-      "Mo"
+      "2. Mo"
     ],
-    "startNumber": 2
+    "startNumber": 0
   },
   "3": {
-    "name": "Mose",
+    "name": "Levitikus",
     "shortNames": [
+      "3. Mose",
       "Le",
       "Lev",
-      "Mo"
+      "3. Mo"
     ],
-    "startNumber": 3
+    "startNumber": 0
   },
   "4": {
-    "name": "Mose",
+    "name": "Numeri",
     "shortNames": [
+      "4. Mose",
       "Nu",
       "Num",
-      "Mo"
+      "4. Mo"
     ],
-    "startNumber": 4
+    "startNumber": 0
   },
   "5": {
-    "name": "Mose",
+    "name": "Deuteronomium",
     "shortNames": [
+      "5. Mose",
       "Dt",
+      "Dtn",
       "Deut",
       "Deu",
       "De",
-      "Mo"
+      "5. Mo"
     ],
-    "startNumber": 5
+    "startNumber": 0
   },
   "6": {
     "name": "Josua",
@@ -65,6 +71,7 @@
   "8": {
     "name": "Ruth",
     "shortNames": [
+      "Rut",
       "Rt"
     ],
     "startNumber": 0
@@ -88,14 +95,16 @@
   "11": {
     "name": "Könige",
     "shortNames": [
-      "Kö"
+      "Kö",
+      "Kön"
     ],
     "startNumber": 1
   },
   "12": {
     "name": "Könige",
     "shortNames": [
-      "Kö"
+      "Kö",
+      "Kön"
     ],
     "startNumber": 2
   },
@@ -142,7 +151,8 @@
   "18": {
     "name": "Hiob",
     "shortNames": [
-      "Hi"
+      "Hi",
+      "Ijob"
     ],
     "startNumber": 0
   },
@@ -164,21 +174,29 @@
     "name": "Prediger",
     "shortNames": [
       "Pr",
-      "Pred"
+      "Pred",
+      "Kohelet",
+      "Ecclesiastes",
+      "Prediger Salomo",
+      "Koh"
     ],
     "startNumber": 0
   },
   "22": {
-    "name": "Hohelied",
+    "name": "Hoheslied",
     "shortNames": [
-      "Hl"
+      "Hl",
+      "Hld",
+      "Hohes Lied",
+      "Hohelied Salomos"
     ],
     "startNumber": 0
   },
   "23": {
     "name": "Jesaja",
     "shortNames": [
-      "Jes"
+      "Jes",
+      "Is"
     ],
     "startNumber": 0
   },
@@ -193,14 +211,18 @@
   "25": {
     "name": "Klagelieder",
     "shortNames": [
-      "Kla"
+      "Kla",
+      "Klgl",
+      "Klagelieder Jeremias"
     ],
     "startNumber": 0
   },
   "26": {
     "name": "Hesekiel",
     "shortNames": [
-      "Hes"
+      "Hes",
+      "Ezechiel",
+      "Ez"
     ],
     "startNumber": 0
   },
@@ -289,7 +311,9 @@
       "Zp",
       "Zep",
       "Zeph",
-      "Ze"
+      "Ze",
+      "Zefanja",
+      "Zef"
     ],
     "startNumber": 0
   },
@@ -357,6 +381,7 @@
     "name": "Apostelgeschichte",
     "shortNames": [
       "Ac",
+      "Act",
       "Apg"
     ],
     "startNumber": 0
@@ -464,7 +489,8 @@
     "name": "Philemon",
     "shortNames": [
       "Pm",
-      "Phil"
+      "Phil",
+      "Phlm"
     ],
     "startNumber": 0
   },
@@ -488,7 +514,8 @@
     "shortNames": [
       "Pe",
       "Pet",
-      "Pt"
+      "Pt",
+      "Petr"
     ],
     "startNumber": 1
   },
@@ -497,7 +524,8 @@
     "shortNames": [
       "Pe",
       "Pet",
-      "Pt"
+      "Pt",
+      "Petr"
     ],
     "startNumber": 2
   },
@@ -541,7 +569,9 @@
   "66": {
     "name": "Offenbarung",
     "shortNames": [
-      "Offb"
+      "Offb",
+      "Apokalypse",
+      "Apk"
     ],
     "startNumber": 0
   }
