@@ -70,6 +70,8 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     </tr>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://www.linkedin.com/in/diatche"><img src="https://avatars.githubusercontent.com/u/5573638?v=4?s=65" width="65px;" alt="Pavel Diatchenko"/><br /><sub><b>Pavel Diatchenko</b></sub></a><br /><a href="https://github.com/tim-hub/obsidian-bible-reference/commits?author=diatche" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="http://blog.tecur.xyz"><img src="https://avatars.githubusercontent.com/u/20840821?v=4?s=65" width="65px;" alt="Joshua Stoll"/><br /><sub><b>Joshua Stoll</b></sub></a><br /><a href="https://github.com/tim-hub/obsidian-bible-reference/commits?author=Tecur" title="Code">💻</a> <a href="#translation-Tecur" title="Translation">🌍</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/blankton2"><img src="https://avatars.githubusercontent.com/u/51744123?v=4?s=65" width="65px;" alt="blankton2"/><br /><sub><b>blankton2</b></sub></a><br /><a href="#translation-blankton2" title="Translation">🌍</a></td>
     </tr>
   </tbody>
 </table>
