@@ -159,6 +159,15 @@
         "code",
         "translation"
       ]
+    },
+    {
+      "login": "blankton2",
+      "name": "blankton2",
+      "avatar_url": "https://avatars.githubusercontent.com/u/51744123?v=4",
+      "profile": "https://github.com/blankton2",
+      "contributions": [
+        "translation"
+      ]
     }
   ],
   "contributorsPerLine": 7,
