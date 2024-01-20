@@ -9,8 +9,8 @@ dependencies:
     specifier: ^5.1.0
     version: 5.1.0
   bible-reference-toolkit:
-    specifier: ^2.3.2
-    version: 2.3.2
+    specifier: ^2.3.3
+    version: 2.3.3
   flagsmith-nodejs:
     specifier: ^3.1.1
     version: 3.1.1
@@ -1436,14 +1436,14 @@ packages:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
     dev: false
 
-  /bible-book-names-intl@3.0.9:
-    resolution: {integrity: sha512-UfDmDfXK0R4Y2R00C6t/E1MoSNVnyK26Rzl91i/XahPR+HgKOIodL9r7ADXfnjhTlh/7hh+ozGnSEYMkLIttXw==}
+  /bible-book-names-intl@3.1.0:
+    resolution: {integrity: sha512-czH2NH7KDJu27WmPhQcuHiNppvrH81hPfaQNymSy7eWaCl/dFIQdIWVWys7+9Rbals5i+5loZzYzrbPX8k12Og==}
     dev: false
 
-  /bible-reference-toolkit@2.3.2:
-    resolution: {integrity: sha512-DnzOSIeU6rjyIPEY+YmbSLJhPYwET6vvYXqFY4fZ8VVRR0y2jq6Yv9M1u//aOf6s6p+Sook2FnwyXQfSKBmBeQ==}
+  /bible-reference-toolkit@2.3.3:
+    resolution: {integrity: sha512-6jOWrTqtjeoiW8/hoXkmv1N5BBNhKCO27VCBgvBkfzCJlrx9zzq72AYnxXwkeFAaeGXUdyiliy+cC2phIcRg+g==}
     dependencies:
-      bible-book-names-intl: 3.0.9
+      bible-book-names-intl: 3.1.0
     dev: false
 
   /big-integer@1.6.51:
