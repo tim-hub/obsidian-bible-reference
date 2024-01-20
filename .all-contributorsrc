@@ -149,6 +149,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "Tecur",
+      "name": "Joshua Stoll",
+      "avatar_url": "https://avatars.githubusercontent.com/u/20840821?v=4",
+      "profile": "http://blog.tecur.xyz",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
