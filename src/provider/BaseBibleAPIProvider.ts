@@ -6,19 +6,20 @@ import { IBibleVersion } from '../interfaces/IBibleVersion'
 export abstract class BaseBibleAPIProvider {
   protected _versionKey: string // the version selected, for example kjv
   protected _apiUrl: string
-  protected _queryUrl: string
+  protected _currentQueryUrl: string
   protected _bibleReferenceHead: string
-  protected _bibleVersiopn: IBibleVersion
+  protected _bibleVersion: IBibleVersion
+  protected bibleGatewayUrl: string = ''
 
   constructor(bibleVersion: IBibleVersion) {
-    this._bibleVersiopn = bibleVersion
-    const { key } = bibleVersion
+    this._bibleVersion = bibleVersion
+    const {key} = bibleVersion
     this._versionKey = key
     this._apiUrl = bibleVersion.apiSource.apiUrl
   }
 
   protected get LanguageShortCode(): string | undefined {
-    return this._bibleVersiopn.code
+    return this._bibleVersion.code
   }
 
   /**
@@ -33,8 +34,10 @@ export abstract class BaseBibleAPIProvider {
    * for example, https://api.scripture.api.bible/v1/bibles/de4e0c8c-9c29-44c7-a8c3-c8a9c1b9d6a0/verses/ESV/
    */
   public get QueryURL(): string {
-    return this._queryUrl
+    return this._currentQueryUrl
   }
+
+  protected abstract prepareVerseLinkUrl():string
 
   /**
    * Get the Callout Link URL for the verse query
@@ -42,7 +45,7 @@ export abstract class BaseBibleAPIProvider {
    * In the Bolly Life interface, it's just the same URL location except without `/get-text`
    */
   public get VerseLinkURL(): string {
-    return this._queryUrl
+    return this.prepareVerseLinkUrl()
   }
 
   /**
@@ -51,6 +54,37 @@ export abstract class BaseBibleAPIProvider {
    */
   public get BibleReferenceHead(): string {
     return this._bibleReferenceHead
+  }
+
+  /**
+   * Get the Bible Gateway URL for the latest query
+   * @returns {string}
+   *   something like this https://www.biblegateway.com/passage/?search=Romans%206:23&version=niv
+   * @param bookName
+   * @param chapter
+   * @param verses
+   * @protected
+   */
+  protected buildBibleGatewayUrl(bookName: string, chapter: number, verses: number[]): string {
+    return `https://www.biblegateway.com/passage/?search=${bookName}+${chapter}:${this.convertVersesToQueryString(verses)}&version=${this._versionKey}`
+  }
+
+  /**
+   * Convert the verses array to a query string
+   * For example, [1,2,3] will be converted to "1&2&3"
+   * [1,2] will be converted to "1-2"
+   * [1] will be converted to "1"
+   * @param verses
+   * @protected
+   */
+  protected convertVersesToQueryString(verses: number[]): string {
+    if (verses?.length >= 3) {
+      return verses.join('&')
+    } else if (verses?.length === 2 && !!verses[1]) {
+      return `${verses[0]}-${verses[1]}`
+    } else {
+      return `${verses[0]}`
+    }
   }
 
   /**
@@ -96,7 +130,7 @@ export abstract class BaseBibleAPIProvider {
     } catch (e) {
       console.error('error while querying', e)
       new Notice(`Error while querying ${url}`)
-      EventStats.logError('errors', { key: url, value: 1 })
+      EventStats.logError('errors', {key: url, value: 1})
       return await Promise.reject(e)
     }
   }

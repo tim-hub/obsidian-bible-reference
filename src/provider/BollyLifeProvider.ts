@@ -14,8 +14,8 @@ export class BollyLifeProvider extends BaseBibleAPIProvider {
     this._chapterApiUrl = this._apiUrl
   }
 
-  public get VerseLinkURL(): string {
-    return this._queryUrl.replace('/get-text', '')
+  protected prepareVerseLinkUrl(): string {
+    return this._currentQueryUrl.replace('/get-text', '')
   }
 
   public buildRequestURL(
@@ -25,9 +25,10 @@ export class BollyLifeProvider extends BaseBibleAPIProvider {
     versionName?: string
   ): string {
     const baseUrl = this._chapterApiUrl
-    const bookId = getBookIdFromBookName(bookName, this._bibleVersiopn.code)
-    this._queryUrl = `${baseUrl}/${versionName?.toUpperCase()}/${bookId}/${chapter}/`
-    return this._queryUrl
+    const bookId = getBookIdFromBookName(bookName, this._bibleVersion.code)
+    this._currentQueryUrl = `${baseUrl}/${versionName?.toUpperCase()}/${bookId}/${chapter}/`
+    // if build bible gateway url here, the VerseLinkURL will be different
+    return this._currentQueryUrl
   }
 
   /**

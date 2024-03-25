@@ -21,21 +21,37 @@ export class BibleAPIDotComProvider extends BaseBibleAPIProvider {
     versionName?: string
   ): string {
     let queryString = `${bookName}+${chapter}:`.replace(/ /g, '+')
-    if (verses?.length >= 3) {
-      queryString += verses.join('&')
-    } else if (verses?.length === 2 && !!verses[1]) {
-      queryString += `${verses[0]}-${verses[1]}`
-    } else {
-      queryString += `${verses[0]}`
-    }
-    this._queryUrl = `${this._apiUrl}/${queryString}?translation=${
+    queryString += this.convertVersesToQueryString(verses)
+    this._currentQueryUrl = `${this._apiUrl}/${queryString}?translation=${
       versionName
         ? versionName
         : this?.BibleVersionKey
-        ? this.BibleVersionKey
-        : ''
+          ? this.BibleVersionKey
+          : ''
     }`
-    return this._queryUrl
+
+    // setup the bible gateway url
+    this.bibleGatewayUrl = this.buildBibleGatewayUrl(bookName, chapter, verses)
+    return this._currentQueryUrl
+  }
+
+  protected prepareVerseLinkUrl(): string {
+    if (this._versionKey in [
+      'bbe',
+      'clementine',
+      'oeb-us',
+      'oeb-cw',
+      'almeida',
+      'rccv',
+      'cherokee',
+    ] && !this.bibleGatewayUrl) {
+      return this._currentQueryUrl
+    }
+    if (this._versionKey === 'webbe') {
+      //   replace bibleGatewayUrl webbe to web
+      return this.bibleGatewayUrl.replace('webbe', 'web')
+    }
+    return this.bibleGatewayUrl
   }
 
   /**
