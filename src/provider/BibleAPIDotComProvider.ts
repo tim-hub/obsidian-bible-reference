@@ -20,7 +20,7 @@ export class BibleAPIDotComProvider extends BaseBibleAPIProvider {
     verses: number[],
     versionName?: string
   ): string {
-    let queryString = `${bookName}+${chapter}:`.replace(/ /g, '+')
+    let queryString = `${bookName}+${chapter}:`
     queryString += this.convertVersesToQueryString(verses)
     this._currentQueryUrl = `${this._apiUrl}/${queryString}?translation=${
       versionName
@@ -31,7 +31,7 @@ export class BibleAPIDotComProvider extends BaseBibleAPIProvider {
     }`
 
     // setup the bible gateway url
-    this.bibleGatewayUrl = this.buildBibleGatewayUrl(bookName, chapter, verses)
+    this.bibleGatewayUrl = this.buildBibleGatewayUrl(bookName, chapter, verses).replace(/ /g, "+") // Remove spaces in Book names for URL.
     return this._currentQueryUrl
   }
 
