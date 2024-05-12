@@ -59,7 +59,7 @@ export abstract class BaseVerseFormatter {
         text +=
           ' ' + verseNumberFormatted + verse.text.trim().replaceAll('\n', ' ')
       } else {
-        text += '> ' + verseNumberFormatted + verse.text.trim() + '\n'
+        text += '> ' + verseNumberFormatted + verse.text.replace(/\r\n|\n|\r/g, " ") + "\n" // Remove extraneous line breaks in KJV verses.
       }
     })
     console.debug('text', text)
