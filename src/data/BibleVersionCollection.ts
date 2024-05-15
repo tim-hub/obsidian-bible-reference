@@ -169,7 +169,7 @@ export const BibleVersionCollection: IBibleVersion[] = [
   },
   {
     key: 'dhnt',
-    versionName: "Delitzsch's Hebrew New Testament 1877, 1998 (with Vowels)",
+    versionName: 'Delitzsch\'s Hebrew New Testament 1877, 1998 (with Vowels)',
     language: 'Hebrew עברית',
     apiSource: BibleAPISourceCollection.bollsLife,
   },
@@ -279,7 +279,13 @@ export const BibleVersionCollection: IBibleVersion[] = [
     versionName: 'Nouvelle Bible Segond, 2002',
     language: 'French',
     apiSource: BibleAPISourceCollection.bollsLife,
-  }
+  },
+    {
+    key: 'tbsi',
+    versionName: 'The Bible Society of India - Tamil - O.V.',
+    language: 'Tamil',
+    apiSource: BibleAPISourceCollection.bollsLife,
+  },
 ]
 
 export const DEFAULT_BIBLE_VERSION = BibleVersionCollection[11]
