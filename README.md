@@ -31,7 +31,9 @@
 
 > On iOS devices, there is a known issue about conflict between `Smart Punctuation` and double hyphens `--`.
 >
-> To make it work, Smart Punctuation need to be turned off => [How to use on iOS](https://github.com/tim-hub/obsidian-bible-reference/wiki/How-to-use#how-to-use-on-ios-iphone--ipad)
+> To make it work, 
+> - you can use `++` instead of `--` in the beginning of the verse reference => `++John1:1` (recommended)
+> - or you can turn Smart Punctuation off => [How to use](https://github.com/tim-hub/obsidian-bible-reference/wiki/How-to-use#how-to-use-on-ios-iphone--ipad)
 
 ## Contribution and Credits
 
