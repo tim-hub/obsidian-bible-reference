@@ -7,7 +7,7 @@ import {
   TFile,
 } from 'obsidian'
 import BibleReferencePlugin from '../main'
-import { verseMatch } from '../utils/verseMatch'
+import { verseMatch, matchTriggerPrefix } from '../utils/verseMatch'
 import { VerseSuggesting } from '../verse/VerseSuggesting'
 import { BibleReferencePluginSettings } from '../data/constants'
 import { getSuggestionsFromQuery } from '../utils/getSuggestionsFromQuery'
@@ -22,7 +22,7 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
 
   constructor(
     plugin: BibleReferencePlugin,
-    settings: BibleReferencePluginSettings
+    settings: BibleReferencePluginSettings,
   ) {
     super(plugin.app)
     this.plugin = plugin
@@ -38,22 +38,33 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
   onTrigger(
     cursor: EditorPosition,
     editor: Editor,
-    _: TFile
+    _: TFile,
   ): EditorSuggestTriggerInfo | null {
     const currentContent = editor.getLine(cursor.line).substring(0, cursor.ch)
-    const match = verseMatch(currentContent, false)
+
+    // get first 2 characters
+    if (currentContent.length < 2) {
+      return null
+    }
+    const prefixTrigger = currentContent.substring(0, 2)
+    if (!matchTriggerPrefix(prefixTrigger)) {
+      return null
+    }
+    const queryContent = currentContent.substring(2)
+
+    const match = verseMatch(queryContent)
     if (match) {
-      console.debug('trigger on', currentContent)
+      console.debug('trigger on', queryContent)
       EventStats.logUIOpen(
         'lookupEditorOpen',
         { key: `${this.settings.bibleVersion}`, value: 1 },
-        this.settings.optOutToEvents
+        this.settings.optOutToEvents,
       )
       return {
         end: cursor,
         start: {
           line: cursor.line,
-          ch: currentContent.lastIndexOf(match),
+          ch: queryContent.lastIndexOf(match),
         },
         query: match,
       }
@@ -66,11 +77,11 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
    * @param context
    */
   async getSuggestions(
-    context: EditorSuggestContext
+    context: EditorSuggestContext,
   ): Promise<VerseSuggesting[]> {
     const suggestions = await getSuggestionsFromQuery(
       context.query,
-      this.settings
+      this.settings,
     )
     EventStats.logLookup(
       'verseLookUp',
@@ -78,7 +89,7 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
         key: `${this.settings.bibleVersion}-${context.query.toLowerCase()}`,
         value: 1,
       },
-      this.settings.optOutToEvents
+      this.settings.optOutToEvents,
     )
     return suggestions
   }
@@ -93,7 +104,7 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
       (this.context.editor as Editor).replaceRange(
         suggestion.allFormattedContent,
         this.context.start,
-        this.context.end
+        this.context.end,
       )
     }
   }

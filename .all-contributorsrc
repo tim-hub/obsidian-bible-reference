@@ -168,6 +168,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "abbasou",
+      "name": "abbasou",
+      "avatar_url": "https://avatars.githubusercontent.com/u/68356554?v=4",
+      "profile": "https://github.com/abbasou",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,

@@ -25,7 +25,7 @@ export class VerseLookupSuggestModal extends SuggestModal<VerseSuggesting> {
   }
 
   async getSuggestions(query: string): Promise<VerseSuggesting[]> {
-    const match = verseMatch(query, true)
+    const match = verseMatch(query)
     if (match) {
       console.debug('trigger on', query)
       EventStats.logLookup(
@@ -36,7 +36,7 @@ export class VerseLookupSuggestModal extends SuggestModal<VerseSuggesting> {
         },
         this.settings.optOutToEvents
       )
-      return getSuggestionsFromQuery(`--${query}`, this.settings)
+      return getSuggestionsFromQuery(`${query}`, this.settings)
     }
     return []
   }

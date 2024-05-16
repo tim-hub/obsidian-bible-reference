@@ -1,16 +1,22 @@
+
+import { MODAL_REG, DEFAULT_TRIGGER_PREFIX_REG } from './regs'
+
+
 /**
  * check if the given string contains a verseNumber, and return the verseNumber if it does
- * @param verse
- * @param modal
- * @constructor
+ * @param verseTrigger without the prefix trigger --
+ * @returns string the same string if it match
  */
-import { MODAL_REG, SHORT_REG } from './regs'
-
-export const verseMatch = (verse: string, isFromModal = false): string => {
-  const matchResults = verse.match(isFromModal ? MODAL_REG : SHORT_REG)
+export const verseMatch = (verseTrigger: string): string => {
+  const matchResults = verseTrigger.match( MODAL_REG )
   if (!matchResults) {
     return ''
   } else {
     return matchResults[0]
   }
+}
+
+
+export const matchTriggerPrefix = (verseTrigger: string): boolean => {
+  return DEFAULT_TRIGGER_PREFIX_REG.test(verseTrigger)
 }

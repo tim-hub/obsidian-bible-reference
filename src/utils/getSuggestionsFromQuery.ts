@@ -6,22 +6,24 @@ import { getBibleVersion } from '../data/BibleVersionCollection'
 
 /**
  * Get suggestions from string query
+ * @param queryWithoutPrefix without the prefix trigger
+ * @param settings
  */
 export const getSuggestionsFromQuery = async (
-  query: string,
+  queryWithoutPrefix: string,
   settings: BibleReferencePluginSettings
 ): Promise<VerseSuggesting[]> => {
-  console.debug('get suggestion for query ', query.toLowerCase())
+  console.debug('get suggestion for query ', queryWithoutPrefix.toLowerCase())
 
-  const matchResults = query.match(BOOK_REG)
-  const rawBookName = matchResults?.length ? matchResults[0] : undefined
+  const bookNameMatchingResults = queryWithoutPrefix.match(BOOK_REG)
+  const rawBookName = bookNameMatchingResults?.length ? bookNameMatchingResults[0] : undefined
 
   if (!rawBookName) {
-    console.error(`could not find through query`, query)
+    console.error(`could not find through query`, queryWithoutPrefix)
     return []
   }
 
-  const numbersPartsOfQueryString = query.substring(2 + rawBookName.length)
+  const numbersPartsOfQueryString = queryWithoutPrefix.substring(rawBookName.length)
   const numbers = numbersPartsOfQueryString.split(/[-:]+/)
 
   const chapterNumber = parseInt(numbers[0].trim())
@@ -30,7 +32,7 @@ export const getSuggestionsFromQuery = async (
 
   const selectedBibleVersion = getBibleVersion(settings.bibleVersion)
   const bookName = getFullBookName(rawBookName, selectedBibleVersion?.code)
-  console.debug('bookName', bookName)
+  console.debug('selected bookName', bookName)
 
   // todo get bibleVersion and language from settings
   const suggestingVerse = new VerseSuggesting(

@@ -31,7 +31,9 @@
 
 > On iOS devices, there is a known issue about conflict between `Smart Punctuation` and double hyphens `--`.
 >
-> To make it work, Smart Punctuation need to be turned off => [How to use on iOS](https://github.com/tim-hub/obsidian-bible-reference/wiki/How-to-use#how-to-use-on-ios-iphone--ipad)
+> To make it work, 
+> - you can use `++` instead of `--` in the beginning of the verse reference => `++John1:1` (recommended)
+> - or you can turn Smart Punctuation off => [How to use](https://github.com/tim-hub/obsidian-bible-reference/wiki/How-to-use#how-to-use-on-ios-iphone--ipad)
 
 ## Contribution and Credits
 
@@ -72,6 +74,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://www.linkedin.com/in/diatche"><img src="https://avatars.githubusercontent.com/u/5573638?v=4?s=65" width="65px;" alt="Pavel Diatchenko"/><br /><sub><b>Pavel Diatchenko</b></sub></a><br /><a href="https://github.com/tim-hub/obsidian-bible-reference/commits?author=diatche" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="http://blog.tecur.xyz"><img src="https://avatars.githubusercontent.com/u/20840821?v=4?s=65" width="65px;" alt="Joshua Stoll"/><br /><sub><b>Joshua Stoll</b></sub></a><br /><a href="https://github.com/tim-hub/obsidian-bible-reference/commits?author=Tecur" title="Code">💻</a> <a href="#translation-Tecur" title="Translation">🌍</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/blankton2"><img src="https://avatars.githubusercontent.com/u/51744123?v=4?s=65" width="65px;" alt="blankton2"/><br /><sub><b>blankton2</b></sub></a><br /><a href="#translation-blankton2" title="Translation">🌍</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/abbasou"><img src="https://avatars.githubusercontent.com/u/68356554?v=4?s=65" width="65px;" alt="abbasou"/><br /><sub><b>abbasou</b></sub></a><br /><a href="https://github.com/tim-hub/obsidian-bible-reference/commits?author=abbasou" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
