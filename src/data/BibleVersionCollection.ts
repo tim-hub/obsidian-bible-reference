@@ -80,6 +80,14 @@ export const BibleVersionCollection: IBibleVersion[] = [
   },
   // bolls life
   {
+    key: "mev",
+    versionName: "Modern English Version",
+    language: "English",
+    code: "en",
+    apiSource: BibleAPISourceCollection.bollsLife,
+    infoUrl: "https://wikipedia.org/wiki/Modern_English_Version"
+  },
+  {
     key: 'nkjv',
     versionName: 'New King James Version',
     language: 'English',
