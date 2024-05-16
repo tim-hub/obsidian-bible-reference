@@ -36,7 +36,7 @@ export class VerseLookupSuggestModal extends SuggestModal<VerseSuggesting> {
         },
         this.settings.optOutToEvents
       )
-      return getSuggestionsFromQuery(`--${query}`, this.settings)
+      return getSuggestionsFromQuery(`${query}`, this.settings)
     }
     return []
   }
