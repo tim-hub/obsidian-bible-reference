@@ -6,6 +6,7 @@ export enum BibleVerseNumberFormat {
   NumberOnly = '1 ',
   SuperScript = '^1',
   SuperScriptBold = '**^1**',
+  Bold = '**1**',
   None = 'None',
 }
 
@@ -37,6 +38,10 @@ export const BibleVerseNumberFormatCollection = [
   {
     name: BibleVerseNumberFormat.SuperScriptBold,
     description: '**^1** (bolded superscript)',
+  },
+  {
+    name: BibleVerseNumberFormat.Bold,
+    description: '**1** (bold)',
   },
   {
     name: BibleVerseNumberFormat.None,
