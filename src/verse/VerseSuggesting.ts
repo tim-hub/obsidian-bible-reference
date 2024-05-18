@@ -56,11 +56,11 @@ export class VerseSuggesting
     if (this.settings?.bookTagging || this.settings?.chapterTagging) {
       bottom += ' %%'
       bottom += this.settings?.bookTagging
-        ? ` #${this.verseReference.bookName}`
+        ? ` #${this.verseReference.bookName.replace(/ /g, "")}` // Remove spaces from book names in tags
         : ''
       bottom += this.settings?.chapterTagging
         ? ` #${
-            this.verseReference.bookName + this.verseReference.chapterNumber
+            this.verseReference.bookName.replace(/ /g, "") + this.verseReference.chapterNumber // Remove spaces from book names in tags
           }`
         : ''
       bottom += ' %%'
