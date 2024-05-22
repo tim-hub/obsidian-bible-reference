@@ -80,12 +80,12 @@ export const BibleVersionCollection: IBibleVersion[] = [
   },
   // bolls life
   {
-    key: "mev",
-    versionName: "Modern English Version",
-    language: "English",
-    code: "en",
+    key: 'mev',
+    versionName: 'Modern English Version',
+    language: 'English',
+    code: 'en',
     apiSource: BibleAPISourceCollection.bollsLife,
-    infoUrl: "https://wikipedia.org/wiki/Modern_English_Version"
+    infoUrl: 'https://wikipedia.org/wiki/Modern_English_Version',
   },
   {
     key: 'nkjv',
@@ -184,6 +184,20 @@ export const BibleVersionCollection: IBibleVersion[] = [
   {
     key: 'cuv',
     versionName: 'Chinese Union Version (Traditional)',
+    language: 'Chinese',
+    code: 'cn',
+    apiSource: BibleAPISourceCollection.bollsLife,
+  },
+  {
+    key: 'cunp',
+    versionName: 'Chinese Union New Punctuation Cross References',
+    language: 'Chinese',
+    code: 'cn',
+    apiSource: BibleAPISourceCollection.bollsLife,
+  },
+  {
+    key: 'cunps',
+    versionName: 'Chinese Union New Punctuation (Simplified)',
     language: 'Chinese',
     code: 'cn',
     apiSource: BibleAPISourceCollection.bollsLife,
@@ -288,7 +302,7 @@ export const BibleVersionCollection: IBibleVersion[] = [
     language: 'French',
     apiSource: BibleAPISourceCollection.bollsLife,
   },
-    {
+  {
     key: 'tbsi',
     versionName: 'The Bible Society of India - Tamil - O.V.',
     language: 'Tamil',
