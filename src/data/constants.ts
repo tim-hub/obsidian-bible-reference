@@ -28,6 +28,8 @@ export interface BibleReferencePluginSettings {
   verseFormatting?: BibleVerseFormat
   verseNumberFormatting?: BibleVerseNumberFormat
   collapsibleVerses?: boolean // this is binging to displayBibleIconPrefixAtHeader option
+  enableHyperlinking?: boolean
+  showVerseTranslation?: boolean
   bookTagging?: boolean
   chapterTagging?: boolean
   bookBacklinking?: OutgoingLinkPositionEnum // this is refering to outgoing link
@@ -48,6 +50,8 @@ export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
   verseFormatting: BibleVerseFormat.SingleLine,
   verseNumberFormatting: BibleVerseNumberFormat.Period,
   collapsibleVerses: false,
+  enableHyperlinking: true,
+  showVerseTranslation: true,
   bookTagging: false,
   chapterTagging: false,
   enableBibleVerseLookupRibbon: false,
