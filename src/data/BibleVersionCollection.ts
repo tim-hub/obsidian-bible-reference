@@ -124,6 +124,13 @@ export const BibleVersionCollection: IBibleVersion[] = [
     apiSource: BibleAPISourceCollection.bollsLife,
   },
   {
+    key: 'lsb',
+    versionName: 'Legacy Standard Bible',
+    language: 'English',
+    code: 'en',
+    apiSource: BibleAPISourceCollection.bollsLife,
+  },
+  {
     key: 'elb',
     versionName: 'Elberfelder Bibel (1871)',
     language: 'German Deutsch',
