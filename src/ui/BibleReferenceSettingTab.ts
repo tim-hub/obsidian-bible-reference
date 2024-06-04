@@ -50,19 +50,21 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
         <iframe src="https://github.com/sponsors/tim-hub/button" title="Sponsor Obsidian Bible Reference" width="116" height="32px" class="sponsor-button"/>
     `
 
-    this.containerEl.createEl('h1', {text: APP_NAMING.appName})
+    this.containerEl.createEl('h1', { text: APP_NAMING.appName })
     this.setUpVersionSettingsAndVersionOptions()
 
-    this.containerEl.createEl('h2', {text: 'Verses Rendering'})
+    this.containerEl.createEl('h2', { text: 'Verses Rendering' })
     this.setUpReferenceLinkPositionOptions()
+    // 2 options for reference
+    this.setUpShowVerseTranslationOptions()
+    this.setUpHyperlinkingOptions()
+
     this.setUpVerseFormatOptions()
     this.setUpVerseNumberFormatOptions()
     this.setUpBibleIconPrefixToggle()
-    this.setUpShowVerseTranslationOptions()
-    this.setUpHyperlinkingOptions()
     this.setUpCollapsibleToggle()
     this.setUpStatusIndicationOptions()
-    this.containerEl.createEl('h2', {text: 'Others'})
+    this.containerEl.createEl('h2', { text: 'Others' })
     this.setUpExpertSettings()
 
     this.containerEl.createSpan({}, (span) => {
@@ -92,8 +94,8 @@ Obsidian Bible Reference  is proudly powered by
     }
     EventStats.logUIOpen(
       'settingsOpen',
-      {key: 'open', value: 1},
-      this.plugin.settings.optOutToEvents
+      { key: 'open', value: 1 },
+      this.plugin.settings.optOutToEvents,
     )
   }
 
@@ -116,7 +118,7 @@ Obsidian Bible Reference  is proudly powered by
   private displayExpertSettings(): void {
     if (this.expertSettingContainer) {
       this.expertSettingContainer.empty()
-      this.expertSettingContainer.createEl('h2', {text: 'Expert Settings'})
+      this.expertSettingContainer.createEl('h2', { text: 'Expert Settings' })
 
       new Setting(this.expertSettingContainer)
         .setName('Add a Book Tag')
@@ -129,10 +131,10 @@ Obsidian Bible Reference  is proudly powered by
               await this.plugin.saveSettings()
               EventStats.logSettingChange(
                 'changeVerseFormatting',
-                {key: `book-tagging-${value}`, value: 1},
-                this.plugin.settings.optOutToEvents
+                { key: `book-tagging-${value}`, value: 1 },
+                this.plugin.settings.optOutToEvents,
               )
-            })
+            }),
         )
       new Setting(this.expertSettingContainer)
         .setName('Add a Chapter Tag')
@@ -145,14 +147,14 @@ Obsidian Bible Reference  is proudly powered by
               await this.plugin.saveSettings()
               EventStats.logSettingChange(
                 'changeVerseFormatting',
-                {key: `chapter-tagging-${value}`, value: 1},
-                this.plugin.settings.optOutToEvents
+                { key: `chapter-tagging-${value}`, value: 1 },
+                this.plugin.settings.optOutToEvents,
               )
-            })
+            }),
         )
 
       const getOutgoingLinkPosition = (
-        linkingPostion: string | OutgoingLinkPositionEnum | undefined
+        linkingPostion: string | OutgoingLinkPositionEnum | undefined,
       ) => {
         let value = linkingPostion
         if (!value) {
@@ -172,7 +174,7 @@ Obsidian Bible Reference  is proudly powered by
             dropdown.addOption(name, name)
           })
           const value = getOutgoingLinkPosition(
-            this.plugin.settings?.bookBacklinking
+            this.plugin.settings?.bookBacklinking,
           )
           dropdown.setValue(value)
           dropdown.onChange(async (value) => {
@@ -185,14 +187,14 @@ Obsidian Bible Reference  is proudly powered by
       new Setting(this.expertSettingContainer)
         .setName('Add a Chapter Outgoing Links')
         .setDesc(
-          'Makes an outgoing link for the chapter, for example [[John1]] '
+          'Makes an outgoing link for the chapter, for example [[John1]] ',
         )
         .addDropdown((dropdown) => {
           Object.keys(OutgoingLinkPositionEnum).forEach((name) => {
             dropdown.addOption(name, name)
           })
           const value = getOutgoingLinkPosition(
-            this.plugin.settings?.chapterBacklinking
+            this.plugin.settings?.chapterBacklinking,
           )
           dropdown.setValue(value)
           dropdown.onChange(async (value) => {
@@ -219,7 +221,7 @@ Obsidian Bible Reference  is proudly powered by
     if (
       disableBibleAPI &&
       !allAvailableVersionOptions.find(
-        (v) => v.key === this.plugin.settings.bibleVersion
+        (v) => v.key === this.plugin.settings.bibleVersion,
       )
     ) {
       this.plugin.settings.bibleVersion = DEFAULT_BIBLE_VERSION.key
@@ -232,7 +234,7 @@ Obsidian Bible Reference  is proudly powered by
         allAvailableVersionOptions.forEach((version: IBibleVersion) => {
           dropdown.addOption(
             version.key,
-            `${version.language} - ${version.versionName} @${version.apiSource.name}`
+            `${version.language} - ${version.versionName} @${version.apiSource.name}`,
           )
         })
         dropdown
@@ -245,8 +247,8 @@ Obsidian Bible Reference  is proudly powered by
             new Notice(`Bible Reference - use Version ${value.toUpperCase()}`)
             EventStats.logSettingChange(
               'changeVersion',
-              {key: value, value: 1},
-              this.plugin.settings.optOutToEvents
+              { key: value, value: 1 },
+              this.plugin.settings.optOutToEvents,
             )
           })
       })
@@ -259,20 +261,20 @@ Obsidian Bible Reference  is proudly powered by
       .addDropdown((dropdown: DropdownComponent) => {
         dropdown.addOption(
           BibleVersionNameLengthEnum.Full,
-          BibleVersionNameLengthEnum.Full
+          BibleVersionNameLengthEnum.Full,
         )
         dropdown.addOption(
           BibleVersionNameLengthEnum.Short,
-          BibleVersionNameLengthEnum.Short
+          BibleVersionNameLengthEnum.Short,
         )
         dropdown.addOption(
           BibleVersionNameLengthEnum.Hide,
-          BibleVersionNameLengthEnum.Hide
+          BibleVersionNameLengthEnum.Hide,
         )
         dropdown
           .setValue(
             this.plugin.settings.bibleVersionStatusIndicator ??
-            BibleVersionNameLengthEnum.Short
+            BibleVersionNameLengthEnum.Short,
           )
           .onChange(async (value) => {
             this.plugin.settings.bibleVersionStatusIndicator =
@@ -284,8 +286,8 @@ Obsidian Bible Reference  is proudly powered by
             ])
             EventStats.logSettingChange(
               'others',
-              {key: `version-status-indicator-${value}`, value: 1},
-              this.plugin.settings.optOutToEvents
+              { key: `version-status-indicator-${value}`, value: 1 },
+              this.plugin.settings.optOutToEvents,
             )
           })
       })
@@ -297,14 +299,14 @@ Obsidian Bible Reference  is proudly powered by
       .setDesc('Where to put the reference link of the Bible')
       .addDropdown((dropdown: DropdownComponent) => {
         BibleVerseReferenceLinkPositionCollection.forEach(
-          ({name, description}) => {
+          ({ name, description }) => {
             dropdown.addOption(name, description)
-          }
+          },
         )
         dropdown
           .setValue(
             this.plugin.settings.referenceLinkPosition ??
-            BibleVerseReferenceLinkPosition.None
+            BibleVerseReferenceLinkPosition.None,
           )
           .onChange(async (value) => {
             this.plugin.settings.referenceLinkPosition =
@@ -314,8 +316,8 @@ Obsidian Bible Reference  is proudly powered by
             new Notice('Bible Reference Settings Updated ')
             EventStats.logSettingChange(
               'changeVerseFormatting',
-              {key: `link-position-${value}`, value: 1},
-              this.plugin.settings.optOutToEvents
+              { key: `link-position-${value}`, value: 1 },
+              this.plugin.settings.optOutToEvents,
             )
           })
       })
@@ -325,15 +327,15 @@ Obsidian Bible Reference  is proudly powered by
     new Setting(this.containerEl)
       .setName('Verse Formatting Options')
       .setDesc(
-        'Sets how to format the verses in Obsidian, either line by line or in 1 paragraph'
+        'Sets how to format the verses in Obsidian, either line by line or in 1 paragraph',
       )
       .addDropdown((dropdown: DropdownComponent) => {
-        BibleVerseFormatCollection.forEach(({name, description}) => {
+        BibleVerseFormatCollection.forEach(({ name, description }) => {
           dropdown.addOption(name, description)
         })
         dropdown
           .setValue(
-            this.plugin.settings.verseFormatting ?? BibleVerseFormat.SingleLine
+            this.plugin.settings.verseFormatting ?? BibleVerseFormat.SingleLine,
           )
           .onChange(async (value) => {
             this.plugin.settings.verseFormatting = value as BibleVerseFormat
@@ -342,8 +344,8 @@ Obsidian Bible Reference  is proudly powered by
             new Notice('Bible Verse Format Settings Updated')
             EventStats.logSettingChange(
               'changeVerseFormatting',
-              {key: `verse-format-${value}`, value: 1},
-              this.plugin.settings.optOutToEvents
+              { key: `verse-format-${value}`, value: 1 },
+              this.plugin.settings.optOutToEvents,
             )
           })
       })
@@ -352,15 +354,11 @@ Obsidian Bible Reference  is proudly powered by
   private setUpShowVerseTranslationOptions(): void {
     const setting = new Setting(this.containerEl)
       .setName('Show Verse Translation')
-      .setDesc('Show or hide the verse translation')
+      .setDesc('Show or hide the verse translation in verses reference')
     setting.setTooltip(
-      'This will show the verse translation verse text after the verse number'
+      'This will show the verse translation verse text after the verse number',
     )
     setting.addToggle((toggle) => {
-      if (!this.plugin.settings?.displayBibleIconPrefixAtHeader) {
-        toggle.setDisabled(true)
-        toggle.setTooltip('')
-      }
       toggle
         .setValue(!!this.plugin.settings?.showVerseTranslation)
         .onChange(async (value) => {
@@ -368,8 +366,8 @@ Obsidian Bible Reference  is proudly powered by
           await this.plugin.saveSettings()
           EventStats.logSettingChange(
             'changeVerseFormatting',
-            {key: `show-translation-${value}`, value: 1},
-            this.plugin.settings.optOutToEvents
+            { key: `show-translation-${value}`, value: 1 },
+            this.plugin.settings.optOutToEvents,
           )
         })
     })
@@ -378,15 +376,11 @@ Obsidian Bible Reference  is proudly powered by
   private setUpHyperlinkingOptions(): void {
     const setting = new Setting(this.containerEl)
       .setName('Enable Hyperlinking')
-      .setDesc('Enable or disable hyperlinking of the verses')
+      .setDesc('Enable or disable hyperlinking in verses reference')
     setting.setTooltip(
-      'This will make the verse number clickable and will open the verse in the Bible app'
+      'This will make the verse number clickable and will open the verse in the Bible app',
     )
     setting.addToggle((toggle) => {
-      if (!this.plugin.settings?.displayBibleIconPrefixAtHeader) {
-        toggle.setDisabled(true)
-        toggle.setTooltip('')
-      }
       toggle
         .setValue(!!this.plugin.settings?.enableHyperlinking)
         .onChange(async (value) => {
@@ -394,8 +388,8 @@ Obsidian Bible Reference  is proudly powered by
           await this.plugin.saveSettings()
           EventStats.logSettingChange(
             'changeVerseFormatting',
-            {key: `hyperlinking-${value}`, value: 1},
-            this.plugin.settings.optOutToEvents
+            { key: `hyperlinking-${value}`, value: 1 },
+            this.plugin.settings.optOutToEvents,
           )
         })
     })
@@ -406,13 +400,13 @@ Obsidian Bible Reference  is proudly powered by
       .setName('Verse Number Formatting Options')
       .setDesc('Sets how to format the verse numbers in Obsidian')
       .addDropdown((dropdown: DropdownComponent) => {
-        BibleVerseNumberFormatCollection.forEach(({name, description}) => {
+        BibleVerseNumberFormatCollection.forEach(({ name, description }) => {
           dropdown.addOption(name, description)
         })
         dropdown
           .setValue(
             this.plugin.settings.verseNumberFormatting ??
-            BibleVerseNumberFormat.Period
+            BibleVerseNumberFormat.Period,
           )
           .onChange(async (value) => {
             this.plugin.settings.verseNumberFormatting =
@@ -422,8 +416,8 @@ Obsidian Bible Reference  is proudly powered by
             new Notice('Bible Verse Format Number Settings Updated')
             EventStats.logSettingChange(
               'changeVerseFormatting',
-              {key: `verse-number-format-${value}`, value: 1},
-              this.plugin.settings.optOutToEvents
+              { key: `verse-number-format-${value}`, value: 1 },
+              this.plugin.settings.optOutToEvents,
             )
           })
       })
@@ -433,10 +427,10 @@ Obsidian Bible Reference  is proudly powered by
     const setting = new Setting(this.containerEl)
       .setName('Make Verses Collapsible *')
       .setDesc(
-        'Make the rendered verses collapsible, (This option will be disabled if Bible Icon Prefix option above is disabled)'
+        'Make the rendered verses collapsible, (This option will be disabled if Bible Icon Prefix option above is disabled)',
       )
     setting.setTooltip(
-      "This will make the rendered verses collapsible, so that you can hide them when you don't need them"
+      'This will make the rendered verses collapsible, so that you can hide them when you don\'t need them',
     )
     setting.addToggle((toggle) => {
       if (!this.plugin.settings?.displayBibleIconPrefixAtHeader) {
@@ -450,8 +444,8 @@ Obsidian Bible Reference  is proudly powered by
           await this.plugin.saveSettings()
           EventStats.logSettingChange(
             'changeVerseFormatting',
-            {key: `collapsible-${value}`, value: 1},
-            this.plugin.settings.optOutToEvents
+            { key: `collapsible-${value}`, value: 1 },
+            this.plugin.settings.optOutToEvents,
           )
         })
     })
@@ -461,7 +455,7 @@ Obsidian Bible Reference  is proudly powered by
     new Setting(this.containerEl)
       .setName('Show Bible Icon Prefix "[!Bible]" *')
       .setDesc(
-        'When this is true, it will render a Bible icon in Obsidian, disable this if you want to hide it or use standard Markdown. (This will disable the Collapsible option below)'
+        'When this is true, it will render a Bible icon in Obsidian, disable this if you want to hide it or use standard Markdown. (This will disable the Collapsible option below)',
       )
       .addToggle((toggle) =>
         toggle
@@ -476,10 +470,10 @@ Obsidian Bible Reference  is proudly powered by
             pluginEvent.trigger('bible-reference:settings:re-render', [])
             EventStats.logSettingChange(
               'others',
-              {key: `displayBibleIconPrefix-${value}`, value: 1},
-              this.plugin.settings.optOutToEvents
+              { key: `displayBibleIconPrefix-${value}`, value: 1 },
+              this.plugin.settings.optOutToEvents,
             )
-          })
+          }),
       )
   }
 
@@ -487,7 +481,7 @@ Obsidian Bible Reference  is proudly powered by
     new Setting(this.containerEl)
       .setName('Expert Settings')
       .setDesc(
-        'Display or Hide Expert Settings, such as Tagging, Linking, Events Logging settings'
+        'Display or Hide Expert Settings, such as Tagging, Linking, Events Logging settings',
       )
       .addToggle((toggle) =>
         toggle
@@ -497,7 +491,7 @@ Obsidian Bible Reference  is proudly powered by
             await this.plugin.saveSettings()
             pluginEvent.trigger('bible-reference:settings:advanced', [value])
             // todo add event log stats fire
-          })
+          }),
       )
   }
 
@@ -514,10 +508,10 @@ Obsidian Bible Reference  is proudly powered by
             await this.plugin.saveSettings()
             EventStats.logSettingChange(
               'changeVerseFormatting',
-              {key: `book-tagging-${value}`, value: 1},
-              this.plugin.settings.optOutToEvents
+              { key: `book-tagging-${value}`, value: 1 },
+              this.plugin.settings.optOutToEvents,
             )
-          })
+          }),
       )
   }
 
@@ -534,20 +528,20 @@ Obsidian Bible Reference  is proudly powered by
             await this.plugin.saveSettings()
             EventStats.logSettingChange(
               'changeVerseFormatting',
-              {key: `chapter-tagging-${value}`, value: 1},
-              this.plugin.settings.optOutToEvents
+              { key: `chapter-tagging-${value}`, value: 1 },
+              this.plugin.settings.optOutToEvents,
             )
-          })
+          }),
       )
   }
 
   private setUpOptOutEventsOptions(
-    container: HTMLElement = this.containerEl
+    container: HTMLElement = this.containerEl,
   ): void {
     new Setting(container)
       .setName('Opt Out of Events Logging')
       .setDesc(
-        'We used events logging to improve the plugin, this is very helpful for us, but if you want to opt out, you can do it here. (Excluding Errors Logs))'
+        'We used events logging to improve the plugin, this is very helpful for us, but if you want to opt out, you can do it here. (Excluding Errors Logs))',
       )
       .addToggle((toggle) =>
         toggle
@@ -555,21 +549,21 @@ Obsidian Bible Reference  is proudly powered by
           .onChange(async (value) => {
             EventStats.logSettingChange(
               'others',
-              {key: `opt-${value ? 'out' : 'in'}`, value: 1},
-              this.plugin.settings.optOutToEvents
+              { key: `opt-${value ? 'out' : 'in'}`, value: 1 },
+              this.plugin.settings.optOutToEvents,
             )
             this.plugin.settings.optOutToEvents = value
             await this.plugin.saveSettings()
             if (value) {
               new Notice(
-                'You have opted out of events logging, we will not log any events from now on'
+                'You have opted out of events logging, we will not log any events from now on',
               )
             } else {
               new Notice(
-                'Thanks for opting in to events logging, this is really valuable for us to improve the plugin'
+                'Thanks for opting in to events logging, this is really valuable for us to improve the plugin',
               )
             }
-          })
+          }),
       )
   }
 }
