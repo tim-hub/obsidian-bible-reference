@@ -177,6 +177,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "AlphaHasher",
+      "name": "AlphaHasher",
+      "avatar_url": "https://avatars.githubusercontent.com/u/33443001?v=4",
+      "profile": "https://github.com/AlphaHasher",
+      "contributions": [
+        "code",
+        "translation"
+      ]
     }
   ],
   "contributorsPerLine": 7,
