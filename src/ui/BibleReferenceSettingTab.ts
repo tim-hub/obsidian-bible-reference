@@ -58,6 +58,8 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     this.setUpVerseFormatOptions()
     this.setUpVerseNumberFormatOptions()
     this.setUpBibleIconPrefixToggle()
+    this.setUpShowVerseTranslationOptions()
+    this.setUpHyperlinkingOptions()
     this.setUpCollapsibleToggle()
     this.setUpStatusIndicationOptions()
     this.containerEl.createEl('h2', {text: 'Others'})
@@ -74,16 +76,16 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
 <br/>
 
 <span class="setting-item-description">
-Obsidian Bible Reference  is proudly powered by 
+Obsidian Bible Reference  is proudly powered by
     <a href="https://antioch.tech/obsidian-bible-reference/">
         <img src="https://antioch.tech/wp-content/uploads/2023/10/logo_128.png" alt="Antioch Tech logo" class="logo"> Antioch Tech
-    </a> 
+    </a>
 </span>
 
     `
     })
 
-    // this initialisation order is important
+    // this initialization order is important
     this.expertSettingContainer = this.containerEl.createDiv()
     if (this.plugin.settings.advancedSettings) {
       this.displayExpertSettings()
@@ -345,6 +347,58 @@ Obsidian Bible Reference  is proudly powered by
             )
           })
       })
+  }
+
+  private setUpShowVerseTranslationOptions(): void {
+    const setting = new Setting(this.containerEl)
+      .setName('Show Verse Translation')
+      .setDesc('Show or hide the verse translation')
+    setting.setTooltip(
+      'This will show the verse translation verse text after the verse number'
+    )
+    setting.addToggle((toggle) => {
+      if (!this.plugin.settings?.displayBibleIconPrefixAtHeader) {
+        toggle.setDisabled(true)
+        toggle.setTooltip('')
+      }
+      toggle
+        .setValue(!!this.plugin.settings?.showVerseTranslation)
+        .onChange(async (value) => {
+          this.plugin.settings.showVerseTranslation = value
+          await this.plugin.saveSettings()
+          EventStats.logSettingChange(
+            'changeVerseFormatting',
+            {key: `show-translation-${value}`, value: 1},
+            this.plugin.settings.optOutToEvents
+          )
+        })
+    })
+  }
+
+  private setUpHyperlinkingOptions(): void {
+    const setting = new Setting(this.containerEl)
+      .setName('Enable Hyperlinking')
+      .setDesc('Enable or disable hyperlinking of the verses')
+    setting.setTooltip(
+      'This will make the verse number clickable and will open the verse in the Bible app'
+    )
+    setting.addToggle((toggle) => {
+      if (!this.plugin.settings?.displayBibleIconPrefixAtHeader) {
+        toggle.setDisabled(true)
+        toggle.setTooltip('')
+      }
+      toggle
+        .setValue(!!this.plugin.settings?.enableHyperlinking)
+        .onChange(async (value) => {
+          this.plugin.settings.enableHyperlinking = value
+          await this.plugin.saveSettings()
+          EventStats.logSettingChange(
+            'changeVerseFormatting',
+            {key: `hyperlinking-${value}`, value: 1},
+            this.plugin.settings.optOutToEvents
+          )
+        })
+    })
   }
 
   private setUpVerseNumberFormatOptions(): void {
