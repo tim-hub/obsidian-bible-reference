@@ -16,6 +16,7 @@ export class BibleReferenceAPI {
     public app: App,
     public settings: BibleReferencePluginSettings,
   ) {
+    this.app = app
     this.settings = settings
   }
 
