@@ -17,11 +17,13 @@ import { FlagService } from './provider/FeatureFlag'
 import { EventStats } from './provider/EventStats'
 import { getBibleVersion } from './data/BibleVersionCollection'
 import { pluginEvent } from './obsidian/PluginEvent'
+import { BibleReferenceAPI } from './api/PluginAPI'
 
 export default class BibleReferencePlugin extends Plugin {
   settings: BibleReferencePluginSettings
   verseLookUpModal: VerseLookupSuggestModal
   verseOfDayModal: VerseOfDayModal
+  api: BibleReferenceAPI
   private cachedVerseOfDaySuggesting: {
     verseOfDaySuggesting: VerseOfDaySuggesting
     ttl: number
@@ -40,6 +42,10 @@ export default class BibleReferencePlugin extends Plugin {
     this.verseLookUpModal = new VerseLookupSuggestModal(this, this.settings)
     this.addVerseLookupCommand()
     this.addRibbonButton()
+
+    this.api = new BibleReferenceAPI(this, this.settings);
+    // Register the api globally
+    (window['BibleReferenceAPI'] = this.api) && this.register(() => { delete window['BibleReferenceAPI'] });
 
     const flagService = FlagService.getInstace()
     await flagService.init('obsidian-app')
