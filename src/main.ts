@@ -43,8 +43,9 @@ export default class BibleReferencePlugin extends Plugin {
     this.addVerseLookupCommand()
     this.addRibbonButton()
 
-    this.api = new BibleReferenceAPI(this, this.settings);
+    this.api = new BibleReferenceAPI(this.app, this.settings);
     // Register the api globally
+    // @ts-ignore
     (window['BibleReferenceAPI'] = this.api) && this.register(() => { delete window['BibleReferenceAPI'] });
 
     const flagService = FlagService.getInstace()

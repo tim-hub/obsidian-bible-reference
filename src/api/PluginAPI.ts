@@ -2,6 +2,7 @@ import { BibleReferencePluginSettings } from '../data/constants'
 import { VerseSuggesting } from '../verse/VerseSuggesting'
 import { verseMatch } from '../utils/verseMatch'
 import { getSuggestionsFromQuery } from '../utils/getSuggestionsFromQuery'
+import { App } from 'obsidian'
 
 /**
  * A subset of the plugin's API, to be exposed globally for programmatic use
@@ -11,19 +12,11 @@ import { getSuggestionsFromQuery } from '../utils/getSuggestionsFromQuery'
  * Many thanks to `obsidian-dataview` for the implementation reference
  */
 export class BibleReferenceAPI {
-  settings: BibleReferencePluginSettings
-  
   public constructor(
     public app: App,
-    public settings: BibleReferencePluginSettings
+    public settings: BibleReferencePluginSettings,
   ) {
-    this.settings = settings;
-  }
-
-  private mergeSettings(opts?: BibleReferencePluginSettings): BibleReferencePluginSettings {
-    return opts
-      ? Object.assign(Object.assign({}, this.settings), opts)
-      : Object.assign({}, this.settings);
+    this.settings = settings
   }
 
   /**
@@ -35,7 +28,13 @@ export class BibleReferenceAPI {
    * @param {BibleReferencePluginSettings?} [opts=undefined] - optional overrides for any settings
    */
   async queryVerses(query: string, opts?: BibleReferencePluginSettings): Promise<VerseSuggesting | null> {
-    if ( !verseMatch(query) ) return null;
-    return getSuggestionsFromQuery(`${query}`, this.mergeSettings(opts)).then(verseArray => verseArray[0] || null);
+    if (!verseMatch(query)) return null
+    return getSuggestionsFromQuery(`${query}`, this.mergeSettings(opts)).then(verseArray => verseArray[0] || null)
+  }
+
+  private mergeSettings(opts?: BibleReferencePluginSettings): BibleReferencePluginSettings {
+    return opts
+      ? Object.assign(Object.assign({}, this.settings), opts)
+      : Object.assign({}, this.settings)
   }
 }
