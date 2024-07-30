@@ -11,6 +11,14 @@ export const BibleVersionCollectionEnglish = [
     apiSource: BibleAPISourceCollection.bibleApi,
   },
   {
+    key: 'drb',
+    versionName: 'Douay-Rheims Bible',
+    language: 'English',
+    code: 'en',
+    apiSource: BibleAPISourceCollection.bollsLife,
+    infoURL: 'https://en.wikipedia.org/wiki/Douay-Rheims_Bible',
+  },
+  {
     key: 'esv',
     versionName: 'English Standard Version',
     language: 'English',
