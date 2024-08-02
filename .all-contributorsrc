@@ -196,6 +196,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "ajwdd",
+      "name": "Adam W",
+      "avatar_url": "https://avatars.githubusercontent.com/u/4010514?v=4",
+      "profile": "https://github.com/ajwdd",
+      "contributions": [
+        "translation",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
