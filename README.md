@@ -87,8 +87,13 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
-> Special Thanks for the sponsors [![support button of obsidian bible reference](https://img.shields.io/static/v1?label=SupportMe&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/tim-hub)
->
-> - [Chris Gonzales](https://github.com/chrisg32)
+> Special thanks for the sponsors [![support button of obsidian bible reference](https://img.shields.io/static/v1?label=SupportMe&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/tim-hub)
+
 
 <!-- sponsors --><!-- sponsors -->
+
+
+
+## Related Projects
+- [Bible Vector Search](https://bible-search.antioch.tech/) To search Bible verses in meaning not in keywords. 
+This is another open source project I built recently to implement AI Embedding and Vector Search for Bible verses (in BBE transaltion).
