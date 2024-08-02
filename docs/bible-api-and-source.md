@@ -27,6 +27,7 @@ This plugin Bible Verse Query Functionality is currently powered by
   - **CUV**: China Union Version (Bolls Life) (Book Names Are In English, Bible Verses Are In Chinese)
   - **ESV**: English Standard Version (Bolls Life)
   - **LSB**: Legacy Standard Bible (Bolls Life)
+  - **DRB**: Douay-Rheims Bible (Bolls Life)
   - and more
 
 ### Credits
