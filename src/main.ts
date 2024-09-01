@@ -47,28 +47,17 @@ export default class BibleReferencePlugin extends Plugin {
     // Register the api globally
     // @ts-ignore
     (window['BibleReferenceAPI'] = this.api) && this.register(() => {
-       // @ts-ignore
+      // @ts-ignore
       delete window['BibleReferenceAPI']
     })
 
-    const flagService = FlagService.getInstace()
-    await flagService.init('obsidian-app')
-    if (FlagService.instance.isFeatureEnabled('vod')) {
-      console.debug('vod feature flag enabled')
-      const featureValues = FlagService.instance.getFeatureValue('vod')
-      if (featureValues?.editor) {
-        this.registerEditorSuggest(
-          new VerseOfDayEditorSuggester(this, this.settings),
-        )
-      }
-      if (featureValues?.insert) {
-        this.verseOfDayModal = new VerseOfDayModal(this, this.settings)
-        this.addVerseOfDayInsertCommand()
-      }
-      if (featureValues?.notice) {
-        this.addVerseOfDayNoticeCommand()
-      }
-    }
+    // enable vod
+    this.registerEditorSuggest(
+      new VerseOfDayEditorSuggester(this, this.settings),
+    )
+    this.verseOfDayModal = new VerseOfDayModal(this, this.settings)
+    this.addVerseOfDayInsertCommand()
+    this.addVerseOfDayNoticeCommand()
 
     this.initStatusBarIndicator()
     EventStats.logRecord(this.settings.optOutToEvents)
