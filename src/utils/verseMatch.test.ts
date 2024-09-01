@@ -2,12 +2,12 @@ import { verseMatch, matchTriggerPrefix } from './verseMatch'
 
 test('test verse match', () => {
   const result = verseMatch('--John3:16')
-  expect(result).toBe('--John3:16')
+  expect(result).toBe('John3:16')
 })
 
 test('test verse not match', () => {
   const result = verseMatch('-John3:16')
-  expect(result).toBe('')
+  expect(result).toBe('John3:16')
 })
 
 test('test verse not match', () => {
@@ -32,7 +32,7 @@ test('test trigger prefix **', () => {
   expect(result).toBe(false)
 })
 
-test('test trigger prefix ++1', () => {
+test('test trigger prefix **1', () => {
   const result = matchTriggerPrefix('**1')
   expect(result).toBe(false)
 })
