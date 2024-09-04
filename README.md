@@ -80,6 +80,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/jonathanvanschenck"><img src="https://avatars.githubusercontent.com/u/44685047?v=4?s=65" width="65px;" alt="jonathanvanschenck"/><br /><sub><b>jonathanvanschenck</b></sub></a><br /><a href="https://github.com/tim-hub/obsidian-bible-reference/commits?author=jonathanvanschenck" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/ajwdd"><img src="https://avatars.githubusercontent.com/u/4010514?v=4?s=65" width="65px;" alt="Adam W"/><br /><sub><b>Adam W</b></sub></a><br /><a href="#translation-ajwdd" title="Translation">🌍</a> <a href="https://github.com/tim-hub/obsidian-bible-reference/commits?author=ajwdd" title="Code">💻</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Redster1"><img src="https://avatars.githubusercontent.com/u/69325218?v=4?s=65" width="65px;" alt="Redster1"/><br /><sub><b>Redster1</b></sub></a><br /><a href="https://github.com/tim-hub/obsidian-bible-reference/issues?q=author%3ARedster1" title="Bug reports">🐛</a></td>
+    </tr>
   </tbody>
 </table>
 
