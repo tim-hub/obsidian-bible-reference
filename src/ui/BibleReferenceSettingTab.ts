@@ -1,36 +1,16 @@
-import {
-  App,
-  DropdownComponent,
-  Notice,
-  PluginSettingTab,
-  Setting,
-} from 'obsidian'
+import { App, DropdownComponent, Notice, PluginSettingTab, Setting } from 'obsidian'
 import BibleReferencePlugin from './../main'
-import {
-  allBibleVersionsWithLanguageNameAlphabetically,
-  DEFAULT_BIBLE_VERSION,
-} from '../data/BibleVersionCollection'
+import { allBibleVersionsWithLanguageNameAlphabetically, DEFAULT_BIBLE_VERSION } from '../data/BibleVersionCollection'
 import { IBibleVersion } from '../interfaces/IBibleVersion'
 import {
   BibleVerseReferenceLinkPosition,
   BibleVerseReferenceLinkPositionCollection,
 } from '../data/BibleVerseReferenceLinkPosition'
-import {
-  BibleVerseFormat,
-  BibleVerseFormatCollection,
-} from '../data/BibleVerseFormat'
-import {
-  BibleVerseNumberFormat,
-  BibleVerseNumberFormatCollection,
-} from '../data/BibleVerseNumberFormat'
-import { FlagService } from '../provider/FeatureFlag'
+import { BibleVerseFormat, BibleVerseFormatCollection } from '../data/BibleVerseFormat'
+import { BibleVerseNumberFormat, BibleVerseNumberFormatCollection } from '../data/BibleVerseNumberFormat'
 import { BibleAPISourceCollection } from '../data/BibleApiSourceCollection'
 import { EventStats } from '../provider/EventStats'
-import {
-  APP_NAMING,
-  BibleVersionNameLengthEnum,
-  OutgoingLinkPositionEnum,
-} from '../data/constants'
+import { APP_NAMING, BibleVersionNameLengthEnum, OutgoingLinkPositionEnum } from '../data/constants'
 import { pluginEvent } from '../obsidian/PluginEvent'
 
 export class BibleReferenceSettingTab extends PluginSettingTab {
@@ -211,8 +191,7 @@ Obsidian Bible Reference  is proudly powered by
   private setUpVersionSettingsAndVersionOptions(): void {
     let allAvailableVersionOptions =
       allBibleVersionsWithLanguageNameAlphabetically
-    const disableBibleAPI =
-      FlagService.instance.isFeatureEnabled('disable-bible-api')
+    const disableBibleAPI = false
     if (disableBibleAPI) {
       allAvailableVersionOptions = allAvailableVersionOptions.filter((v) => {
         return v.apiSource.name !== BibleAPISourceCollection.bibleApi.name
