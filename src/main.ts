@@ -43,17 +43,18 @@ export default class BibleReferencePlugin extends Plugin {
     this.addVerseLookupCommand()
     this.addRibbonButton()
 
-    this.api = new BibleReferenceAPI(this.app, this.settings);
+    this.api = new BibleReferenceAPI(this.app, this.settings)
     // Register the api globally
     // @ts-ignore
-    (window['BibleReferenceAPI'] = this.api) && this.register(() => {
-      // @ts-ignore
-      delete window['BibleReferenceAPI']
-    })
+    ;(window['BibleReferenceAPI'] = this.api) &&
+      this.register(() => {
+        // @ts-ignore
+        delete window['BibleReferenceAPI']
+      })
 
     // enable vod
     this.registerEditorSuggest(
-      new VerseOfDayEditorSuggester(this, this.settings),
+      new VerseOfDayEditorSuggester(this, this.settings)
     )
     this.verseOfDayModal = new VerseOfDayModal(this, this.settings)
     this.addVerseOfDayInsertCommand()
@@ -81,7 +82,7 @@ export default class BibleReferencePlugin extends Plugin {
 
   private async getAndCachedVerseOfDay(): Promise<VerseOfDaySuggesting> {
     const { ttl, timestamp, verseOfDaySuggesting } =
-    this?.cachedVerseOfDaySuggesting || {}
+      this?.cachedVerseOfDaySuggesting || {}
     if (!verseOfDaySuggesting || timestamp + ttl > Date.now()) {
       const vodResp = await getVod()
       const reference = splitBibleReference(vodResp.verse.details.reference)
@@ -89,7 +90,7 @@ export default class BibleReferencePlugin extends Plugin {
       const vodSuggesting = new VerseOfDaySuggesting(
         this.settings,
         reference,
-        verseTexts,
+        verseTexts
       )
       this.cachedVerseOfDaySuggesting = {
         verseOfDaySuggesting: vodSuggesting,
@@ -108,7 +109,7 @@ export default class BibleReferencePlugin extends Plugin {
         EventStats.logUIOpen(
           'lookupModalOpen',
           { key: `command-lookup`, value: 1 },
-          this.settings.optOutToEvents,
+          this.settings.optOutToEvents
         )
         this.verseLookUpModal.open()
       },
@@ -125,13 +126,13 @@ export default class BibleReferencePlugin extends Plugin {
         EventStats.logUIOpen(
           'vodEditorOpen',
           { key: `command-vod`, value: 1 },
-          this.settings.optOutToEvents,
+          this.settings.optOutToEvents
         )
         new Notice(
           `${verse.verseTexts?.join('')} -- ${verse.verseReference.bookName} ${
             verse.verseReference.chapterNumber
           }:${verse.verseReference.verseNumber}`,
-          1000 * 10,
+          1000 * 10
         )
       },
     })
@@ -146,7 +147,7 @@ export default class BibleReferencePlugin extends Plugin {
         EventStats.logUIOpen(
           'vodEditorOpen',
           { key: `command-vod-insert`, value: 1 },
-          this.settings.optOutToEvents,
+          this.settings.optOutToEvents
         )
         editor.replaceSelection(vodSuggesting.allFormattedContent)
       },
@@ -163,10 +164,10 @@ export default class BibleReferencePlugin extends Plugin {
         EventStats.logUIOpen(
           'lookupModalOpen',
           { key: `ribbon-click`, value: 1 },
-          this.settings.optOutToEvents,
+          this.settings.optOutToEvents
         )
         this.verseLookUpModal.open()
-      },
+      }
     )
   }
 
@@ -175,7 +176,7 @@ export default class BibleReferencePlugin extends Plugin {
       EventStats.logUIOpen(
         'lookupModalOpen',
         { key: `ribbon-remove`, value: 1 },
-        this.settings.optOutToEvents,
+        this.settings.optOutToEvents
       )
       this.ribbonButton.parentNode?.removeChild(this.ribbonButton)
     }
@@ -230,7 +231,7 @@ export default class BibleReferencePlugin extends Plugin {
       'getElementsByClassName' in this.statusBarIndicator
     ) {
       const el = this.statusBarIndicator.getElementsByClassName(
-        'bible-version-indicator',
+        'bible-version-indicator'
       )[0]
       el.innerHTML = this.getStatusBatLabel()
     }

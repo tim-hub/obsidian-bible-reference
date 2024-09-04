@@ -26,25 +26,33 @@ export class BibleAPIDotComProvider extends BaseBibleAPIProvider {
       versionName
         ? versionName
         : this?.BibleVersionKey
-          ? this.BibleVersionKey
-          : ''
+        ? this.BibleVersionKey
+        : ''
     }`
 
     // setup the bible gateway url
-    this.bibleGatewayUrl = this.buildBibleGatewayUrl(bookName, chapter, verses).replace(/ /g, "+") // Remove spaces in Book names for URL.
+    this.bibleGatewayUrl = this.buildBibleGatewayUrl(
+      bookName,
+      chapter,
+      verses
+    ).replace(/ /g, '+') // Remove spaces in Book names for URL.
     return this._currentQueryUrl
   }
 
   protected prepareVerseLinkUrl(): string {
-    if (this._versionKey in [
-      'bbe',
-      'clementine',
-      'oeb-us',
-      'oeb-cw',
-      'almeida',
-      'rccv',
-      'cherokee',
-    ] && !this.bibleGatewayUrl) {
+    if (
+      this._versionKey in
+        [
+          'bbe',
+          'clementine',
+          'oeb-us',
+          'oeb-cw',
+          'almeida',
+          'rccv',
+          'cherokee',
+        ] &&
+      !this.bibleGatewayUrl
+    ) {
       return this._currentQueryUrl
     }
     if (this._versionKey === 'webbe') {

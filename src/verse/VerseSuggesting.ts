@@ -56,11 +56,12 @@ export class VerseSuggesting
     if (this.settings?.bookTagging || this.settings?.chapterTagging) {
       bottom += ' %%'
       bottom += this.settings?.bookTagging
-        ? ` #${this.verseReference.bookName.replace(/ /g, "")}` // Remove spaces from book names in tags
+        ? ` #${this.verseReference.bookName.replace(/ /g, '')}` // Remove spaces from book names in tags
         : ''
       bottom += this.settings?.chapterTagging
         ? ` #${
-            this.verseReference.bookName.replace(/ /g, "") + this.verseReference.chapterNumber // Remove spaces from book names in tags
+            this.verseReference.bookName.replace(/ /g, '') +
+            this.verseReference.chapterNumber // Remove spaces from book names in tags
           }`
         : ''
       bottom += ' %%'
@@ -123,14 +124,29 @@ export class VerseSuggesting
 
   protected getVerseReferenceLink(): string {
     let verseLink = ''
-    if (this.settings?.showVerseTranslation && this.settings?.enableHyperlinking) {
-      verseLink = ` [${this.bibleProvider.BibleReferenceHead} - ${this.bibleVersion.toUpperCase()}](${this.bibleProvider.VerseLinkURL})`
-    } else if (this.settings?.showVerseTranslation && !this.settings?.enableHyperlinking) {
-      verseLink = ` ${this.bibleProvider.BibleReferenceHead} - ${this.bibleVersion.toUpperCase()}`
-    } else if (!this.settings?.showVerseTranslation && this.settings?.enableHyperlinking) {
+    if (
+      this.settings?.showVerseTranslation &&
+      this.settings?.enableHyperlinking
+    ) {
+      verseLink = ` [${
+        this.bibleProvider.BibleReferenceHead
+      } - ${this.bibleVersion.toUpperCase()}](${
+        this.bibleProvider.VerseLinkURL
+      })`
+    } else if (
+      this.settings?.showVerseTranslation &&
+      !this.settings?.enableHyperlinking
+    ) {
+      verseLink = ` ${
+        this.bibleProvider.BibleReferenceHead
+      } - ${this.bibleVersion.toUpperCase()}`
+    } else if (
+      !this.settings?.showVerseTranslation &&
+      this.settings?.enableHyperlinking
+    ) {
       verseLink = ` [${this.bibleProvider.BibleReferenceHead}](${this.bibleProvider.VerseLinkURL})`
     } else {
-      verseLink =  ` ${this.bibleProvider.BibleReferenceHead}`
+      verseLink = ` ${this.bibleProvider.BibleReferenceHead}`
     }
     return verseLink
   }

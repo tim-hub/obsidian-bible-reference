@@ -1,7 +1,6 @@
 import { IBibleVersion } from '../interfaces/IBibleVersion'
 import { BibleAPISourceCollection } from './BibleApiSourceCollection'
 
-
 export const BibleVersionCollectionEnglish = [
   {
     key: 'amp',
@@ -31,7 +30,8 @@ export const BibleVersionCollectionEnglish = [
     language: 'English',
     code: 'en',
     apiSource: BibleAPISourceCollection.bollsLife,
-    infoURL: 'https://en.wikipedia.org/wiki/Messianic_Bible_translations#Complete_Jewish_Bible_(CJB)',
+    infoURL:
+      'https://en.wikipedia.org/wiki/Messianic_Bible_translations#Complete_Jewish_Bible_(CJB)',
   },
   {
     key: 'drb',
@@ -198,7 +198,7 @@ export const BibleVersionCollectionEnglish = [
   },
   {
     key: 'ylt',
-    versionName: 'Young\'s Literal Translation',
+    versionName: "Young's Literal Translation",
     language: 'English',
     code: 'en',
     apiSource: BibleAPISourceCollection.bollsLife,
@@ -312,14 +312,12 @@ export const BibleVersionCollectionGreek = [
     language: 'Greek Ελληνικά',
     apiSource: BibleAPISourceCollection.bollsLife,
   },
-
 ]
 
 export const BibleVersionCollectionHebrew = [
-
   {
     key: 'dhnt',
-    versionName: 'Delitzsch\'s Hebrew New Testament 1877, 1998 (with Vowels)',
+    versionName: "Delitzsch's Hebrew New Testament 1877, 1998 (with Vowels)",
     language: 'Hebrew עברית',
     apiSource: BibleAPISourceCollection.bollsLife,
   },
@@ -427,7 +425,6 @@ export const BibleVersionCollectionSpanish = [
   },
 ]
 
-
 export const BibleVersionCollectionPolish = [
   {
     key: 'bg',
@@ -488,34 +485,32 @@ export const BibleVersionCollectionTamil = [
   },
 ]
 
-
 /**
  * Please note to support the abbreviation of the translation
  * "code" need to be added
  * And the Abbreviation source need to be updated too See this repo. https://github.com/AntiochTechnology/bible-reference-toolkit/tree/master/packages/bible-book-names-intl
  */
-export const BibleVersionCollection: IBibleVersion[] =
-  [
-    ...BibleVersionCollectionArabic,
-    ...BibleVersionCollectionCherokee,
-    ...BibleVersionCollectionChinese,
-    ...BibleVersionCollectionEnglish,
-    ...BibleVersionCollectionEnglishUK,
-    ...BibleVersionCollectionFrench,
-    ...BibleVersionCollectionGerman,
-    ...BibleVersionCollectionGreek,
-    ...BibleVersionCollectionHebrew,
-    ...BibleVersionCollectionIndonesian,
-    ...BibleVersionCollectionItalian,
-    ...BibleVersionCollectionLatin,
-    ...BibleVersionCollectionPolish,
-    ...BibleVersionCollectionPortuguese,
-    ...BibleVersionCollectionRomanian,
-    ...BibleVersionCollectionRussian,
-    ...BibleVersionCollectionSpanish,
-    ...BibleVersionCollectionTamil,
-    ...BibleVersionCollectionUkrainian,
-  ]
+export const BibleVersionCollection: IBibleVersion[] = [
+  ...BibleVersionCollectionArabic,
+  ...BibleVersionCollectionCherokee,
+  ...BibleVersionCollectionChinese,
+  ...BibleVersionCollectionEnglish,
+  ...BibleVersionCollectionEnglishUK,
+  ...BibleVersionCollectionFrench,
+  ...BibleVersionCollectionGerman,
+  ...BibleVersionCollectionGreek,
+  ...BibleVersionCollectionHebrew,
+  ...BibleVersionCollectionIndonesian,
+  ...BibleVersionCollectionItalian,
+  ...BibleVersionCollectionLatin,
+  ...BibleVersionCollectionPolish,
+  ...BibleVersionCollectionPortuguese,
+  ...BibleVersionCollectionRomanian,
+  ...BibleVersionCollectionRussian,
+  ...BibleVersionCollectionSpanish,
+  ...BibleVersionCollectionTamil,
+  ...BibleVersionCollectionUkrainian,
+]
 
 export const DEFAULT_BIBLE_VERSION = BibleVersionCollection[11]
 

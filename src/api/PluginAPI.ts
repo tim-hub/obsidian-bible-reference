@@ -14,7 +14,7 @@ import { App } from 'obsidian'
 export class BibleReferenceAPI {
   public constructor(
     public app: App,
-    public settings: BibleReferencePluginSettings,
+    public settings: BibleReferencePluginSettings
   ) {
     this.app = app
     this.settings = settings
@@ -28,12 +28,19 @@ export class BibleReferenceAPI {
    * @param {String} query - the query string (e.g. 'Luke 1:1')
    * @param {BibleReferencePluginSettings?} [opts=undefined] - optional overrides for any settings
    */
-  async queryVerses(query: string, opts?: BibleReferencePluginSettings): Promise<VerseSuggesting | null> {
+  async queryVerses(
+    query: string,
+    opts?: BibleReferencePluginSettings
+  ): Promise<VerseSuggesting | null> {
     if (!verseMatch(query)) return null
-    return getSuggestionsFromQuery(`${query}`, this.mergeSettings(opts)).then(verseArray => verseArray[0] || null)
+    return getSuggestionsFromQuery(`${query}`, this.mergeSettings(opts)).then(
+      (verseArray) => verseArray[0] || null
+    )
   }
 
-  private mergeSettings(opts?: BibleReferencePluginSettings): BibleReferencePluginSettings {
+  private mergeSettings(
+    opts?: BibleReferencePluginSettings
+  ): BibleReferencePluginSettings {
     return opts
       ? Object.assign(Object.assign({}, this.settings), opts)
       : Object.assign({}, this.settings)

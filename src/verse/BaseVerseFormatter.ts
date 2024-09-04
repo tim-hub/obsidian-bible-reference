@@ -59,7 +59,11 @@ export abstract class BaseVerseFormatter {
         text +=
           ' ' + verseNumberFormatted + verse.text.trim().replaceAll('\n', ' ')
       } else {
-        text += '> ' + verseNumberFormatted + verse.text.trim().replace(/\r\n|\n|\r/g, " ") + "\n" // Remove extraneous line breaks in KJV verses.
+        text +=
+          '> ' +
+          verseNumberFormatted +
+          verse.text.trim().replace(/\r\n|\n|\r/g, ' ') +
+          '\n' // Remove extraneous line breaks in KJV verses.
       }
     })
     console.debug('text', text)
@@ -130,7 +134,7 @@ export abstract class BaseVerseFormatter {
         return verseNumberFormatted
       case BibleVerseNumberFormat.Bold:
         verseNumberFormatted += '**' + verseNumber + '** '
-        return verseNumberFormatted  
+        return verseNumberFormatted
       case BibleVerseNumberFormat.None:
         verseNumberFormatted = ' '
         return verseNumberFormatted

@@ -13,7 +13,7 @@ export abstract class BaseBibleAPIProvider {
 
   constructor(bibleVersion: IBibleVersion) {
     this._bibleVersion = bibleVersion
-    const {key} = bibleVersion
+    const { key } = bibleVersion
     this._versionKey = key
     this._apiUrl = bibleVersion.apiSource.apiUrl
   }
@@ -37,7 +37,7 @@ export abstract class BaseBibleAPIProvider {
     return this._currentQueryUrl
   }
 
-  protected abstract prepareVerseLinkUrl():string
+  protected abstract prepareVerseLinkUrl(): string
 
   /**
    * Get the Callout Link URL for the verse query
@@ -65,8 +65,14 @@ export abstract class BaseBibleAPIProvider {
    * @param verses
    * @protected
    */
-  protected buildBibleGatewayUrl(bookName: string, chapter: number, verses: number[]): string {
-    return `https://www.biblegateway.com/passage/?search=${bookName}+${chapter}:${this.convertVersesToQueryString(verses)}&version=${this._versionKey}`
+  protected buildBibleGatewayUrl(
+    bookName: string,
+    chapter: number,
+    verses: number[]
+  ): string {
+    return `https://www.biblegateway.com/passage/?search=${bookName}+${chapter}:${this.convertVersesToQueryString(
+      verses
+    )}&version=${this._versionKey}`
   }
 
   /**
@@ -130,7 +136,7 @@ export abstract class BaseBibleAPIProvider {
     } catch (e) {
       console.error('error while querying', e)
       new Notice(`Error while querying ${url}`)
-      EventStats.logError('errors', {key: url, value: 1})
+      EventStats.logError('errors', { key: url, value: 1 })
       return await Promise.reject(e)
     }
   }

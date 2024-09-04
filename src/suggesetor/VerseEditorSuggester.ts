@@ -22,7 +22,7 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
 
   constructor(
     plugin: BibleReferencePlugin,
-    settings: BibleReferencePluginSettings,
+    settings: BibleReferencePluginSettings
   ) {
     super(plugin.app)
     this.plugin = plugin
@@ -38,7 +38,7 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
   onTrigger(
     cursor: EditorPosition,
     editor: Editor,
-    _: TFile,
+    _: TFile
   ): EditorSuggestTriggerInfo | null {
     const currentContent = editor.getLine(cursor.line).substring(0, cursor.ch)
 
@@ -58,7 +58,7 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
       EventStats.logUIOpen(
         'lookupEditorOpen',
         { key: `${this.settings.bibleVersion}`, value: 1 },
-        this.settings.optOutToEvents,
+        this.settings.optOutToEvents
       )
       return {
         end: cursor,
@@ -77,11 +77,11 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
    * @param context
    */
   async getSuggestions(
-    context: EditorSuggestContext,
+    context: EditorSuggestContext
   ): Promise<VerseSuggesting[]> {
     const suggestions = await getSuggestionsFromQuery(
       context.query,
-      this.settings,
+      this.settings
     )
     EventStats.logLookup(
       'verseLookUp',
@@ -89,7 +89,7 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
         key: `${this.settings.bibleVersion}-${context.query.toLowerCase()}`,
         value: 1,
       },
-      this.settings.optOutToEvents,
+      this.settings.optOutToEvents
     )
     return suggestions
   }

@@ -16,14 +16,18 @@ export const getSuggestionsFromQuery = async (
   console.debug('get suggestion for query ', queryWithoutPrefix.toLowerCase())
 
   const bookNameMatchingResults = queryWithoutPrefix.match(BOOK_REG)
-  const rawBookName = bookNameMatchingResults?.length ? bookNameMatchingResults[0] : undefined
+  const rawBookName = bookNameMatchingResults?.length
+    ? bookNameMatchingResults[0]
+    : undefined
 
   if (!rawBookName) {
     console.error(`could not find through query`, queryWithoutPrefix)
     return []
   }
 
-  const numbersPartsOfQueryString = queryWithoutPrefix.substring(rawBookName.length)
+  const numbersPartsOfQueryString = queryWithoutPrefix.substring(
+    rawBookName.length
+  )
   const numbers = numbersPartsOfQueryString.split(/[-:]+/)
 
   const chapterNumber = parseInt(numbers[0].trim())

@@ -15,7 +15,6 @@ test('test verse not match', () => {
   expect(result).toBe('John3:16')
 })
 
-
 test('test trigger prefix', () => {
   const result = matchTriggerPrefix('--')
   expect(result).toBe(true)
@@ -25,7 +24,6 @@ test('test trigger prefix ++', () => {
   const result = matchTriggerPrefix('++')
   expect(result).toBe(true)
 })
-
 
 test('test trigger prefix **', () => {
   const result = matchTriggerPrefix('**')
