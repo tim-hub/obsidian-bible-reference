@@ -6,7 +6,6 @@ describe('test book names', () => {
     expect(languageToBookWithAbbreviationsDict.has('en')).toBe(true);
   });
 
-
   test('books count is 66', () => {
     expect(languageToBookWithAbbreviationsDict.has('en')).toBe(true);
     expect(books.length).toBe(66);

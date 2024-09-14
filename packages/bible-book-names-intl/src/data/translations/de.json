@@ -2,172 +2,102 @@
   "language": "de",
   "1": {
     "name": "Genesis",
-    "shortNames": [
-      "1. Mose",
-      "Ge",
-      "Gen",
-      "1. Mo"
-    ],
+    "shortNames": ["1. Mose", "Ge", "Gen", "1. Mo"],
     "startNumber": 0
   },
   "2": {
     "name": "Exodus",
-    "shortNames": [
-      "2. Mose",
-      "Ex",
-      "Exo",
-      "2. Mo"
-    ],
+    "shortNames": ["2. Mose", "Ex", "Exo", "2. Mo"],
     "startNumber": 0
   },
   "3": {
     "name": "Levitikus",
-    "shortNames": [
-      "3. Mose",
-      "Le",
-      "Lev",
-      "3. Mo"
-    ],
+    "shortNames": ["3. Mose", "Le", "Lev", "3. Mo"],
     "startNumber": 0
   },
   "4": {
     "name": "Numeri",
-    "shortNames": [
-      "4. Mose",
-      "Nu",
-      "Num",
-      "4. Mo"
-    ],
+    "shortNames": ["4. Mose", "Nu", "Num", "4. Mo"],
     "startNumber": 0
   },
   "5": {
     "name": "Deuteronomium",
-    "shortNames": [
-      "5. Mose",
-      "Dt",
-      "Dtn",
-      "Deut",
-      "Deu",
-      "De",
-      "5. Mo"
-    ],
+    "shortNames": ["5. Mose", "Dt", "Dtn", "Deut", "Deu", "De", "5. Mo"],
     "startNumber": 0
   },
   "6": {
     "name": "Josua",
-    "shortNames": [
-      "Js",
-      "Jos"
-    ],
+    "shortNames": ["Js", "Jos"],
     "startNumber": 0
   },
   "7": {
     "name": "Richter",
-    "shortNames": [
-      "Ri"
-    ],
+    "shortNames": ["Ri"],
     "startNumber": 0
   },
   "8": {
     "name": "Ruth",
-    "shortNames": [
-      "Rut",
-      "Rt"
-    ],
+    "shortNames": ["Rut", "Rt"],
     "startNumber": 0
   },
   "9": {
     "name": "Samuel",
-    "shortNames": [
-      "Sa",
-      "Sam"
-    ],
+    "shortNames": ["Sa", "Sam"],
     "startNumber": 1
   },
   "10": {
     "name": "Samuel",
-    "shortNames": [
-      "Sa",
-      "Sam"
-    ],
+    "shortNames": ["Sa", "Sam"],
     "startNumber": 2
   },
   "11": {
     "name": "Könige",
-    "shortNames": [
-      "Kö",
-      "Kön"
-    ],
+    "shortNames": ["Kö", "Kön"],
     "startNumber": 1
   },
   "12": {
     "name": "Könige",
-    "shortNames": [
-      "Kö",
-      "Kön"
-    ],
+    "shortNames": ["Kö", "Kön"],
     "startNumber": 2
   },
   "13": {
     "name": "Chronik",
-    "shortNames": [
-      "Ch",
-      "Chr",
-      "Chron"
-    ],
+    "shortNames": ["Ch", "Chr", "Chron"],
     "startNumber": 1
   },
   "14": {
     "name": "Chronik",
-    "shortNames": [
-      "Ch",
-      "Chr",
-      "Chron"
-    ],
+    "shortNames": ["Ch", "Chr", "Chron"],
     "startNumber": 2
   },
   "15": {
     "name": "Esra",
-    "shortNames": [
-      "Esr"
-    ],
+    "shortNames": ["Esr"],
     "startNumber": 0
   },
   "16": {
     "name": "Nehemia",
-    "shortNames": [
-      "Ne",
-      "Neh"
-    ],
+    "shortNames": ["Ne", "Neh"],
     "startNumber": 0
   },
   "17": {
     "name": "Esther",
-    "shortNames": [
-      "Est"
-    ],
+    "shortNames": ["Est"],
     "startNumber": 0
   },
   "18": {
     "name": "Hiob",
-    "shortNames": [
-      "Hi",
-      "Ijob"
-    ],
+    "shortNames": ["Hi", "Ijob"],
     "startNumber": 0
   },
   "19": {
     "name": "Psalm",
-    "shortNames": [
-      "Ps"
-    ],
+    "shortNames": ["Ps"],
     "startNumber": 0
   },
   "20": {
     "name": "Sprüche",
-    "shortNames": [
-      "Spr"
-    ],
+    "shortNames": ["Spr"],
     "startNumber": 0
   },
   "21": {
@@ -184,394 +114,227 @@
   },
   "22": {
     "name": "Hoheslied",
-    "shortNames": [
-      "Hl",
-      "Hld",
-      "Hohes Lied",
-      "Hohelied Salomos"
-    ],
+    "shortNames": ["Hl", "Hld", "Hohes Lied", "Hohelied Salomos"],
     "startNumber": 0
   },
   "23": {
     "name": "Jesaja",
-    "shortNames": [
-      "Jes",
-      "Is"
-    ],
+    "shortNames": ["Jes", "Is"],
     "startNumber": 0
   },
   "24": {
     "name": "Jeremia",
-    "shortNames": [
-      "Je",
-      "Jer"
-    ],
+    "shortNames": ["Je", "Jer"],
     "startNumber": 0
   },
   "25": {
     "name": "Klagelieder",
-    "shortNames": [
-      "Kla",
-      "Klgl",
-      "Klagelieder Jeremias"
-    ],
+    "shortNames": ["Kla", "Klgl", "Klagelieder Jeremias"],
     "startNumber": 0
   },
   "26": {
     "name": "Hesekiel",
-    "shortNames": [
-      "Hes",
-      "Ezechiel",
-      "Ez"
-    ],
+    "shortNames": ["Hes", "Ezechiel", "Ez"],
     "startNumber": 0
   },
   "27": {
     "name": "Daniel",
-    "shortNames": [
-      "Da",
-      "Dan",
-      "Dl",
-      "Dnl"
-    ],
+    "shortNames": ["Da", "Dan", "Dl", "Dnl"],
     "startNumber": 0
   },
   "28": {
     "name": "Hosea",
-    "shortNames": [
-      "Ho",
-      "Hos"
-    ],
+    "shortNames": ["Ho", "Hos"],
     "startNumber": 0
   },
   "29": {
     "name": "Joel",
-    "shortNames": [
-      "Jl",
-      "Joe"
-    ],
+    "shortNames": ["Jl", "Joe"],
     "startNumber": 0
   },
   "30": {
     "name": "Amos",
-    "shortNames": [
-      "Am",
-      "Amo"
-    ],
+    "shortNames": ["Am", "Amo"],
     "startNumber": 0
   },
   "31": {
     "name": "Obadja",
-    "shortNames": [
-      "Ob",
-      "Oba",
-      "Obd",
-      "Odbh"
-    ],
+    "shortNames": ["Ob", "Oba", "Obd", "Odbh"],
     "startNumber": 0
   },
   "32": {
     "name": "Jona",
-    "shortNames": [
-      "Jh",
-      "Jon",
-      "Jnh"
-    ],
+    "shortNames": ["Jh", "Jon", "Jnh"],
     "startNumber": 0
   },
   "33": {
     "name": "Micha",
-    "shortNames": [
-      "Mi",
-      "Mic"
-    ],
+    "shortNames": ["Mi", "Mic"],
     "startNumber": 0
   },
   "34": {
     "name": "Nahum",
-    "shortNames": [
-      "Na",
-      "Nah"
-    ],
+    "shortNames": ["Na", "Nah"],
     "startNumber": 0
   },
   "35": {
     "name": "Habakuk",
-    "shortNames": [
-      "Hb",
-      "Hab",
-      "Hk",
-      "Habk"
-    ],
+    "shortNames": ["Hb", "Hab", "Hk", "Habk"],
     "startNumber": 0
   },
   "36": {
     "name": "Zephanja",
-    "shortNames": [
-      "Zp",
-      "Zep",
-      "Zeph",
-      "Ze",
-      "Zefanja",
-      "Zef"
-    ],
+    "shortNames": ["Zp", "Zep", "Zeph", "Ze", "Zefanja", "Zef"],
     "startNumber": 0
   },
   "37": {
     "name": "Haggai",
-    "shortNames": [
-      "Ha",
-      "Hag",
-      "Hagg"
-    ],
+    "shortNames": ["Ha", "Hag", "Hagg"],
     "startNumber": 0
   },
   "38": {
     "name": "Sacharja",
-    "shortNames": [
-      "Sach"
-    ],
+    "shortNames": ["Sach"],
     "startNumber": 0
   },
   "39": {
     "name": "Maleachi",
-    "shortNames": [
-      "Ml",
-      "Mal",
-      "Mlc"
-    ],
+    "shortNames": ["Ml", "Mal", "Mlc"],
     "startNumber": 0
   },
   "40": {
     "name": "Matthäus",
-    "shortNames": [
-      "Mt",
-      "Matt",
-      "Mat"
-    ],
+    "shortNames": ["Mt", "Matt", "Mat"],
     "startNumber": 0
   },
   "41": {
     "name": "Markus",
-    "shortNames": [
-      "Mk",
-      "Mrk"
-    ],
+    "shortNames": ["Mk", "Mrk"],
     "startNumber": 0
   },
   "42": {
     "name": "Lukas",
-    "shortNames": [
-      "Lk",
-      "Luk",
-      "Lu"
-    ],
+    "shortNames": ["Lk", "Luk", "Lu"],
     "startNumber": 0
   },
   "43": {
     "name": "Johannes",
-    "shortNames": [
-      "Jn",
-      "Joh",
-      "Jo"
-    ],
+    "shortNames": ["Jn", "Joh", "Jo"],
     "startNumber": 0
   },
   "44": {
     "name": "Apostelgeschichte",
-    "shortNames": [
-      "Ac",
-      "Act",
-      "Apg"
-    ],
+    "shortNames": ["Ac", "Act", "Apg"],
     "startNumber": 0
   },
   "45": {
     "name": "Römer",
-    "shortNames": [
-      "Rö",
-      "Röm"
-    ],
+    "shortNames": ["Rö", "Röm"],
     "startNumber": 0
   },
   "46": {
     "name": "Korinther",
-    "shortNames": [
-      "Ko",
-      "Kor"
-    ],
+    "shortNames": ["Ko", "Kor"],
     "startNumber": 1
   },
   "47": {
     "name": "Korinther",
-    "shortNames": [
-      "Ko",
-      "Kor"
-    ],
+    "shortNames": ["Ko", "Kor"],
     "startNumber": 2
   },
   "48": {
     "name": "Galater",
-    "shortNames": [
-      "Ga",
-      "Gal"
-    ],
+    "shortNames": ["Ga", "Gal"],
     "startNumber": 0
   },
   "49": {
     "name": "Epheser",
-    "shortNames": [
-      "Ep",
-      "Eph"
-    ],
+    "shortNames": ["Ep", "Eph"],
     "startNumber": 0
   },
   "50": {
     "name": "Philipper",
-    "shortNames": [
-      "Phi",
-      "Phil"
-    ],
+    "shortNames": ["Phi", "Phil"],
     "startNumber": 0
   },
   "51": {
     "name": "Kolosser",
-    "shortNames": [
-      "Kol"
-    ],
+    "shortNames": ["Kol"],
     "startNumber": 0
   },
   "52": {
     "name": "Thessalonicher",
-    "shortNames": [
-      "Th",
-      "Thess",
-      "Thes"
-    ],
+    "shortNames": ["Th", "Thess", "Thes"],
     "startNumber": 1
   },
   "53": {
     "name": "Thessalonicher",
-    "shortNames": [
-      "Th",
-      "Thess",
-      "Thes"
-    ],
+    "shortNames": ["Th", "Thess", "Thes"],
     "startNumber": 2
   },
   "54": {
     "name": "Timotheus",
-    "shortNames": [
-      "Ti",
-      "Tim"
-    ],
+    "shortNames": ["Ti", "Tim"],
     "startNumber": 1
   },
   "55": {
     "name": "Timotheus",
-    "shortNames": [
-      "Ti",
-      "Tim"
-    ],
+    "shortNames": ["Ti", "Tim"],
     "startNumber": 2
   },
   "56": {
     "name": "Titus",
-    "shortNames": [
-      "Ti",
-      "Tit",
-      "Tt",
-      "Ts"
-    ],
+    "shortNames": ["Ti", "Tit", "Tt", "Ts"],
     "startNumber": 0
   },
   "57": {
     "name": "Philemon",
-    "shortNames": [
-      "Pm",
-      "Phlm"
-    ],
+    "shortNames": ["Pm", "Phlm"],
     "startNumber": 0
   },
   "58": {
     "name": "Hebräer",
-    "shortNames": [
-      "Hebr"
-    ],
+    "shortNames": ["Hebr"],
     "startNumber": 0
   },
   "59": {
     "name": "Jakobus",
-    "shortNames": [
-      "Jak",
-      "Ja"
-    ],
+    "shortNames": ["Jak", "Ja"],
     "startNumber": 0
   },
   "60": {
     "name": "Petrus",
-    "shortNames": [
-      "Pe",
-      "Pet",
-      "Pt",
-      "Petr"
-    ],
+    "shortNames": ["Pe", "Pet", "Pt", "Petr"],
     "startNumber": 1
   },
   "61": {
     "name": "Petrus",
-    "shortNames": [
-      "Pe",
-      "Pet",
-      "Pt",
-      "Petr"
-    ],
+    "shortNames": ["Pe", "Pet", "Pt", "Petr"],
     "startNumber": 2
   },
   "62": {
     "name": "Johannes",
-    "shortNames": [
-      "Joh",
-      "Jo",
-      "Jn",
-      "J"
-    ],
+    "shortNames": ["Joh", "Jo", "Jn", "J"],
     "startNumber": 1
   },
   "63": {
     "name": "Johannes",
-    "shortNames": [
-      "Joh",
-      "Jo",
-      "Jn",
-      "J"
-    ],
+    "shortNames": ["Joh", "Jo", "Jn", "J"],
     "startNumber": 2
   },
   "64": {
     "name": "Johannes",
-    "shortNames": [
-      "Joh",
-      "Jo",
-      "Jn",
-      "J"
-    ],
+    "shortNames": ["Joh", "Jo", "Jn", "J"],
     "startNumber": 3
   },
   "65": {
     "name": "Judas",
-    "shortNames": [
-      "Jud"
-    ],
+    "shortNames": ["Jud"],
     "startNumber": 0
   },
   "66": {
     "name": "Offenbarung",
-    "shortNames": [
-      "Offb",
-      "Apokalypse",
-      "Apk"
-    ],
+    "shortNames": ["Offb", "Apokalypse", "Apk"],
     "startNumber": 0
   }
 }

@@ -24,7 +24,7 @@ describe('test translation structure', () => {
 
 describe('test all translations', () => {
   const duplicatedBookIndex = new Set([
-      9, 10, 11, 12, 13, 14, 46, 47, 52, 53, 54, 55, 60, 61, 62, 63, 64
+    9, 10, 11, 12, 13, 14, 46, 47, 52, 53, 54, 55, 60, 61, 62, 63, 64,
   ]);
 
   // 1 Sam and 2 Sam => 8, 9
@@ -44,8 +44,7 @@ describe('test all translations', () => {
     [54, 55],
     [60, 61],
     [62, 63, 64],
-  ]
-
+  ];
 
   const allTranslations = readJSONFilesInDirectory(
     path.join(__dirname, '../data/translations/')
@@ -54,46 +53,51 @@ describe('test all translations', () => {
   test('there are at least one valid JSON file', () => {
     // check if it is an array
     expect(Array.isArray(allTranslations)).toBe(true);
-  })
+  });
 
   test('test each translation', async () => {
     for (const translation of allTranslations) {
       // check if it has 66 elements
       expect(Array.isArray(translation)).toBe(false);
-      expect(translation['language']).toBeDefined()
-      expect(translation['1']).toBeDefined()
-      expect(translation['66']).toBeDefined()
+      expect(translation['language']).toBeDefined();
+      expect(translation['1']).toBeDefined();
+      expect(translation['66']).toBeDefined();
 
       // check if the first element is an array
       expect(Array.isArray(translation['1'].shortNames)).toBe(true);
 
       // some books have same name with different start number, they are located at
 
-
       for (const indexes of duplicatedBookIndexInPair) {
-        const sameNameBooks = indexes.map((index: number) => translation[index])
+        const sameNameBooks = indexes.map(
+          (index: number) => translation[index]
+        );
         if (sameNameBooks[0]?.startNumber > 0) {
           // every book name and short names should be the same
           sameNameBooks.every((book, i, arr) => {
-            expect(book.shortNames).toBe(arr[0].shortNames)
+            expect(book.shortNames).toBe(arr[0].shortNames);
             // short name need to be unique
-            expect(new Set(book.shortNames).size).toBe(book.shortNames.length)
-            expect(book.name).toBe(arr[0].name)
-          })
+            expect(new Set(book.shortNames).size).toBe(book.shortNames.length);
+            expect(book.name).toBe(arr[0].name);
+          });
 
           // but start number should be different
           if (sameNameBooks.length > 2) {
-            expect(sameNameBooks.map((b) => b.startNumber)).toEqual([1, 2, 3])
+            expect(sameNameBooks.map((b) => b.startNumber)).toEqual([1, 2, 3]);
           } else {
-            expect(sameNameBooks.map((b) => b.startNumber)).toEqual([1, 2])
+            expect(sameNameBooks.map((b) => b.startNumber)).toEqual([1, 2]);
           }
         } else {
           // if the start number is 0, (which means number is not used in book name in the same way in English) then the short names and name should be different
-          expect(sameNameBooks[0].shortNames).not.toBe(sameNameBooks[1].shortNames)
-          expect(sameNameBooks[0].name).not.toBe(sameNameBooks[1].name)
+          expect(sameNameBooks[0].shortNames).not.toBe(
+            sameNameBooks[1].shortNames
+          );
+          expect(sameNameBooks[0].name).not.toBe(sameNameBooks[1].name);
           if (sameNameBooks.length > 2) {
-            expect(sameNameBooks[0].shortNames).not.toBe(sameNameBooks[2].shortNames)
-            expect(sameNameBooks[0].name).not.toBe(sameNameBooks[2].name)
+            expect(sameNameBooks[0].shortNames).not.toBe(
+              sameNameBooks[2].shortNames
+            );
+            expect(sameNameBooks[0].name).not.toBe(sameNameBooks[2].name);
           }
         }
       }
@@ -113,7 +117,7 @@ describe('test all translations', () => {
           for (const name of book.shortNames) {
             // console.log(name, uniqueBookNames)
             if (uniqueBookNames.has(name)) {
-              console.error(`${name} is duplicated among other books`)
+              console.error(`${name} is duplicated among other books`);
             }
             expect(uniqueBookNames.has(name)).toBe(false);
             uniqueBookNames.add(name);
@@ -121,6 +125,5 @@ describe('test all translations', () => {
         }
       }
     });
-  })
-
+  });
 });

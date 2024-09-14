@@ -2,74 +2,52 @@
   "language": "it",
   "1": {
     "name": "Genesi",
-    "shortNames": [
-      "Gen"
-    ],
+    "shortNames": ["Gen"],
     "startNumber": 0
   },
   "2": {
     "name": "Esodo",
-    "shortNames": [
-      "Es"
-    ],
+    "shortNames": ["Es"],
     "startNumber": 0
   },
   "3": {
     "name": "Levitico",
-    "shortNames": [
-      "Lev"
-    ],
+    "shortNames": ["Lev"],
     "startNumber": 0
   },
   "4": {
     "name": "Numeri",
-    "shortNames": [
-      "Nu"
-    ],
+    "shortNames": ["Nu"],
     "startNumber": 0
   },
   "5": {
     "name": "Deuteronomio",
-    "shortNames": [
-      "Deut"
-    ],
+    "shortNames": ["Deut"],
     "startNumber": 0
   },
   "6": {
     "name": "Giosuè",
-    "shortNames": [
-      "Gios",
-      "Gs"
-    ],
+    "shortNames": ["Gios", "Gs"],
     "startNumber": 0
   },
   "7": {
     "name": "Giudici",
-    "shortNames": [
-      "Gd",
-      "Gdc"
-    ],
+    "shortNames": ["Gd", "Gdc"],
     "startNumber": 0
   },
   "8": {
     "name": "Rut",
-    "shortNames": [
-      "Ru"
-    ],
+    "shortNames": ["Ru"],
     "startNumber": 0
   },
   "9": {
     "name": "Samuele",
-    "shortNames": [
-      "Sam"
-    ],
+    "shortNames": ["Sam"],
     "startNumber": 1
   },
   "10": {
     "name": "Samuele",
-    "shortNames": [
-      "Sam"
-    ],
+    "shortNames": ["Sam"],
     "startNumber": 2
   },
   "11": {
@@ -84,136 +62,97 @@
   },
   "13": {
     "name": "Cronache",
-    "shortNames": [
-      "Cro"
-    ],
+    "shortNames": ["Cro"],
     "startNumber": 1
   },
   "14": {
     "name": "Cronache",
-    "shortNames": [
-      "Cro"
-    ],
+    "shortNames": ["Cro"],
     "startNumber": 2
   },
   "15": {
     "name": "Esdra",
-    "shortNames": [
-      "Esdr"
-    ],
+    "shortNames": ["Esdr"],
     "startNumber": 0
   },
   "16": {
     "name": "Neemia",
-    "shortNames": [
-      "Neem"
-    ],
+    "shortNames": ["Neem"],
     "startNumber": 0
   },
   "17": {
     "name": "Ester",
-    "shortNames": [
-      "Est"
-    ],
+    "shortNames": ["Est"],
     "startNumber": 0
   },
   "18": {
     "name": "Giobbe",
-    "shortNames": [
-      "Gio"
-    ],
+    "shortNames": ["Gio"],
     "startNumber": 0
   },
   "19": {
     "name": "Salmi",
-    "shortNames": [
-      "Sal"
-    ],
+    "shortNames": ["Sal"],
     "startNumber": 0
   },
   "20": {
     "name": "Proverbi",
-    "shortNames": [
-      "Prov"
-    ],
+    "shortNames": ["Prov"],
     "startNumber": 0
   },
   "21": {
     "name": "Ecclesiaste",
-    "shortNames": [
-      "Ecc"
-    ],
+    "shortNames": ["Ecc"],
     "startNumber": 0
   },
   "22": {
     "name": "Cantico dei Cantici",
-    "shortNames": [
-      "Cant",
-      "Cdc"
-    ],
+    "shortNames": ["Cant", "Cdc"],
     "startNumber": 0
   },
   "23": {
     "name": "Isaia",
-    "shortNames": [
-      "Isa"
-    ],
+    "shortNames": ["Isa"],
     "startNumber": 0
   },
   "24": {
     "name": "Geremia",
-    "shortNames": [
-      "Ger"
-    ],
+    "shortNames": ["Ger"],
     "startNumber": 0
   },
   "25": {
     "name": "Lamentazioni",
-    "shortNames": [
-      "Lam"
-    ],
+    "shortNames": ["Lam"],
     "startNumber": 0
   },
   "26": {
     "name": "Ezechiele",
-    "shortNames": [
-      "Eze"
-    ],
+    "shortNames": ["Eze"],
     "startNumber": 0
   },
   "27": {
     "name": "Daniele",
-    "shortNames": [
-      "Dan"
-    ],
+    "shortNames": ["Dan"],
     "startNumber": 0
   },
   "28": {
     "name": "Osea",
-    "shortNames": [
-      "Ose"
-    ],
+    "shortNames": ["Ose"],
     "startNumber": 0
   },
   "29": {
     "name": "Gioele",
-    "shortNames": [
-      "Gioe"
-    ],
+    "shortNames": ["Gioe"],
     "startNumber": 0
   },
   "30": {
     "name": "Amos",
-    "shortNames": [
-      "Am"
-    ],
+    "shortNames": ["Am"],
     "startNumber": 0
   },
   "31": {
     "name": "Abdia",
-    "shortNames": [
-      "Abd"
-    ],
+    "shortNames": ["Abd"],
     "startNumber": 0
   },
   "32": {
@@ -223,163 +162,117 @@
   },
   "33": {
     "name": "Michea",
-    "shortNames": [
-      "Mic"
-    ],
+    "shortNames": ["Mic"],
     "startNumber": 0
   },
   "34": {
     "name": "Naum",
-    "shortNames": [
-      "Na"
-    ],
+    "shortNames": ["Na"],
     "startNumber": 0
   },
   "35": {
     "name": "Abacuc",
-    "shortNames": [
-      "Abac"
-    ],
+    "shortNames": ["Abac"],
     "startNumber": 0
   },
   "36": {
     "name": "Sofonia",
-    "shortNames": [
-      "Sof"
-    ],
+    "shortNames": ["Sof"],
     "startNumber": 0
   },
   "37": {
     "name": "Aggeo",
-    "shortNames": [
-      "Agg"
-    ],
+    "shortNames": ["Agg"],
     "startNumber": 0
   },
   "38": {
     "name": "Zaccaria",
-    "shortNames": [
-      "Zac"
-    ],
+    "shortNames": ["Zac"],
     "startNumber": 0
   },
   "39": {
     "name": "Malachia",
-    "shortNames": [
-      "Mal"
-    ],
+    "shortNames": ["Mal"],
     "startNumber": 0
   },
   "40": {
     "name": "Matteo",
-    "shortNames": [
-      "Mat"
-    ],
+    "shortNames": ["Mat"],
     "startNumber": 0
   },
   "41": {
     "name": "Marco",
-    "shortNames": [
-      "Mar"
-    ],
+    "shortNames": ["Mar"],
     "startNumber": 0
   },
   "42": {
     "name": "Luca",
-    "shortNames": [
-      "Luc"
-    ],
+    "shortNames": ["Luc"],
     "startNumber": 0
   },
   "43": {
     "name": "Giovanni",
-    "shortNames": [
-      "Giov"
-    ],
+    "shortNames": ["Giov"],
     "startNumber": 0
   },
   "44": {
     "name": "Atti degli Apostoli",
-    "shortNames": [
-      "Atti"
-    ],
+    "shortNames": ["Atti"],
     "startNumber": 0
   },
   "45": {
     "name": "Romani",
-    "shortNames": [
-      "Rom"
-    ],
+    "shortNames": ["Rom"],
     "startNumber": 0
   },
   "46": {
     "name": "Corinzi",
-    "shortNames": [
-      "Cor"
-    ],
+    "shortNames": ["Cor"],
     "startNumber": 1
   },
   "47": {
     "name": "Corinzi",
-    "shortNames": [
-      "Cor"
-    ],
+    "shortNames": ["Cor"],
     "startNumber": 2
   },
   "48": {
     "name": "Galati",
-    "shortNames": [
-      "Gal"
-    ],
+    "shortNames": ["Gal"],
     "startNumber": 0
   },
   "49": {
     "name": "Efesini",
-    "shortNames": [
-      "Ef"
-    ],
+    "shortNames": ["Ef"],
     "startNumber": 0
   },
   "50": {
     "name": "Filippesi",
-    "shortNames": [
-      "Fil"
-    ],
+    "shortNames": ["Fil"],
     "startNumber": 0
   },
   "51": {
     "name": "Colossesi",
-    "shortNames": [
-      "Col"
-    ],
+    "shortNames": ["Col"],
     "startNumber": 0
   },
   "52": {
     "name": "Tessalonicesi",
-    "shortNames": [
-      "Tess"
-    ],
+    "shortNames": ["Tess"],
     "startNumber": 1
   },
   "53": {
     "name": "Tessalonicesi",
-    "shortNames": [
-      "Tess"
-    ],
+    "shortNames": ["Tess"],
     "startNumber": 2
   },
   "54": {
     "name": "Timoteo",
-    "shortNames": [
-      "Tim"
-    ],
+    "shortNames": ["Tim"],
     "startNumber": 1
   },
   "55": {
     "name": "Timoteo",
-    "shortNames": [
-      "Tim"
-    ],
+    "shortNames": ["Tim"],
     "startNumber": 2
   },
   "56": {
@@ -389,58 +282,42 @@
   },
   "57": {
     "name": "Filemone",
-    "shortNames": [
-      "Filem"
-    ],
+    "shortNames": ["Filem"],
     "startNumber": 0
   },
   "58": {
     "name": "Ebrei",
-    "shortNames": [
-      "Ebr"
-    ],
+    "shortNames": ["Ebr"],
     "startNumber": 0
   },
   "59": {
     "name": "Giacomo",
-    "shortNames": [
-      "Giac"
-    ],
+    "shortNames": ["Giac"],
     "startNumber": 0
   },
   "60": {
     "name": "Pietro",
-    "shortNames": [
-      "Piet"
-    ],
+    "shortNames": ["Piet"],
     "startNumber": 1
   },
   "61": {
     "name": "Pietro",
-    "shortNames": [
-      "Piet"
-    ],
+    "shortNames": ["Piet"],
     "startNumber": 2
   },
   "62": {
     "name": "Giovanni",
-    "shortNames": [
-      "Giov"
-    ],
+    "shortNames": ["Giov"],
     "startNumber": 1
   },
   "63": {
     "name": "Giovanni",
-    "shortNames": [
-      "Giov"
-    ],
+    "shortNames": ["Giov"],
     "startNumber": 2
   },
   "64": {
     "name": "Giovanni",
-    "shortNames": [
-      "Giov"
-    ],
+    "shortNames": ["Giov"],
     "startNumber": 3
   },
   "65": {
@@ -450,9 +327,7 @@
   },
   "66": {
     "name": "Apocalisse",
-    "shortNames": [
-      "Apo"
-    ],
+    "shortNames": ["Apo"],
     "startNumber": 0
   }
 }

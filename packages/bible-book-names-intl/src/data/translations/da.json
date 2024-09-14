@@ -1,526 +1,333 @@
-
 {
-  "language": "da", 
+  "language": "da",
   "1": {
     "name": "1Mosebog",
-    "shortNames": [
-        "1Mos"
-    ],
+    "shortNames": ["1Mos"],
     "startNumber": 0
   },
   "2": {
     "name": "2Mosebog",
-    "shortNames": [
-        "2Mos"
-    ],
+    "shortNames": ["2Mos"],
     "startNumber": 0
   },
   "3": {
     "name": "3Mosebog",
-    "shortNames": [
-        "3Mos"
-    ],
+    "shortNames": ["3Mos"],
     "startNumber": 0
   },
   "4": {
     "name": "4Mosebog",
-    "shortNames": [
-        "4Mos"
-    ],
+    "shortNames": ["4Mos"],
     "startNumber": 0
   },
   "5": {
     "name": "5Mosebog",
-    "shortNames": [
-        "5Mos"
-    ],
+    "shortNames": ["5Mos"],
     "startNumber": 0
   },
   "6": {
     "name": "Josvabogen",
-    "shortNames": [
-        "Josva",
-        "Jos"
-    ],
+    "shortNames": ["Josva", "Jos"],
     "startNumber": 0
   },
   "7": {
     "name": "Dommerbogen",
-    "shortNames": [
-        "Dommer",
-	    "Dom"
-    ],
+    "shortNames": ["Dommer", "Dom"],
     "startNumber": 0
   },
   "8": {
     "name": "Ruths Bog",
-    "shortNames": [
-        "Ruth"
-    ],
+    "shortNames": ["Ruth"],
     "startNumber": 0
   },
   "9": {
     "name": "Samuelsbog",
-    "shortNames": [
-        "Sam",
-        "Samuel"
-    ],
+    "shortNames": ["Sam", "Samuel"],
     "startNumber": 1
   },
   "10": {
     "name": "Samuelsbog",
-    "shortNames": [
-        "Sam",
-        "Samuel"
-    ],
+    "shortNames": ["Sam", "Samuel"],
     "startNumber": 2
   },
   "11": {
     "name": "Kongebog",
-    "shortNames": [
-        "Kong",
-        "Konge"
-    ],
+    "shortNames": ["Kong", "Konge"],
     "startNumber": 1
   },
   "12": {
     "name": "Kongebog",
-    "shortNames": [
-        "Kong",
-        "Konge"
-    ],
+    "shortNames": ["Kong", "Konge"],
     "startNumber": 2
   },
   "13": {
     "name": "Krønikebog",
-    "shortNames": [
-        "Krønike",
-        "Krøn"
-    ],
+    "shortNames": ["Krønike", "Krøn"],
     "startNumber": 1
   },
   "14": {
     "name": "Krønikebog",
-    "shortNames": [
-        "Krønike",
-        "Krøn"
-    ],
+    "shortNames": ["Krønike", "Krøn"],
     "startNumber": 2
   },
   "15": {
     "name": "Ezras Bog",
-    "shortNames": [
-      "Ezra"
-    ],
+    "shortNames": ["Ezra"],
     "startNumber": 0
   },
   "16": {
     "name": "Nehemias' Bog",
-    "shortNames": [
-      "Neh",
-      "Nehemias"
-    ],
+    "shortNames": ["Neh", "Nehemias"],
     "startNumber": 0
   },
   "17": {
     "name": "Esters Bog",
-    "shortNames": [
-      "Est",
-      "Ester"
-    ],
+    "shortNames": ["Est", "Ester"],
     "startNumber": 0
   },
   "18": {
     "name": "Jobs Bog",
-    "shortNames": [
-      "Job"
-    ],
+    "shortNames": ["Job"],
     "startNumber": 0
   },
   "19": {
     "name": "Salmernes Bog",
-    "shortNames": [
-        "Salme",
-        "Sl",
-        "Sal"
-    ],
+    "shortNames": ["Salme", "Sl", "Sal"],
     "startNumber": 0
   },
   "20": {
     "name": "Ordsprogenes Bog",
-    "shortNames": [
-        "Ordsprog",
-        "Ordsp"
-    ],
+    "shortNames": ["Ordsprog", "Ordsp"],
     "startNumber": 0
   },
   "21": {
     "name": "Prædikerens Bog",
-    "shortNames": [
-        "Prædiker",
-        "Præd"
-    ],
+    "shortNames": ["Prædiker", "Præd"],
     "startNumber": 0
   },
   "22": {
     "name": "Højsangen",
-    "shortNames": [
-        "Højs"
-    ],
+    "shortNames": ["Højs"],
     "startNumber": 0
   },
   "23": {
     "name": "Esajas' Bog",
-    "shortNames": [
-      "Es",
-      "Esajas"
-    ],
+    "shortNames": ["Es", "Esajas"],
     "startNumber": 0
   },
   "24": {
     "name": "Jeremias' Bog",
-    "shortNames": [
-        "Jeremias",
-        "Jer"
-    ],
+    "shortNames": ["Jeremias", "Jer"],
     "startNumber": 0
   },
   "25": {
     "name": "Klagesangene",
-    "shortNames": [
-        "Klages",
-        "Klagesang"
-    ],
+    "shortNames": ["Klages", "Klagesang"],
     "startNumber": 0
   },
   "26": {
     "name": "Ezekiels Bog",
-    "shortNames": [
-        "Ez",
-        "Eze",
-        "Ezekiel"
-    ],
+    "shortNames": ["Ez", "Eze", "Ezekiel"],
     "startNumber": 0
   },
   "27": {
     "name": "Daniels Bog",
-    "shortNames": [
-        "Daniel",
-        "Dan"
-    ],
+    "shortNames": ["Daniel", "Dan"],
     "startNumber": 0
   },
   "28": {
     "name": "Hoseas' Bog",
-    "shortNames": [
-        "Hos",
-        "Hosea"
-    ],
+    "shortNames": ["Hos", "Hosea"],
     "startNumber": 0
   },
   "29": {
     "name": "Joels Bog",
-    "shortNames": [
-        "Joel"
-    ],
+    "shortNames": ["Joel"],
     "startNumber": 0
   },
   "30": {
     "name": "Amos' Bog",
-    "shortNames": [
-        "Amos",
-        "Am"
-    ],
+    "shortNames": ["Amos", "Am"],
     "startNumber": 0
   },
   "31": {
     "name": "Obadias' Bog",
-    "shortNames": [
-      "Obad",
-      "Obadias"
-    ],
+    "shortNames": ["Obad", "Obadias"],
     "startNumber": 0
   },
   "32": {
     "name": "Jonas' Bog",
-    "shortNames": [
-        "Jonas",
-        "Jon"
-    ],
+    "shortNames": ["Jonas", "Jon"],
     "startNumber": 0
   },
   "33": {
     "name": "Mikas Bog",
-    "shortNames": [
-        "Mika"
-    ],
+    "shortNames": ["Mika"],
     "startNumber": 0
   },
   "34": {
     "name": "Nahums Bog",
-    "shortNames": [
-        "Nah",
-        "Nahum"
-    ],
+    "shortNames": ["Nah", "Nahum"],
     "startNumber": 0
   },
   "35": {
     "name": "Habakkuks Bog",
-    "shortNames": [
-        "Habakkuk",
-        "Hab"
-    ],
+    "shortNames": ["Habakkuk", "Hab"],
     "startNumber": 0
   },
   "36": {
     "name": "Sefanias' Bog",
-    "shortNames": [
-        "Sefanias",
-        "Sef"
-    ],
+    "shortNames": ["Sefanias", "Sef"],
     "startNumber": 0
   },
   "37": {
     "name": "Haggajs Bog",
-    "shortNames": [
-        "Hagg",
-        "Haggaj"
-    ],
+    "shortNames": ["Hagg", "Haggaj"],
     "startNumber": 0
   },
   "38": {
     "name": "Zakarias' Bog",
-    "shortNames": [
-        "Zakarias",
-        "Zak"
-    ],
+    "shortNames": ["Zakarias", "Zak"],
     "startNumber": 0
   },
   "39": {
     "name": "Malakias' Bog",
-    "shortNames": [
-        "Malakias",
-        "Mal"
-    ],
+    "shortNames": ["Malakias", "Mal"],
     "startNumber": 0
   },
   "40": {
     "name": "Matthæusevangeliet",
-    "shortNames": [
-      "Mt",
-      "Matt",
-      "Mat",
-      "Matthæus"
-    ],
+    "shortNames": ["Mt", "Matt", "Mat", "Matthæus"],
     "startNumber": 0
   },
   "41": {
     "name": "Markusevangeliet",
-    "shortNames": [
-      "Mk",
-      "Mark",
-      "Markus"
-    ],
+    "shortNames": ["Mk", "Mark", "Markus"],
     "startNumber": 0
   },
   "42": {
     "name": "Lukasevangeliet",
-    "shortNames": [
-      "Lk",
-      "Lukas"
-    ],
+    "shortNames": ["Lk", "Lukas"],
     "startNumber": 0
   },
   "43": {
     "name": "Johannesevangeliet",
-    "shortNames": [
-      "Jh",
-      "Joh",
-      "Johannes"
-    ],
+    "shortNames": ["Jh", "Joh", "Johannes"],
     "startNumber": 0
   },
   "44": {
     "name": "Apostlenes Gerninger",
-    "shortNames": [
-        "ApG"
-    ],
+    "shortNames": ["ApG"],
     "startNumber": 0
   },
   "45": {
     "name": "Romerbrevet",
-    "shortNames": [
-        "Rom"
-    ],
+    "shortNames": ["Rom"],
     "startNumber": 0
   },
   "46": {
     "name": "Korintherbrev",
-    "shortNames": [
-        "Kor"
-    ],
+    "shortNames": ["Kor"],
     "startNumber": 1
   },
   "47": {
     "name": "Korintherbrev",
-    "shortNames": [
-        "Kor"
-    ],
+    "shortNames": ["Kor"],
     "startNumber": 2
   },
   "48": {
     "name": "Galaterbrevet",
-    "shortNames": [
-        "Gal",
-        "Galaterne"
-    ],
+    "shortNames": ["Gal", "Galaterne"],
     "startNumber": 0
   },
   "49": {
     "name": "Efeserbrevet",
-    "shortNames": [
-        "Efeserne",
-        "Ef"
-    ],
+    "shortNames": ["Efeserne", "Ef"],
     "startNumber": 0
   },
   "50": {
     "name": "Filipperbrevet",
-    "shortNames": [
-        "Filipperne",
-        "Fil"
-    ],
+    "shortNames": ["Filipperne", "Fil"],
     "startNumber": 0
   },
   "51": {
     "name": "Kolossenserbrevet",
-    "shortNames": [
-        "Kolossenserne",
-        "Kol"
-    ],
+    "shortNames": ["Kolossenserne", "Kol"],
     "startNumber": 0
   },
   "52": {
     "name": "Thessalonikerbrev",
-    "shortNames": [
-        "Thess",
-        "Thessaloniker"
-    ],
+    "shortNames": ["Thess", "Thessaloniker"],
     "startNumber": 1
   },
   "53": {
     "name": "Thessalonikerbrev",
-    "shortNames": [
-        "Thess",
-        "Thessaloniker"
-    ],
+    "shortNames": ["Thess", "Thessaloniker"],
     "startNumber": 2
   },
   "54": {
     "name": "Timotheusbrev",
-    "shortNames": [
-        "Tim",
-        "Timotheus"
-    ],
+    "shortNames": ["Tim", "Timotheus"],
     "startNumber": 1
   },
   "55": {
     "name": "Timotheusbrev",
-    "shortNames": [
-        "Tim",
-        "Timotheus"
-    ],
+    "shortNames": ["Tim", "Timotheus"],
     "startNumber": 2
   },
   "56": {
     "name": "Titusbrevet",
-    "shortNames": [
-        "Tit",
-        "Titus"
-    ],
+    "shortNames": ["Tit", "Titus"],
     "startNumber": 0
   },
   "57": {
     "name": "Filemonbrevet",
-    "shortNames": [
-        "Filemon",
-        "Film"
-    ],
+    "shortNames": ["Filemon", "Film"],
     "startNumber": 0
   },
   "58": {
     "name": "Hebræerbrevet",
-    "shortNames": [
-        "Hebr",
-        "Heb",
-        "Hebræerne"
-    ],
+    "shortNames": ["Hebr", "Heb", "Hebræerne"],
     "startNumber": 0
   },
   "59": {
     "name": "Jakobsbrevet",
-    "shortNames": [
-        "Jakob",
-        "Jak"
-    ],
+    "shortNames": ["Jakob", "Jak"],
     "startNumber": 0
   },
   "60": {
     "name": "Petersbrev",
-    "shortNames": [
-        "Pet",
-        "Peter"
-    ],
+    "shortNames": ["Pet", "Peter"],
     "startNumber": 1
   },
   "61": {
     "name": "Petersbrev",
-    "shortNames": [
-        "Pet",
-        "Peter"
-    ],
+    "shortNames": ["Pet", "Peter"],
     "startNumber": 2
   },
   "62": {
     "name": "Johannesbrev",
-    "shortNames": [
-        "Joh",
-        "Johannes"
-    ],
+    "shortNames": ["Joh", "Johannes"],
     "startNumber": 1
   },
   "63": {
     "name": "Johannesbrev",
-    "shortNames": [
-        "Joh",
-        "Johannes"
-    ],
+    "shortNames": ["Joh", "Johannes"],
     "startNumber": 2
   },
   "64": {
     "name": "Johannesbrev",
-    "shortNames": [
-        "Joh",
-        "Johannes"
-    ],
+    "shortNames": ["Joh", "Johannes"],
     "startNumber": 3
   },
   "65": {
     "name": "Judasbrevet",
-    "shortNames": [
-        "Judas",
-        "Jud"
-    ],
+    "shortNames": ["Judas", "Jud"],
     "startNumber": 0
   },
   "66": {
     "name": "Johannes' Åbenbaring",
-    "shortNames": [
-        "Åbenbaring",
-        "Åb",
-        "Aabenbaring",
-        "Aab"
-    ],
+    "shortNames": ["Åbenbaring", "Åb", "Aabenbaring", "Aab"],
     "startNumber": 0
   }
 }
