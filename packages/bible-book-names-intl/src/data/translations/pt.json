@@ -147,10 +147,7 @@
     },
     "18": {
       "name": "Jó",
-      "shortNames": [
-        "Jó",
-        "Jo"
-      ],
+      "shortNames": [],
       "startNumber": 0
     },
     "19": {
@@ -332,9 +329,7 @@
     },
     "43": {
       "name": "João",
-      "shortNames": [
-        "Jo"
-      ],
+      "shortNames": [],
       "startNumber": 0
     },
     "44": {
@@ -482,24 +477,21 @@
     "62": {
       "name": "João",
       "shortNames": [
-        "Jo",
-        "1Jo"
+        "Jo"
       ],
       "startNumber": 1
     },
     "63": {
       "name": "João",
       "shortNames": [
-        "Jo",
-        "2Jo"
+        "Jo"
       ],
       "startNumber": 2
     },
     "64": {
       "name": "João",
       "shortNames": [
-        "Jo",
-        "3Jo"
+        "Jo"
       ],
       "startNumber": 3
     },
