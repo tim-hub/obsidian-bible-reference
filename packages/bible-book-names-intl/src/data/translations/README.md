@@ -10,7 +10,7 @@ It is in this structure
 
 ```json
 {
-  "language": "en", // language code
+  "language": "en", // language code or zh_CN, zh_TW, etc, no-hyphen, use underscore
   "1": {
     // the book index, 1 is Genesis
     "name": "Genesis", // the book name

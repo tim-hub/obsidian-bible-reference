@@ -3,6 +3,12 @@ import en from './data/translations/en.json';
 import it from './data/translations/it.json';
 import jp from './data/translations/jp.json';
 import sp from './data/translations/sp.json';
+import da from './data/translations/da.json';
+import de from './data/translations/de.json';
+import fr from './data/translations/fr.json';
+import pt from './data/translations/pt.json';
+import ro from './data/translations/ro.json';
+import zh_CN from './data/translations/zh_CN.json';
 // add new translations here
 
 const allTranslations = [
@@ -11,6 +17,12 @@ const allTranslations = [
   jp,
   sp,
   // add new translations here
+  da,
+  de,
+  fr,
+  pt,
+  ro,
+  zh_CN,
 ];
 
 type OriginalBookType = {

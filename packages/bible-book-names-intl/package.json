@@ -34,5 +34,8 @@
     "test": "bun test src/**/*.test.ts ",
     "prettier": "prettier . --check",
     "prettier:fix": "prettier . --write"
+  },
+  "dependencies": {
+    "@types/jest": "^29.5.13"
   }
 }
