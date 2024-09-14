@@ -12,8 +12,8 @@ importers:
         specifier: 5.1.0
         version: 5.1.0
       bible-reference-toolkit:
-        specifier: ^2.3.4
-        version: 2.3.4
+        specifier: ^2.3.5
+        version: 2.3.5
       flagsmith-nodejs:
         specifier: 3.3.1
         version: 3.3.1
@@ -553,6 +553,9 @@ packages:
   '@types/jest@29.5.12':
     resolution: {integrity: sha512-eDC8bTvT/QhYdxJAulQikueigY5AsdBRH2yDKW3yveW7svY3+DzN84/2NUgkw10RTiJbWqZrTtoGVdYlvFJdLw==}
 
+  '@types/jest@29.5.13':
+    resolution: {integrity: sha512-wd+MVEZCHt23V0/L642O5APvspWply/rGY5BcW4SUETo2UzPU3Z26qr8jC2qxpimI2jjx9h7+2cj2FwIr01bXg==}
+
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
 
@@ -729,11 +732,11 @@ packages:
   base64-js@1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
 
-  bible-book-names-intl@3.2.1:
-    resolution: {integrity: sha512-6jKKhSTzb+MaoT/2+g/AIK2URihQnEGUbvqZjld2idJBzAR5lTV+Uhqnm4oeLQB87KnfmKysrvq6EoCx0eGySg==}
+  bible-book-names-intl@3.2.2:
+    resolution: {integrity: sha512-61nSCL9cbwaeVmAJWGLV6XCIgw2jcFhv6RZA1noqINowPmraEFEmd5LzJWJPlT0YQectGnnhko/Gv1JMFBdBRg==}
 
-  bible-reference-toolkit@2.3.4:
-    resolution: {integrity: sha512-017MpOFkgHt5PNhI8k8OxtWRnW8BOS9sOaVu67/PuGybNwMflOEnkVDdSi7pPe8YOo+lo+f8XcpraXNBB8RLyQ==}
+  bible-reference-toolkit@2.3.5:
+    resolution: {integrity: sha512-yrLY6VeaU2+UF6bvxIvBY1q9SSkt+Yg+WiluYlN2dibb6pvvYK0ngg/vuU7yzUzOLwYNHD10Iyl4lTYbAupPgg==}
 
   big-integer@1.6.52:
     resolution: {integrity: sha512-QxD8cf2eVqJOOz63z6JIN9BzvVs/dlySa5HGSBH5xtR8dPteIRQnBxxKqkNTiT6jbDTF6jAfrd4oMcND9RGbQg==}
@@ -2587,6 +2590,11 @@ snapshots:
       expect: 29.7.0
       pretty-format: 29.7.0
 
+  '@types/jest@29.5.13':
+    dependencies:
+      expect: 29.7.0
+      pretty-format: 29.7.0
+
   '@types/json-schema@7.0.15': {}
 
   '@types/node@20.12.12':
@@ -2823,11 +2831,13 @@ snapshots:
 
   base64-js@1.5.1: {}
 
-  bible-book-names-intl@3.2.1: {}
-
-  bible-reference-toolkit@2.3.4:
+  bible-book-names-intl@3.2.2:
     dependencies:
-      bible-book-names-intl: 3.2.1
+      '@types/jest': 29.5.13
+
+  bible-reference-toolkit@2.3.5:
+    dependencies:
+      bible-book-names-intl: 3.2.2
 
   big-integer@1.6.52: {}
 

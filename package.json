@@ -73,7 +73,7 @@
   },
   "dependencies": {
     "ackee-tracker": "5.1.0",
-    "bible-reference-toolkit": "^2.3.4",
+    "bible-reference-toolkit": "^2.3.5",
     "flagsmith-nodejs": "3.3.1"
   }
 }
