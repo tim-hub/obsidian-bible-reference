@@ -1,0 +1,468 @@
+{
+  "language": "zh-CN",
+  "1": {
+    "name": "创世纪",
+    "shortNames": [
+      "创"
+    ],
+    "startNumber": 0
+  },
+  "2": {
+    "name": "出埃及记",
+    "shortNames": [
+      "出"
+    ],
+    "startNumber": 0
+  },
+  "3": {
+    "name": "利未记",
+    "shortNames": [
+      "利"
+    ],
+    "startNumber": 0
+  },
+  "4": {
+    "name": "民数记",
+    "shortNames": [
+      "民"
+    ],
+    "startNumber": 0
+  },
+  "5": {
+    "name": "申命记",
+    "shortNames": [
+      "申"
+    ],
+    "startNumber": 0
+  },
+  "6": {
+    "name": "约书亚记",
+    "shortNames": [
+      "书"
+    ],
+    "startNumber": 0
+  },
+  "7": {
+    "name": "士师记",
+    "shortNames": [
+      "士"
+    ],
+    "startNumber": 0
+  },
+  "8": {
+    "name": "路得记",
+    "shortNames": [
+      "得"
+    ],
+    "startNumber": 0
+  },
+  "9": {
+    "name": "撒母耳记上",
+    "shortNames": [
+      "撒上"
+    ],
+    "startNumber": 0
+  },
+  "10": {
+    "name": "撒母耳记下",
+    "shortNames": [
+      "撒下"
+    ],
+    "startNumber": 0
+  },
+  "11": {
+    "name": "列王纪上",
+    "shortNames": [
+      "王上"
+    ],
+    "startNumber": 0
+  },
+  "12": {
+    "name": "列王记下",
+    "shortNames": [
+      "王下"
+    ],
+    "startNumber": 0
+  },
+  "13": {
+    "name": "历代志上",
+    "shortNames": [
+      "代上"
+    ],
+    "startNumber": 0
+  },
+  "14": {
+    "name": "历代志下",
+    "shortNames": [
+      "代下"
+    ],
+    "startNumber": 0
+  },
+  "15": {
+    "name": "以斯拉记",
+    "shortNames": [
+      "拉"
+    ],
+    "startNumber": 0
+  },
+  "16": {
+    "name": "尼希米记",
+    "shortNames": [
+      "尼"
+    ],
+    "startNumber": 0
+  },
+  "17": {
+    "name": "以斯帖记",
+    "shortNames": [
+      "斯"
+    ],
+    "startNumber": 0
+  },
+  "18": {
+    "name": "约伯记",
+    "shortNames": [
+      "伯"
+    ],
+    "startNumber": 0
+  },
+  "19": {
+    "name": "诗篇",
+    "shortNames": [
+      "诗"
+    ],
+    "startNumber": 0
+  },
+  "20": {
+    "name": "箴言",
+    "shortNames": [
+      "箴"
+    ],
+    "startNumber": 0
+  },
+  "21": {
+    "name": "传道书",
+    "shortNames": [
+      "传"
+    ],
+    "startNumber": 0
+  },
+  "22": {
+    "name": "雅歌",
+    "shortNames": [
+      "歌"
+    ],
+    "startNumber": 0
+  },
+  "23": {
+    "name": "以赛亚书",
+    "shortNames": [
+      "赛"
+    ],
+    "startNumber": 0
+  },
+  "24": {
+    "name": "耶利米书",
+    "shortNames": [
+      "耶"
+    ],
+    "startNumber": 0
+  },
+  "25": {
+    "name": "耶利米哀歌",
+    "shortNames": [
+      "哀"
+    ],
+    "startNumber": 0
+  },
+  "26": {
+    "name": "以西结书",
+    "shortNames": [
+      "结"
+    ],
+    "startNumber": 0
+  },
+  "27": {
+    "name": "但以理书",
+    "shortNames": [
+      "但"
+    ],
+    "startNumber": 0
+  },
+  "28": {
+    "name": "何西阿书",
+    "shortNames": [
+      "何"
+    ],
+    "startNumber": 0
+  },
+  "29": {
+    "name": "约珥书",
+    "shortNames": [
+      "珥"
+    ],
+    "startNumber": 0
+  },
+  "30": {
+    "name": "阿摩司书",
+    "shortNames": [
+      "摩"
+    ],
+    "startNumber": 0
+  },
+  "31": {
+    "name": "俄巴底亚书",
+    "shortNames": [
+      "俄"
+    ],
+    "startNumber": 0
+  },
+  "32": {
+    "name": "约拿书",
+    "shortNames": [
+      "拿"
+    ],
+    "startNumber": 0
+  },
+  "33": {
+    "name": "弥迦书",
+    "shortNames": [
+      "弥"
+    ],
+    "startNumber": 0
+  },
+  "34": {
+    "name": "那鸿书",
+    "shortNames": [
+      "鸿"
+    ],
+    "startNumber": 0
+  },
+  "35": {
+    "name": "哈巴谷书",
+    "shortNames": [
+      "哈"
+    ],
+    "startNumber": 0
+  },
+  "36": {
+    "name": "西番雅书",
+    "shortNames": [
+      "番"
+    ],
+    "startNumber": 0
+  },
+  "37": {
+    "name": "哈该书",
+    "shortNames": [
+      "该"
+    ],
+    "startNumber": 0
+  },
+  "38": {
+    "name": "撒迦利亚书",
+    "shortNames": [
+      "亚"
+    ],
+    "startNumber": 0
+  },
+  "39": {
+    "name": "玛拉基书",
+    "shortNames": [
+      "玛"
+    ],
+    "startNumber": 0
+  },
+  "40": {
+    "name": "马太福音",
+    "shortNames": [
+      "太"
+    ],
+    "startNumber": 0
+  },
+  "41": {
+    "name": "马可福音",
+    "shortNames": [
+      "可"
+    ],
+    "startNumber": 0
+  },
+  "42": {
+    "name": "路加福音",
+    "shortNames": [
+      "路"
+    ],
+    "startNumber": 0
+  },
+  "43": {
+    "name": "约翰福音",
+    "shortNames": [
+      "约"
+    ],
+    "startNumber": 0
+  },
+  "44": {
+    "name": "使徒行传",
+    "shortNames": [
+      "徒"
+    ],
+    "startNumber": 0
+  },
+  "45": {
+    "name": "罗马书",
+    "shortNames": [
+      "罗"
+    ],
+    "startNumber": 0
+  },
+  "46": {
+    "name": "哥林多前书",
+    "shortNames": [
+      "林前"
+    ],
+    "startNumber": 0
+  },
+  "47": {
+    "name": "哥林多后书",
+    "shortNames": [
+      "林后"
+    ],
+    "startNumber": 0
+  },
+  "48": {
+    "name": "加拉太书",
+    "shortNames": [
+      "加"
+    ],
+    "startNumber": 0
+  },
+  "49": {
+    "name": "以弗所书",
+    "shortNames": [
+      "弗"
+    ],
+    "startNumber": 0
+  },
+  "50": {
+    "name": "腓立比书",
+    "shortNames": [
+      "腓"
+    ],
+    "startNumber": 0
+  },
+  "51": {
+    "name": "歌罗西书",
+    "shortNames": [
+      "西"
+    ],
+    "startNumber": 0
+  },
+  "52": {
+    "name": "帖撒罗尼迦前书",
+    "shortNames": [
+      "帖前"
+    ],
+    "startNumber": 0
+  },
+  "53": {
+    "name": "帖撒罗尼迦后书",
+    "shortNames": [
+      "贴后"
+    ],
+    "startNumber": 0
+  },
+  "54": {
+    "name": "提摩太前书",
+    "shortNames": [
+      "提前"
+    ],
+    "startNumber": 0
+  },
+  "55": {
+    "name": "提摩太后书",
+    "shortNames": [
+      "提后"
+    ],
+    "startNumber": 0
+  },
+  "56": {
+    "name": "提多书",
+    "shortNames": [
+      "多"
+    ],
+    "startNumber": 0
+  },
+  "57": {
+    "name": "腓利门书",
+    "shortNames": [
+      "门"
+    ],
+    "startNumber": 0
+  },
+  "58": {
+    "name": "希伯来书",
+    "shortNames": [
+      "来"
+    ],
+    "startNumber": 0
+  },
+  "59": {
+    "name": "雅各书",
+    "shortNames": [
+      "雅"
+    ],
+    "startNumber": 0
+  },
+  "60": {
+    "name": "彼得前书",
+    "shortNames": [
+      "彼前"
+    ],
+    "startNumber": 0
+  },
+  "61": {
+    "name": "彼得后书",
+    "shortNames": [
+      "彼后"
+    ],
+    "startNumber": 0
+  },
+  "62": {
+    "name": "约翰一书",
+    "shortNames": [
+      "约一",
+      "约壹"
+    ],
+    "startNumber": 0
+  },
+  "63": {
+    "name": "约翰二书",
+    "shortNames": [
+      "约二",
+      "约贰"
+    ],
+    "startNumber": 0
+  },
+  "64": {
+    "name": "约翰三书",
+    "shortNames": [
+      "约三",
+      "约叁"
+    ],
+    "startNumber": 0
+  },
+  "65": {
+    "name": "犹大书",
+     "shortNames": [
+      "犹"
+    ],
+    "startNumber": 0
+  },
+  "66": {
+    "name": "启示录",
+    "shortNames": [
+      "启"
+    ],
+    "startNumber": 0
+  }
+}

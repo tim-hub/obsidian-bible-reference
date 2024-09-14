@@ -1,0 +1,605 @@
+{
+  "language": "fr",
+  "1": {
+    "name": "Genèse",
+    "shortNames": [
+      "Ge",
+      "Gen",
+	  "Gn"
+    ],
+    "startNumber": 0
+  },
+  "2": {
+    "name": "Exode",
+    "shortNames": [
+      "Ex"
+    ],
+    "startNumber": 0
+  },
+  "3": {
+    "name": "Lévitique",
+    "shortNames": [
+      "Le",
+      "Lév",
+	  "Lv"
+    ],
+    "startNumber": 0
+  },
+  "4": {
+    "name": "Nombres",
+    "shortNames": [
+      "Nb",
+      "Nom"
+    ],
+    "startNumber": 0
+  },
+  "5": {
+    "name": "Deutéronome",
+    "shortNames": [
+      "Dt",
+      "Deut",
+      "Deu",
+      "De"
+    ],
+    "startNumber": 0
+  },
+  "6": {
+    "name": "Josué",
+    "shortNames": [
+      "Js",
+      "Jos"
+    ],
+    "startNumber": 0
+  },
+  "7": {
+    "name": "Juges",
+    "shortNames": [
+      "Jg",
+      "Jug"
+    ],
+    "startNumber": 0
+  },
+  "8": {
+    "name": "Ruth",
+    "shortNames": [
+      "Ru",
+      "Rut",
+	  "Rt"
+    ],
+    "startNumber": 0
+  },
+  "9": {
+    "name": "Samuel",
+    "shortNames": [
+      " Samuel",
+	  "Sa",
+	  " Sa",
+      "Sam",
+	  " Sam",
+	  "S",
+	  " S"
+    ],
+    "startNumber": 1
+  },
+  "10": {
+    "name": "Samuel",
+    "shortNames": [
+      " Samuel",
+	  "Sa",
+	  " Sa",
+      "Sam",
+	  " Sam",
+	  "S",
+	  " S"
+    ],
+    "startNumber": 2
+  },
+  "11": {
+    "name": "Rois",
+    "shortNames": [
+      " Rois",
+	  "R",
+	  " R"
+    ],
+    "startNumber": 1
+  },
+  "12": {
+    "name": "Rois",
+    "shortNames": [
+      " Rois",
+	  "R",
+	  " R"
+    ],
+    "startNumber": 2
+  },
+  "13": {
+    "name": "Chroniques",
+    "shortNames": [
+      " Chroniques",
+	  "Ch",
+      "Chr",
+      "Chron"
+    ],
+    "startNumber": 1
+  },
+  "14": {
+    "name": "Chroniques",
+    "shortNames": [
+      " Chroniques",
+	  "Ch",
+      "Chr",
+      "Chron"
+    ],
+    "startNumber": 2
+  },
+  "15": {
+    "name": "Esdras",
+    "shortNames": [
+      "Es",
+	  "Esd"
+    ],
+    "startNumber": 0
+  },
+  "16": {
+    "name": "Nehémie",
+    "shortNames": [
+      "Ne",
+      "Neh",
+	  "Né",
+	  "Néh"
+    ],
+    "startNumber": 0
+  },
+  "17": {
+    "name": "Esther",
+    "shortNames": [
+      "Est",
+      "Esth"
+    ],
+    "startNumber": 0
+  },
+  "18": {
+    "name": "Job",
+    "shortNames": [
+      "Jb"
+    ],
+    "startNumber": 0
+  },
+  "19": {
+    "name": "Psaumes",
+    "shortNames": [
+      "Ps",
+      "Psa",
+	  "Psaume"
+    ],
+    "startNumber": 0
+  },
+  "20": {
+    "name": "Proverbes",
+    "shortNames": [
+      "Pr",
+      "Prov",
+      "Pro",
+	  "Proverbe"
+    ],
+    "startNumber": 0
+  },
+  "21": {
+    "name": "Ecclésiaste",
+    "shortNames": [
+      "Ec",
+      "Ecc",
+	  "Qo",
+	  "Qohélet"
+    ],
+    "startNumber": 0
+  },
+  "22": {
+    "name": "Cantique des cantiques",
+    "shortNames": [
+      "Ct",
+	  "Cant",
+	  "Cantique",
+	  "CdC"
+    ],
+    "startNumber": 0
+  },
+  "23": {
+    "name": "Ésaïe",
+    "shortNames": [
+	  "És",
+	  "Isaïe",
+	  "Is"
+    ],
+    "startNumber": 0
+  },
+  "24": {
+    "name": "Jérémie",
+    "shortNames": [
+      "Je",
+	  "Jé",
+	  "Jr",
+      "Jer"
+    ],
+    "startNumber": 0
+  },
+  "25": {
+    "name": "Lamentations",
+    "shortNames": [
+      "La",
+      "Lam",
+      "Lament"
+    ],
+    "startNumber": 0
+  },
+  "26": {
+    "name": "Ézéchiel",
+    "shortNames": [
+      "Ez",
+      "Éz"
+    ],
+    "startNumber": 0
+  },
+  "27": {
+    "name": "Daniel",
+    "shortNames": [
+      "Da",
+      "Dan",
+      "Dn",
+      "Dl",
+	  "Dnl"
+    ],
+    "startNumber": 0
+  },
+  "28": {
+    "name": "Osée",
+    "shortNames": [
+      "Os"
+    ],
+    "startNumber": 0
+  },
+  "29": {
+    "name": "Joël",
+    "shortNames": [
+      "Jl",
+      "Joe",
+	  "Joë"
+    ],
+    "startNumber": 0
+  },
+  "30": {
+    "name": "Amos",
+    "shortNames": [
+      "Am",
+      "Amo"
+    ],
+    "startNumber": 0
+  },
+  "31": {
+    "name": "Abdias",
+    "shortNames": [
+      "Ab",
+	  "Abd"
+    ],
+    "startNumber": 0
+  },
+  "32": {
+    "name": "Jonas",
+    "shortNames": [
+      "Jon"
+    ],
+    "startNumber": 0
+  },
+  "33": {
+    "name": "Michée",
+    "shortNames": [
+      "Mi",
+      "Mic"
+    ],
+    "startNumber": 0
+  },
+  "34": {
+    "name": "Nahum",
+    "shortNames": [
+      "Na",
+      "Nah"
+    ],
+    "startNumber": 0
+  },
+  "35": {
+    "name": "Habakuk",
+    "shortNames": [
+      "Ha",
+      "Hab",
+      "Hb",
+      "Hk"
+    ],
+    "startNumber": 0
+  },
+  "36": {
+    "name": "Sophonie",
+    "shortNames": [
+      "So",
+	  "Sp",
+	  "Soph"
+    ],
+    "startNumber": 0
+  },
+  "37": {
+    "name": "Aggée",
+    "shortNames": [
+      "Ag",
+	  "Agg"
+    ],
+    "startNumber": 0
+  },
+  "38": {
+    "name": "Zacharie",
+    "shortNames": [
+      "Za",
+	  "Zc",
+	  "Zach"
+    ],
+    "startNumber": 0
+  },
+  "39": {
+    "name": "Malachie",
+    "shortNames": [
+      "Ml",
+      "Mal",
+      "Mlc",
+	  "Ma"
+    ],
+    "startNumber": 0
+  },
+  "40": {
+    "name": "Matthieu",
+    "shortNames": [
+      "Mt",
+      "Matt",
+      "Mat"
+    ],
+    "startNumber": 0
+  },
+  "41": {
+    "name": "Marc",
+    "shortNames": [
+      "Mc",
+      "Mrc"
+    ],
+    "startNumber": 0
+  },
+  "42": {
+    "name": "Luc",
+    "shortNames": [
+      "Lc"
+    ],
+    "startNumber": 0
+  },
+  "43": {
+    "name": "Jean",
+    "shortNames": [
+      "Jn"
+    ],
+    "startNumber": 0
+  },
+  "44": {
+    "name": "Actes des apôtres",
+    "shortNames": [
+      "Ac",
+      "Act",
+	  "Actes"
+    ],
+    "startNumber": 0
+  },
+  "45": {
+    "name": "Romains",
+    "shortNames": [
+      "Ro",
+      "Rom",
+      "Rmn",
+      "Rmns"
+    ],
+    "startNumber": 0
+  },
+  "46": {
+    "name": "Corinthiens",
+    "shortNames": [
+      "Co",
+      "Cor",
+	  " Corinthiens",
+	  " Co",
+	  " Cor"
+    ],
+    "startNumber": 1
+  },
+  "47": {
+    "name": "Corinthians",
+    "shortNames": [
+      "Co",
+      "Cor",
+	  " Corinthiens",
+	  " Co",
+	  " Cor"
+    ],
+    "startNumber": 2
+  },
+  "48": {
+    "name": "Galates",
+    "shortNames": [
+      "Ga",
+      "Gal"
+    ],
+    "startNumber": 0
+  },
+  "49": {
+    "name": "Éphésiens",
+    "shortNames": [
+      "Ep",
+      "Eph",
+	  "Ép",
+	  "Éph"
+    ],
+    "startNumber": 0
+  },
+  "50": {
+    "name": "Philippiens",
+    "shortNames": [
+      "Ph",
+	  "Phi",
+      "Phil"
+    ],
+    "startNumber": 0
+  },
+  "51": {
+    "name": "Colossiens",
+    "shortNames": [
+      "Co",
+      "Col",
+      "Colo"
+    ],
+    "startNumber": 0
+  },
+  "52": {
+    "name": "Thessaloniciens",
+    "shortNames": [
+      " Thessaloniciens",
+	  "Th",
+	  " Th",
+      "Thess",
+	  " Thess"
+    ],
+    "startNumber": 1
+  },
+  "53": {
+    "name": "Thessalonians",
+    "shortNames": [
+      " Thessaloniciens",
+	  "Th",
+	  " Th",
+      "Thess",
+	  " Thess"
+    ],
+    "startNumber": 2
+  },
+  "54": {
+    "name": "Timothée",
+    "shortNames": [
+      " Timothée",
+	  "Ti",
+	  "Tm",
+      "Tim"
+    ],
+    "startNumber": 1
+  },
+  "55": {
+    "name": "Timothy",
+    "shortNames": [
+      " Timothée",
+	  "Ti",
+	  "Tm",
+      "Tim"
+    ],
+    "startNumber": 2
+  },
+  "56": {
+    "name": "Tite",
+    "shortNames": [
+      "Ti",
+      "Tit",
+      "Tt"
+    ],
+    "startNumber": 0
+  },
+  "57": {
+    "name": "Philémon",
+    "shortNames": [
+	  "Phm"
+    ],
+    "startNumber": 0
+  },
+  "58": {
+    "name": "Hébreux",
+    "shortNames": [
+      "He",
+      "Heb",
+      "Hé",
+	  "Héb"
+    ],
+    "startNumber": 0
+  },
+  "59": {
+    "name": "Jacques",
+    "shortNames": [
+      "Jc",
+	  "Ja",
+	  "Jac"
+    ],
+    "startNumber": 0
+  },
+  "60": {
+    "name": "Pierre",
+    "shortNames": [
+      " Pierre",
+	  "P",
+	  " P",
+	  "Pi",
+	  " Pi"
+    ],
+    "startNumber": 1
+  },
+  "61": {
+    "name": "Peter",
+    "shortNames": [
+      " Pierre",
+	  "P",
+	  " P",
+	  "Pi",
+	  " Pi"
+    ],
+    "startNumber": 2
+  },
+  "62": {
+    "name": "Jean",
+    "shortNames": [
+      " Jean",
+	  "Jn",
+	  " Jn"
+    ],
+    "startNumber": 1
+  },
+  "63": {
+    "name": "Jean",
+    "shortNames": [
+      " Jean",
+	  "Jn",
+	  " Jn"
+    ],
+    "startNumber": 2
+  },
+  "64": {
+    "name": "Jean",
+    "shortNames": [
+      " Jean",
+	  "Jn",
+	  " Jn"
+    ],
+    "startNumber": 3
+  },
+  "65": {
+    "name": "Jude",
+    "shortNames": [
+		"Ju",
+		"Jud"
+	],
+    "startNumber": 0
+  },
+  "66": {
+    "name": "Apocalypse",
+    "shortNames": [
+      "Ap",
+	  "Apo"
+    ],
+    "startNumber": 0
+  }
+}
