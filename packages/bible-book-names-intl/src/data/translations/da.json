@@ -2,39 +2,39 @@
 {
   "language": "da", 
   "1": {
-    "name": "Mosebog",
+    "name": "1Mosebog",
     "shortNames": [
-        "Mos"
+        "1Mos"
     ],
-    "startNumber": 1
+    "startNumber": 0
   },
   "2": {
-    "name": "Mosebog",
+    "name": "2Mosebog",
     "shortNames": [
-        "Mos"
+        "2Mos"
     ],
-    "startNumber": 2
+    "startNumber": 0
   },
   "3": {
-    "name": "Mosebog",
+    "name": "3Mosebog",
     "shortNames": [
-        "Mos"
+        "3Mos"
     ],
-    "startNumber": 3
+    "startNumber": 0
   },
   "4": {
-    "name": "Mosebog",
+    "name": "4Mosebog",
     "shortNames": [
-        "Mos"
+        "4Mos"
     ],
-    "startNumber": 4
+    "startNumber": 0
   },
   "5": {
-    "name": "Mosebog",
+    "name": "5Mosebog",
     "shortNames": [
-        "Mos"
+        "5Mos"
     ],
-    "startNumber": 5
+    "startNumber": 0
   },
   "6": {
     "name": "Josvabogen",
