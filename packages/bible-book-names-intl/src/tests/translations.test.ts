@@ -23,7 +23,9 @@ describe('test translation structure', () => {
 });
 
 describe('test all translations', () => {
-  const duplicatedBookIndex = new Set([9, 10, 11, 12, 13, 14, 46, 47, 52, 53, 54, 55, 60, 61, 62, 63, 64]);
+  const duplicatedBookIndex = new Set([
+      9, 10, 11, 12, 13, 14, 46, 47, 52, 53, 54, 55, 60, 61, 62, 63, 64
+  ]);
 
   // 1 Sam and 2 Sam => 8, 9
   // 1 Kings and 2 Kings => 10, 11
