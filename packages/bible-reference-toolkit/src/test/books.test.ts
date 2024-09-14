@@ -12,6 +12,10 @@ describe('test books', () => {
     expect(SupportedLanguages).toContain('en', 'it', 'jp', 'sp');
   });
 
+  test('should support da, de, fr, pt, it, ro, sp, zh-CN', () => {
+    expect(SupportedLanguages).toContain('da', 'de', 'fr', 'pt', 'it', 'ro', 'sp', 'zh-CN');
+  });
+
   test('book count should be 66', () => {
     expect(AllBibleBooksInAllSupportedLanguages.length).toBe(66);
     expect(AllBibleBooksInAllSupportedLanguages[0].name).toBe('Genesis');
