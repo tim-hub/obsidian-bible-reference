@@ -1,4 +1,7 @@
-import { getTranslationBooks, BookWithAbbreviations } from 'bible-book-names-intl';
+import {
+  getTranslationBooks,
+  BookWithAbbreviations,
+} from 'bible-book-names-intl';
 import { generateOrdinalNameVariations } from './utils';
 import { AllBibleBooksInAllSupportedLanguages as AllBooks } from './books';
 
@@ -77,14 +80,23 @@ export class Reference implements IReference {
    * @param language, en, jp sp, it etc
    * @param nameInTranslation
    */
-  public static bookIdFromTranslationAndName(language: string, nameInTranslation: string): number {
+  public static bookIdFromTranslationAndName(
+    language: string,
+    nameInTranslation: string
+  ): number {
     const booksInTranslation = getTranslationBooks(language.toLowerCase());
-    return Reference.getBookIdFromTranslationAndName(booksInTranslation, nameInTranslation);
+    return Reference.getBookIdFromTranslationAndName(
+      booksInTranslation,
+      nameInTranslation
+    );
   }
 
   // Given a string of a book name (shortened or full length), get the book id
   public static bookIdFromName(nameInAnySupportedTranslation: string): number {
-    return Reference.getBookIdFromTranslationAndName(AllBooks, nameInAnySupportedTranslation);
+    return Reference.getBookIdFromTranslationAndName(
+      AllBooks,
+      nameInAnySupportedTranslation
+    );
   }
 
   // Given a book id, get the full length book name
@@ -92,7 +104,10 @@ export class Reference implements IReference {
     return Reference.bookNameFromTranslationAndId('en', id);
   }
 
-  public static bookNameFromTranslationAndId(language: string, id: number): string {
+  public static bookNameFromTranslationAndId(
+    language: string,
+    id: number
+  ): string {
     const book = getTranslationBooks(language.toLowerCase())[id - 1];
     if (!book) {
       throw new Error('Book id out of range (no such book)');
@@ -127,7 +142,7 @@ export class Reference implements IReference {
     }
     throw new Error(
       'There was a problem creating the a reference from chapter id ' +
-      chapterId
+        chapterId
     );
   }
 
@@ -163,7 +178,10 @@ export class Reference implements IReference {
 
   // Get the number of verses in the given book id
   public static versesInBookId(bookId: number): number {
-    return AllBooks[bookId - 1].verses.reduce(function sum(a: number, b: number) {
+    return AllBooks[bookId - 1].verses.reduce(function sum(
+      a: number,
+      b: number
+    ) {
       return a + b;
     });
   }
@@ -212,14 +230,21 @@ export class Reference implements IReference {
     return count;
   }
 
-  private static getBookIdFromTranslationAndName(books: BookWithAbbreviations[], name: string): number {
+  private static getBookIdFromTranslationAndName(
+    books: BookWithAbbreviations[],
+    name: string
+  ): number {
     const lowerName = name.toLowerCase();
     const relativeBooks = books.filter((book) => {
       let bookNames = [book.name, ...book.abbreviations];
       if (book?.startNumber && book.startNumber > 0) {
         bookNames = generateOrdinalNameVariations(book.startNumber, bookNames);
       } // todo instead of get all books from the lib, use the getfunction and map here to get all books
-      return [book.fullName, ...bookNames].map((name) => name.toLowerCase()).indexOf(lowerName) > -1;
+      return (
+        [book.fullName, ...bookNames]
+          .map((name) => name.toLowerCase())
+          .indexOf(lowerName) > -1
+      );
     });
     if (relativeBooks?.length) {
       return books.indexOf(relativeBooks[0]) + 1;
@@ -244,8 +269,8 @@ export class Reference implements IReference {
     } else {
       throw new Error(
         'Unknown unit ' +
-        unit +
-        ' supplied to startOf() - supported units are: "book", "chapter"'
+          unit +
+          ' supplied to startOf() - supported units are: "book", "chapter"'
       );
     }
     return clone;

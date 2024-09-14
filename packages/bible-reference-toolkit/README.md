@@ -1,6 +1,5 @@
 # Bible Reference Toolkit
 
-
 [![CodeQL](https://github.com/tim-hub/bible-reference-toolkit/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/tim-hub/bible-reference-toolkit/actions/workflows/codeql-analysis.yml)
 
 Bible Reference Toolkit is a JavaScript/Typescript package for handling Bible references. It can:

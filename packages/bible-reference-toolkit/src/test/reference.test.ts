@@ -1,6 +1,5 @@
 import Reference from '../lib/reference';
 
-
 describe('Reference Original Test in English', () => {
   test('isChapter() returns true for chapter references', () => {
     let ref = new Reference('Genesis 1');
@@ -102,5 +101,4 @@ describe('Reference Original Test in English', () => {
   test('Reference.chaptersUpToBookId() returns the number of chapters in all books prior to the given book id', () => {
     expect(Reference.chaptersUpToBookId(2)).toBe(50); // Exodus
   });
-
-})
+});
