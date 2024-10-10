@@ -1,6 +1,6 @@
 {
   "name": "obsidian-bible-reference",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "description": "Taking Bible Study note in Obsidian.md application easily. Automatically suggesting Bible Verses as references. ",
   "main": "main.js",
   "scripts": {
@@ -73,7 +73,7 @@
   },
   "dependencies": {
     "ackee-tracker": "5.1.0",
-    "bible-reference-toolkit": "^2.3.5",
+    "bible-reference-toolkit": "^2.3.6",
     "flagsmith-nodejs": "3.3.1"
   }
 }
