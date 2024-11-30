@@ -12,6 +12,8 @@ import { VerseSuggesting } from '../verse/VerseSuggesting'
 import { BibleReferencePluginSettings } from '../data/constants'
 import { getSuggestionsFromQuery } from '../utils/getSuggestionsFromQuery'
 import { EventStats } from '../provider/EventStats'
+import { versionMatch } from '../utils/versionMatch'
+import { getBibleVersion } from '../data/BibleVersionCollection'
 
 /**
  * Extend the EditorSuggest to suggest bible verses.
@@ -53,7 +55,23 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
     const queryContent = currentContent.substring(2)
 
     const match = verseMatch(queryContent)
+    
     if (match) {
+
+      const vMatch = versionMatch(queryContent)
+      if (vMatch) {
+        this.plugin.settings.bibleVersion = vMatch
+        if (getBibleVersion(vMatch).key == vMatch) {
+          this.plugin.saveSettings()
+        }
+      } else {
+        if (this.settings.bibleVersion != this.settings.defaultBibleVersion) {
+          this.settings.bibleVersion = this.settings.defaultBibleVersion
+          console.log(`defaultBibleVersion : ${this.settings.defaultBibleVersion}`)
+          this.plugin.saveSettings()
+        }
+      }
+
       console.debug('trigger on', queryContent)
       EventStats.logUIOpen(
         'lookupEditorOpen',
@@ -79,6 +97,7 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
   async getSuggestions(
     context: EditorSuggestContext
   ): Promise<VerseSuggesting[]> {
+    console.log(`context query : ${context.query}`)
     const suggestions = await getSuggestionsFromQuery(
       context.query,
       this.settings
