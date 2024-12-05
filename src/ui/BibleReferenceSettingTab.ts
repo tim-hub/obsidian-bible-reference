@@ -239,6 +239,7 @@ Obsidian Bible Reference  is proudly powered by
           .setValue(this.plugin.settings.bibleVersion)
           .onChange(async (value) => {
             this.plugin.settings.bibleVersion = value
+            this.plugin.settings.defaultBibleVersion = value
             console.debug('Default Bible Version: ' + value)
             await this.plugin.saveSettings()
             pluginEvent.trigger('bible-reference:settings:version', [value])

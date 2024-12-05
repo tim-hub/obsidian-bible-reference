@@ -1,4 +1,4 @@
-import { BOOK_REG, MODAL_REG } from './regs'
+import { BOOK_REG, MODAL_REG, VERSION_REG } from './regs'
 
 describe('test book name reg matching in different languages', () => {
   test('should match book name in English', () => {
@@ -74,4 +74,23 @@ describe('test modal reg matching in different languages', () => {
     const reg = new RegExp(MODAL_REG)
     expect(reg.test(modal)).toBe(false)
   })
+
+  test('should match version with only alphabets', () => {
+    const modal = '-niv2011'
+    const reg = new RegExp(VERSION_REG)
+    expect(reg.test(modal)).toBe(true)
+  })
+  
+  test('should match version with numbers', () => {
+    const modal = '-niv2011'
+    const reg = new RegExp(VERSION_REG)
+    expect(reg.test(modal)).toBe(true)
+  })
+
+  test('should not match when there is hyphen', () => {
+    const modal = '-should-fail'
+    const reg = new RegExp(MODAL_REG)
+    expect(reg.test(modal)).toBe(false)
+  })
+
 })

@@ -24,6 +24,7 @@ export enum BibleVersionNameLengthEnum {
 
 export interface BibleReferencePluginSettings {
   bibleVersion: string
+  defaultBibleVersion: string
   referenceLinkPosition?: BibleVerseReferenceLinkPosition
   verseFormatting?: BibleVerseFormat
   verseNumberFormatting?: BibleVerseNumberFormat
@@ -46,6 +47,7 @@ export interface BibleReferencePluginSettings {
 
 export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
   bibleVersion: DEFAULT_BIBLE_VERSION.key,
+  defaultBibleVersion: DEFAULT_BIBLE_VERSION.key,
   referenceLinkPosition: BibleVerseReferenceLinkPosition.Header,
   verseFormatting: BibleVerseFormat.SingleLine,
   verseNumberFormatting: BibleVerseNumberFormat.Period,
