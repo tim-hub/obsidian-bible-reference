@@ -83,6 +83,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Redster1"><img src="https://avatars.githubusercontent.com/u/69325218?v=4?s=65" width="65px;" alt="Redster1"/><br /><sub><b>Redster1</b></sub></a><br /><a href="https://github.com/tim-hub/obsidian-bible-reference/issues?q=author%3ARedster1" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/dbergan"><img src="https://avatars.githubusercontent.com/u/6843811?v=4?s=65" width="65px;" alt="David Bergan"/><br /><sub><b>David Bergan</b></sub></a><br /><a href="#financial-dbergan" title="Financial">💵</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Benedictteo05"><img src="https://avatars.githubusercontent.com/u/75201951?v=4?s=65" width="65px;" alt="Benedictteo05"/><br /><sub><b>Benedictteo05</b></sub></a><br /><a href="https://github.com/tim-hub/obsidian-bible-reference/commits?author=Benedictteo05" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
