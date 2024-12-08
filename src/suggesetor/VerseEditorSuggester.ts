@@ -55,13 +55,11 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
     const queryContent = currentContent.substring(2)
 
     const match = verseMatch(queryContent)
-    
     if (match) {
-
       const vMatch = versionMatch(queryContent)
       if (vMatch) {
-        this.plugin.settings.bibleVersion = vMatch
         if (getBibleVersion(vMatch).key == vMatch) {
+          this.plugin.settings.bibleVersion = vMatch
           this.plugin.saveSettings()
         }
       } else {
