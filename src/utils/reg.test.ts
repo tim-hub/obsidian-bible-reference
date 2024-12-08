@@ -76,7 +76,7 @@ describe('test modal reg matching in different languages', () => {
   })
 
   test('should match version with only alphabets', () => {
-    const modal = '-niv2011'
+    const modal = '-esv'
     const reg = new RegExp(VERSION_REG)
     expect(reg.test(modal)).toBe(true)
   })
@@ -87,10 +87,10 @@ describe('test modal reg matching in different languages', () => {
     expect(reg.test(modal)).toBe(true)
   })
 
-  test('should not match when there is hyphen', () => {
-    const modal = '-should-fail'
-    const reg = new RegExp(MODAL_REG)
-    expect(reg.test(modal)).toBe(false)
+  test('should match even when there is hyphen', () => {
+    const modal = '-oeb-cw'
+    const reg = new RegExp(VERSION_REG)
+    expect(reg.test(modal)).toBe(true)
   })
 
 })
