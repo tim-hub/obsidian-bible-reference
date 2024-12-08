@@ -1,6 +1,7 @@
 import { IBibleVersion } from '../interfaces/IBibleVersion'
 import { BibleAPISourceCollection } from './BibleApiSourceCollection'
 
+export const DEFAULT_BIBLE_VERSION_KEY = 'bbe'
 export const BibleVersionCollectionEnglish = [
   {
     key: 'amp',
@@ -11,7 +12,7 @@ export const BibleVersionCollectionEnglish = [
     infoURL: 'https://en.wikipedia.org/wiki/Amplified_Bible',
   },
   {
-    key: 'bbe',
+    key: DEFAULT_BIBLE_VERSION_KEY,
     versionName: 'Bible in Basic English',
     language: 'English',
     code: 'en',
@@ -512,7 +513,9 @@ export const BibleVersionCollection: IBibleVersion[] = [
   ...BibleVersionCollectionUkrainian,
 ]
 
-export const DEFAULT_BIBLE_VERSION = BibleVersionCollection[11]
+export const DEFAULT_BIBLE_VERSION = BibleVersionCollection.find(
+  (bibleVersion) => bibleVersion.key === DEFAULT_BIBLE_VERSION_KEY
+) as IBibleVersion
 
 export const getBibleVersion = (key: string): IBibleVersion => {
   return (
