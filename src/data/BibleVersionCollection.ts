@@ -1,6 +1,10 @@
 import { IBibleVersion } from '../interfaces/IBibleVersion'
 import { BibleAPISourceCollection } from './BibleApiSourceCollection'
 
+/**
+ * This file contains the collection of Bible versions
+ * the key cannot start with a number
+ */
 export const DEFAULT_BIBLE_VERSION_KEY = 'bbe'
 export const BibleVersionCollectionEnglish = [
   {
