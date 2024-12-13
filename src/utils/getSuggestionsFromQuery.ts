@@ -11,7 +11,8 @@ import { getBibleVersion } from '../data/BibleVersionCollection'
  */
 export const getSuggestionsFromQuery = async (
   queryWithoutPrefix: string,
-  settings: BibleReferencePluginSettings
+  settings: BibleReferencePluginSettings,
+  translation?: string
 ): Promise<VerseSuggesting[]> => {
   console.debug('get suggestion for query ', queryWithoutPrefix.toLowerCase())
 
@@ -34,7 +35,7 @@ export const getSuggestionsFromQuery = async (
   const verseNumber = parseInt(numbers[1])
   const verseEndNumber = numbers.length === 3 ? parseInt(numbers[2]) : undefined
 
-  const selectedBibleVersion = getBibleVersion(settings.bibleVersion)
+  const selectedBibleVersion = getBibleVersion( translation ? translation : settings.bibleVersion)
   const bookName = getFullBookName(rawBookName, selectedBibleVersion?.code)
   console.debug('selected bookName', bookName)
 

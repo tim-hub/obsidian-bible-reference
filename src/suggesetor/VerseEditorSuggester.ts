@@ -31,6 +31,18 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
     this.settings = settings
   }
 
+  private getBookVerseAndTranslation(queryContent: string) {
+    let bookVerseQuery = queryContent
+    let translationQuery = ''
+    // split by @
+    if (queryContent.includes('@')) {
+      const queryContentSplit = queryContent.split('@')
+      bookVerseQuery = queryContentSplit[0]
+      translationQuery = queryContentSplit[1]
+    }
+    return { bookVerseQuery, translationQuery }
+  }
+
   /**
    * This will build the EditorSuggestContext in getSuggestions
    * @param cursor
@@ -53,18 +65,12 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
       return null
     }
     const queryContent = currentContent.substring(2) // remove the trigger prefix
-    let bookVerseQuery = queryContent
-    let translationQuery = ''
-    // split by @
-    if (queryContent.includes('@')) {
-      const queryContentSplit = queryContent.split('@')
-      bookVerseQuery = queryContentSplit[0]
-      translationQuery = queryContentSplit[1]
-    }
+    const { bookVerseQuery, translationQuery } = this.getBookVerseAndTranslation(queryContent)
+
     const verseMatchResult = verseMatch(bookVerseQuery)
     if (verseMatchResult && verseMatchResult.length > 0) {
       const versionSelectionMatchResult = versionSelectionMatch(translationQuery)
-      if (!translationQuery || !versionSelectionMatchResult) {
+      if (!translationQuery || !versionSelectionMatchResult || getBibleVersion(versionSelectionMatchResult).key == versionSelectionMatchResult ) {
         if (this.settings.bibleVersion != this.settings.defaultBibleVersion) {
           this.settings.bibleVersion = this.settings.defaultBibleVersion // reset to default
           console.log(`defaultBibleVersion : ${this.settings.defaultBibleVersion}`)
@@ -88,7 +94,7 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
           line: cursor.line,
           ch: queryContent.lastIndexOf(verseMatchResult),
         },
-        query: verseMatchResult,
+        query: queryContent,
       }
     }
     return null
@@ -102,10 +108,14 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
     context: EditorSuggestContext
   ): Promise<VerseSuggesting[]> {
     console.log(`context query : ${context.query}`)
+    const { bookVerseQuery, translationQuery } = this.getBookVerseAndTranslation(context.query)
+
     const suggestions = await getSuggestionsFromQuery(
-      context.query,
-      this.settings
+      bookVerseQuery,
+      this.settings,
+      translationQuery
     )
+
     EventStats.logLookup(
       'verseLookUp',
       {
