@@ -23,7 +23,7 @@ export enum BibleVersionNameLengthEnum {
 }
 
 export interface BibleReferencePluginSettings {
-  bibleVersion: string
+  bibleVersion: string // the tmp version selected at editor
   defaultBibleVersion: string
   referenceLinkPosition?: BibleVerseReferenceLinkPosition
   verseFormatting?: BibleVerseFormat

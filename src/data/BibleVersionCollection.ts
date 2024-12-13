@@ -3,7 +3,7 @@ import { BibleAPISourceCollection } from './BibleApiSourceCollection'
 
 /**
  * This file contains the collection of Bible versions
- * the key cannot start with a number
+ * the key cannot start with a number, at least 3 characters long
  */
 export const DEFAULT_BIBLE_VERSION_KEY = 'bbe'
 export const BibleVersionCollectionEnglish = [
