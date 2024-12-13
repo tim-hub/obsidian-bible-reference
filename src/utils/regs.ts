@@ -11,7 +11,7 @@ export const MODAL_REG = /([123])*\s*([\p{L}[\\\]^_`a-zA-Z]{2,100}|\p{Script=Han
 
 export const BOOK_REG = /([123])*\s*([\p{L}[\\\]^_`a-zA-Z]{2,100}|\p{Script=Han}{1,})/isu
 
-export const VERSION_REG = /-[a-zA-Z][a-zA-Z0-9-]*$/isu 
+export const TRANSLATION_VERSION_KEY_REG = /^[a-zA-Z]+-?[a-zA-Z0-9]*$/isu 
 
 // export const BOOK_REG = /[123]*\s*[A-Z\[\\\]^_`a-z]{2,}/
 
