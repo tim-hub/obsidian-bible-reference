@@ -68,18 +68,20 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
     const { bookVerseQuery, translationQuery } = this.getBookVerseAndTranslation(queryContent)
 
     const verseMatchResult = verseMatch(bookVerseQuery)
+    const versionSelectionMatchResult = versionSelectionMatch(translationQuery)
+
     if (verseMatchResult && verseMatchResult.length > 0) {
-      const versionSelectionMatchResult = versionSelectionMatch(translationQuery)
-      if (!translationQuery || !versionSelectionMatchResult || getBibleVersion(versionSelectionMatchResult).key == versionSelectionMatchResult ) {
+      if (versionSelectionMatchResult && getBibleVersion(versionSelectionMatchResult).key == versionSelectionMatchResult ) {
+        console.log(`set version : ${versionSelectionMatchResult}`)
+        this.plugin.settings.bibleVersion = versionSelectionMatchResult // pick a version
+        this.plugin.saveSettings() //todo this is an async function, so it may not be saved before the getSuggestions is called
+      } else {
+        // revert back to default version
         if (this.settings.bibleVersion != this.settings.defaultBibleVersion) {
           this.settings.bibleVersion = this.settings.defaultBibleVersion // reset to default
           console.log(`defaultBibleVersion : ${this.settings.defaultBibleVersion}`)
           this.plugin.saveSettings()
         }
-      } else {
-        console.log(`set version : ${versionSelectionMatchResult}`)
-        this.plugin.settings.bibleVersion = versionSelectionMatchResult // pick a version
-        this.plugin.saveSettings() //todo this is an async function, so it may not be saved before the getSuggestions is called
       }
 
       console.debug('trigger on', queryContent)
@@ -94,7 +96,7 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
           line: cursor.line,
           ch: queryContent.lastIndexOf(verseMatchResult),
         },
-        query: queryContent,
+        query: `${verseMatchResult}@${versionSelectionMatchResult}`,
       }
     }
     return null

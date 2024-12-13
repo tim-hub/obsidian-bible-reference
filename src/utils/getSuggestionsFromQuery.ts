@@ -14,7 +14,7 @@ export const getSuggestionsFromQuery = async (
   settings: BibleReferencePluginSettings,
   translation?: string
 ): Promise<VerseSuggesting[]> => {
-  console.debug('get suggestion for query ', queryWithoutPrefix.toLowerCase())
+  console.debug('get suggestion for query ', queryWithoutPrefix.toLowerCase(), translation, settings.bibleVersion, settings.defaultBibleVersion)
 
   const bookNameMatchingResults = queryWithoutPrefix.match(BOOK_REG)
   const rawBookName = bookNameMatchingResults?.length
