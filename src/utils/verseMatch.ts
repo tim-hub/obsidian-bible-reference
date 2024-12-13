@@ -1,4 +1,4 @@
-import { MODAL_REG, DEFAULT_TRIGGER_PREFIX_REG } from './regs'
+import { BOOK_VERSE_REG, DEFAULT_TRIGGER_PREFIX_REG } from './regs'
 
 /**
  * check if the given string contains a verseNumber, and return the verseNumber if it does
@@ -6,7 +6,7 @@ import { MODAL_REG, DEFAULT_TRIGGER_PREFIX_REG } from './regs'
  * @returns string the same string if it match
  */
 export const verseMatch = (verseTrigger: string): string => {
-  const matchResults = verseTrigger.match(MODAL_REG)
+  const matchResults = verseTrigger.match(BOOK_VERSE_REG)
   if (!matchResults) {
     return ''
   } else {
