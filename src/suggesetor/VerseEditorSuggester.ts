@@ -12,7 +12,7 @@ import { VerseSuggesting } from '../verse/VerseSuggesting'
 import { BibleReferencePluginSettings } from '../data/constants'
 import { getSuggestionsFromQuery } from '../utils/getSuggestionsFromQuery'
 import { EventStats } from '../provider/EventStats'
-import { versionMatch } from '../utils/versionMatch'
+import { versionSelectionMatch } from '../utils/versionSelectionMatch'
 import { getBibleVersion } from '../data/BibleVersionCollection'
 
 /**
@@ -52,22 +52,28 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
     if (!matchTriggerPrefix(prefixTrigger)) {
       return null
     }
-    const queryContent = currentContent.substring(2)
-
-    const match = verseMatch(queryContent)
-    if (match) {
-      const vMatch = versionMatch(queryContent)
-      if (vMatch) {
-        if (getBibleVersion(vMatch).key == vMatch) {
-          this.plugin.settings.bibleVersion = vMatch
-          this.plugin.saveSettings()
-        }
-      } else {
+    const queryContent = currentContent.substring(2) // remove the trigger prefix
+    let bookVerseQuery = queryContent
+    let translationQuery = ''
+    // split by @
+    if (queryContent.includes('@')) {
+      const queryContentSplit = queryContent.split('@')
+      bookVerseQuery = queryContentSplit[0]
+      translationQuery = queryContentSplit[1]
+    }
+    const verseMatchResult = verseMatch(bookVerseQuery)
+    if (verseMatchResult && verseMatchResult.length > 0) {
+      const versionSelectionMatchResult = versionSelectionMatch(translationQuery)
+      if (!translationQuery || !versionSelectionMatchResult) {
         if (this.settings.bibleVersion != this.settings.defaultBibleVersion) {
-          this.settings.bibleVersion = this.settings.defaultBibleVersion
+          this.settings.bibleVersion = this.settings.defaultBibleVersion // reset to default
           console.log(`defaultBibleVersion : ${this.settings.defaultBibleVersion}`)
           this.plugin.saveSettings()
         }
+      } else {
+        console.log(`set version : ${versionSelectionMatchResult}`)
+        this.plugin.settings.bibleVersion = versionSelectionMatchResult // pick a version
+        this.plugin.saveSettings() //todo this is an async function, so it may not be saved before the getSuggestions is called
       }
 
       console.debug('trigger on', queryContent)
@@ -80,9 +86,9 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
         end: cursor,
         start: {
           line: cursor.line,
-          ch: queryContent.lastIndexOf(match),
+          ch: queryContent.lastIndexOf(verseMatchResult),
         },
-        query: match,
+        query: verseMatchResult,
       }
     }
     return null
