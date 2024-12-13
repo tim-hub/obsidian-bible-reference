@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4.2.2
         with:
           submodules: recursive
 
@@ -25,7 +25,7 @@ jobs:
           token: ${{ secrets.PAT }}
           file: 'README.md'
 
-      - uses: pnpm/action-setup@v2.1.0
+      - uses: pnpm/action-setup@v4.0.0
         with:
           version: 7.17.0
           run_install: true
