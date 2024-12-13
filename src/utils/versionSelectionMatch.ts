@@ -6,7 +6,9 @@ import { TRANSLATION_VERSION_KEY_REG } from './regs'
  * @returns string the same string if it match
  */
 export const versionSelectionMatch = (verseWithVersionAtEnd: string): string => {
-  console.log(`version selection reg : ${verseWithVersionAtEnd}`)
+  if (verseWithVersionAtEnd.length < 3) {
+    return ''
+  }
   const matchResults = verseWithVersionAtEnd.match(TRANSLATION_VERSION_KEY_REG)
   console.log(`version selection reg match result : ${matchResults}`)
   if (!matchResults) {

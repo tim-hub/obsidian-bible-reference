@@ -6,6 +6,10 @@ import { BOOK_VERSE_REG, DEFAULT_TRIGGER_PREFIX_REG } from './regs'
  * @returns string the same string if it match
  */
 export const verseMatch = (verseTrigger: string): string => {
+  if (verseTrigger.length < 5) {
+    return ''
+  }
+
   const matchResults = verseTrigger.match(BOOK_VERSE_REG)
   if (!matchResults) {
     return ''
