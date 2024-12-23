@@ -296,6 +296,13 @@ export const BibleVersionCollectionGerman = [
     code: 'de',
     apiSource: BibleAPISourceCollection.bollsLife,
   },
+  {
+    key: 's00',
+    versionName: 'Schlachter (2000)',
+    language: 'German Deutsch',
+    code: 'de',
+    apiSource: BibleAPISourceCollection.bollsLife,
+  },
 ]
 
 export const BibleVersionCollectionGreek = [
