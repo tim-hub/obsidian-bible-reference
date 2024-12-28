@@ -4,6 +4,7 @@ import { BibleVerseNumberFormat } from '../data/BibleVerseNumberFormat'
 import { VerseReference } from '../utils/splitBibleReference'
 import { BibleVerseFormat } from '../data/BibleVerseFormat'
 import { IVerse } from '../interfaces/IVerse'
+import { CollapsibleVerses } from 'src/data/CollapsibleVerses'
 
 export abstract class BaseVerseFormatter {
   protected settings: BibleReferencePluginSettings
@@ -53,17 +54,19 @@ export abstract class BaseVerseFormatter {
     } else {
       text = ''
     }
-    this.verses.forEach((verse) => {
+    this.verses.forEach((verse, index) => {
+      let singleVerseText = verse.text.trim()
+      if (
+      index === this.verses!.length - 1 &&
+      singleVerseText.endsWith('<br/>') // Remove the last <br/> tag that appears in LSB verses.
+      ) {
+      singleVerseText = singleVerseText.slice(0, -5)
+      }
       const verseNumberFormatted = this.formatVerseNumber(verse.verse)
       if (this.settings?.verseFormatting === BibleVerseFormat.Paragraph) {
-        text +=
-          ' ' + verseNumberFormatted + verse.text.trim().replaceAll('\n', ' ')
+        text += ' ' + verseNumberFormatted + singleVerseText.replaceAll('\n', ' ')
       } else {
-        text +=
-          '> ' +
-          verseNumberFormatted +
-          verse.text.trim().replace(/\r\n|\n|\r/g, ' ') +
-          '\n' // Remove extraneous line breaks in KJV verses.
+        text += '> ' + verseNumberFormatted + singleVerseText.replace(/\r\n|\n|\r/g, ' ') + '\n' // Remove extraneous line breaks in KJV verses.
       }
     })
     console.debug('text', text)
@@ -76,8 +79,16 @@ export abstract class BaseVerseFormatter {
     if (this.settings.displayBibleIconPrefixAtHeader) {
       head += '[!bible]'
 
-      if (this.settings?.collapsibleVerses) {
-        head += '+'
+      switch (this.settings?.collapsibleVerses) {
+        case CollapsibleVerses.Plus:
+          head += '+'
+          break
+        case CollapsibleVerses.Minus:
+          head += '-'
+          break
+        case CollapsibleVerses.None:
+          head += ''
+          break
       }
     }
 
