@@ -60,6 +60,9 @@ export default class BibleReferencePlugin extends Plugin {
     this.addVerseOfDayInsertCommand()
     this.addVerseOfDayNoticeCommand()
 
+    // toggle bible icon prefix
+    this.toggleBibleIconPrefix()
+
     this.initStatusBarIndicator()
     EventStats.logRecord(this.settings.optOutToEvents)
   }
@@ -150,6 +153,19 @@ export default class BibleReferencePlugin extends Plugin {
           this.settings.optOutToEvents
         )
         editor.replaceSelection(vodSuggesting.allFormattedContent)
+      },
+    })
+  }
+
+  // create a hotkey that will toggle the "Show Bible Icon Prefix" setting called: "setUpBibleIconPrefixToggle" from the BibleReferenceSettingTab class
+
+  private toggleBibleIconPrefix() {
+    this.addCommand({
+      id: 'toggle-bible-icon-prefix',
+      name: 'Toggle Bible Icon Prefix',
+      callback: () => {
+        this.settings.displayBibleIconPrefixAtHeader = !this.settings.displayBibleIconPrefixAtHeader
+        this.saveSettings()
       },
     })
   }
