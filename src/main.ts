@@ -157,8 +157,6 @@ export default class BibleReferencePlugin extends Plugin {
     })
   }
 
-  // create a hotkey that will toggle the "Show Bible Icon Prefix" setting called: "setUpBibleIconPrefixToggle" from the BibleReferenceSettingTab class
-
   private toggleBibleIconPrefix() {
     this.addCommand({
       id: 'toggle-bible-icon-prefix',
