@@ -4,6 +4,7 @@ import { BibleVerseNumberFormat } from '../data/BibleVerseNumberFormat'
 import { VerseReference } from '../utils/splitBibleReference'
 import { BibleVerseFormat } from '../data/BibleVerseFormat'
 import { IVerse } from '../interfaces/IVerse'
+import { CollapsibleVerses } from 'src/data/CollapsibleVerses'
 
 export abstract class BaseVerseFormatter {
   protected settings: BibleReferencePluginSettings
@@ -78,8 +79,16 @@ export abstract class BaseVerseFormatter {
     if (this.settings.displayBibleIconPrefixAtHeader) {
       head += '[!bible]'
 
-      if (this.settings?.collapsibleVerses) {
-        head += '+'
+      switch (this.settings?.collapsibleVerses) {
+        case CollapsibleVerses.Plus:
+          head += '+'
+          break
+        case CollapsibleVerses.Minus:
+          head += '-'
+          break
+        case CollapsibleVerses.None:
+          head += ''
+          break
       }
     }
 
