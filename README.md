@@ -27,6 +27,8 @@
 2. In a note, for example type `--John1:1`
 3. Select the suggestion
 
+You can also get a "verse of the day" by typing `--vod`.
+
 > Read more about [How to use](https://github.com/tim-hub/obsidian-bible-reference/blob/master/docs/howto.md)
 
 > On iOS devices, there is a known issue about conflict between `Smart Punctuation` and double hyphens `--`.

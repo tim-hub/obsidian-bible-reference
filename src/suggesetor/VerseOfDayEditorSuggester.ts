@@ -11,6 +11,7 @@ import { BibleReferencePluginSettings } from '../data/constants'
 import { getVod } from '../provider/VODProvider'
 import { VerseOfDaySuggesting } from '../verse/VerseOfDaySuggesting'
 import { splitBibleReference } from '../utils/splitBibleReference'
+import { matchTriggerPrefix } from '../utils/verseMatch'
 import { EventStats } from '../provider/EventStats'
 
 export class VerseOfDayEditorSuggester extends EditorSuggest<VerseOfDaySuggesting> {
@@ -60,8 +61,20 @@ export class VerseOfDayEditorSuggester extends EditorSuggest<VerseOfDaySuggestin
     editor: Editor,
     file: TFile
   ): EditorSuggestTriggerInfo | null {
+    // this variable holds the full query content, in this case --vod or ++vod
     const currentContent = editor.getLine(cursor.line).substring(0, cursor.ch)
-    if (currentContent === '--vod') {
+
+    // get first 2 characters
+    if (currentContent.length < 2) {
+      return null
+    }
+    const prefixTrigger = currentContent.substring(0, 2)
+    if (!matchTriggerPrefix(prefixTrigger)) {
+      return null
+    }
+    const queryContent = currentContent.substring(2) // remove the trigger prefix
+
+    if (queryContent === 'vod') {
       EventStats.logUIOpen(
         'vodEditorOpen',
         { key: `${this.settings.bibleVersion}-vod`, value: 1 },
@@ -71,9 +84,9 @@ export class VerseOfDayEditorSuggester extends EditorSuggest<VerseOfDaySuggestin
         end: cursor,
         start: {
           line: cursor.line,
-          ch: currentContent.lastIndexOf('--vod'),
+          ch: currentContent.lastIndexOf(currentContent),
         },
-        query: '--vod',
+        query: currentContent,
       }
     }
     return null
