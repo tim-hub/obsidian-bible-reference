@@ -87,6 +87,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/dbergan"><img src="https://avatars.githubusercontent.com/u/6843811?v=4?s=65" width="65px;" alt="David Bergan"/><br /><sub><b>David Bergan</b></sub></a><br /><a href="#financial-dbergan" title="Financial">💵</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Benedictteo05"><img src="https://avatars.githubusercontent.com/u/75201951?v=4?s=65" width="65px;" alt="Benedictteo05"/><br /><sub><b>Benedictteo05</b></sub></a><br /><a href="https://github.com/tim-hub/obsidian-bible-reference/commits?author=Benedictteo05" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://jphjsoares.github.io/"><img src="https://avatars.githubusercontent.com/u/24354644?v=4?s=65" width="65px;" alt="José Soares"/><br /><sub><b>José Soares</b></sub></a><br /><a href="https://github.com/tim-hub/obsidian-bible-reference/commits?author=jphjsoares" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/wrichert"><img src="https://avatars.githubusercontent.com/u/970921?v=4?s=65" width="65px;" alt="Willi Richert"/><br /><sub><b>Willi Richert</b></sub></a><br /><a href="https://github.com/tim-hub/obsidian-bible-reference/commits?author=wrichert" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
