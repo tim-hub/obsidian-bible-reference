@@ -55,17 +55,16 @@ export abstract class BaseVerseFormatter {
     }
     this.verses.forEach((verse, index) => {
       let singleVerseText = verse.text.trim()
-      if (
-      index === this.verses!.length - 1 &&
-      singleVerseText.endsWith('<br/>') // Remove the last <br/> tag that appears in LSB verses.
-      ) {
-      singleVerseText = singleVerseText.slice(0, -5)
+      if (index === this.verses!.length - 1 && singleVerseText.endsWith('<br/>')) {
+        // Remove the last <br/> tag that appears in LSB verses.
+        singleVerseText = singleVerseText.slice(0, -5)
       }
       const verseNumberFormatted = this.formatVerseNumber(verse.verse)
       if (this.settings?.verseFormatting === BibleVerseFormat.Paragraph) {
         text += ' ' + verseNumberFormatted + singleVerseText.replaceAll('\n', ' ')
       } else {
-        text += '> ' + verseNumberFormatted + singleVerseText.replace(/\r\n|\n|\r/g, ' ') + '\n' // Remove extraneous line breaks in KJV verses.
+        text += '> ' + verseNumberFormatted + singleVerseText.replace(/\r\n|\n|\r/g, ' ') + '\n' 
+        // Remove extraneous line breaks in KJV verses.
       }
     })
     console.debug('text', text)
