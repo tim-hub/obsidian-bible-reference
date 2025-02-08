@@ -11,10 +11,10 @@ export enum BibleVerseNumberFormat {
 }
 
 export const BibleVerseNumberFormatCollection = [
-  {
-    name: BibleVerseNumberFormat.Period,
-    description: '1. ',
-  },
+  // {
+  //   name: BibleVerseNumberFormat.Period,
+  //   description: '1. ',
+  // },
   {
     name: BibleVerseNumberFormat.PeriodParenthesis,
     description: '1.) ',
