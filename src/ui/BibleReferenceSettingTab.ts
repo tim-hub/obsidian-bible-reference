@@ -23,6 +23,10 @@ import {
   BibleVerseNumberFormat,
   BibleVerseNumberFormatCollection,
 } from '../data/BibleVerseNumberFormat'
+import {
+  CollapsibleVerses,
+  CollapsibleVersesCollection,
+} from '../data/CollapsibleVerses'
 import { BibleAPISourceCollection } from '../data/BibleApiSourceCollection'
 import { EventStats } from '../provider/EventStats'
 import {
@@ -61,7 +65,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     this.setUpVerseFormatOptions()
     this.setUpVerseNumberFormatOptions()
     this.setUpBibleIconPrefixToggle()
-    this.setUpCollapsibleToggle()
+    this.setUpCollapsibleOptions()
     this.setUpStatusIndicationOptions()
     this.containerEl.createEl('h2', { text: 'Others' })
     this.setUpExpertSettings()
@@ -422,28 +426,27 @@ Obsidian Bible Reference  is proudly powered by
       })
   }
 
-  private setUpCollapsibleToggle(): void {
-    const setting = new Setting(this.containerEl)
+  private setUpCollapsibleOptions(): void {
+    new Setting(this.containerEl)
       .setName('Make Verses Collapsible *')
-      .setDesc(
-        'Make the rendered verses collapsible, (This option will be disabled if Bible Icon Prefix option above is disabled)'
-      )
-    setting.setTooltip(
-      "This will make the rendered verses collapsible, so that you can hide them when you don't need them"
-    )
-    setting.addToggle((toggle) => {
-      if (!this.plugin.settings?.displayBibleIconPrefixAtHeader) {
-        toggle.setDisabled(true)
-        toggle.setTooltip('')
-      }
-      toggle
-        .setValue(!!this.plugin.settings?.collapsibleVerses)
+      .setDesc('Set how the rendered verses collapse, (This option will be disabled if Bible Icon Prefix option above is disabled)')
+      .setTooltip("'+' will make the callout be expanded on default. '-' will make the callout be collapsed by default. 'None' removes that options entirely")
+    .addDropdown((dropdown: DropdownComponent) => {
+      CollapsibleVersesCollection.forEach(({ name, description }) => {
+        dropdown.addOption(name, description)
+      })
+      dropdown
+        .setValue(
+          this.plugin.settings.collapsibleVerses ?? CollapsibleVerses.Plus
+        )
         .onChange(async (value) => {
-          this.plugin.settings.collapsibleVerses = value
+          this.plugin.settings.collapsibleVerses = value as CollapsibleVerses
+          console.debug('Bible Verse Collapsible To: ' + value)
           await this.plugin.saveSettings()
+          new Notice('Bible Verse Collapsible Settings Updated')
           EventStats.logSettingChange(
             'changeVerseFormatting',
-            { key: `collapsible-${value}`, value: 1 },
+            { key: `collapsible-verses-${value}`, value: 1 },
             this.plugin.settings.optOutToEvents
           )
         })
@@ -463,7 +466,7 @@ Obsidian Bible Reference  is proudly powered by
             this.plugin.settings.displayBibleIconPrefixAtHeader = value
             await this.plugin.saveSettings()
             if (!value) {
-              this.plugin.settings.collapsibleVerses = false
+              this.plugin.settings.collapsibleVerses = CollapsibleVerses.None
               await this.plugin.saveSettings()
             }
             pluginEvent.trigger('bible-reference:settings:re-render', [])
