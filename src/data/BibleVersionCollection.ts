@@ -511,6 +511,25 @@ export const BibleVersionCollectionTamil = [
   },
 ]
 
+export const BibleVersionCollectionHindi = [
+  {
+    kye: 'hiov',
+    versionName: 'Hindi O.V. - Re-edited (BSI)',
+    language: 'Hindi',
+    apiSource: BibleAPISourceCollection.bollsLife,
+  },
+]
+
+// malayalam
+export const BibleVersionCollectionMalayalam = [
+  {
+    key: 'mov',
+    versionName: 'സത്യവേദപുസ്തകം O.V.',
+    language: 'Malayalam',
+    apiSource: BibleAPISourceCollection.bollsLife,
+  },
+]
+
 /**
  * Please note to support the abbreviation of the translation
  * "code" need to be added
@@ -526,9 +545,11 @@ export const BibleVersionCollection: IBibleVersion[] = [
   ...BibleVersionCollectionGerman,
   ...BibleVersionCollectionGreek,
   ...BibleVersionCollectionHebrew,
+  ...BibleVersionCollectionHindi,
   ...BibleVersionCollectionIndonesian,
   ...BibleVersionCollectionItalian,
   ...BibleVersionCollectionLatin,
+  ...BibleVersionCollectionMalayalam,
   ...BibleVersionCollectionPolish,
   ...BibleVersionCollectionPortuguese,
   ...BibleVersionCollectionRomanian,
