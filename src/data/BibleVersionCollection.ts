@@ -363,6 +363,20 @@ export const BibleVersionCollectionChinese = [
     code: 'cn',
     apiSource: BibleAPISourceCollection.bollsLife,
   },
+  {
+    key: 'pcb',
+    versionName: 'Peking Committee Bible, 1899',
+    language: 'Chinese',
+    code: 'cn',
+    apiSource: BibleAPISourceCollection.bollsLife,
+  },
+  {
+    key: 'pcbs',
+    versionName: 'Peking Committee Bible, 1899 (Simplified)',
+    language: 'Chinese',
+    code: 'cn',
+    apiSource: BibleAPISourceCollection.bollsLife,
+  },
 ]
 
 export const BibleVersionCollectionItalian = [
