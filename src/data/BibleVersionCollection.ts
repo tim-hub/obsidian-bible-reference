@@ -513,7 +513,7 @@ export const BibleVersionCollectionTamil = [
 
 export const BibleVersionCollectionHindi = [
   {
-    kye: 'hiov',
+    key: 'hiov',
     versionName: 'Hindi O.V. - Re-edited (BSI)',
     language: 'Hindi',
     apiSource: BibleAPISourceCollection.bollsLife,

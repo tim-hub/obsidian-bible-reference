@@ -32,6 +32,15 @@ import {
 } from '../data/constants'
 import { pluginEvent } from '../obsidian/PluginEvent'
 
+function escapeHtml(unsafe: string) {
+  return unsafe
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;')
+}
+
 export class BibleReferenceSettingTab extends PluginSettingTab {
   private plugin: BibleReferencePlugin
   private expertSettingContainer?: HTMLElement
@@ -232,7 +241,11 @@ Obsidian Bible Reference  is proudly powered by
         allAvailableVersionOptions.forEach((version: IBibleVersion) => {
           dropdown.addOption(
             version.key,
-            `${version.language} - ${version.versionName} @${version.apiSource.name}`
+            escapeHtml(
+              `${version.language} - (${version.key.toUpperCase()}) - ${
+                version.versionName
+              } @${version.apiSource.name}`
+            )
           )
         })
         dropdown
