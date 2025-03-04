@@ -2,6 +2,7 @@ import { DEFAULT_BIBLE_VERSION } from './BibleVersionCollection'
 import { BibleVerseReferenceLinkPosition } from './BibleVerseReferenceLinkPosition'
 import { BibleVerseFormat } from './BibleVerseFormat'
 import { BibleVerseNumberFormat } from './BibleVerseNumberFormat'
+import { CollapsibleVerses } from './CollapsibleVerses'
 
 export const APP_NAMING = {
   appName: 'Bible Reference',
@@ -28,7 +29,7 @@ export interface BibleReferencePluginSettings {
   referenceLinkPosition?: BibleVerseReferenceLinkPosition
   verseFormatting?: BibleVerseFormat
   verseNumberFormatting?: BibleVerseNumberFormat
-  collapsibleVerses?: boolean // this is binging to displayBibleIconPrefixAtHeader option
+  collapsibleVerses?: CollapsibleVerses // this is binging to displayBibleIconPrefixAtHeader option
   enableHyperlinking?: boolean
   showVerseTranslation?: boolean
   bookTagging?: boolean
@@ -51,7 +52,7 @@ export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
   referenceLinkPosition: BibleVerseReferenceLinkPosition.Header,
   verseFormatting: BibleVerseFormat.SingleLine,
   verseNumberFormatting: BibleVerseNumberFormat.Period,
-  collapsibleVerses: false,
+  collapsibleVerses: CollapsibleVerses.Plus,
   enableHyperlinking: true,
   showVerseTranslation: true,
   bookTagging: false,
@@ -61,7 +62,7 @@ export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
   bookBacklinking: OutgoingLinkPositionEnum.None,
   chapterBacklinking: OutgoingLinkPositionEnum.None,
   bibleVersionStatusIndicator: BibleVersionNameLengthEnum.Short,
-  displayBibleIconPrefixAtHeader: true,
+  displayBibleIconPrefixAtHeader: true
 }
 
 export const API_WAITING_LABEL = 'Loading...'
