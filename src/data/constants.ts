@@ -43,6 +43,7 @@ export interface BibleReferencePluginSettings {
   advancedSettings?: boolean
   bibleVersionStatusIndicator?: BibleVersionNameLengthEnum
   displayBibleIconPrefixAtHeader?: boolean // this is binding to to header collapsible option
+  enableInternalLinking?: string
 }
 
 export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
@@ -62,6 +63,7 @@ export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
   chapterBacklinking: OutgoingLinkPositionEnum.None,
   bibleVersionStatusIndicator: BibleVersionNameLengthEnum.Short,
   displayBibleIconPrefixAtHeader: true,
+  enableInternalLinking: 'None'
 }
 
 export const API_WAITING_LABEL = 'Loading...'

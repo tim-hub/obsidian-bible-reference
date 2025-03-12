@@ -160,7 +160,6 @@ Obsidian Bible Reference  is proudly powered by
               )
             })
         )
-
       const getOutgoingLinkPosition = (
         linkingPostion: string | OutgoingLinkPositionEnum | undefined
       ) => {
@@ -211,6 +210,31 @@ Obsidian Bible Reference  is proudly powered by
             await this.plugin.saveSettings()
           })
         })
+
+      new Setting(this.expertSettingContainer)
+        .setName('Add Internal Linking to the Verse Numbers')
+        .setDesc(
+          'Choose how verse numbers should link internally to match your system. ' +
+          'Warning: Links will only work if matching notes/block IDs exist in your vault.'
+        )
+        .addDropdown((dropdown) => {
+          dropdown
+            .addOption('None', 'None')
+            .addOption('[[Book Chapter#^Verse|Verse]]', '[[John 1#^1|1]]')
+            .addOption('[[Book Chapter#Verse|Verse]]', '[[John 1#1|1]]')
+            .addOption('[[Book Chapter.Verse|Verse]]', '[[John 1.1|1]]')
+            .setValue(this.plugin.settings.internalLinkingFormat || 'None')
+            .onChange(async (value) => {
+              this.plugin.settings.internalLinkingFormat = value;
+              await this.plugin.saveSettings();
+              new Notice('Internal Linking Format Updated');
+              EventStats.logSettingChange(
+              'changeInternalLinkingFormat',
+              { key: `internal-linking-${value}`, value: 1 },
+              this.plugin.settings.optOutToEvents
+            );
+          });
+        });
 
       this.setUpOptOutEventsOptions(this.expertSettingContainer)
     }
@@ -388,9 +412,9 @@ Obsidian Bible Reference  is proudly powered by
   private setUpHyperlinkingOptions(): void {
     const setting = new Setting(this.containerEl)
       .setName('Enable Hyperlinking')
-      .setDesc('Enable or disable hyperlinking in verses reference')
+      .setDesc('Enable or disable hyperlinking in the verses reference')
     setting.setTooltip(
-      'This will make the verse number clickable and will open the verse in the Bible app'
+      'This will make the verse number clickable and will open the passage for viewing.'
     )
     setting.addToggle((toggle) => {
       toggle
