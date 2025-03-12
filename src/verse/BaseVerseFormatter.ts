@@ -133,8 +133,14 @@ export abstract class BaseVerseFormatter {
       case BibleVerseNumberFormat.SuperScriptBold:
         verseNumberFormatted += '<sup> **' + verseNumber + '** </sup>'
         return verseNumberFormatted
+      case BibleVerseNumberFormat.SuperScriptItalic:
+        verseNumberFormatted += '<sup> *' + verseNumber + '* </sup>'
+        return verseNumberFormatted
       case BibleVerseNumberFormat.Bold:
         verseNumberFormatted += '**' + verseNumber + '** '
+        return verseNumberFormatted
+      case BibleVerseNumberFormat.Italic:
+        verseNumberFormatted += '*' + verseNumber + '* '
         return verseNumberFormatted
       case BibleVerseNumberFormat.None:
         verseNumberFormatted = ' '
