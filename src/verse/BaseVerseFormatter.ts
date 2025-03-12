@@ -109,39 +109,53 @@ export abstract class BaseVerseFormatter {
 
   protected abstract getVerseReferenceLink(): string
 
-  protected formatVerseNumber(verseNumber: number | string) {
-    let verseNumberFormatted = ''
+  protected getVerseLink(verseNumber: number): string {
+  const { bookName, chapterNumber } = this.verseReference;
+  const verseNumberLinkFormat = this.settings.internalLinkingFormat || 'None';
+  if (verseNumberLinkFormat === 'None') return '';
+  const verseNumStr = verseNumber.toString();
+  switch (verseNumberLinkFormat) {
+    case '[[Book Chapter#^Verse|Verse]]':
+      return `[[${bookName} ${chapterNumber}#^${verseNumStr}|${verseNumStr}]]`;
+    case '[[Book Chapter#Verse|Verse]]':
+      return `[[${bookName} ${chapterNumber}#${verseNumStr}|${verseNumStr}]]`;
+    case '[[Book Chapter:Verse|Verse]]':
+      return `[[${bookName} ${chapterNumber}:${verseNumStr}|${verseNumStr}]]`;
+    default:
+      return '';
+    }
+  }
+
+  protected formatVerseNumber(verseNumber: number | string): string {
+    const verseNumStr2 = verseNumber.toString();
+    const verseNumLink = this.getVerseLink(Number(verseNumber));
+    const verseNumberFormatted = verseNumLink || verseNumStr2;
+
     switch (this.settings.verseNumberFormatting) {
       case BibleVerseNumberFormat.Period:
-        verseNumberFormatted += verseNumber + '. '
-        return verseNumberFormatted
+        return verseNumberFormatted + '. ';
       case BibleVerseNumberFormat.PeriodParenthesis:
-        verseNumberFormatted += verseNumber + '.) '
-        return verseNumberFormatted
+        return verseNumberFormatted + '.) ';
       case BibleVerseNumberFormat.Parenthesis:
-        verseNumberFormatted += verseNumber + ') '
-        return verseNumberFormatted
+        return verseNumberFormatted + ') ';
       case BibleVerseNumberFormat.Dash:
-        verseNumberFormatted += verseNumber + ' - '
-        return verseNumberFormatted
+        return verseNumberFormatted + ' - ';
       case BibleVerseNumberFormat.NumberOnly:
-        verseNumberFormatted += verseNumber + ' '
-        return verseNumberFormatted
+        return verseNumberFormatted + ' ';
       case BibleVerseNumberFormat.SuperScript:
-        verseNumberFormatted += '<sup> ' + verseNumber + ' </sup>'
-        return verseNumberFormatted
+        return `<sup>${verseNumberFormatted}</sup> `;
       case BibleVerseNumberFormat.SuperScriptBold:
-        verseNumberFormatted += '<sup> **' + verseNumber + '** </sup>'
-        return verseNumberFormatted
+        return `<sup>**${verseNumberFormatted}**</sup> `;
+      case BibleVerseNumberFormat.SuperScriptItalic:
+        return `<sup>*${verseNumberFormatted}*</sup> `;
       case BibleVerseNumberFormat.Bold:
-        verseNumberFormatted += '**' + verseNumber + '** '
-        return verseNumberFormatted
+        return `**${verseNumberFormatted}** `;
+      case BibleVerseNumberFormat.Italic:
+        return `*${verseNumberFormatted}* `;
       case BibleVerseNumberFormat.None:
-        verseNumberFormatted = ' '
-        return verseNumberFormatted
+        return ' ';
       default:
-        verseNumberFormatted += verseNumber + '. '
-        return verseNumberFormatted
+        return verseNumberFormatted + '. ';
     }
   }
 }

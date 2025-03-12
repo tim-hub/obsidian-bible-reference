@@ -160,7 +160,31 @@ Obsidian Bible Reference  is proudly powered by
               )
             })
         )
-
+      new Setting(this.expertSettingContainer)
+        .setName('Add Internal Linking to the Verse Numbers')
+        .setDesc(
+          'Choose how verse numbers should link internally. ' +
+          'Warning: Links will only work if matching notes/block IDs exist in your vault.'
+        )
+        .addDropdown((dropdown) => {
+          dropdown
+            .addOption('None', 'None')
+            .addOption('[[Book Chapter#^Verse|Verse]]', '[[John 1#^1|1]]')
+            .addOption('[[Book Chapter#Verse|Verse]]', '[[John 1#1|1]]')
+            .addOption('[[Book Chapter:Verse|Verse]]', '[[John 1:1|1]]')
+            .setValue(this.plugin.settings.internalLinkingFormat || 'None')
+            .onChange(async (value) => {
+              this.plugin.settings.internalLinkingFormat = value;
+              await this.plugin.saveSettings();
+              new Notice('Internal Linking Format Updated');
+              EventStats.logSettingChange(
+              'changeInternalLinkingFormat',
+              { key: `internal-linking-${value}`, value: 1 },
+              this.plugin.settings.optOutToEvents
+            );
+          });
+          dropdown.selectEl.style.width = '200px';
+        });
       const getOutgoingLinkPosition = (
         linkingPostion: string | OutgoingLinkPositionEnum | undefined
       ) => {
