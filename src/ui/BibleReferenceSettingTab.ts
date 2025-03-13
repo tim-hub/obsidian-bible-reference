@@ -125,8 +125,8 @@ Obsidian Bible Reference  is proudly powered by
 
   private displayExpertSettings(): void {
     if (this.expertSettingContainer) {
-      this.expertSettingContainer.empty()
-      this.expertSettingContainer.createEl('h2', { text: 'Expert Settings' })
+      this.expertSettingContainer.empty();
+      this.expertSettingContainer.createEl('h2', { text: 'Expert Settings' });
 
       new Setting(this.expertSettingContainer)
         .setName('Add a Book Tag')
@@ -160,7 +160,6 @@ Obsidian Bible Reference  is proudly powered by
               )
             })
         )
-
       const getOutgoingLinkPosition = (
         linkingPostion: string | OutgoingLinkPositionEnum | undefined
       ) => {
@@ -212,7 +211,56 @@ Obsidian Bible Reference  is proudly powered by
           })
         })
 
-      this.setUpOptOutEventsOptions(this.expertSettingContainer)
+      new Setting(this.expertSettingContainer)
+        .setName('Add Internal Linking to the Verse Numbers')
+        .setDesc(
+          'Choose how verse numbers should link internally to match your system. ' +
+          'Warning: Links will only work if matching notes/block IDs exist in your vault.'
+        )
+        .addDropdown((dropdown) => {
+          dropdown
+            .addOption('None', 'None')
+            .addOption('[[Book Chapter#^Verse|Verse]]', '[[John 1#^1|1]]')
+            .addOption('[[Book Chapter#Verse|Verse]]', '[[John 1#1|1]]')
+            .addOption('[[Book Chapter.Verse|Verse]]', '[[John 1.1|1]]')
+            .setValue(this.plugin.settings.internalLinkingFormat || 'None')
+            .onChange(async (value) => {
+              this.plugin.settings.internalLinkingFormat = value;
+              await this.plugin.saveSettings();
+              new Notice('Internal Linking Format Updated');
+              EventStats.logSettingChange(
+              'changeInternalLinkingFormat',
+              { key: `internal-linking-${value}`, value: 1 },
+              this.plugin.settings.optOutToEvents
+            );
+          });
+        });
+
+      new Setting(this.expertSettingContainer)
+        .setName('BLB Reference Alternative HyperLinking')
+        .setDesc(
+          'Adding a Blue Letter Bible Version Code in the box provided, will alternatively link the Bible Reference Hyperlink to BLB instead your default version already chosen above. Note: This effects only the link itself and not the bible passage text. If an invalid code is entered, the resulting link will be broken. Also, Hyperlinking must be enabled above and using this hinders the version from being displayed for the passage text even ifyou have that option selected.'
+        )
+        .setTooltip('Please make sure the BLB Version Code is accurate')
+        .addText((text) => {
+            text
+              .setPlaceholder('e.g., KJV')
+              .setValue(this.plugin.settings.versionCodeBLB || '')
+              .onChange(async (value) => {
+                this.plugin.settings.versionCodeBLB = value;
+                await this.plugin.saveSettings();
+                new Notice(`BLB Alternative Reference Link Version Code set to: ${value}`);
+                EventStats.logSettingChange(
+                  'setVersionCodeBLB',
+                  { key: `versionCodeBLB-${value}`, value: 1 },
+                  this.plugin.settings.optOutToEvents
+                );
+              });
+            if (!this.plugin.settings.enableHyperlinking) {
+              text.setDisabled(true);
+            }
+          });
+      this.setUpOptOutEventsOptions(this.expertSettingContainer);
     }
   }
 
@@ -388,9 +436,9 @@ Obsidian Bible Reference  is proudly powered by
   private setUpHyperlinkingOptions(): void {
     const setting = new Setting(this.containerEl)
       .setName('Enable Hyperlinking')
-      .setDesc('Enable or disable hyperlinking in verses reference')
+      .setDesc('Enable or disable hyperlinking in the verses reference')
     setting.setTooltip(
-      'This will make the verse number clickable and will open the verse in the Bible app'
+      'This will make the verse number clickable and will open the passage for viewing.'
     )
     setting.addToggle((toggle) => {
       toggle
@@ -403,6 +451,7 @@ Obsidian Bible Reference  is proudly powered by
             { key: `hyperlinking-${value}`, value: 1 },
             this.plugin.settings.optOutToEvents
           )
+          pluginEvent.trigger('bible-reference:settings:re-render', []);
         })
     })
   }
