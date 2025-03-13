@@ -4,6 +4,7 @@ import { BibleVerseNumberFormat } from '../data/BibleVerseNumberFormat'
 import { VerseReference } from '../utils/splitBibleReference'
 import { BibleVerseFormat } from '../data/BibleVerseFormat'
 import { IVerse } from '../interfaces/IVerse'
+import { getBLBLink } from '../utils/referenceBLBAltLinking';
 
 export abstract class BaseVerseFormatter {
   protected settings: BibleReferencePluginSettings
@@ -88,10 +89,14 @@ export abstract class BaseVerseFormatter {
       this.settings.referenceLinkPosition ===
         BibleVerseReferenceLinkPosition.AllAbove
     ) {
-      head += this.getVerseReferenceLink()
+      // Conditional BLB link
+      if (this.settings.versionCodeBLB && this.settings.enableHyperlinking) {
+        head += getBLBLink(this.settings, this.verseReference);
+      } else {
+        head += this.getVerseReferenceLink();
+      }
     }
-
-    return head
+    return head;
   }
 
   protected get bottom(): string {
@@ -102,9 +107,15 @@ export abstract class BaseVerseFormatter {
       this.settings.referenceLinkPosition ===
         BibleVerseReferenceLinkPosition.AllAbove
     ) {
-      bottom += `> \n ${this.getVerseReferenceLink()}`
+      bottom += `> \n `;
+      // Conditional BLB link
+      if (this.settings.versionCodeBLB && this.settings.enableHyperlinking) {
+        bottom += getBLBLink(this.settings, this.verseReference);
+      } else {
+        bottom += this.getVerseReferenceLink();
+      }
     }
-    return bottom
+    return bottom;
   }
 
   protected abstract getVerseReferenceLink(): string
