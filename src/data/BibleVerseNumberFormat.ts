@@ -6,7 +6,9 @@ export enum BibleVerseNumberFormat {
   NumberOnly = '1 ',
   SuperScript = '^1',
   SuperScriptBold = '**^1**',
+  SuperScriptItalic = '*^1*',
   Bold = '**1**',
+  Italic = '*1*',
   None = 'None',
 }
 
@@ -40,8 +42,16 @@ export const BibleVerseNumberFormatCollection = [
     description: '**^1** (bolded superscript)',
   },
   {
+    name: BibleVerseNumberFormat.SuperScriptItalic,
+    description: '*^1* (italic superscript)',
+  },
+  {
     name: BibleVerseNumberFormat.Bold,
     description: '**1** (bold)',
+  },
+  {
+    name: BibleVerseNumberFormat.Italic,
+    description: '*1* (italic)',
   },
   {
     name: BibleVerseNumberFormat.None,
