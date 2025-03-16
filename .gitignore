@@ -16,3 +16,9 @@ data.json
 .DS_Store
 .eslintignore
 .stignore
+
+# Exclude NixOS-specific residue
+flake.nix
+flake.lock
+/.direnv
+.envrc
