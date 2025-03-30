@@ -65,13 +65,18 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
       return null
     }
     const queryContent = currentContent.substring(2) // remove the trigger prefix
-    const { bookVerseQuery, translationQuery } = this.getBookVerseAndTranslation(queryContent)
+    const { bookVerseQuery, translationQuery } =
+      this.getBookVerseAndTranslation(queryContent)
 
     const verseMatchResult = verseMatch(bookVerseQuery)
     const versionSelectionMatchResult = versionSelectionMatch(translationQuery)
 
     if (verseMatchResult && verseMatchResult.length > 0) {
-      if (versionSelectionMatchResult && getBibleVersion(versionSelectionMatchResult).key == versionSelectionMatchResult ) {
+      if (
+        versionSelectionMatchResult &&
+        getBibleVersion(versionSelectionMatchResult).key ==
+          versionSelectionMatchResult
+      ) {
         console.log(`set version : ${versionSelectionMatchResult}`)
         this.plugin.settings.bibleVersion = versionSelectionMatchResult // pick a version
         this.plugin.saveSettings() //todo this is an async function, so it may not be saved before the getSuggestions is called
@@ -79,7 +84,9 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
         // revert back to default version
         if (this.settings.bibleVersion != this.settings.defaultBibleVersion) {
           this.settings.bibleVersion = this.settings.defaultBibleVersion // reset to default
-          console.log(`defaultBibleVersion : ${this.settings.defaultBibleVersion}`)
+          console.log(
+            `defaultBibleVersion : ${this.settings.defaultBibleVersion}`
+          )
           this.plugin.saveSettings()
         }
       }
@@ -110,7 +117,8 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
     context: EditorSuggestContext
   ): Promise<VerseSuggesting[]> {
     console.log(`context query : ${context.query}`)
-    const { bookVerseQuery, translationQuery } = this.getBookVerseAndTranslation(context.query)
+    const { bookVerseQuery, translationQuery } =
+      this.getBookVerseAndTranslation(context.query)
 
     const suggestions = await getSuggestionsFromQuery(
       bookVerseQuery,
@@ -135,11 +143,10 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
 
   selectSuggestion(suggestion: VerseSuggesting): void {
     if (this.context) {
-      /* prettier-ignore */
-      (this.context.editor as Editor).replaceRange(
+      this.context.editor.replaceRange(
         suggestion.allFormattedContent,
         this.context.start,
-        this.context.end,
+        this.context.end
       )
     }
   }

@@ -12,7 +12,7 @@ describe('test book name reg matching in different languages', () => {
     const reg = new RegExp(TRANSLATION_VERSION_KEY_REG)
     expect(reg.test(modal)).toBe(true)
   })
-  
+
   test('should match version with numbers', () => {
     const modal = 'niv2011'
     const reg = new RegExp(TRANSLATION_VERSION_KEY_REG)
@@ -31,6 +31,3 @@ describe('test book name reg matching in different languages', () => {
     expect(reg.test(modal)).toBe(false)
   })
 })
-
-
-

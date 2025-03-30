@@ -27,5 +27,6 @@ jobs:
           version: 10 # local version is 7 but it's not supported by the action, this is why the next line we use no-frozen-lockfile
       - run: pnpm install --no-frozen-lockfile
       - run: pnpm run lint
+      - run: pnpm run prettier
       - run: pnpm run test
       - run: pnpm run build

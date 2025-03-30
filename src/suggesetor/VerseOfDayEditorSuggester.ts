@@ -102,8 +102,7 @@ export class VerseOfDayEditorSuggester extends EditorSuggest<VerseOfDaySuggestin
     evt: MouseEvent | KeyboardEvent
   ): void {
     if (this.context) {
-      /* prettier-ignore */
-      (this.context.editor as Editor).replaceRange(
+      this.context.editor.replaceRange(
         suggestion.allFormattedContent,
         this.context.start,
         this.context.end

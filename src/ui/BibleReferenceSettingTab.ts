@@ -125,8 +125,8 @@ Obsidian Bible Reference  is proudly powered by
 
   private displayExpertSettings(): void {
     if (this.expertSettingContainer) {
-      this.expertSettingContainer.empty();
-      this.expertSettingContainer.createEl('h2', { text: 'Expert Settings' });
+      this.expertSettingContainer.empty()
+      this.expertSettingContainer.createEl('h2', { text: 'Expert Settings' })
 
       new Setting(this.expertSettingContainer)
         .setName('Add a Book Tag')
@@ -223,24 +223,24 @@ Obsidian Bible Reference  is proudly powered by
         )
         .setTooltip('Please make sure the BLB Version Code is accurate')
         .addText((text) => {
-            text
-              .setPlaceholder('e.g., KJV')
-              .setValue(this.plugin.settings.versionCodeBLB || '')
-              .onChange(async (value) => {
-                this.plugin.settings.versionCodeBLB = value;
-                await this.plugin.saveSettings();
-                // new Notice(`Use ${value} for Blue Letter Bible Reference Hyperlinking`);
-                EventStats.logSettingChange(
-                  'setVersionCodeBLB',
-                  { key: `versionCodeBLB-${value}`, value: 1 },
-                  this.plugin.settings.optOutToEvents
-                );
-              });
-            if (!this.plugin.settings.enableHyperlinking) {
-              text.setDisabled(true);
-            }
-          });
-      this.setUpOptOutEventsOptions(this.expertSettingContainer);
+          text
+            .setPlaceholder('e.g., KJV')
+            .setValue(this.plugin.settings.versionCodeBLB || '')
+            .onChange(async (value) => {
+              this.plugin.settings.versionCodeBLB = value
+              await this.plugin.saveSettings()
+              // new Notice(`Use ${value} for Blue Letter Bible Reference Hyperlinking`);
+              EventStats.logSettingChange(
+                'setVersionCodeBLB',
+                { key: `versionCodeBLB-${value}`, value: 1 },
+                this.plugin.settings.optOutToEvents
+              )
+            })
+          if (!this.plugin.settings.enableHyperlinking) {
+            text.setDisabled(true)
+          }
+        })
+      this.setUpOptOutEventsOptions(this.expertSettingContainer)
     }
   }
 
@@ -431,7 +431,7 @@ Obsidian Bible Reference  is proudly powered by
             { key: `hyperlinking-${value}`, value: 1 },
             this.plugin.settings.optOutToEvents
           )
-          pluginEvent.trigger('bible-reference:settings:re-render', []);
+          pluginEvent.trigger('bible-reference:settings:re-render', [])
         })
     })
   }

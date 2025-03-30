@@ -5,7 +5,9 @@ import { TRANSLATION_VERSION_KEY_REG } from './regs'
  * @param verseWithVersionAtEnd without the prefix trigger --
  * @returns string the same string if it match
  */
-export const versionSelectionMatch = (verseWithVersionAtEnd: string): string => {
+export const versionSelectionMatch = (
+  verseWithVersionAtEnd: string
+): string => {
   if (verseWithVersionAtEnd.length < 3) {
     return ''
   }

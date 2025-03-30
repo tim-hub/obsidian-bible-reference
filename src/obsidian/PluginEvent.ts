@@ -16,7 +16,11 @@ export class PluginEvent extends Events {
     return PluginEvent.instance
   }
 
-  on(name: string, callback: (...data: never) => never|void, ctx?: never): EventRef {
+  on(
+    name: string,
+    callback: (...data: never) => never | void,
+    ctx?: never
+  ): EventRef {
     const ref = super.on(name, callback, ctx)
     this.refs.push(ref)
     return ref

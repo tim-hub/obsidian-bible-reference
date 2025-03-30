@@ -70,7 +70,7 @@ export class BollyLifeProvider extends BaseBibleAPIProvider {
             book_id: verse.book,
             book_name: bookName, // this might be different than user typed
             verse: verse.verse,
-          } as IVerse)
+          }) as IVerse
       )
   }
 }

@@ -1,4 +1,4 @@
-import { BOOK_REG, BOOK_VERSE_REG, } from './regs'
+import { BOOK_REG, BOOK_VERSE_REG } from './regs'
 
 describe('test book name reg matching in different languages', () => {
   test('should match book name in English', () => {

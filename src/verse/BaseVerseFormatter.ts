@@ -4,7 +4,7 @@ import { BibleVerseNumberFormat } from '../data/BibleVerseNumberFormat'
 import { VerseReference } from '../utils/splitBibleReference'
 import { BibleVerseFormat } from '../data/BibleVerseFormat'
 import { IVerse } from '../interfaces/IVerse'
-import { getBLBLink } from '../utils/referenceBLBAltLinking';
+import { getBLBLink } from '../utils/referenceBLBAltLinking'
 
 export abstract class BaseVerseFormatter {
   protected settings: BibleReferencePluginSettings
@@ -56,15 +56,23 @@ export abstract class BaseVerseFormatter {
     }
     this.verses.forEach((verse, index) => {
       let singleVerseText = verse.text.trim()
-      if (index === this.verses!.length - 1 && singleVerseText.endsWith('<br/>')) {
+      if (
+        index === this.verses!.length - 1 &&
+        singleVerseText.endsWith('<br/>')
+      ) {
         // Remove the last <br/> tag that appears in LSB verses.
         singleVerseText = singleVerseText.slice(0, -5)
       }
       const verseNumberFormatted = this.formatVerseNumber(verse.verse)
       if (this.settings?.verseFormatting === BibleVerseFormat.Paragraph) {
-        text += ' ' + verseNumberFormatted + singleVerseText.replaceAll('\n', ' ')
+        text +=
+          ' ' + verseNumberFormatted + singleVerseText.replaceAll('\n', ' ')
       } else {
-        text += '> ' + verseNumberFormatted + singleVerseText.replace(/\r\n|\n|\r/g, ' ') + '\n' 
+        text +=
+          '> ' +
+          verseNumberFormatted +
+          singleVerseText.replace(/\r\n|\n|\r/g, ' ') +
+          '\n'
         // Remove extraneous line breaks in KJV verses.
       }
     })
@@ -91,12 +99,12 @@ export abstract class BaseVerseFormatter {
     ) {
       // Conditional BLB link
       if (this.settings.versionCodeBLB && this.settings.enableHyperlinking) {
-        head += getBLBLink(this.settings, this.verseReference);
+        head += getBLBLink(this.settings, this.verseReference)
       } else {
-        head += this.getVerseReferenceLink();
+        head += this.getVerseReferenceLink()
       }
     }
-    return head;
+    return head
   }
 
   protected get bottom(): string {
@@ -107,15 +115,15 @@ export abstract class BaseVerseFormatter {
       this.settings.referenceLinkPosition ===
         BibleVerseReferenceLinkPosition.AllAbove
     ) {
-      bottom += `> \n `;
+      bottom += `> \n `
       // Conditional BLB link
       if (this.settings.versionCodeBLB && this.settings.enableHyperlinking) {
-        bottom += getBLBLink(this.settings, this.verseReference);
+        bottom += getBLBLink(this.settings, this.verseReference)
       } else {
-        bottom += this.getVerseReferenceLink();
+        bottom += this.getVerseReferenceLink()
       }
     }
-    return bottom;
+    return bottom
   }
 
   protected abstract getVerseReferenceLink(): string

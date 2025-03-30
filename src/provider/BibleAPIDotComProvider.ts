@@ -26,8 +26,8 @@ export class BibleAPIDotComProvider extends BaseBibleAPIProvider {
       versionName
         ? versionName
         : this?.BibleVersionKey
-        ? this.BibleVersionKey
-        : ''
+          ? this.BibleVersionKey
+          : ''
     }`
 
     // setup the bible gateway url
