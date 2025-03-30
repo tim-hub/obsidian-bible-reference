@@ -1,4 +1,4 @@
-import { Events, EventRef } from 'obsidian'
+import { EventRef, Events } from 'obsidian'
 
 // ref this article https://shbgm.ca/blog/obsidian/plugin-development/custom-events
 export class PluginEvent extends Events {
@@ -16,7 +16,7 @@ export class PluginEvent extends Events {
     return PluginEvent.instance
   }
 
-  on(name: string, callback: (...data: any) => any, ctx?: any): EventRef {
+  on(name: string, callback: (...data: never) => never|void, ctx?: never): EventRef {
     const ref = super.on(name, callback, ctx)
     this.refs.push(ref)
     return ref

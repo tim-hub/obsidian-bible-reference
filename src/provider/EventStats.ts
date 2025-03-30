@@ -29,6 +29,7 @@ const EVENTS = {
   // changeChapterTagging: '',
 
   errors: '0d3fad56-4293-4691-b810-9a32cd1f6117',
+  setVersionCodeBLB: '0d3fad56-4293-4691-b810-9a32cd1f6118',
 }
 
 type VerseLookUp = 'verseLookUp' | 'vodLookUp'
@@ -38,7 +39,11 @@ type UIOpen =
   | 'vodEditorOpen'
   | 'lookupEditorOpen'
   | 'lookupModalOpen'
-type SettingChange = 'changeVersion' | 'changeVerseFormatting' | 'others'
+type SettingChange =
+  | 'changeVersion'
+  | 'changeVerseFormatting'
+  | 'others'
+  | 'setVersionCodeBLB'
 type EventsKeys = keyof typeof EVENTS
 type EventsValues = (typeof EVENTS)[EventsKeys]
 

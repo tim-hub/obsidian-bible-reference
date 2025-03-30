@@ -161,13 +161,17 @@ Obsidian Bible Reference  is proudly powered by
             })
         )
 
+      /**
+       * Function to get the outgoing link position to stay compatible with the old version
+       * @param linkingPosition
+       */
       const getOutgoingLinkPosition = (
-        linkingPostion: string | OutgoingLinkPositionEnum | undefined
+        linkingPosition: string | OutgoingLinkPositionEnum | undefined | boolean
       ) => {
-        let value = linkingPostion
+        let value = linkingPosition
         if (!value) {
           value = OutgoingLinkPositionEnum.None
-        } else if ((value as any) === true) {
+        } else if (value === true) {
           value = OutgoingLinkPositionEnum.Header
         }
         // otherwise no change

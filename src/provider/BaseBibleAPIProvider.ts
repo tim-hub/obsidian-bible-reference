@@ -164,7 +164,12 @@ export abstract class BaseBibleAPIProvider {
    * @param versionName
    */
   protected abstract formatBibleVerses(
-    data: any,
+    data:
+      | {
+          reference: string
+          verses: IVerse[]
+        }
+      | Array<object>,
     bookName: string,
     chapter: number,
     verse: number[],

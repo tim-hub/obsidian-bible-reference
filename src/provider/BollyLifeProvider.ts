@@ -42,7 +42,7 @@ export class BollyLifeProvider extends BaseBibleAPIProvider {
    * @returns {Promise<IVerse[]>}
    */
   protected formatBibleVerses(
-    data: any,
+    data: Array<object>,
     bookName: string,
     chapter: number,
     verses: number[],
@@ -53,16 +53,24 @@ export class BollyLifeProvider extends BaseBibleAPIProvider {
     }`
 
     return data
-      .filter(
+      ?.filter(
         (verse: { verse: number }) =>
           verse.verse >= verses[0] && verse.verse <= verses[verses.length - 1]
       )
-      .map((verse: { text: any; chapter: any; book: any; verse: any }) => ({
-        text: verse.text,
-        chapter: verse.chapter,
-        book_id: verse.book,
-        book_name: bookName, // this might be different than user typed
-        verse: verse.verse,
-      }))
+      .map(
+        (verse: {
+          text: string
+          chapter: number
+          book: string
+          verse: number
+        }) =>
+          ({
+            text: verse.text,
+            chapter: verse.chapter,
+            book_id: verse.book,
+            book_name: bookName, // this might be different than user typed
+            verse: verse.verse,
+          } as IVerse)
+      )
   }
 }

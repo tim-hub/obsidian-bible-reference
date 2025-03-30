@@ -72,7 +72,10 @@ export class BibleAPIDotComProvider extends BaseBibleAPIProvider {
    * - translation_note
    * @returns {Promise<IVerse[]>}
    */
-  protected formatBibleVerses(data: any): IVerse[] {
+  protected formatBibleVerses(data: {
+    reference: string
+    verses: IVerse[]
+  }): IVerse[] {
     this._bibleReferenceHead = data.reference
     return data.verses
   }
