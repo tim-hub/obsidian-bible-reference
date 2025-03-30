@@ -219,7 +219,7 @@ Obsidian Bible Reference  is proudly powered by
       new Setting(this.expertSettingContainer)
         .setName('BLB Reference Alternative HyperLinking')
         .setDesc(
-          'Adding a Blue Letter Bible Version Code in the box provided, will alternatively link the Bible Reference Hyperlink to BLB instead your default version already chosen above. Note: This effects only the link itself and not the bible passage text. If an invalid code is entered, the resulting link will be broken. Also, Hyperlinking must be enabled above and using this hinders the version from being displayed for the passage text even ifyou have that option selected.'
+          'Enter a Blue Letter Bible Version Code to link Bible references to BLB. This affects only the link, not the text, and hides the version display. Invalid codes break the link.'
         )
         .setTooltip('Please make sure the BLB Version Code is accurate')
         .addText((text) => {
@@ -229,7 +229,7 @@ Obsidian Bible Reference  is proudly powered by
               .onChange(async (value) => {
                 this.plugin.settings.versionCodeBLB = value;
                 await this.plugin.saveSettings();
-                new Notice(`BLB Alternative Reference Link Version Code set to: ${value}`);
+                // new Notice(`Use ${value} for Blue Letter Bible Reference Hyperlinking`);
                 EventStats.logSettingChange(
                   'setVersionCodeBLB',
                   { key: `versionCodeBLB-${value}`, value: 1 },
