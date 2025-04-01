@@ -35,6 +35,7 @@ export interface BibleReferencePluginSettings {
   chapterTagging?: boolean
   bookBacklinking?: OutgoingLinkPositionEnum // this is refering to outgoing link
   chapterBacklinking?: OutgoingLinkPositionEnum // this is refering to outgoing link
+  internalLinkingFormat: string // this is refering to internal link
   versionCodeBLB: string
 
   // add this to ui at some point todo
@@ -44,6 +45,7 @@ export interface BibleReferencePluginSettings {
   advancedSettings?: boolean
   bibleVersionStatusIndicator?: BibleVersionNameLengthEnum
   displayBibleIconPrefixAtHeader?: boolean // this is binding to to header collapsible option
+  enableInternalLinking?: string
 }
 
 export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
@@ -63,6 +65,8 @@ export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
   chapterBacklinking: OutgoingLinkPositionEnum.None,
   bibleVersionStatusIndicator: BibleVersionNameLengthEnum.Short,
   displayBibleIconPrefixAtHeader: true,
+  internalLinkingFormat: 'None',
+  enableInternalLinking: 'None',
   versionCodeBLB: '',
 }
 

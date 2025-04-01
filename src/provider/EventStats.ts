@@ -30,6 +30,7 @@ const EVENTS = {
 
   errors: '0d3fad56-4293-4691-b810-9a32cd1f6117',
   setVersionCodeBLB: '0d3fad56-4293-4691-b810-9a32cd1f6118',
+  changeInternalLinkingFormat: '1236fb13-bbd3-4797-8e8d-e317fc0ad22c', // via npx uuid
 }
 
 type VerseLookUp = 'verseLookUp' | 'vodLookUp'
@@ -44,6 +45,7 @@ type SettingChange =
   | 'changeVerseFormatting'
   | 'others'
   | 'setVersionCodeBLB'
+  | 'changeInternalLinkingFormat'
 type EventsKeys = keyof typeof EVENTS
 type EventsValues = (typeof EVENTS)[EventsKeys]
 
