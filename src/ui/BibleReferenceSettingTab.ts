@@ -57,6 +57,14 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     headingSection.innerHTML = `
         <iframe src="https://github.com/sponsors/tim-hub/button" title="Sponsor Obsidian Bible Reference" width="116" height="32px" class="sponsor-button"/>
     `
+    const secondSponsor = this.containerEl.createEl('i')
+    secondSponsor.innerHTML = `
+         If you trade stocks and want to support us, please consider use 
+         <a href="https://tradeinsight.info?ref=obsidian-bible-reference">
+            <img src="https://tradeinsight.info/_next/static/media/pelosi_trade_logo.ce6c1779.svg" alt="Antioch Tech logo" class="logo"> TradeInsight.info
+        </a>, 
+        it is another project from us.
+    `
 
     this.containerEl.createEl('h1', { text: APP_NAMING.appName })
     this.setUpVersionSettingsAndVersionOptions()
