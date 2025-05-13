@@ -530,6 +530,21 @@ export const BibleVersionCollectionMalayalam = [
   },
 ]
 
+export const BibleVersionCollectionDutch = [
+  {
+    key: 'hsv17',
+    versionName: 'Herziene Statenvertaling 2017',
+    language: 'Dutch',
+    apiSource: BibleAPISourceCollection.bollsLife,
+  },
+  {
+    key: 'svrj',
+    versionName: 'Statenvertaling',
+    language: 'Dutch',
+    apiSource: BibleAPISourceCollection.bollsLife,
+  },
+]
+
 /**
  * Please note to support the abbreviation of the translation
  * "code" need to be added
@@ -539,6 +554,7 @@ export const BibleVersionCollection: IBibleVersion[] = [
   ...BibleVersionCollectionArabic,
   ...BibleVersionCollectionCherokee,
   ...BibleVersionCollectionChinese,
+  ...BibleVersionCollectionDutch,
   ...BibleVersionCollectionEnglish,
   ...BibleVersionCollectionEnglishUK,
   ...BibleVersionCollectionFrench,
