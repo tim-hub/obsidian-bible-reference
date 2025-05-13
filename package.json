@@ -1,6 +1,6 @@
 {
   "name": "obsidian-bible-reference",
-  "version": "25.04.26",
+  "version": "25.05.13",
   "description": "Taking Bible Study note in Obsidian.md application easily. Automatically suggesting Bible Verses as references. ",
   "main": "main.js",
   "scripts": {
@@ -17,10 +17,14 @@
   },
   "keywords": [
     "bible",
+    "bible reference",
+    "bible notes",
     "bible study",
+    "theology study",
     "obsidian",
     "obsidian.md",
-    "obsidian plugin"
+    "obsidian plugin",
+    "obsidian bible"
   ],
   "author": "tim-hub",
   "license": "MIT",
