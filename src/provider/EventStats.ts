@@ -31,6 +31,7 @@ const EVENTS = {
   errors: '0d3fad56-4293-4691-b810-9a32cd1f6117',
   setVersionCodeBLB: '0d3fad56-4293-4691-b810-9a32cd1f6118',
   changeInternalLinkingFormat: '1236fb13-bbd3-4797-8e8d-e317fc0ad22c', // via npx uuid
+  changeUseLogosBibleUri: 'c3692d4a-18b8-403b-a442-7c8d2a6e9a0f', // via npx uuid
 }
 
 type VerseLookUp = 'verseLookUp' | 'vodLookUp'
@@ -46,6 +47,7 @@ type SettingChange =
   | 'others'
   | 'setVersionCodeBLB'
   | 'changeInternalLinkingFormat'
+  | 'changeUseLogosBibleUri'
 type EventsKeys = keyof typeof EVENTS
 type EventsValues = (typeof EVENTS)[EventsKeys]
 

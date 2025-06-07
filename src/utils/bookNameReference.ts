@@ -1,28 +1,18 @@
-import Reference from 'bible-reference-toolkit'
+import { bcv_parser } from 'bible-passage-reference-parser';
 
-export const getBookIdFromBookName = (
-  bookName: string,
-  languageCode: string = 'en'
-): number => {
-  try {
-    console.debug('get book id first time', bookName, languageCode)
-    return Reference.bookIdFromTranslationAndName(languageCode, bookName)
-  } catch (e) {
-    // try in slow but in all supported languages
-    console.debug('get book id from all translations', bookName)
-    return Reference.bookIdFromName(bookName)
-  }
-}
+const bcv = new bcv_parser();
 
-export const getFullBookName = (
-  name: string,
-  languageCode: string = 'en'
-): string => {
-  console.debug('getFullBookName', name, languageCode)
-  const bookId = getBookIdFromBookName(name, languageCode)
-  try {
-    return Reference.bookNameFromTranslationAndId(languageCode, bookId)
-  } catch (e) {
-    return Reference.bookEnglishFullNameFromId(bookId)
+bcv.set_options({
+  book_alone_strategy: 'full',
+  book_sequence_strategy: 'include',
+});
+
+export const getBookOsis = (bookName: string): string => {
+  const parsed = bcv.parse(bookName).osis();
+  // The osis output might be something like "Gen.1" if only "Genesis" is passed in.
+  // We only want the book part.
+  if (parsed.includes('.')) {
+    return parsed.split('.')[0];
   }
-}
+  return parsed;
+};

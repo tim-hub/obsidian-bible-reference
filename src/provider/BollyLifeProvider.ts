@@ -1,17 +1,35 @@
 import { IVerse } from '../interfaces/IVerse'
 import { IBibleVersion } from '../interfaces/IBibleVersion'
 import { BaseBibleAPIProvider } from './BaseBibleAPIProvider'
-import { getBookIdFromBookName } from '../utils/bookNameReference'
+import { getBookOsis } from '../utils/bookNameReference'
+import { BibleReferencePluginSettings } from '../data/constants'
 
 export class BollyLifeProvider extends BaseBibleAPIProvider {
   //private _verseApiUrl: string; // we do not support get verse api yet, but the api supported it
   private _chapterApiUrl: string
+  private settings: BibleReferencePluginSettings
+  private bookOsis: string
+  private chapter: number
+  private verses: number[]
 
-  public constructor(bibleVersion: IBibleVersion) {
+  public constructor(
+    bibleVersion: IBibleVersion,
+    settings: BibleReferencePluginSettings
+  ) {
     super(bibleVersion)
+    this.settings = settings
     //this._verseApiUrl = `${this._apiUrl}/get-paralel-verses/`;
     //this._chapterApiUrl = `${this._apiUrl}/get-chapter/`;
     this._chapterApiUrl = this._apiUrl
+  }
+
+  public get VerseLinkURL(): string {
+    if (this.settings.useLogosBibleUri) {
+      const chapter = this.chapter
+      const verses = this.verses.join('-')
+      return `https://ref.ly/logosres/${this.BibleVersionKey}?ref=Bible%20${this.BibleVersionKey}.${this.bookOsis}%20${chapter}.${verses}`
+    }
+    return this.prepareVerseLinkUrl()
   }
 
   protected prepareVerseLinkUrl(): string {
@@ -25,8 +43,9 @@ export class BollyLifeProvider extends BaseBibleAPIProvider {
     versionName?: string
   ): string {
     const baseUrl = this._chapterApiUrl
-    const bookId = getBookIdFromBookName(bookName, this._bibleVersion.code)
-    this._currentQueryUrl = `${baseUrl}/${versionName?.toUpperCase()}/${bookId}/${chapter}/`
+    this.bookOsis = getBookOsis(bookName)
+    // bolls.life API uses the OSIS book name for its URL
+    this._currentQueryUrl = `${baseUrl}/${versionName?.toUpperCase()}/${this.bookOsis}/${chapter}/`
     // if build bible gateway url here, the VerseLinkURL will be different
     return this._currentQueryUrl
   }
@@ -51,6 +70,8 @@ export class BollyLifeProvider extends BaseBibleAPIProvider {
     this._bibleReferenceHead = `${bookName} ${chapter}:${verses[0]}${
       verses[1] ? `-${verses[1]}` : ''
     }`
+    this.chapter = chapter
+    this.verses = verses
 
     return data
       ?.filter(
@@ -68,7 +89,7 @@ export class BollyLifeProvider extends BaseBibleAPIProvider {
             text: verse.text,
             chapter: verse.chapter,
             book_id: verse.book,
-            book_name: bookName, // this might be different than user typed
+            book_name: bookName,
             verse: verse.verse,
           }) as IVerse
       )

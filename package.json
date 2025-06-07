@@ -78,6 +78,6 @@
   },
   "dependencies": {
     "ackee-tracker": "5.1.0",
-    "bible-reference-toolkit": "^2.3.6"
+    "bible-passage-reference-parser": "^3.0.0"
   }
 }

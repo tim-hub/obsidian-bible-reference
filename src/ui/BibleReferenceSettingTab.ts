@@ -243,11 +243,13 @@ Obsidian Bible Reference  is proudly powered by
                 { key: `versionCodeBLB-${value}`, value: 1 },
                 this.plugin.settings.optOutToEvents
               )
+              if (!this.plugin.settings.enableHyperlinking) {
+                text.setDisabled(true)
+              }
             })
-          if (!this.plugin.settings.enableHyperlinking) {
-            text.setDisabled(true)
-          }
         })
+
+      this.setUpUseLogosBibleUri()
 
       new Setting(this.expertSettingContainer)
         .setName('Add Internal Linking to the Verse Numbers')
@@ -275,6 +277,30 @@ Obsidian Bible Reference  is proudly powered by
         })
       this.setUpOptOutEventsOptions(this.expertSettingContainer)
     }
+  }
+
+  private setUpUseLogosBibleUri(): void {
+    if (!this.expertSettingContainer) {
+      return
+    }
+    new Setting(this.expertSettingContainer)
+      .setName('Use Logos Bible URI')
+      .setDesc(
+        'Use Logos Bible URI for Bible references. This will override the default BOLDS link format.'
+      )
+      .addToggle((toggle) => {
+        toggle
+          .setValue(!!this.plugin.settings?.useLogosBibleUri)
+          .onChange(async (value) => {
+            this.plugin.settings.useLogosBibleUri = value
+            await this.plugin.saveSettings()
+            EventStats.logSettingChange(
+              'changeUseLogosBibleUri',
+              { key: `useLogosBibleUri-${value}`, value: 1 },
+              this.plugin.settings.optOutToEvents
+            )
+          })
+      })
   }
 
   private setUpVersionSettingsAndVersionOptions(): void {
