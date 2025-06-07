@@ -12,7 +12,7 @@
     "prettier": "prettier --check .",
     "prettier:fix": "prettier --write .",
     "prepare": "husky install",
-    "precommit": "pnpm run lint && pnpm run prettier",
+    "precommit": "npm run lint && npm run prettier",
     "test": "jest src"
   },
   "keywords": [
