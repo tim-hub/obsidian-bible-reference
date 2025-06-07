@@ -1,8 +1,6 @@
 import { BibleReferencePluginSettings } from '../data/constants'
 import { VerseSuggesting } from '../verse/VerseSuggesting'
 import { BOOK_REG } from './regs'
-import { getFullBookName } from './bookNameReference'
-import { getBibleVersion } from '../data/BibleVersionCollection'
 
 /**
  * Get suggestions from string query
@@ -41,23 +39,17 @@ export const getSuggestionsFromQuery = async (
   const verseNumber = parseInt(numbers[1])
   const verseEndNumber = numbers.length === 3 ? parseInt(numbers[2]) : undefined
 
-  const selectedBibleVersion = getBibleVersion(
-    translation ? translation : settings.bibleVersion
-  )
-  const bookName = getFullBookName(rawBookName, selectedBibleVersion?.code)
-  console.debug('selected bookName', bookName)
-
   // todo get bibleVersion and language from settings
   const suggestingVerse = new VerseSuggesting(
     settings,
-    bookName,
+    rawBookName,
     chapterNumber,
     verseNumber,
     verseEndNumber
   )
 
   console.debug(
-    bookName,
+    rawBookName,
     chapterNumber,
     verseNumber,
     verseEndNumber,

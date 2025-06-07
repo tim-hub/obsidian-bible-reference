@@ -87,9 +87,9 @@ export class VerseSuggesting
    * Render for use in editor/modal suggest
    */
   public renderSuggestion(el: HTMLElement) {
-    const outer = el.createDiv({ cls: 'obr-suggester-container' })
+    const outer = el.createEl('div', { cls: 'obr-suggester-container' })
     // @ts-ignore
-    outer.createDiv({ cls: 'obr-shortcode' }).setText(this.bodyContent)
+    outer.createEl('div', { cls: 'obr-shortcode' }).setText(this.bodyContent)
   }
 
   public async fetchAndSetVersesText(): Promise<void> {
@@ -110,7 +110,8 @@ export class VerseSuggesting
       // make sure this is only 1 adapter, and it is the same bible version
       this.bibleProvider =
         ProviderFactory.Instance.BuildBibleVersionAPIAdapterFromIBibleVersion(
-          bibleVersion
+          bibleVersion,
+          this.settings
         )
     }
     return this.bibleProvider.query(

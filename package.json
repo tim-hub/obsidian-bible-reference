@@ -12,7 +12,7 @@
     "prettier": "prettier --check .",
     "prettier:fix": "prettier --write .",
     "prepare": "husky install",
-    "precommit": "pnpm run lint && pnpm run prettier",
+    "precommit": "npm run lint && npm run prettier",
     "test": "jest src"
   },
   "keywords": [
@@ -78,6 +78,6 @@
   },
   "dependencies": {
     "ackee-tracker": "5.1.0",
-    "bible-reference-toolkit": "^2.3.6"
+    "bible-passage-reference-parser": "^3.0.0"
   }
 }
