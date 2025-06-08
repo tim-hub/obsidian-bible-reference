@@ -6,9 +6,10 @@ describe('test bookNameReference', () => {
     expect(getBookOsis('Genesis')).toBe('Gen')
     expect(getBookOsis('John')).toBe('John')
     expect(getBookOsis('1 John')).toBe('1John')
+    expect(getBookOsis('2chron')).toBe('2Chr')
   })
 
-  // Test for getBookFullName function using bcv_parser
+  // Test for getBookFullName function using two-step approach
   it('should expand abbreviated book names to full names', () => {
     expect(getBookFullName('jn')).toBe('John')
     expect(getBookFullName('gen')).toBe('Genesis')
@@ -17,7 +18,7 @@ describe('test bookNameReference', () => {
     expect(getBookFullName('mar')).toBe('Mark')
     expect(getBookFullName('mk')).toBe('Mark')
     expect(getBookFullName('lk')).toBe('Luke')
-    expect(getBookFullName('2chron')).toBe('2 Chronicles') // The regression case!
+    expect(getBookFullName('2chron')).toBe('2 Chronicles') // The main regression case!
     expect(getBookFullName('1chron')).toBe('1 Chronicles')
     expect(getBookFullName('1jn')).toBe('1 John')
     expect(getBookFullName('2cor')).toBe('2 Corinthians')
