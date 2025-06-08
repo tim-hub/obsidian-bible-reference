@@ -5,13 +5,19 @@ import {
   translations,
 } from 'bible-passage-reference-parser/esm/lang/en.js'
 
-const lang = {
+interface BCVParserConstructor {
+  grammar: unknown
+  regexps: unknown
+  translations: unknown
+}
+
+const lang: BCVParserConstructor = {
   grammar,
   regexps,
   translations,
 }
 
-const bcv = new bcv_parser(lang as any)
+const bcv = new bcv_parser(lang)
 
 bcv.set_options({
   book_alone_strategy: 'full',
