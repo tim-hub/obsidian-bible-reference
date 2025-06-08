@@ -1,6 +1,7 @@
 import { BibleReferencePluginSettings } from '../data/constants'
 import { VerseSuggesting } from '../verse/VerseSuggesting'
 import { BOOK_REG } from './regs'
+import { getBookFullName } from './bookNameReference'
 
 /**
  * Get suggestions from string query
@@ -30,6 +31,9 @@ export const getSuggestionsFromQuery = async (
     return []
   }
 
+  // Expand abbreviated book name to full name
+  const fullBookName = getBookFullName(rawBookName.trim())
+
   const numbersPartsOfQueryString = queryWithoutPrefix.substring(
     rawBookName.length
   )
@@ -42,7 +46,7 @@ export const getSuggestionsFromQuery = async (
   // todo get bibleVersion and language from settings
   const suggestingVerse = new VerseSuggesting(
     settings,
-    rawBookName,
+    fullBookName, // Use the expanded full book name
     chapterNumber,
     verseNumber,
     verseEndNumber
@@ -50,6 +54,7 @@ export const getSuggestionsFromQuery = async (
 
   console.debug(
     rawBookName,
+    fullBookName, // Log both for debugging
     chapterNumber,
     verseNumber,
     verseEndNumber,
