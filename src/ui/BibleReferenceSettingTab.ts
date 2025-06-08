@@ -286,10 +286,10 @@ Obsidian Bible Reference  is proudly powered by
     new Setting(this.expertSettingContainer)
       .setName('Use Logos Bible URI')
       .setDesc(
-        'This will create links that open directly in the Logos Bible app instead of web links. The URI will only work for the following translations: ESV, LSB, NIV 2011, NASB, NLT, KJV, NKJV, RSV'
+        'This will use hyperlinks that open directly in the Logos Bible app instead of web links. The URI will only work for the following translations: ESV, LSB, NIV 2011, NASB, NLT, KJV, NKJV, RSV'
       )
       .setTooltip(
-        'This will create links that open directly in the Logos Bible app instead of web links. The URI will only work for the following translations: ESV, LSB, NIV 2011, NASB, NLT, KJV, NKJV, RSV'
+        'Please use compatible translations. Falls back to web links if the translation is not compatible.'
       )
       .addToggle((toggle) => {
         toggle
