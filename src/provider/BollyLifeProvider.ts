@@ -4,6 +4,18 @@ import { BaseBibleAPIProvider } from './BaseBibleAPIProvider'
 import { getBookOsis } from '../utils/bookNameReference'
 import { BibleReferencePluginSettings } from '../data/constants'
 
+// Mapping of Bible version keys to Logos translation codes
+const LOGOS_TRANSLATION_CODES: { [key: string]: string } = {
+  esv: 'esv',
+  lsb: 'lgcystndrdbblsb',
+  niv2011: 'niv2011',
+  nasb95: 'nasb95',
+  nlt: 'nlt',
+  kjv1900: 'kjv1900',
+  nkjv: 'nkjv',
+  rsv: 'rsv',
+}
+
 export class BollyLifeProvider extends BaseBibleAPIProvider {
   //private _verseApiUrl: string; // we do not support get verse api yet, but the api supported it
   private _chapterApiUrl: string
@@ -27,8 +39,19 @@ export class BollyLifeProvider extends BaseBibleAPIProvider {
     if (this.settings.useLogosBibleUri) {
       const chapter = this.chapter
       const verses = this.verses.join('-')
-      const bibleVersionKey = this.BibleVersionKey.toUpperCase()
-      return `https://ref.ly/logosres/${this.BibleVersionKey}?ref=Bible${bibleVersionKey}.${this.bookOsis}${chapter}.${verses}`
+      const bibleVersionKey = this.BibleVersionKey.toLowerCase()
+      const logosTranslationCode = LOGOS_TRANSLATION_CODES[bibleVersionKey]
+
+      if (logosTranslationCode) {
+        // Use simplified Logos URI format: https://ref.ly/[reference];[translation-code]
+        return `https://ref.ly/${this.bookOsis}${chapter}.${verses};${logosTranslationCode}`
+      } else {
+        // Fall back to original format if translation not supported
+        console.warn(
+          `Logos URI not supported for translation: ${bibleVersionKey}`
+        )
+        return this.prepareVerseLinkUrl()
+      }
     }
     return this.prepareVerseLinkUrl()
   }
