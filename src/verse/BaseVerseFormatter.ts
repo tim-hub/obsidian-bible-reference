@@ -22,10 +22,20 @@ export abstract class BaseVerseFormatter {
     const { bookName, chapterNumber, verseNumber, verseNumberEnd } =
       this.verseReference
     if (
+      verseTexts &&
       verseNumberEnd &&
-      verseNumberEnd - verseNumber + 1 !== verseTexts?.length
+      verseNumberEnd - verseNumber + 1 !== verseTexts.length
     ) {
       console.error('Verse text length does not match verse numbers')
+      console.error('Debug info:', {
+        bookName,
+        chapterNumber,
+        verseNumber,
+        verseNumberEnd,
+        expectedLength: verseNumberEnd - verseNumber + 1,
+        actualLength: verseTexts.length,
+        verseTexts: verseTexts,
+      })
     }
     this.verses = verseTexts?.map((verse, index) => {
       return {

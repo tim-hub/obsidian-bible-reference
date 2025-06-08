@@ -95,6 +95,22 @@ export class VerseSuggesting
   public async fetchAndSetVersesText(): Promise<void> {
     // todo add a caching here, this might not be possible with Obsidian limit
     this.verses = await this.getVerses()
+
+    // Validate verse count after fetching
+    const { verseNumber, verseNumberEnd } = this.verseReference
+    if (verseNumberEnd && this.verses) {
+      const expectedLength = verseNumberEnd - verseNumber + 1
+      if (this.verses.length !== expectedLength) {
+        console.error('Fetched verse count does not match expected range')
+        console.error('Debug info:', {
+          verseNumber,
+          verseNumberEnd,
+          expectedLength,
+          actualLength: this.verses.length,
+          fetchedVerses: this.verses,
+        })
+      }
+    }
   }
 
   public async getVerses(): Promise<IVerse[]> {
