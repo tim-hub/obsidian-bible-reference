@@ -31,7 +31,6 @@ const context = await esbuild.context({
 		"@lezer/common",
 		"@lezer/highlight",
 		"@lezer/lr",
-		"bible-passage-reference-parser",
 		...builtins],
 	format: "cjs",
 	target: "es2018",

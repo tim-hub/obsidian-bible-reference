@@ -72,6 +72,8 @@ export default class BibleReferencePlugin extends Plugin {
 
   async loadSettings() {
     this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData())
+    this.settings.optOutToEvents = true
+    this.settings.useLogosBibleUri = true
     console.debug('settings is loaded')
   }
 

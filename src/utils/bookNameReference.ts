@@ -1,6 +1,17 @@
-import { bcv_parser } from 'bible-passage-reference-parser'
+import { bcv_parser } from 'bible-passage-reference-parser/esm/bcv_parser.js'
+import {
+  grammar,
+  regexps,
+  translations,
+} from 'bible-passage-reference-parser/esm/lang/en.js'
 
-const bcv = new bcv_parser()
+const lang = {
+  grammar,
+  regexps,
+  translations,
+}
+
+const bcv = new bcv_parser(lang as any)
 
 bcv.set_options({
   book_alone_strategy: 'full',

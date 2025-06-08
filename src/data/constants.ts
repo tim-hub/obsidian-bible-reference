@@ -61,7 +61,7 @@ export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
   bookTagging: false,
   chapterTagging: false,
   enableBibleVerseLookupRibbon: false,
-  optOutToEvents: false,
+  optOutToEvents: true,
   bookBacklinking: OutgoingLinkPositionEnum.None,
   chapterBacklinking: OutgoingLinkPositionEnum.None,
   bibleVersionStatusIndicator: BibleVersionNameLengthEnum.Short,
@@ -70,6 +70,7 @@ export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
   enableInternalLinking: 'None',
   versionCodeBLB: '',
   useLogosBibleUri: false,
+  advancedSettings: true,
 }
 
 export const API_WAITING_LABEL = 'Loading...'

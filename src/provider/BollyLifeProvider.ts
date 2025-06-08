@@ -27,7 +27,8 @@ export class BollyLifeProvider extends BaseBibleAPIProvider {
     if (this.settings.useLogosBibleUri) {
       const chapter = this.chapter
       const verses = this.verses.join('-')
-      return `https://ref.ly/logosres/${this.BibleVersionKey}?ref=Bible%20${this.BibleVersionKey}.${this.bookOsis}%20${chapter}.${verses}`
+      const bibleVersionKey = this.BibleVersionKey.toUpperCase()
+      return `https://ref.ly/logosres/${this.BibleVersionKey}?ref=Bible${bibleVersionKey}.${this.bookOsis}${chapter}.${verses}`
     }
     return this.prepareVerseLinkUrl()
   }
