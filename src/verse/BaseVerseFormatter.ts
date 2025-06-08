@@ -110,8 +110,13 @@ export abstract class BaseVerseFormatter {
       this.settings.referenceLinkPosition ===
         BibleVerseReferenceLinkPosition.AllAbove
     ) {
-      // Conditional BLB link
-      if (this.settings.versionCodeBLB && this.settings.enableHyperlinking) {
+      // Prioritize Logos URI over BLB link
+      if (this.settings.useLogosBibleUri && this.settings.enableHyperlinking) {
+        head += this.getVerseReferenceLink()
+      } else if (
+        this.settings.versionCodeBLB &&
+        this.settings.enableHyperlinking
+      ) {
         head += getBLBLink(this.settings, this.verseReference)
       } else {
         head += this.getVerseReferenceLink()
@@ -129,8 +134,13 @@ export abstract class BaseVerseFormatter {
         BibleVerseReferenceLinkPosition.AllAbove
     ) {
       bottom += `> \n `
-      // Conditional BLB link
-      if (this.settings.versionCodeBLB && this.settings.enableHyperlinking) {
+      // Prioritize Logos URI over BLB link
+      if (this.settings.useLogosBibleUri && this.settings.enableHyperlinking) {
+        bottom += this.getVerseReferenceLink()
+      } else if (
+        this.settings.versionCodeBLB &&
+        this.settings.enableHyperlinking
+      ) {
         bottom += getBLBLink(this.settings, this.verseReference)
       } else {
         bottom += this.getVerseReferenceLink()
