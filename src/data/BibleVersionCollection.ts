@@ -530,6 +530,17 @@ export const BibleVersionCollectionMalayalam = [
   },
 ]
 
+// Korean
+export const BibleVersionCollectionKorean = [
+  {
+    key: 'krv',
+    versionName: 'KRV (개역한글)',
+    language: 'Korean',
+    apiSource: BibleAPISourceCollection.bollsLife,
+  },
+]
+
+// Dutch
 export const BibleVersionCollectionDutch = [
   {
     key: 'hsv17',
@@ -564,6 +575,7 @@ export const BibleVersionCollection: IBibleVersion[] = [
   ...BibleVersionCollectionHindi,
   ...BibleVersionCollectionIndonesian,
   ...BibleVersionCollectionItalian,
+  ...BibleVersionCollectionKorean,
   ...BibleVersionCollectionLatin,
   ...BibleVersionCollectionMalayalam,
   ...BibleVersionCollectionPolish,
