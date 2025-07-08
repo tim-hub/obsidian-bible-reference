@@ -1,0 +1,465 @@
+{
+  "language": "ko",
+  "1": {
+    "name": "창세기",
+    "shortNames": [
+      "창"
+    ],
+    "startNumber": 0
+  },
+  "2": {
+    "name": "출애굽기",
+    "shortNames": [
+      "출"
+    ],
+    "startNumber": 0
+  },
+  "3": {
+    "name": "레위기",
+    "shortNames": [
+      "레"
+    ],
+    "startNumber": 0
+  },
+  "4": {
+    "name": "민수기",
+    "shortNames": [
+      "민"
+    ],
+    "startNumber": 0
+  },
+  "5": {
+    "name": "신명기",
+    "shortNames": [
+      "신"
+    ],
+    "startNumber": 0
+  },
+  "6": {
+    "name": "여호수아",
+    "shortNames": [
+      "수"
+    ],
+    "startNumber": 0
+  },
+  "7": {
+    "name": "사사기",
+    "shortNames": [
+      "삿"
+    ],
+    "startNumber": 0
+  },
+  "8": {
+    "name": "룻기",
+    "shortNames": [
+      "룻"
+    ],
+    "startNumber": 0
+  },
+  "9": {
+    "name": "사무엘상",
+    "shortNames": [
+      "삼상"
+    ],
+    "startNumber": 1
+  },
+  "10": {
+    "name": "사무엘하",
+    "shortNames": [
+      "삼하"
+    ],
+    "startNumber": 2
+  },
+  "11": {
+    "name": "열왕기상",
+    "shortNames": [
+      "왕상"
+    ],
+    "startNumber": 1
+  },
+  "12": {
+    "name": "열왕기하",
+    "shortNames": [
+      "왕하"
+    ],
+    "startNumber": 2
+  },
+  "13": {
+    "name": "역대상",
+    "shortNames": [
+      "대상"
+    ],
+    "startNumber": 1
+  },
+  "14": {
+    "name": "역대하",
+    "shortNames": [
+      "대하"
+    ],
+    "startNumber": 2
+  },
+  "15": {
+    "name": "에스라",
+    "shortNames": [
+      "스"
+    ],
+    "startNumber": 0
+  },
+  "16": {
+    "name": "느헤미야",
+    "shortNames": [
+      "느"
+    ],
+    "startNumber": 0
+  },
+  "17": {
+    "name": "에스더",
+    "shortNames": [
+      "에"
+    ],
+    "startNumber": 0
+  },
+  "18": {
+    "name": "욥기",
+    "shortNames": [
+      "욥"
+    ],
+    "startNumber": 0
+  },
+  "19": {
+    "name": "시편",
+    "shortNames": [
+      "시"
+    ],
+    "startNumber": 0
+  },
+  "20": {
+    "name": "잠언",
+    "shortNames": [
+      "잠"
+    ],
+    "startNumber": 0
+  },
+  "21": {
+    "name": "전도서",
+    "shortNames": [
+      "전"
+    ],
+    "startNumber": 0
+  },
+  "22": {
+    "name": "아가",
+    "shortNames": [
+      "아"
+    ],
+    "startNumber": 0
+  },
+  "23": {
+    "name": "이사야",
+    "shortNames": [
+      "사"
+    ],
+    "startNumber": 0
+  },
+  "24": {
+    "name": "예레미야",
+    "shortNames": [
+      "렘"
+    ],
+    "startNumber": 0
+  },
+  "25": {
+    "name": "예레미야애가",
+    "shortNames": [
+      "애"
+    ],
+    "startNumber": 0
+  },
+  "26": {
+    "name": "에스겔",
+    "shortNames": [
+      "겔"
+    ],
+    "startNumber": 0
+  },
+  "27": {
+    "name": "다니엘",
+    "shortNames": [
+      "단"
+    ],
+    "startNumber": 0
+  },
+  "28": {
+    "name": "호세아",
+    "shortNames": [
+      "호"
+    ],
+    "startNumber": 0
+  },
+  "29": {
+    "name": "요엘",
+    "shortNames": [
+      "욜"
+    ],
+    "startNumber": 0
+  },
+  "30": {
+    "name": "아모스",
+    "shortNames": [
+      "암"
+    ],
+    "startNumber": 0
+  },
+  "31": {
+    "name": "오바댜",
+    "shortNames": [
+      "옵"
+    ],
+    "startNumber": 0
+  },
+  "32": {
+    "name": "요나",
+    "shortNames": [
+      "욘"
+    ],
+    "startNumber": 0
+  },
+  "33": {
+    "name": "미가",
+    "shortNames": [
+      "미"
+    ],
+    "startNumber": 0
+  },
+  "34": {
+    "name": "나훔",
+    "shortNames": [
+      "나"
+    ],
+    "startNumber": 0
+  },
+  "35": {
+    "name": "하박국",
+    "shortNames": [
+      "합"
+    ],
+    "startNumber": 0
+  },
+  "36": {
+    "name": "스바냐",
+    "shortNames": [
+      "습"
+    ],
+    "startNumber": 0
+  },
+  "37": {
+    "name": "학개",
+    "shortNames": [
+      "학"
+    ],
+    "startNumber": 0
+  },
+  "38": {
+    "name": "스가랴",
+    "shortNames": [
+      "슥"
+    ],
+    "startNumber": 0
+  },
+  "39": {
+    "name": "말라기",
+    "shortNames": [
+      "말"
+    ],
+    "startNumber": 0
+  },
+  "40": {
+    "name": "마태복음",
+    "shortNames": [
+      "마"
+    ],
+    "startNumber": 0
+  },
+  "41": {
+    "name": "마가복음",
+    "shortNames": [
+      "막"
+    ],
+    "startNumber": 0
+  },
+  "42": {
+    "name": "누가복음",
+    "shortNames": [
+      "눅"
+    ],
+    "startNumber": 0
+  },
+  "43": {
+    "name": "요한복음",
+    "shortNames": [
+      "요"
+    ],
+    "startNumber": 0
+  },
+  "44": {
+    "name": "사도행전",
+    "shortNames": [
+      "행"
+    ],
+    "startNumber": 0
+  },
+  "45": {
+    "name": "로마서",
+    "shortNames": [
+      "롬"
+    ],
+    "startNumber": 0
+  },
+  "46": {
+    "name": "고린도전서",
+    "shortNames": [
+      "고전"
+    ],
+    "startNumber": 1
+  },
+  "47": {
+    "name": "고린도후서",
+    "shortNames": [
+      "고후"
+    ],
+    "startNumber": 2
+  },
+  "48": {
+    "name": "갈라디아서",
+    "shortNames": [
+      "갈"
+    ],
+    "startNumber": 0
+  },
+  "49": {
+    "name": "에베소서",
+    "shortNames": [
+      "엡"
+    ],
+    "startNumber": 0
+  },
+  "50": {
+    "name": "빌립보서",
+    "shortNames": [
+      "빌"
+    ],
+    "startNumber": 0
+  },
+  "51": {
+    "name": "골로새서",
+    "shortNames": [
+      "골"
+    ],
+    "startNumber": 0
+  },
+  "52": {
+    "name": "데살로니가전서",
+    "shortNames": [
+      "살전"
+    ],
+    "startNumber": 1
+  },
+  "53": {
+    "name": "데살로니가후서",
+    "shortNames": [
+      "살후"
+    ],
+    "startNumber": 2
+  },
+  "54": {
+    "name": "디모데전서",
+    "shortNames": [
+      "딤전"
+    ],
+    "startNumber": 1
+  },
+  "55": {
+    "name": "디모데후서",
+    "shortNames": [
+      "딤후"
+    ],
+    "startNumber": 2
+  },
+  "56": {
+    "name": "디도서",
+    "shortNames": [
+      "딛"
+    ],
+    "startNumber": 0
+  },
+  "57": {
+    "name": "빌레몬서",
+    "shortNames": [
+      "몬"
+    ],
+    "startNumber": 0
+  },
+  "58": {
+    "name": "히브리서",
+    "shortNames": [
+      "히"
+    ],
+    "startNumber": 0
+  },
+  "59": {
+    "name": "야고보서",
+    "shortNames": [
+      "약"
+    ],
+    "startNumber": 0
+  },
+  "60": {
+    "name": "베드로전서",
+    "shortNames": [
+      "벧전"
+    ],
+    "startNumber": 1
+  },
+  "61": {
+    "name": "베드로후서",
+    "shortNames": [
+      "벧후"
+    ],
+    "startNumber": 2
+  },
+  "62": {
+    "name": "요한일서",
+    "shortNames": [
+      "요일"
+    ],
+    "startNumber": 1
+  },
+  "63": {
+    "name": "요한이서",
+    "shortNames": [
+      "요이"
+    ],
+    "startNumber": 2
+  },
+  "64": {
+    "name": "요한삼서",
+    "shortNames": [
+      "요삼"
+    ],
+    "startNumber": 3
+  },
+  "65": {
+    "name": "유다서",
+    "shortNames": [
+      "유"
+    ],
+    "startNumber": 0
+  },
+  "66": {
+    "name": "요한계시록",
+    "shortNames": [
+      "계"
+    ],
+    "startNumber": 0
+  }
+} 
