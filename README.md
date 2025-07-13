@@ -1,6 +1,6 @@
 ## Obsidian Bible Reference
 
-- Simplify your Bible Study note-taking experience with the user-friendly Obsidian.md notes app.
+- Simplify your Bible Study note-taking experience with the user-friendly [Obsidian.md](https://obsidian.md/) notes app.
 - Experience the seamless assistance of automated Bible Verse suggestions for effortless referencing.
 
 [![CodeQL for Obsidain Bible Reference](https://github.com/tim-hub/obsidian-bible-reference/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/tim-hub/obsidian-bible-reference/actions/workflows/codeql-analysis.yml)
@@ -9,7 +9,7 @@
 [![obsidain bible reference project kanban board and roadmap ](<https://img.shields.io/badge/Project(Kanban)-orange>)](https://github.com/users/tim-hub/projects/2/views/1)
 [![support button of obsidian bible reference](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/tim-hub)
 
-> These will be very appreciate for the project development. 👍
+> These contributions will be highly appreciated in supporting the development of the project. 👍
 >
 > - 👉 `Star` the Project
 > - ☕️ **Buy me a coffee** @[Github Sponsor](https://github.com/sponsors/tim-hub)
@@ -38,9 +38,9 @@ You can also get a "verse of the day" by typing `--vod`.
 > - you can use `++` instead of `--` in the beginning of the verse reference => `++John1:1` (recommended)
 > - or you can turn Smart Punctuation off => [How to use](https://github.com/tim-hub/obsidian-bible-reference/wiki/How-to-use#how-to-use-on-ios-iphone--ipad)
 
-## Contribution and Credits
+## Contribution and Credits 🙏
 
-- All different kinds of contributions are welcom,
+- All different kinds of contributions are welcome,
   see: [How to Contribute](https://github.com/tim-hub/obsidian-bible-reference/blob/master/CONTRIBUTING.md)
 - Credits: [Bible API/Data Source Providers](https://github.com/tim-hub/obsidian-bible-reference/blob/master/docs/bible-api-and-source.md)
 
@@ -105,4 +105,4 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 ## Related Projects
 
 - [Bible Vector Search](https://bible-search.antioch.tech/) To search Bible verses in meaning not in keywords.
-  This is another open source project I built recently to implement AI Embedding and Vector Search for Bible verses (in BBE transaltion).
+  This is another open source project I built recently to implement AI Embedding and Vector Search for Bible verses (in BBE translation).
