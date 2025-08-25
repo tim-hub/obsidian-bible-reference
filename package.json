@@ -5,7 +5,7 @@
   "main": "main.js",
   "engines": {
     "node": ">=24.6.0",
-    "pnpm": ">=10.5.0"
+    "pnpm": ">=10.15.0"
   },
   "scripts": {
     "dev": "node scripts/esbuild.config.mjs",

@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [ 22.x ]
+        node-version: [ 22=4.x ]
 
     steps:
       - name: Checkout repository
@@ -25,9 +25,9 @@ jobs:
           token: ${{ secrets.PAT }}
           file: 'README.md'
 
-      - uses: pnpm/action-setup@v4.0.0
+      - uses: pnpm/action-setup@v4.1.0
         with:
-          version: 6
+          version: 10.15.0
           # run_install: true
 
       - name: Use Node.js

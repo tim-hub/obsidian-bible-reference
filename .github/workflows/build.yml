@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [22.x]
+        node-version: [24.6.x]
 
     steps:
       - uses: actions/checkout@v4.2.2
@@ -24,7 +24,7 @@ jobs:
       - name: run install
         uses: pnpm/action-setup@v4.1.0
         with:
-          version: 10 # local version is 7 but it's not supported by the action, this is why the next line we use no-frozen-lockfile
+          version: 10.15.0 # local version is 7 but it's not supported by the action, this is why the next line we use no-frozen-lockfile
       - run: pnpm install --no-frozen-lockfile
       - run: pnpm run lint
       - run: pnpm run prettier
