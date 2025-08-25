@@ -1,8 +1,12 @@
 {
   "name": "obsidian-bible-reference",
-  "version": "25.06.19",
+  "version": "25.08.25",
   "description": "Taking Bible Study note in Obsidian.md application easily. Automatically suggesting Bible Verses as references. ",
   "main": "main.js",
+  "engines": {
+    "node": ">=24.6.0",
+    "pnpm": ">=10.5.0"
+  },
   "scripts": {
     "dev": "node scripts/esbuild.config.mjs",
     "build": "tsc -noEmit -skipLibCheck && node scripts/esbuild.config.mjs production",
@@ -31,7 +35,7 @@
   "devDependencies": {
     "@types/ackee-tracker": "5.0.4",
     "@types/jest": "29.5.14",
-    "@types/node": "22.13.14",
+    "@types/node": "24.3.0",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
     "all-contributors-cli": "6.26.1",
