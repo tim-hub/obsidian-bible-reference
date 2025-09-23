@@ -12,7 +12,6 @@ import { getVod } from '../provider/VODProvider'
 import { VerseOfDaySuggesting } from '../verse/VerseOfDaySuggesting'
 import { splitBibleReference } from '../utils/splitBibleReference'
 import { matchTriggerPrefix } from '../utils/verseMatch'
-import { EventStats } from '../provider/EventStats'
 
 export class VerseOfDayEditorSuggester extends EditorSuggest<VerseOfDaySuggesting> {
   private plugin: BibleReferencePlugin
@@ -39,11 +38,6 @@ export class VerseOfDayEditorSuggester extends EditorSuggest<VerseOfDaySuggestin
       this.settings,
       reference,
       verseTexts
-    )
-    EventStats.logLookup(
-      'vodLookUp',
-      { key: `${this.settings.bibleVersion}-vod`, value: 1 },
-      this.settings.optOutToEvents
     )
     return [vodSuggesting]
   }
@@ -75,11 +69,6 @@ export class VerseOfDayEditorSuggester extends EditorSuggest<VerseOfDaySuggestin
     const queryContent = currentContent.substring(2) // remove the trigger prefix
 
     if (queryContent === 'vod') {
-      EventStats.logUIOpen(
-        'vodEditorOpen',
-        { key: `${this.settings.bibleVersion}-vod`, value: 1 },
-        this.settings.optOutToEvents
-      )
       return {
         end: cursor,
         start: {

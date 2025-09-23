@@ -24,7 +24,6 @@ import {
   BibleVerseNumberFormatCollection,
 } from '../data/BibleVerseNumberFormat'
 import { BibleAPISourceCollection } from '../data/BibleApiSourceCollection'
-import { EventStats } from '../provider/EventStats'
 import {
   APP_NAMING,
   BibleVersionNameLengthEnum,
@@ -108,11 +107,6 @@ Obsidian Bible Reference  is proudly powered by
     if (this.plugin.settings.advancedSettings) {
       this.displayExpertSettings()
     }
-    EventStats.logUIOpen(
-      'settingsOpen',
-      { key: 'open', value: 1 },
-      this.plugin.settings.optOutToEvents
-    )
   }
 
   private startListeningToEvents(): void {
@@ -145,11 +139,6 @@ Obsidian Bible Reference  is proudly powered by
             .onChange(async (value) => {
               this.plugin.settings.bookTagging = value
               await this.plugin.saveSettings()
-              EventStats.logSettingChange(
-                'changeVerseFormatting',
-                { key: `book-tagging-${value}`, value: 1 },
-                this.plugin.settings.optOutToEvents
-              )
             })
         )
       new Setting(this.expertSettingContainer)
@@ -161,11 +150,6 @@ Obsidian Bible Reference  is proudly powered by
             .onChange(async (value) => {
               this.plugin.settings.chapterTagging = value
               await this.plugin.saveSettings()
-              EventStats.logSettingChange(
-                'changeVerseFormatting',
-                { key: `chapter-tagging-${value}`, value: 1 },
-                this.plugin.settings.optOutToEvents
-              )
             })
         )
 
@@ -238,11 +222,6 @@ Obsidian Bible Reference  is proudly powered by
               this.plugin.settings.versionCodeBLB = value
               await this.plugin.saveSettings()
               // new Notice(`Use ${value} for Blue Letter Bible Reference Hyperlinking`);
-              EventStats.logSettingChange(
-                'setVersionCodeBLB',
-                { key: `versionCodeBLB-${value}`, value: 1 },
-                this.plugin.settings.optOutToEvents
-              )
             })
           if (!this.plugin.settings.enableHyperlinking) {
             text.setDisabled(true)
@@ -266,11 +245,6 @@ Obsidian Bible Reference  is proudly powered by
               this.plugin.settings.internalLinkingFormat = value
               await this.plugin.saveSettings()
               new Notice('Internal Linking Format Updated')
-              EventStats.logSettingChange(
-                'changeInternalLinkingFormat',
-                { key: `internal-linking-${value}`, value: 1 },
-                this.plugin.settings.optOutToEvents
-              )
             })
         })
       this.setUpOptOutEventsOptions(this.expertSettingContainer)
@@ -318,11 +292,6 @@ Obsidian Bible Reference  is proudly powered by
             await this.plugin.saveSettings()
             pluginEvent.trigger('bible-reference:settings:version', [value])
             new Notice(`Bible Reference - use Version ${value.toUpperCase()}`)
-            EventStats.logSettingChange(
-              'changeVersion',
-              { key: value, value: 1 },
-              this.plugin.settings.optOutToEvents
-            )
           })
       })
   }
@@ -357,11 +326,6 @@ Obsidian Bible Reference  is proudly powered by
             pluginEvent.trigger('bible-reference:settings:version', [
               this.plugin.settings.bibleVersion,
             ])
-            EventStats.logSettingChange(
-              'others',
-              { key: `version-status-indicator-${value}`, value: 1 },
-              this.plugin.settings.optOutToEvents
-            )
           })
       })
   }
@@ -387,11 +351,6 @@ Obsidian Bible Reference  is proudly powered by
             console.debug('Bible Verse Reference Link Position: ' + value)
             await this.plugin.saveSettings()
             new Notice('Bible Reference Settings Updated ')
-            EventStats.logSettingChange(
-              'changeVerseFormatting',
-              { key: `link-position-${value}`, value: 1 },
-              this.plugin.settings.optOutToEvents
-            )
           })
       })
   }
@@ -415,11 +374,6 @@ Obsidian Bible Reference  is proudly powered by
             console.debug('Bible Verse Format To: ' + value)
             await this.plugin.saveSettings()
             new Notice('Bible Verse Format Settings Updated')
-            EventStats.logSettingChange(
-              'changeVerseFormatting',
-              { key: `verse-format-${value}`, value: 1 },
-              this.plugin.settings.optOutToEvents
-            )
           })
       })
   }
@@ -437,11 +391,6 @@ Obsidian Bible Reference  is proudly powered by
         .onChange(async (value) => {
           this.plugin.settings.showVerseTranslation = value
           await this.plugin.saveSettings()
-          EventStats.logSettingChange(
-            'changeVerseFormatting',
-            { key: `show-translation-${value}`, value: 1 },
-            this.plugin.settings.optOutToEvents
-          )
         })
     })
   }
@@ -459,11 +408,6 @@ Obsidian Bible Reference  is proudly powered by
         .onChange(async (value) => {
           this.plugin.settings.enableHyperlinking = value
           await this.plugin.saveSettings()
-          EventStats.logSettingChange(
-            'changeVerseFormatting',
-            { key: `hyperlinking-${value}`, value: 1 },
-            this.plugin.settings.optOutToEvents
-          )
           pluginEvent.trigger('bible-reference:settings:re-render', [])
         })
     })
@@ -488,11 +432,6 @@ Obsidian Bible Reference  is proudly powered by
             console.debug('Bible Verse Number Format To: ' + value)
             await this.plugin.saveSettings()
             new Notice('Bible Verse Format Number Settings Updated')
-            EventStats.logSettingChange(
-              'changeVerseFormatting',
-              { key: `verse-number-format-${value}`, value: 1 },
-              this.plugin.settings.optOutToEvents
-            )
           })
       })
   }
@@ -516,11 +455,6 @@ Obsidian Bible Reference  is proudly powered by
         .onChange(async (value) => {
           this.plugin.settings.collapsibleVerses = value
           await this.plugin.saveSettings()
-          EventStats.logSettingChange(
-            'changeVerseFormatting',
-            { key: `collapsible-${value}`, value: 1 },
-            this.plugin.settings.optOutToEvents
-          )
         })
     })
   }
@@ -542,11 +476,6 @@ Obsidian Bible Reference  is proudly powered by
               await this.plugin.saveSettings()
             }
             pluginEvent.trigger('bible-reference:settings:re-render', [])
-            EventStats.logSettingChange(
-              'others',
-              { key: `displayBibleIconPrefix-${value}`, value: 1 },
-              this.plugin.settings.optOutToEvents
-            )
           })
       )
   }
@@ -580,11 +509,6 @@ Obsidian Bible Reference  is proudly powered by
             .onChange(async (value) => {
               this.plugin.settings.bookTagging = value
               await this.plugin.saveSettings()
-              EventStats.logSettingChange(
-                'changeVerseFormatting',
-                { key: `book-tagging-${value}`, value: 1 },
-                this.plugin.settings.optOutToEvents
-              )
             })
         )
   }
@@ -600,11 +524,6 @@ Obsidian Bible Reference  is proudly powered by
             .onChange(async (value) => {
               this.plugin.settings.chapterTagging = value
               await this.plugin.saveSettings()
-              EventStats.logSettingChange(
-                'changeVerseFormatting',
-                { key: `chapter-tagging-${value}`, value: 1 },
-                this.plugin.settings.optOutToEvents
-              )
             })
         )
   }
@@ -621,11 +540,6 @@ Obsidian Bible Reference  is proudly powered by
         toggle
           .setValue(!!this.plugin.settings?.optOutToEvents)
           .onChange(async (value) => {
-            EventStats.logSettingChange(
-              'others',
-              { key: `opt-${value ? 'out' : 'in'}`, value: 1 },
-              this.plugin.settings.optOutToEvents
-            )
             this.plugin.settings.optOutToEvents = value
             await this.plugin.saveSettings()
             if (value) {

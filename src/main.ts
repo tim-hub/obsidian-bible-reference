@@ -13,7 +13,6 @@ import { VerseOfDayModal } from './suggesetor/VerseOfDayModal'
 import { getVod } from './provider/VODProvider'
 import { splitBibleReference } from './utils/splitBibleReference'
 import { VerseOfDaySuggesting } from './verse/VerseOfDaySuggesting'
-import { EventStats } from './provider/EventStats'
 import { getBibleVersion } from './data/BibleVersionCollection'
 import { pluginEvent } from './obsidian/PluginEvent'
 import { BibleReferenceAPI } from './api/PluginAPI'
@@ -60,7 +59,6 @@ export default class BibleReferencePlugin extends Plugin {
     this.addVerseOfDayNoticeCommand()
 
     this.initStatusBarIndicator()
-    EventStats.logRecord(this.settings.optOutToEvents)
   }
 
   onunload() {
@@ -105,11 +103,6 @@ export default class BibleReferencePlugin extends Plugin {
       id: 'obr-lookup',
       name: 'Verse Lookup',
       callback: () => {
-        EventStats.logUIOpen(
-          'lookupModalOpen',
-          { key: `command-lookup`, value: 1 },
-          this.settings.optOutToEvents
-        )
         this.verseLookUpModal.open()
       },
     })
@@ -122,11 +115,6 @@ export default class BibleReferencePlugin extends Plugin {
       callback: async () => {
         // this.verseOfDayModal.open()
         const verse = await this.getAndCachedVerseOfDay()
-        EventStats.logUIOpen(
-          'vodEditorOpen',
-          { key: `command-vod`, value: 1 },
-          this.settings.optOutToEvents
-        )
         new Notice(
           `${verse.verseTexts?.join('')} -- ${verse.verseReference.bookName} ${
             verse.verseReference.chapterNumber
@@ -143,11 +131,6 @@ export default class BibleReferencePlugin extends Plugin {
       name: 'Verse Of The Day - Insert To Current Note',
       editorCallback: async (editor: Editor, view: MarkdownView) => {
         const vodSuggesting = await this.getAndCachedVerseOfDay()
-        EventStats.logUIOpen(
-          'vodEditorOpen',
-          { key: `command-vod-insert`, value: 1 },
-          this.settings.optOutToEvents
-        )
         editor.replaceSelection(vodSuggesting.allFormattedContent)
       },
     })
@@ -160,11 +143,6 @@ export default class BibleReferencePlugin extends Plugin {
       'book-open',
       'Bible Verse Lookup',
       (_evt) => {
-        EventStats.logUIOpen(
-          'lookupModalOpen',
-          { key: `ribbon-click`, value: 1 },
-          this.settings.optOutToEvents
-        )
         this.verseLookUpModal.open()
       }
     )
@@ -172,11 +150,6 @@ export default class BibleReferencePlugin extends Plugin {
 
   private removeRibbonButton(): void {
     if (this.ribbonButton) {
-      EventStats.logUIOpen(
-        'lookupModalOpen',
-        { key: `ribbon-remove`, value: 1 },
-        this.settings.optOutToEvents
-      )
       this.ribbonButton.parentNode?.removeChild(this.ribbonButton)
     }
   }

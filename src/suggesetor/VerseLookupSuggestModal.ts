@@ -4,7 +4,6 @@ import { BibleReferencePluginSettings } from '../data/constants'
 import { VerseSuggesting } from '../verse/VerseSuggesting'
 import { getSuggestionsFromQuery } from '../utils/getSuggestionsFromQuery'
 import BibleReferencePlugin from '../main'
-import { EventStats } from '../provider/EventStats'
 
 export class VerseLookupSuggestModal extends SuggestModal<VerseSuggesting> {
   settings: BibleReferencePluginSettings
@@ -28,14 +27,6 @@ export class VerseLookupSuggestModal extends SuggestModal<VerseSuggesting> {
     const match = verseMatch(query)
     if (match) {
       console.debug('trigger on', query)
-      EventStats.logLookup(
-        'verseLookUp',
-        {
-          key: `${this.settings.bibleVersion}-${match.toLowerCase()}`,
-          value: 1,
-        },
-        this.settings.optOutToEvents
-      )
       return getSuggestionsFromQuery(`${query}`, this.settings)
     }
     return []

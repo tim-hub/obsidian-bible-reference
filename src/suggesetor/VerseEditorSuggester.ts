@@ -11,7 +11,6 @@ import { verseMatch, matchTriggerPrefix } from '../utils/verseMatch'
 import { VerseSuggesting } from '../verse/VerseSuggesting'
 import { BibleReferencePluginSettings } from '../data/constants'
 import { getSuggestionsFromQuery } from '../utils/getSuggestionsFromQuery'
-import { EventStats } from '../provider/EventStats'
 import { versionSelectionMatch } from '../utils/versionSelectionMatch'
 import { getBibleVersion } from '../data/BibleVersionCollection'
 
@@ -92,11 +91,6 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
       }
 
       console.debug('trigger on', queryContent)
-      EventStats.logUIOpen(
-        'lookupEditorOpen',
-        { key: `${this.settings.bibleVersion}`, value: 1 },
-        this.settings.optOutToEvents
-      )
       return {
         end: cursor,
         start: {
@@ -124,15 +118,6 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
       bookVerseQuery,
       this.settings,
       translationQuery
-    )
-
-    EventStats.logLookup(
-      'verseLookUp',
-      {
-        key: `${this.settings.bibleVersion}-${context.query.toLowerCase()}`,
-        value: 1,
-      },
-      this.settings.optOutToEvents
     )
     return suggestions
   }
