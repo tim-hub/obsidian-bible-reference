@@ -1,6 +1,6 @@
 import { Modal } from 'obsidian'
 import BibleReferencePlugin from '../main'
-import { getVod } from '../provider/VODProvider'
+import { getEnhancedVod } from '../provider/VODProvider'
 import { BibleReferencePluginSettings } from '../data/constants'
 
 export class VerseOfDayModal extends Modal {
@@ -20,9 +20,17 @@ export class VerseOfDayModal extends Modal {
   async onOpen() {
     super.onOpen()
     const { contentEl } = this
-    const item = await getVod()
-    contentEl.setText(`${item.verse.details.text}
--- ${item.verse.details.reference}    
+    const item = await getEnhancedVod(this.settings.defaultBibleVersion)
+
+    // Use enhanced verse text if available, otherwise fall back to NIV
+    const text = item.enhancedVerse
+      ? item.enhancedVerse.map((v) => v.text).join(' ')
+      : item.verse.details.text
+
+    const version = item.userVersion || item.verse.details.version
+
+    contentEl.setText(`${text}
+-- ${item.verse.details.reference} (${version})    
     `)
   }
 }
