@@ -10,7 +10,7 @@ import { VerseEditorSuggester } from './suggesetor/VerseEditorSuggester'
 import { VerseLookupSuggestModal } from './suggesetor/VerseLookupSuggestModal'
 import { VerseOfDayEditorSuggester } from './suggesetor/VerseOfDayEditorSuggester'
 import { VerseOfDayModal } from './suggesetor/VerseOfDayModal'
-import { getVod } from './provider/VODProvider'
+import { getEnhancedVod } from './provider/VODProvider'
 import { splitBibleReference } from './utils/splitBibleReference'
 import { VerseOfDaySuggesting } from './verse/VerseOfDaySuggesting'
 import { getBibleVersion } from './data/BibleVersionCollection'
@@ -81,9 +81,13 @@ export default class BibleReferencePlugin extends Plugin {
     const { ttl, timestamp, verseOfDaySuggesting } =
       this?.cachedVerseOfDaySuggesting || {}
     if (!verseOfDaySuggesting || timestamp + ttl > Date.now()) {
-      const vodResp = await getVod()
+      const vodResp = await getEnhancedVod(this.settings.defaultBibleVersion)
       const reference = splitBibleReference(vodResp.verse.details.reference)
-      const verseTexts = [vodResp.verse.details.text]
+
+      // Use enhanced verse text if available, otherwise fall back to NIV
+      const verseTexts = vodResp.enhancedVerse
+        ? vodResp.enhancedVerse.map((v) => v.text)
+        : [vodResp.verse.details.text]
       const vodSuggesting = new VerseOfDaySuggesting(
         this.settings,
         reference,
