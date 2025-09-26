@@ -74,7 +74,7 @@ export const getEnhancedVod = async (
       userVersion: preferredVersionKey,
     }
   } catch (error) {
-    console.warn('Failed to fetch VOD in preferred version, using NIV:', error)
+    console.warn(`Failed to fetch VOD in preferred version "${preferredVersionKey}", using NIV:`, error)
     return vodResponse
   }
 }
