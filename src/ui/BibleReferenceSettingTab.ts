@@ -78,6 +78,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     this.setUpVerseNumberFormatOptions()
     this.setUpBibleIconPrefixToggle()
     this.setUpCollapsibleToggle()
+    this.setupCollapsedByDefault()
     this.setUpStatusIndicationOptions()
     this.containerEl.createEl('h2', { text: 'Others' })
     this.setUpExpertSettings()
@@ -436,29 +437,6 @@ Obsidian Bible Reference  is proudly powered by
       })
   }
 
-  private setUpCollapsibleToggle(): void {
-    const setting = new Setting(this.containerEl)
-      .setName('Make Verses Collapsible *')
-      .setDesc(
-        'Make the rendered verses collapsible, (This option will be disabled if Bible Icon Prefix option above is disabled)'
-      )
-    setting.setTooltip(
-      "This will make the rendered verses collapsible, so that you can hide them when you don't need them"
-    )
-    setting.addToggle((toggle) => {
-      if (!this.plugin.settings?.displayBibleIconPrefixAtHeader) {
-        toggle.setDisabled(true)
-        toggle.setTooltip('')
-      }
-      toggle
-        .setValue(!!this.plugin.settings?.collapsibleVerses)
-        .onChange(async (value) => {
-          this.plugin.settings.collapsibleVerses = value
-          await this.plugin.saveSettings()
-        })
-    })
-  }
-
   private setUpBibleIconPrefixToggle(): void {
     new Setting(this.containerEl)
       .setName('Show Bible Icon Prefix "[!Bible]" *')
@@ -478,6 +456,58 @@ Obsidian Bible Reference  is proudly powered by
             pluginEvent.trigger('bible-reference:settings:re-render', [])
           })
       )
+  }
+
+  private setUpCollapsibleToggle(): void {
+    const setting = new Setting(this.containerEl)
+      .setName('Make Verses Collapsible *')
+      .setDesc(
+        'Make the rendered verses collapsible, (This option will be disabled if Bible Icon Prefix option above is disabled)'
+      )
+    setting.setTooltip(
+      "This will make the rendered verses collapsible, so that you can hide them when you don't need them"
+    )
+    setting.addToggle((toggle) => {
+      if (!this.plugin.settings?.displayBibleIconPrefixAtHeader) {
+        toggle.setDisabled(true)
+        toggle.setTooltip('')
+      }
+      toggle
+        .setValue(!!this.plugin.settings?.collapsibleVerses)
+        .onChange(async (value) => {
+          this.plugin.settings.collapsibleVerses = value
+          await this.plugin.saveSettings()
+          pluginEvent.trigger('bible-reference:settings:re-render', [])
+        })
+    })
+  }
+
+  // set up default collapsible toggle to true or false if displayBibleIconPrefixAtHeader is set
+  private setupCollapsedByDefault(): void {
+    const setting = new Setting(this.containerEl)
+      .setName('Default Collapsed *')
+      .setDesc(
+        'When verses are collapsible, set the default state to open or closed ((This option will be disabled if Make Verses Collapsible option above is disabled))'
+      )
+    setting.setTooltip(
+      'This will set the default state of the collapsible verses, when you open a note, the verses will be open or closed by default'
+    )
+    setting.addToggle((toggle) => {
+      if (!this.plugin.settings?.collapsibleVerses) {
+        toggle.setDisabled(true)
+        toggle.setTooltip('This option is disabled because collapsible is off')
+      }
+      toggle
+        .setValue(!!this.plugin.settings?.collapsedByDefault)
+        .onChange(async (value) => {
+          this.plugin.settings.collapsedByDefault = value
+          await this.plugin.saveSettings()
+          if (!value) {
+            this.plugin.settings.collapsedByDefault = false
+            await this.plugin.saveSettings()
+          }
+        })
+    })
   }
 
   private setUpExpertSettings(): void {

@@ -87,7 +87,11 @@ export abstract class BaseVerseFormatter {
       head += '[!bible]'
 
       if (this.settings?.collapsibleVerses) {
-        head += '+'
+        if (this.settings.collapsedByDefault) {
+          head += '-'
+        } else {
+          head += '+'
+        }
       }
     }
 

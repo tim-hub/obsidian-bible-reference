@@ -29,6 +29,7 @@ export interface BibleReferencePluginSettings {
   verseFormatting?: BibleVerseFormat
   verseNumberFormatting?: BibleVerseNumberFormat
   collapsibleVerses?: boolean // this is binging to displayBibleIconPrefixAtHeader option
+  collapsedByDefault?: boolean
   enableHyperlinking?: boolean
   showVerseTranslation?: boolean
   bookTagging?: boolean
