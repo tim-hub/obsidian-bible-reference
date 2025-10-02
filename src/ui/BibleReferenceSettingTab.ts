@@ -247,7 +247,7 @@ Obsidian Bible Reference  is proudly powered by
               new Notice('Internal Linking Format Updated')
             })
         })
-      this.setUpOptOutEventsOptions(this.expertSettingContainer)
+      // this.setUpOptOutEventsOptions(this.expertSettingContainer)
     }
   }
 
