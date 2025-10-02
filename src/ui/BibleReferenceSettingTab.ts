@@ -451,6 +451,7 @@ Obsidian Bible Reference  is proudly powered by
             await this.plugin.saveSettings()
             if (!value) {
               this.plugin.settings.collapsibleVerses = false
+              this.plugin.settings.collapsedByDefault = false
               await this.plugin.saveSettings()
             }
             pluginEvent.trigger('bible-reference:settings:re-render', [])
