@@ -9,6 +9,7 @@ export abstract class BaseBibleAPIProvider {
   protected _bibleReferenceHead: string
   protected _bibleVersion: IBibleVersion
   protected bibleGatewayUrl: string = ''
+  protected reflyUrl: string = ''
 
   constructor(bibleVersion: IBibleVersion) {
     this._bibleVersion = bibleVersion
@@ -44,6 +45,18 @@ export abstract class BaseBibleAPIProvider {
    * In the Bolly Life interface, it's just the same URL location except without `/get-text`
    */
   public get VerseLinkURL(): string {
+    return this.prepareVerseLinkUrl()
+  }
+
+  /**
+   * Get the external link URL based on the link type preference
+   * @param linkType - The type of external link (BibleGateway or Ref.ly)
+   */
+  public getExternalLinkUrl(linkType: string): string {
+    if (linkType === 'Ref.ly (Logos)' && this.reflyUrl) {
+      return this.reflyUrl
+    }
+    // Default to the standard verse link (BibleGateway or API URL)
     return this.prepareVerseLinkUrl()
   }
 
@@ -89,6 +102,122 @@ export abstract class BaseBibleAPIProvider {
       return `${verses[0]}-${verses[1]}`
     } else {
       return `${verses[0]}`
+    }
+  }
+
+  /**
+   * Get the ref.ly (Logos) book abbreviation for a given book name
+   * @param bookName
+   * @protected
+   */
+  protected getReflyBookAbbreviation(bookName: string): string {
+    const reflyAbbreviations: { [key: string]: string } = {
+      'Genesis': 'Ge',
+      'Exodus': 'Ex',
+      'Leviticus': 'Le',
+      'Numbers': 'Nu',
+      'Deuteronomy': 'Dt',
+      'Joshua': 'Jos',
+      'Judges': 'Jdg',
+      'Ruth': 'Ru',
+      '1 Samuel': '1Sa',
+      '2 Samuel': '2Sa',
+      '1 Kings': '1Ki',
+      '2 Kings': '2Ki',
+      '1 Chronicles': '1Ch',
+      '2 Chronicles': '2Ch',
+      'Ezra': 'Ezr',
+      'Nehemiah': 'Ne',
+      'Esther': 'Est',
+      'Job': 'Job',
+      'Psalm': 'Ps',
+      'Psalms': 'Ps',
+      'Proverbs': 'Pr',
+      'Ecclesiastes': 'Ec',
+      'Song of Solomon': 'So',
+      'Isaiah': 'Is',
+      'Jeremiah': 'Je',
+      'Lamentations': 'La',
+      'Ezekiel': 'Eze',
+      'Daniel': 'Da',
+      'Hosea': 'Ho',
+      'Joel': 'Jol',
+      'Amos': 'Am',
+      'Obadiah': 'Ob',
+      'Jonah': 'Jon',
+      'Micah': 'Mic',
+      'Nahum': 'Na',
+      'Habakkuk': 'Hab',
+      'Zephaniah': 'Zep',
+      'Haggai': 'Hag',
+      'Zechariah': 'Zec',
+      'Malachi': 'Mal',
+      'Matthew': 'Mt',
+      'Mark': 'Mk',
+      'Luke': 'Lk',
+      'John': 'Jn',
+      'Acts': 'Ac',
+      'Romans': 'Ro',
+      '1 Corinthians': '1Co',
+      '2 Corinthians': '2Co',
+      'Galatians': 'Ga',
+      'Ephesians': 'Eph',
+      'Philippians': 'Php',
+      'Colossians': 'Col',
+      '1 Thessalonians': '1Th',
+      '2 Thessalonians': '2Th',
+      '1 Timothy': '1Ti',
+      '2 Timothy': '2Ti',
+      'Titus': 'Tt',
+      'Philemon': 'Phm',
+      'Hebrews': 'Heb',
+      'James': 'Jas',
+      '1 Peter': '1Pe',
+      '2 Peter': '2Pe',
+      '1 John': '1Jn',
+      '2 John': '2Jn',
+      '3 John': '3Jn',
+      'Jude': 'Jud',
+      'Revelation': 'Re',
+    }
+
+    // If exact match found, return it
+    if (reflyAbbreviations[bookName]) {
+      return reflyAbbreviations[bookName]
+    }
+
+    // Fallback: remove spaces from book name
+    return bookName.replace(/ /g, '')
+  }
+
+  /**
+   * Build the ref.ly (Logos) URL for the verse query
+   * @returns {string}
+   *   something like this https://ref.ly/Jn3.16 or https://ref.ly/Pr31.10-31
+   * @param bookName
+   * @param chapter
+   * @param verses
+   * @protected
+   */
+  protected buildReflyUrl(
+    bookName: string,
+    chapter: number,
+    verses: number[]
+  ): string {
+    const bookAbbrev = this.getReflyBookAbbreviation(bookName)
+
+    if (!verses || verses.length === 0) {
+      // Whole chapter
+      return `https://ref.ly/${bookAbbrev}${chapter}`
+    } else if (verses.length === 1) {
+      // Single verse
+      return `https://ref.ly/${bookAbbrev}${chapter}.${verses[0]}`
+    } else if (verses.length === 2) {
+      // Verse range
+      return `https://ref.ly/${bookAbbrev}${chapter}.${verses[0]}-${verses[1]}`
+    } else {
+      // Multiple non-consecutive verses - use first verse
+      return `https://ref.ly/${bookAbbrev}${chapter}.${verses[0]}`
     }
   }
 

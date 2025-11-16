@@ -27,7 +27,17 @@ export class BollyLifeProvider extends BaseBibleAPIProvider {
     const baseUrl = this._chapterApiUrl
     const bookId = getBookIdFromBookName(bookName, this._bibleVersion.code)
     this._currentQueryUrl = `${baseUrl}/${versionName?.toUpperCase()}/${bookId}/${chapter}/`
-    // if build bible gateway url here, the VerseLinkURL will be different
+
+    // setup the bible gateway url
+    this.bibleGatewayUrl = this.buildBibleGatewayUrl(
+      bookName,
+      chapter,
+      verses || []
+    ).replace(/ /g, '+')
+
+    // setup the ref.ly url
+    this.reflyUrl = this.buildReflyUrl(bookName, chapter, verses || [])
+
     return this._currentQueryUrl
   }
 

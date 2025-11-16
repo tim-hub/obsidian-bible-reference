@@ -124,15 +124,17 @@ export class VerseSuggesting
 
   protected getVerseReferenceLink(): string {
     let verseLink = ''
+    const linkUrl = this.settings?.externalLinkType
+      ? this.bibleProvider.getExternalLinkUrl(this.settings.externalLinkType)
+      : this.bibleProvider.VerseLinkURL
+
     if (
       this.settings?.showVerseTranslation &&
       this.settings?.enableHyperlinking
     ) {
       verseLink = ` [${
         this.bibleProvider.BibleReferenceHead
-      } - ${this.bibleVersion.toUpperCase()}](${
-        this.bibleProvider.VerseLinkURL
-      })`
+      } - ${this.bibleVersion.toUpperCase()}](${linkUrl})`
     } else if (
       this.settings?.showVerseTranslation &&
       !this.settings?.enableHyperlinking
@@ -144,7 +146,7 @@ export class VerseSuggesting
       !this.settings?.showVerseTranslation &&
       this.settings?.enableHyperlinking
     ) {
-      verseLink = ` [${this.bibleProvider.BibleReferenceHead}](${this.bibleProvider.VerseLinkURL})`
+      verseLink = ` [${this.bibleProvider.BibleReferenceHead}](${linkUrl})`
     } else {
       verseLink = ` ${this.bibleProvider.BibleReferenceHead}`
     }
