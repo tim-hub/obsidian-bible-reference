@@ -36,6 +36,10 @@ export class BibleAPIDotComProvider extends BaseBibleAPIProvider {
       chapter,
       verses
     ).replace(/ /g, '+') // Remove spaces in Book names for URL.
+
+    // setup the ref.ly url
+    this.reflyUrl = this.buildReflyUrl(bookName, chapter, verses)
+
     return this._currentQueryUrl
   }
 

@@ -28,6 +28,7 @@ import {
   APP_NAMING,
   BibleVersionNameLengthEnum,
   OutgoingLinkPositionEnum,
+  ExternalLinkType,
 } from '../data/constants'
 import { pluginEvent } from '../obsidian/PluginEvent'
 
@@ -411,6 +412,31 @@ Obsidian Bible Reference  is proudly powered by
           await this.plugin.saveSettings()
           pluginEvent.trigger('bible-reference:settings:re-render', [])
         })
+    })
+
+    // Add external link type selector
+    const linkTypeSetting = new Setting(this.containerEl)
+      .setName('External Link Type')
+      .setDesc('Choose which external website to link to for verse references')
+    linkTypeSetting.setTooltip(
+      'BibleGateway provides comprehensive Bible tools. Ref.ly (Logos) integrates with Logos Bible Software.'
+    )
+    linkTypeSetting.addDropdown((dropdown) => {
+      Object.values(ExternalLinkType).forEach((type) => {
+        dropdown.addOption(type, type)
+      })
+      dropdown
+        .setValue(
+          this.plugin.settings.externalLinkType ?? ExternalLinkType.BibleGateway
+        )
+        .onChange(async (value) => {
+          this.plugin.settings.externalLinkType = value as ExternalLinkType
+          await this.plugin.saveSettings()
+          new Notice(`External Link Type set to ${value}`)
+        })
+      if (!this.plugin.settings?.enableHyperlinking) {
+        dropdown.setDisabled(true)
+      }
     })
   }
 

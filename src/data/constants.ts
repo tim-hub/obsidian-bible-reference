@@ -22,6 +22,11 @@ export enum BibleVersionNameLengthEnum {
   Hide = 'Hide',
 }
 
+export enum ExternalLinkType {
+  BibleGateway = 'BibleGateway',
+  Refly = 'Ref.ly (Logos)',
+}
+
 export interface BibleReferencePluginSettings {
   bibleVersion: string // the tmp version selected at editor
   defaultBibleVersion: string
@@ -38,6 +43,7 @@ export interface BibleReferencePluginSettings {
   chapterBacklinking?: OutgoingLinkPositionEnum // this is refering to outgoing link
   internalLinkingFormat: string // this is refering to internal link
   versionCodeBLB: string
+  externalLinkType?: ExternalLinkType
 
   // add this to ui at some point todo
   enableBibleVerseLookupRibbon?: boolean
@@ -69,6 +75,7 @@ export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
   internalLinkingFormat: 'None',
   enableInternalLinking: 'None',
   versionCodeBLB: '',
+  externalLinkType: ExternalLinkType.BibleGateway,
 }
 
 export const API_WAITING_LABEL = 'Loading...'
