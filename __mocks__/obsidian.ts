@@ -7,8 +7,3 @@ export class Notice {
 
   message: string
 }
-
-// Add other Obsidian mocks as needed
-export class Plugin {}
-export class TFile {}
-export class Vault {}
