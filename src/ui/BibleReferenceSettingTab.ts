@@ -417,7 +417,9 @@ Obsidian Bible Reference  is proudly powered by
     // Add external link type selector
     const linkTypeSetting = new Setting(this.containerEl)
       .setName('External Link Type')
-      .setDesc('Choose which external website to link to for verse references')
+      .setDesc(
+        "Choose which external website to hyperlink to for verse references. Logos will link to user's default translation."
+      )
     linkTypeSetting.setTooltip(
       'BibleGateway provides comprehensive Bible tools. Ref.ly (Logos) integrates with Logos Bible Software.'
     )
