@@ -1,5 +1,6 @@
 import { BibleAPIDotComProvider } from './BibleAPIDotComProvider'
 import { IBibleVersion } from '../interfaces/IBibleVersion'
+import { bookNames } from '../data/abbreviations'
 
 describe('BaseBibleAPIProvider - Ref.ly URL validation', () => {
   // Create a mock bible version for testing
@@ -13,77 +14,6 @@ describe('BaseBibleAPIProvider - Ref.ly URL validation', () => {
     },
   }
 
-  // All books from the reflyAbbreviations array
-  const bibleBooks = [
-    'Genesis',
-    'Exodus',
-    'Leviticus',
-    'Numbers',
-    'Deuteronomy',
-    'Joshua',
-    'Judges',
-    'Ruth',
-    '1 Samuel',
-    '2 Samuel',
-    '1 Kings',
-    '2 Kings',
-    '1 Chronicles',
-    '2 Chronicles',
-    'Ezra',
-    'Nehemiah',
-    'Esther',
-    'Job',
-    'Psalm',
-    'Psalms',
-    'Proverbs',
-    'Ecclesiastes',
-    'Song of Solomon',
-    'Isaiah',
-    'Jeremiah',
-    'Lamentations',
-    'Ezekiel',
-    'Daniel',
-    'Hosea',
-    'Joel',
-    'Amos',
-    'Obadiah',
-    'Jonah',
-    'Micah',
-    'Nahum',
-    'Habakkuk',
-    'Zephaniah',
-    'Haggai',
-    'Zechariah',
-    'Malachi',
-    'Matthew',
-    'Mark',
-    'Luke',
-    'John',
-    'Acts',
-    'Romans',
-    '1 Corinthians',
-    '2 Corinthians',
-    'Galatians',
-    'Ephesians',
-    'Philippians',
-    'Colossians',
-    '1 Thessalonians',
-    '2 Thessalonians',
-    '1 Timothy',
-    '2 Timothy',
-    'Titus',
-    'Philemon',
-    'Hebrews',
-    'James',
-    '1 Peter',
-    '2 Peter',
-    '1 John',
-    '2 John',
-    '3 John',
-    'Jude',
-    'Revelation',
-  ]
-
   let provider: BibleAPIDotComProvider
 
   beforeEach(() => {
@@ -91,7 +21,7 @@ describe('BaseBibleAPIProvider - Ref.ly URL validation', () => {
   })
 
   describe('Ref.ly URLs should not return 404', () => {
-    it.each(bibleBooks)(
+    it.each(bookNames)(
       'should return a valid URL for %s chapter 1',
       async (bookName) => {
         // Build the request URL which also sets the reflyUrl
