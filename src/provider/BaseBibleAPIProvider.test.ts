@@ -20,7 +20,7 @@ describe('BaseBibleAPIProvider - Ref.ly URL validation', () => {
     provider = new BibleAPIDotComProvider(mockBibleVersion)
   })
 
-  describe('Ref.ly URLs should not return 404', () => {
+  describe('Ref.ly URLs should not redirect to base URL', () => {
     it.each(bookNames)(
       'should return a valid URL for %s chapter 1',
       async (bookName) => {
@@ -34,17 +34,30 @@ describe('BaseBibleAPIProvider - Ref.ly URL validation', () => {
         expect(reflyUrl).toBeTruthy()
         expect(reflyUrl).toContain('https://ref.ly/')
 
-        // Test that the URL doesn't return 404
+        // Test that the URL doesn't redirect to the base ref.ly page
+        // Invalid links redirect to https://ref.ly/ without the reference
         const response = await fetch(reflyUrl, {
           method: 'HEAD', // Use HEAD to avoid downloading the full page
           redirect: 'follow',
         })
 
-        expect(response.status).not.toBe(404)
+        // Check that the final URL after redirects is not just the base URL
+        // The redirect response that ref.ly gives when sending to base url.
+        expect(response.url).not.toBe('https://ref.ly/')
         expect(response.ok).toBe(true)
       },
       30000 // 30 second timeout for network requests
     )
+  })
+
+  describe('1 Samuel with spaces in book abbreviation', () => {
+    it('should return 307 status from refly', async () => {
+      const response = await fetch('https://ref.ly/1', {
+        method: 'HEAD',
+        redirect: 'follow',
+      })
+      expect(response.url).toBe('https://ref.ly/')
+    })
   })
 
   describe('Ref.ly URL format validation', () => {
