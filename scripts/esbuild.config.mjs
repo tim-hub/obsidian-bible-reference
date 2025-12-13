@@ -1,6 +1,9 @@
 import esbuild from "esbuild";
 import process from "process";
 import builtins from "builtin-modules";
+import path from "path";
+import fs from "fs/promises";
+import { watch } from "fs";
 
 const banner =
 `/*
@@ -10,6 +13,38 @@ if you want to view the source, please visit the github repository of this plugi
 `;
 
 const prod = (process.argv[2] === "production");
+// Allow overriding output directory with env OUT_DIR or third CLI arg
+const outDir = process.env.OUT_DIR || process.argv[3] || './';
+const resolvedOutDir = path.resolve(outDir);
+
+const staticFiles = [
+	'styles.css',
+	'manifest.json',
+	'versions.json',
+];
+
+async function copyStaticFiles() {
+	try {
+
+    if (outDir === './') {
+      return; // Skip copying if output directory is current directory
+    }
+
+		await fs.mkdir(resolvedOutDir, { recursive: true });
+		for (const f of staticFiles) {
+			const src = path.resolve(f);
+			const dest = path.join(resolvedOutDir, path.basename(f));
+			try {
+				await fs.copyFile(src, dest);
+				console.log(`copied ${src} -> ${dest}`);
+			} catch (err) {
+				console.warn(`warning: failed to copy ${src} -> ${dest}:`, err.message);
+			}
+		}
+	} catch (err) {
+		console.error('error ensuring out dir or copying files:', err);
+	}
+}
 
 const context = await esbuild.context({
 	banner: {
@@ -37,13 +72,32 @@ const context = await esbuild.context({
 	logLevel: "info",
 	sourcemap: prod ? false : "inline",
 	treeShaking: true,
-	outfile: "main.js",
+	outdir: resolvedOutDir,
 	minify: prod,
 });
 
 if (prod) {
 	await context.rebuild();
+	// Copy static files for production build
+	await copyStaticFiles();
+	console.log('Built to', resolvedOutDir);
 	process.exit(0);
 } else {
 	await context.watch();
+	// Initial copy for dev/watch so OUT_DIR has static assets immediately
+	await copyStaticFiles();
+	console.log('Watching — output ->', resolvedOutDir);
+
+	// Watch the static files and copy on change so dev:out stays up-to-date
+	for (const f of staticFiles) {
+		try {
+			watch(f, { persistent: false }, (eventType) => {
+				if (eventType === 'change' || eventType === 'rename') {
+					copyStaticFiles().catch(err => console.error('error copying static files:', err));
+				}
+			});
+		} catch (err) {
+			console.warn(`warning: could not watch ${f}:`, err.message);
+		}
+	}
 }
