@@ -9,6 +9,7 @@ import BibleReferencePlugin from './../main'
 import {
   allBibleVersionsWithLanguageNameAlphabetically,
   DEFAULT_BIBLE_VERSION,
+  LOGOS_SUPPORTED_TRANSLATIONS,
 } from '../data/BibleVersionCollection'
 import { IBibleVersion } from '../interfaces/IBibleVersion'
 import {
@@ -233,7 +234,7 @@ Obsidian Bible Reference  is proudly powered by
         .setName('Add Internal Linking to the Verse Numbers')
         .setDesc(
           'Choose how verse numbers should link internally to match your system. ' +
-            'Warning: Links will only work if matching notes/block IDs exist in your vault.'
+          'Warning: Links will only work if matching notes/block IDs exist in your vault.'
         )
         .addDropdown((dropdown) => {
           dropdown
@@ -248,13 +249,38 @@ Obsidian Bible Reference  is proudly powered by
               new Notice('Internal Linking Format Updated')
             })
         })
+      this.setUpLogosSettings(this.expertSettingContainer)
       // this.setUpOptOutEventsOptions(this.expertSettingContainer)
     }
+  }
+
+  private setUpLogosSettings(container: HTMLElement): void {
+    new Setting(container)
+      .setName('Enable Logos URI Links')
+      .setDesc(
+        'Enable or disable Logos URI links (ref.ly). When enabled, only Logos-supported Bible versions will be available in the default version list.'
+      )
+      .addToggle((toggle) => {
+        toggle
+          .setValue(!!this.plugin.settings?.logosURIEnabled)
+          .onChange(async (value) => {
+            this.plugin.settings.logosURIEnabled = value
+            await this.plugin.saveSettings()
+            this.display() // Re-render to update the version list
+          })
+      })
   }
 
   private setUpVersionSettingsAndVersionOptions(): void {
     let allAvailableVersionOptions =
       allBibleVersionsWithLanguageNameAlphabetically
+
+    if (this.plugin.settings.logosURIEnabled) {
+      allAvailableVersionOptions = allAvailableVersionOptions.filter((v) =>
+        LOGOS_SUPPORTED_TRANSLATIONS.some((l) => l.key === v.key)
+      )
+    }
+
     const disableBibleAPI = false
     if (disableBibleAPI) {
       allAvailableVersionOptions = allAvailableVersionOptions.filter((v) => {
@@ -278,8 +304,7 @@ Obsidian Bible Reference  is proudly powered by
           dropdown.addOption(
             version.key,
             escapeHtml(
-              `${version.language} - (${version.key.toUpperCase()}) - ${
-                version.versionName
+              `${version.language} - (${version.key.toUpperCase()}) - ${version.versionName
               } @${version.apiSource.name}`
             )
           )
@@ -317,7 +342,7 @@ Obsidian Bible Reference  is proudly powered by
         dropdown
           .setValue(
             this.plugin.settings.bibleVersionStatusIndicator ??
-              BibleVersionNameLengthEnum.Short
+            BibleVersionNameLengthEnum.Short
           )
           .onChange(async (value) => {
             this.plugin.settings.bibleVersionStatusIndicator =
@@ -344,7 +369,7 @@ Obsidian Bible Reference  is proudly powered by
         dropdown
           .setValue(
             this.plugin.settings.referenceLinkPosition ??
-              BibleVerseReferenceLinkPosition.None
+            BibleVerseReferenceLinkPosition.None
           )
           .onChange(async (value) => {
             this.plugin.settings.referenceLinkPosition =
@@ -425,7 +450,7 @@ Obsidian Bible Reference  is proudly powered by
         dropdown
           .setValue(
             this.plugin.settings.verseNumberFormatting ??
-              BibleVerseNumberFormat.Period
+            BibleVerseNumberFormat.Period
           )
           .onChange(async (value) => {
             this.plugin.settings.verseNumberFormatting =
