@@ -10,15 +10,15 @@ import { BaseBibleAPIProvider } from './BaseBibleAPIProvider'
  * ['cherokee', 'bbe', 'kjv', 'oeb-us', 'web', 'oeb-cw', 'webbe', 'clementine', 'almeida', 'rccv']
  */
 
-const bibleGatewaySupportedTranslations = [
-  'bbe',
-  'clementine',
-  'oeb-us',
-  'oeb-cw',
-  'almeida',
-  'rccv',
-  'cherokee',
-]
+// const bibleGatewaySupportedTranslations = [
+//   'bbe',
+//   'clementine',
+//   'oeb-us',
+//   'oeb-cw',
+//   'almeida',
+//   'rccv',
+//   'cherokee',
+// ]
 
 export class BibleAPIDotComProvider extends BaseBibleAPIProvider {
   public constructor(bibleVersion: IBibleVersion) {
@@ -65,12 +65,6 @@ export class BibleAPIDotComProvider extends BaseBibleAPIProvider {
      * BibleAPI.com is a pure API
      * We used the Bible Gateway URL for the verse reference link
      */
-    if (
-      this._versionKey in bibleGatewaySupportedTranslations &&
-      !this.bibleGatewayUrl
-    ) {
-      return this._currentQueryUrl
-    }
     if (this._versionKey === 'webbe') {
       //   replace bibleGatewayUrl webbe to web
       return this.bibleGatewayUrl.replace('webbe', 'web')
