@@ -2,6 +2,7 @@
 
 import { BibleReferencePluginSettings } from '../data/constants'
 import { VerseReference } from './splitBibleReference'
+import { LOGOS_SUPPORTED_TRANSLATIONS } from '../data/BibleVersionCollection'
 
 /**
  * Mapping of standard book names to Logos Bible Software abbreviations.
@@ -145,9 +146,18 @@ export function getLogosLink(
     verseReference
   const translation = settings.bibleVersion || 'esv'
 
+  let logosTranslation = translation
+  const isSupported = LOGOS_SUPPORTED_TRANSLATIONS.some(
+    (l) => l.key === translation
+  )
+
+  if (!isSupported) {
+    logosTranslation = settings.logosFallbackVersion || LOGOS_SUPPORTED_TRANSLATIONS[0].key
+  }
+
   try {
     const url = getLogosUrl(
-      translation,
+      logosTranslation,
       bookName,
       chapterNumber,
       verseNumber,

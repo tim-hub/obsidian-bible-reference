@@ -45,4 +45,20 @@ describe('referenceLogosLinking', () => {
       'https://ref.ly/logosres/niv2011?ref=BibleNIV.Jn3.16'
     )
   })
+
+  test('getLogosLink should fall back to specified supported version for unsupported translation', () => {
+    const settings = {
+      bibleVersion: 'bbe', // Not Logos-supported
+      logosFallbackVersion: 'nasb',
+    } as BibleReferencePluginSettings
+    const verseReference = {
+      bookName: 'John',
+      chapterNumber: 3,
+      verseNumber: 16,
+    }
+    const link = getLogosLink(settings, verseReference)
+    // Should use nasb in URL (nasb95), but BBE in display text
+    expect(link).toContain('https://ref.ly/logosres/nasb95?ref=BibleNASB.Jn3.16')
+    expect(link).toContain('[John 3:16 - BBE]')
+  })
 })
