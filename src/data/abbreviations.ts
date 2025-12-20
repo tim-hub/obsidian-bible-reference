@@ -3,7 +3,7 @@
  * https://github.com/TehShrike/books-of-the-bible/blob/master/index.json
  * This is not used so far, todo consider delete this or use this
  */
-export const books = [
+export const ALL_BOOKS = [
   {
     name: 'Genesis',
     aliases: ['Gen'],
@@ -281,7 +281,7 @@ export const books = [
 ]
 
 // https://gist.github.com/danott/615135
-const booksYouVersion = {
+const BOOKS_YOUVERSION = {
   gen: 'Genesis',
   exo: 'Exodus',
   lev: 'Leviticus',
@@ -351,7 +351,7 @@ const booksYouVersion = {
 }
 
 //  https://gist.github.com/aaronshaf/7862132
-const OSISBookAbbreviations = [
+const OSI_BOOKS = [
   'Gen',
   'Exod',
   'Lev',
@@ -421,7 +421,7 @@ const OSISBookAbbreviations = [
 ]
 
 // https://gist.github.com/mastastealth/cd5e12f6c0960408a3ac
-export const bookNames = [
+export const BOOK_NAMES = [
   'Genesis',
   'Exodus',
   'Leviticus',
@@ -493,7 +493,7 @@ export const bookNames = [
 /**
  * Mapping of standard book names to Blue Letter Bible three-character codes.
  */
-export const blbBookCodes: { [key: string]: string } = {
+export const BLB_BOOK_CODES: { [key: string]: string } = {
   Genesis: 'Gen',
   Exodus: 'Exo',
   Leviticus: 'Lev',
@@ -566,7 +566,7 @@ export const blbBookCodes: { [key: string]: string } = {
  * Logos ref.ly abbreviations for Bible books
  * Used for generating ref.ly URLs
  */
-export const abbreviationsLogos: { [key: string]: string } = {
+export const LOGOS_BOOK_CODES: { [key: string]: string } = {
   Genesis: 'Ge',
   Exodus: 'Ex',
   Leviticus: 'Le',
@@ -636,11 +636,11 @@ export const abbreviationsLogos: { [key: string]: string } = {
   Revelation: 'Re',
 }
 
-export const bookAbbreviations = OSISBookAbbreviations
 export const matchingBooks: string[] = [
-  ...bookAbbreviations,
-  ...bookNames,
-  ...Object.keys(booksYouVersion),
-  ...Object.keys(blbBookCodes),
-  ...Object.keys(abbreviationsLogos),
+  ...ALL_BOOKS.map((b) => b.name),
+  ...OSI_BOOKS,
+  ...BOOK_NAMES,
+  ...Object.keys(BOOKS_YOUVERSION),
+  ...Object.keys(BLB_BOOK_CODES),
+  ...Object.keys(LOGOS_BOOK_CODES),
 ]

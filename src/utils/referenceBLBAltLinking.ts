@@ -2,7 +2,7 @@
 
 import { BibleReferencePluginSettings } from '../data/constants'
 import { VerseReference } from './splitBibleReference'
-import { blbBookCodes } from '../data/abbreviations'
+import { BLB_BOOK_CODES } from '../data/abbreviations'
 
 /**
  * Generates a Blue Letter Bible URL for a given verse reference.
@@ -15,7 +15,7 @@ export function getBLBUrl(
   verseNumber: number,
   verseNumberEnd?: number
 ): string {
-  const bookCode = blbBookCodes[bookName]
+  const bookCode = BLB_BOOK_CODES[bookName]
   if (!bookCode) {
     throw new Error(`Book code not found for ${bookName}`)
   }
