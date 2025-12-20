@@ -36,7 +36,11 @@ export abstract class BaseBibleAPIProvider {
     return this._currentQueryUrl
   }
 
-  protected abstract prepareVerseLinkUrl(): string
+  /**
+   * Prepare the Verse Link URL for the verse reference
+   * @protected
+   */
+  protected abstract getVerseReferenceLink(): string
 
   /**
    * Get the Callout Link URL for the verse query
@@ -44,7 +48,7 @@ export abstract class BaseBibleAPIProvider {
    * In the Bolly Life interface, it's just the same URL location except without `/get-text`
    */
   public get VerseLinkURL(): string {
-    return this.prepareVerseLinkUrl()
+    return this.getVerseReferenceLink()
   }
 
   /**
