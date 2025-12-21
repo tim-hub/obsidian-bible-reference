@@ -278,6 +278,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "jonzfisher",
+      "name": "Jonathan Fisher",
+      "avatar_url": "https://avatars.githubusercontent.com/u/6652546?v=4",
+      "profile": "http://www.jonzfisher.com",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
