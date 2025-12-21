@@ -587,18 +587,6 @@ export const BibleVersionCollection: IBibleVersion[] = [
   ...BibleVersionCollectionUkrainian,
 ]
 
-export const LOGOS_SUPPORTED_TRANSLATIONS = [
-  { key: 'niv2011', name: 'NIV' },
-  { key: 'nasb', name: 'NASB' },
-  { key: 'msg', name: 'MSG' },
-  { key: 'esv', name: 'ESV' },
-  { key: 'lsb', name: 'LSB' },
-  { key: 'nlt', name: 'NLT' },
-  { key: 'kjv', name: 'KJV' },
-  { key: 'nkjv', name: 'NKJV' },
-  { key: 'rsv', name: 'RSV' },
-]
-
 export const DEFAULT_BIBLE_VERSION = BibleVersionCollection.find(
   (bibleVersion) => bibleVersion.key === DEFAULT_BIBLE_VERSION_KEY
 ) as IBibleVersion
@@ -620,3 +608,15 @@ export const allBibleVersionsWithLanguageNameAlphabetically: IBibleVersion[] =
       return languageCompare
     }
   })
+
+export const LOGOS_SUPPORTED_TRANSLATIONS = [
+  { key: 'niv2011', name: 'NIV' },
+  { key: 'nasb', name: 'NASB' },
+  { key: 'msg', name: 'MSG' },
+  { key: 'esv', name: 'ESV' },
+  { key: 'lsb', name: 'LSB' },
+  { key: 'nlt', name: 'NLT' },
+  { key: 'kjv', name: 'KJV' },
+  { key: 'nkjv', name: 'NKJV' },
+  { key: 'rsv', name: 'RSV' },
+]
