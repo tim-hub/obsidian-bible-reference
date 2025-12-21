@@ -122,36 +122,23 @@ export class VerseSuggesting
   }
 
   protected getReferenceLink(): string {
-    console.debug('getting reference link')
-    const url = this.bibleProvider.getOriginalVerseReferenceLink()
-    console.debug(url, 'reference link')
-    return url
+    return this.bibleProvider.getOriginalVerseReferenceLink()
   }
 
   protected getVerseReferenceLink(): string {
-    let verseLink = ''
-    if (
-      this.settings?.showVerseTranslation &&
-      this.settings?.enableHyperlinking
-    ) {
-      verseLink = ` [${
-        this.bibleProvider.BibleReferenceHead
-      } - ${this.bibleVersion.toUpperCase()}](${this.getReferenceLink()})`
-    } else if (
-      this.settings?.showVerseTranslation &&
-      !this.settings?.enableHyperlinking
-    ) {
-      verseLink = ` ${
-        this.bibleProvider.BibleReferenceHead
-      } - ${this.bibleVersion.toUpperCase()}`
-    } else if (
-      !this.settings?.showVerseTranslation &&
-      this.settings?.enableHyperlinking
-    ) {
-      verseLink = ` [${this.bibleProvider.BibleReferenceHead}](${this.getReferenceLink()})`
-    } else {
-      verseLink = ` ${this.bibleProvider.BibleReferenceHead}`
+    const head = this.bibleProvider.BibleReferenceHead
+    const version = this.settings?.showVerseTranslation
+      ? ` - ${this.bibleVersion.toUpperCase()}`
+      : ''
+    const label = `${head}${version}`
+
+    // keep the original leading space that the previous implementation returned
+    const leading = ' '
+
+    if (this.settings?.enableHyperlinking) {
+      return `${leading}[${label}](${this.getReferenceLink()})`
     }
-    return verseLink
+
+    return `${leading}${label}`
   }
 }
