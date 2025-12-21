@@ -2,6 +2,24 @@ import { IVerse } from '../interfaces/IVerse'
 import { IBibleVersion } from '../interfaces/IBibleVersion'
 import { BaseBibleAPIProvider } from './BaseBibleAPIProvider'
 
+/**
+ * import { allBibleVersionsWithLanguageNameAlphabetically } from '../data/BibleVersionCollection'
+ * const translationKeysFromBibleAPIDotCom: string[] = allBibleVersionsWithLanguageNameAlphabetically.filter(
+ *     (version) => version.apiSource.name === 'Bible API'
+ *   ).map((version) => version.key)
+ * ['cherokee', 'bbe', 'kjv', 'oeb-us', 'web', 'oeb-cw', 'webbe', 'clementine', 'almeida', 'rccv']
+ */
+
+// const bibleGatewaySupportedTranslations = [
+//   'bbe',
+//   'clementine',
+//   'oeb-us',
+//   'oeb-cw',
+//   'almeida',
+//   'rccv',
+//   'cherokee',
+// ]
+
 export class BibleAPIDotComProvider extends BaseBibleAPIProvider {
   public constructor(bibleVersion: IBibleVersion) {
     super(bibleVersion)
@@ -29,37 +47,22 @@ export class BibleAPIDotComProvider extends BaseBibleAPIProvider {
           ? this.BibleVersionKey
           : ''
     }`
-
-    // setup the bible gateway url
-    this.bibleGatewayUrl = this.buildBibleGatewayUrl(
-      bookName,
-      chapter,
-      verses
-    ).replace(/ /g, '+') // Remove spaces in Book names for URL.
     return this._currentQueryUrl
   }
 
-  protected prepareVerseLinkUrl(): string {
-    if (
-      this._versionKey in
-        [
-          'bbe',
-          'clementine',
-          'oeb-us',
-          'oeb-cw',
-          'almeida',
-          'rccv',
-          'cherokee',
-        ] &&
-      !this.bibleGatewayUrl
-    ) {
-      return this._currentQueryUrl
-    }
-    if (this._versionKey === 'webbe') {
-      //   replace bibleGatewayUrl webbe to web
-      return this.bibleGatewayUrl.replace('webbe', 'web')
-    }
-    return this.bibleGatewayUrl
+  /**
+   * todo reference need to switch trasnaltion key
+   *     /**
+   *      * BibleAPI.com is a pure API
+   *      * We used the Bible Gateway URL for the verse reference link
+   *
+   *     if (this._versionKey === 'webbe') {
+   *       //   replace bibleGatewayUrl webbe to web
+   *       return this.bibleGatewayUrl.replace('webbe', 'web')
+   *     }
+   */
+  public getOriginalVerseReferenceLink(): string {
+    return super.getOriginalVerseReferenceLink()
   }
 
   /**

@@ -9,7 +9,6 @@ import BibleReferencePlugin from './../main'
 import {
   allBibleVersionsWithLanguageNameAlphabetically,
   DEFAULT_BIBLE_VERSION,
-  LOGOS_SUPPORTED_TRANSLATIONS,
 } from '../data/BibleVersionCollection'
 import { IBibleVersion } from '../interfaces/IBibleVersion'
 import {
@@ -74,6 +73,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     // 2 options for reference
     this.setUpShowVerseTranslationOptions()
     this.setUpHyperlinkingOptions()
+    this.setUpSourceOfReferenceOptions()
 
     this.setUpVerseFormatOptions()
     this.setUpVerseNumberFormatOptions()
@@ -211,26 +211,6 @@ Obsidian Bible Reference  is proudly powered by
         })
 
       new Setting(this.expertSettingContainer)
-        .setName('BLB Reference Alternative HyperLinking')
-        .setDesc(
-          'Enter a Blue Letter Bible Version Code to link Bible references to BLB. This affects only the link, not the text, and hides the version display. Invalid codes break the link.'
-        )
-        .setTooltip('Please make sure the BLB Version Code is accurate')
-        .addText((text) => {
-          text
-            .setPlaceholder('e.g., KJV')
-            .setValue(this.plugin.settings.versionCodeBLB || '')
-            .onChange(async (value) => {
-              this.plugin.settings.versionCodeBLB = value
-              await this.plugin.saveSettings()
-              // new Notice(`Use ${value} for Blue Letter Bible Reference Hyperlinking`);
-            })
-          if (!this.plugin.settings.enableHyperlinking) {
-            text.setDisabled(true)
-          }
-        })
-
-      new Setting(this.expertSettingContainer)
         .setName('Add Internal Linking to the Verse Numbers')
         .setDesc(
           'Choose how verse numbers should link internally to match your system. ' +
@@ -249,26 +229,8 @@ Obsidian Bible Reference  is proudly powered by
               new Notice('Internal Linking Format Updated')
             })
         })
-      this.setUpLogosSettings(this.expertSettingContainer)
       // this.setUpOptOutEventsOptions(this.expertSettingContainer)
     }
-  }
-
-  private setUpLogosSettings(container: HTMLElement): void {
-    new Setting(container)
-      .setName('Use Logos Bible Study For Reference Link')
-      .setDesc(
-        'Enable or disable Logos URI links (ref.ly). When enabled, and if the translation is not supported by Logos, it will fall back to a supported version for the link.'
-      )
-      .addToggle((toggle) => {
-        toggle
-          .setValue(!!this.plugin.settings?.logosURIEnabled)
-          .onChange(async (value) => {
-            this.plugin.settings.logosURIEnabled = value
-            await this.plugin.saveSettings()
-            this.display() // Re-render to update the version list
-          })
-      })
   }
 
   private setUpVersionSettingsAndVersionOptions(): void {
@@ -313,29 +275,6 @@ Obsidian Bible Reference  is proudly powered by
             await this.plugin.saveSettings()
             pluginEvent.trigger('bible-reference:settings:version', [value])
             new Notice(`Bible Reference - use Version ${value.toUpperCase()}`)
-          })
-      })
-
-    if (this.plugin.settings.logosURIEnabled) {
-      this.setUpLogosFallbackVersionSettings()
-    }
-  }
-
-  private setUpLogosFallbackVersionSettings(): void {
-    new Setting(this.containerEl)
-      .setName('Logos Reference Link Fallback Version')
-      .setDesc(
-        'Choose the Logos-supported Bible version to use for the link if the default version is not supported. Turn this feature off in the expert settings below.'
-      )
-      .addDropdown((dropdown) => {
-        LOGOS_SUPPORTED_TRANSLATIONS.forEach((version) => {
-          dropdown.addOption(version.key, version.name)
-        })
-        dropdown
-          .setValue(this.plugin.settings.logosFallbackVersion || 'niv2011')
-          .onChange(async (value) => {
-            this.plugin.settings.logosFallbackVersion = value
-            await this.plugin.saveSettings()
           })
       })
   }
@@ -454,6 +393,37 @@ Obsidian Bible Reference  is proudly powered by
           await this.plugin.saveSettings()
           pluginEvent.trigger('bible-reference:settings:re-render', [])
         })
+    })
+  }
+
+  private setUpSourceOfReferenceOptions(): void {
+    const setting = new Setting(this.containerEl)
+      .setName('Reference Link Source')
+      .setDesc(
+        'Choose the source for verse reference links: Original (API provider), Blue Letter Bible, Bible Gateway, or Logos'
+      )
+    setting.setTooltip(
+      'Select which service to use for generating verse reference links. This only applies when hyperlinking is enabled.'
+    )
+    setting.addDropdown((dropdown: DropdownComponent) => {
+      dropdown.addOption('original', 'Original (API Provider)')
+      dropdown.addOption('blb', 'Blue Letter Bible (BLB)')
+      dropdown.addOption('biblegateway', 'Bible Gateway')
+      dropdown.addOption('logos', 'Logos')
+      dropdown.setValue(this.plugin.settings.sourceOfReference || 'original')
+      if (!this.plugin.settings?.enableHyperlinking) {
+        dropdown.setDisabled(true)
+      }
+      dropdown.onChange(async (value) => {
+        this.plugin.settings.sourceOfReference = value as
+          | 'original'
+          | 'blb'
+          | 'biblegateway'
+          | 'logos'
+        await this.plugin.saveSettings()
+        pluginEvent.trigger('bible-reference:settings:re-render', [])
+        new Notice('Reference Link Source Updated')
+      })
     })
   }
 

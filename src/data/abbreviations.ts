@@ -3,7 +3,7 @@
  * https://github.com/TehShrike/books-of-the-bible/blob/master/index.json
  * This is not used so far, todo consider delete this or use this
  */
-export const books = [
+export const ALL_BOOKS = [
   {
     name: 'Genesis',
     aliases: ['Gen'],
@@ -281,7 +281,7 @@ export const books = [
 ]
 
 // https://gist.github.com/danott/615135
-const booksYouVersion = {
+const BOOKS_YOUVERSION = {
   gen: 'Genesis',
   exo: 'Exodus',
   lev: 'Leviticus',
@@ -351,7 +351,7 @@ const booksYouVersion = {
 }
 
 //  https://gist.github.com/aaronshaf/7862132
-const OSISBookAbbreviations = [
+const OSI_BOOKS = [
   'Gen',
   'Exod',
   'Lev',
@@ -421,7 +421,7 @@ const OSISBookAbbreviations = [
 ]
 
 // https://gist.github.com/mastastealth/cd5e12f6c0960408a3ac
-export const bookNames = [
+export const BOOK_NAMES = [
   'Genesis',
   'Exodus',
   'Leviticus',
@@ -490,9 +490,157 @@ export const bookNames = [
   'Revelation',
 ]
 
-export const bookAbbreviations = OSISBookAbbreviations
+/**
+ * Mapping of standard book names to Blue Letter Bible three-character codes.
+ */
+export const BLB_BOOK_CODES: { [key: string]: string } = {
+  Genesis: 'Gen',
+  Exodus: 'Exo',
+  Leviticus: 'Lev',
+  Numbers: 'Num',
+  Deuteronomy: 'Deu',
+  Joshua: 'Jos',
+  Judges: 'Jdg',
+  Ruth: 'Rth',
+  '1 Samuel': '1Sa',
+  '2 Samuel': '2Sa',
+  '1 Kings': '1Ki',
+  '2 Kings': '2Ki',
+  '1 Chronicles': '1Ch',
+  '2 Chronicles': '2Ch',
+  Ezra: 'Ezr',
+  Nehemiah: 'Neh',
+  Esther: 'Est',
+  Job: 'Job',
+  Psalms: 'Psa',
+  Proverbs: 'Pro',
+  Ecclesiastes: 'Ecc',
+  'Song of Solomon': 'Sng',
+  Isaiah: 'Isa',
+  Jeremiah: 'Jer',
+  Lamentations: 'Lam',
+  Ezekiel: 'Eze',
+  Daniel: 'Dan',
+  Hosea: 'Hos',
+  Joel: 'Joe',
+  Amos: 'Amo',
+  Obadiah: 'Oba',
+  Jonah: 'Jon',
+  Micah: 'Mic',
+  Nahum: 'Nah',
+  Habakkuk: 'Hab',
+  Zephaniah: 'Zep',
+  Haggai: 'Hag',
+  Zechariah: 'Zec',
+  Malachi: 'Mal',
+  Matthew: 'Mat',
+  Mark: 'Mar',
+  Luke: 'Luk',
+  John: 'Jhn',
+  Acts: 'Act',
+  Romans: 'Rom',
+  '1 Corinthians': '1Co',
+  '2 Corinthians': '2Co',
+  Galatians: 'Gal',
+  Ephesians: 'Eph',
+  Philippians: 'Php',
+  Colossians: 'Col',
+  '1 Thessalonians': '1Th',
+  '2 Thessalonians': '2Th',
+  '1 Timothy': '1Ti',
+  '2 Timothy': '2Ti',
+  Titus: 'Tit',
+  Philemon: 'Phm',
+  Hebrews: 'Heb',
+  James: 'Jas',
+  '1 Peter': '1Pe',
+  '2 Peter': '2Pe',
+  '1 John': '1Jn',
+  '2 John': '2Jn',
+  '3 John': '3Jn',
+  Jude: 'Jud',
+  Revelation: 'Rev',
+}
+
+/**
+ * Logos ref.ly abbreviations for Bible books
+ * Used for generating ref.ly URLs
+ */
+export const LOGOS_BOOK_CODES: { [key: string]: string } = {
+  Genesis: 'Ge',
+  Exodus: 'Ex',
+  Leviticus: 'Le',
+  Numbers: 'Nu',
+  Deuteronomy: 'Dt',
+  Joshua: 'Jos',
+  Judges: 'Jdg',
+  Ruth: 'Ru',
+  '1 Samuel': '1Sa',
+  '2 Samuel': '2Sa',
+  '1 Kings': '1Ki',
+  '2 Kings': '2Ki',
+  '1 Chronicles': '1Ch',
+  '2 Chronicles': '2Ch',
+  Ezra: 'Ezr',
+  Nehemiah: 'Ne',
+  Esther: 'Est',
+  Job: 'Job',
+  Psalm: 'Ps',
+  Psalms: 'Ps',
+  Proverbs: 'Pr',
+  Ecclesiastes: 'Ec',
+  'Song of Solomon': 'So',
+  Isaiah: 'Is',
+  Jeremiah: 'Je',
+  Lamentations: 'La',
+  Ezekiel: 'Eze',
+  Daniel: 'Da',
+  Hosea: 'Ho',
+  Joel: 'Joel',
+  Amos: 'Am',
+  Obadiah: 'Ob',
+  Jonah: 'Jon',
+  Micah: 'Mic',
+  Nahum: 'Na',
+  Habakkuk: 'Hab',
+  Zephaniah: 'Zep',
+  Haggai: 'Hag',
+  Zechariah: 'Zec',
+  Malachi: 'Mal',
+  Matthew: 'Mt',
+  Mark: 'Mk',
+  Luke: 'Lk',
+  John: 'Jn',
+  Acts: 'Ac',
+  Romans: 'Ro',
+  '1 Corinthians': '1Co',
+  '2 Corinthians': '2Co',
+  Galatians: 'Ga',
+  Ephesians: 'Eph',
+  Philippians: 'Php',
+  Colossians: 'Col',
+  '1 Thessalonians': '1Th',
+  '2 Thessalonians': '2Th',
+  '1 Timothy': '1Ti',
+  '2 Timothy': '2Ti',
+  Titus: 'Tt',
+  Philemon: 'Phm',
+  Hebrews: 'Heb',
+  James: 'Jas',
+  '1 Peter': '1Pe',
+  '2 Peter': '2Pe',
+  '1 John': '1Jn',
+  '2 John': '2Jn',
+  '3 John': '3Jn',
+  Jude: 'Jud',
+  Revelation: 'Re',
+}
+
 export const matchingBooks: string[] = [
-  ...bookAbbreviations,
-  ...bookNames,
-  ...Object.keys(booksYouVersion),
+  ...ALL_BOOKS.map((b) => b.name),
+  ...OSI_BOOKS,
+  ...BOOK_NAMES,
+  ...Object.keys(BOOKS_YOUVERSION),
+  ...Object.keys(BLB_BOOK_CODES),
+  ...Object.keys(LOGOS_BOOK_CODES),
 ]

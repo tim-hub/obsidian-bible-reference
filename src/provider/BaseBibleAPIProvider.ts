@@ -8,6 +8,7 @@ export abstract class BaseBibleAPIProvider {
   protected _currentQueryUrl: string
   protected _bibleReferenceHead: string
   protected _bibleVersion: IBibleVersion
+  protected _verseReferenceLink: string = ''
   protected bibleGatewayUrl: string = ''
 
   constructor(bibleVersion: IBibleVersion) {
@@ -15,10 +16,7 @@ export abstract class BaseBibleAPIProvider {
     const { key } = bibleVersion
     this._versionKey = key
     this._apiUrl = bibleVersion.apiSource.apiUrl
-  }
-
-  protected get LanguageShortCode(): string | undefined {
-    return this._bibleVersion.code
+    this._verseReferenceLink = ''
   }
 
   /**
@@ -26,25 +24,6 @@ export abstract class BaseBibleAPIProvider {
    */
   public get BibleVersionKey(): string {
     return this._versionKey
-  }
-
-  /**
-   * Get the API URL for the latest query
-   * for example, https://api.scripture.api.bible/v1/bibles/de4e0c8c-9c29-44c7-a8c3-c8a9c1b9d6a0/verses/ESV/
-   */
-  public get QueryURL(): string {
-    return this._currentQueryUrl
-  }
-
-  protected abstract prepareVerseLinkUrl(): string
-
-  /**
-   * Get the Callout Link URL for the verse query
-   * By default it's the Query URL, but for some API there is a provided web app, so it will link to that.
-   * In the Bolly Life interface, it's just the same URL location except without `/get-text`
-   */
-  public get VerseLinkURL(): string {
-    return this.prepareVerseLinkUrl()
   }
 
   /**
@@ -56,22 +35,12 @@ export abstract class BaseBibleAPIProvider {
   }
 
   /**
-   * Get the Bible Gateway URL for the latest query
-   * @returns {string}
-   *   something like this https://www.biblegateway.com/passage/?search=Romans%206:23&version=niv
-   * @param bookName
-   * @param chapter
-   * @param verses
+   * Prepare the Verse Link URL for the verse reference
    * @protected
    */
-  protected buildBibleGatewayUrl(
-    bookName: string,
-    chapter: number,
-    verses: number[]
-  ): string {
-    return `https://www.biblegateway.com/passage/?search=${bookName}+${chapter}:${this.convertVersesToQueryString(
-      verses
-    )}&version=${this._versionKey}`
+  public getOriginalVerseReferenceLink(): string {
+    // By default, use the Bible Gateway URL, be set in each query
+    return this._currentQueryUrl
   }
 
   /**
@@ -82,7 +51,7 @@ export abstract class BaseBibleAPIProvider {
    * @param verses
    * @protected
    */
-  protected convertVersesToQueryString(verses: number[]): string {
+  public convertVersesToQueryString(verses: number[]): string {
     if (verses?.length >= 3) {
       return verses.join('&')
     } else if (verses?.length === 2 && !!verses[1]) {
@@ -92,12 +61,17 @@ export abstract class BaseBibleAPIProvider {
     }
   }
 
+  protected updateOriginalReferenceUrl() {
+    this._verseReferenceLink = this._currentQueryUrl
+    console.log(this._verseReferenceLink, 'updated verse reference link')
+  }
+
   /**
    * The Query Function to get response from bible api then format the response,
    * @param bookName
    * @param chapter
-   * @param verse, optional, if none, whole chapter will be returned
-   * @param versionName, optional, to override default selected version
+   * @param verse
+   * @param versionName
    */
   public async query(
     bookName: string,
@@ -114,6 +88,8 @@ export abstract class BaseBibleAPIProvider {
       verse,
       versionName || this._versionKey
     )
+    this._currentQueryUrl = url
+    this.updateOriginalReferenceUrl()
     console.debug(url, 'url to query')
     try {
       const response = await fetch(url, {
@@ -140,20 +116,6 @@ export abstract class BaseBibleAPIProvider {
   }
 
   /**
-   * Build the request URL from the given parameters, and set the _queryUrl
-   * @param bookName
-   * @param chapter
-   * @param verses
-   * @param versionName
-   */
-  protected abstract buildRequestURL(
-    bookName: string,
-    chapter: number,
-    verses?: number[],
-    versionName?: string
-  ): string
-
-  /**
    * Format the response from the bible api, and set the bible reference head
    * @param data
    * @param bookName
@@ -173,4 +135,18 @@ export abstract class BaseBibleAPIProvider {
     verse: number[],
     versionName: string
   ): IVerse[]
+
+  /**
+   * Build the request URL from the given parameters, and set the _queryUrl
+   * @param bookName
+   * @param chapter
+   * @param verses
+   * @param versionName
+   */
+  protected abstract buildRequestURL(
+    bookName: string,
+    chapter: number,
+    verses?: number[],
+    versionName?: string
+  ): string
 }

@@ -14,7 +14,7 @@ export class BollyLifeProvider extends BaseBibleAPIProvider {
     this._chapterApiUrl = this._apiUrl
   }
 
-  protected prepareVerseLinkUrl(): string {
+  public getOriginalVerseReferenceLink(): string {
     return this._currentQueryUrl.replace('/get-text', '')
   }
 
