@@ -121,7 +121,7 @@ export class VerseSuggesting
     )
   }
 
-  protected getReferenceLink(): string {
+  protected getUrlForReference(): string {
     return this.bibleProvider.getOriginalVerseReferenceLink()
   }
 
@@ -136,7 +136,7 @@ export class VerseSuggesting
     const leading = ' '
 
     if (this.settings?.enableHyperlinking) {
-      return `${leading}[${label}](${this.getReferenceLink()})`
+      return `${leading}[${label}](${this.getUrlForReference()})`
     }
 
     return `${leading}${label}`
