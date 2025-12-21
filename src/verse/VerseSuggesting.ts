@@ -21,7 +21,6 @@ export class VerseSuggesting
   public bibleVersion: string
   private bibleProvider: BaseBibleAPIProvider
 
-  // todo make constructor consistent with other classes
   constructor(
     settings: BibleReferencePluginSettings,
     bookName: string,
@@ -122,6 +121,13 @@ export class VerseSuggesting
     )
   }
 
+  protected getReferenceLink(): string {
+    console.debug('getting reference link')
+    const url = this.bibleProvider.getOriginalVerseReferenceLink()
+    console.debug(url, 'reference link')
+    return url
+  }
+
   protected getVerseReferenceLink(): string {
     let verseLink = ''
     if (
@@ -130,9 +136,7 @@ export class VerseSuggesting
     ) {
       verseLink = ` [${
         this.bibleProvider.BibleReferenceHead
-      } - ${this.bibleVersion.toUpperCase()}](${
-        this.bibleProvider.VerseLinkURL
-      })`
+      } - ${this.bibleVersion.toUpperCase()}](${this.getReferenceLink()})`
     } else if (
       this.settings?.showVerseTranslation &&
       !this.settings?.enableHyperlinking
@@ -144,7 +148,7 @@ export class VerseSuggesting
       !this.settings?.showVerseTranslation &&
       this.settings?.enableHyperlinking
     ) {
-      verseLink = ` [${this.bibleProvider.BibleReferenceHead}](${this.bibleProvider.VerseLinkURL})`
+      verseLink = ` [${this.bibleProvider.BibleReferenceHead}](${this.getReferenceLink()})`
     } else {
       verseLink = ` ${this.bibleProvider.BibleReferenceHead}`
     }

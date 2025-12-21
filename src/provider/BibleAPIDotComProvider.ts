@@ -47,29 +47,22 @@ export class BibleAPIDotComProvider extends BaseBibleAPIProvider {
           ? this.BibleVersionKey
           : ''
     }`
-
-    // setup the bible gateway url
-    this.bibleGatewayUrl = this.buildBibleGatewayUrl(
-      bookName,
-      chapter,
-      verses
-    ).replace(/ /g, '+') // Remove spaces in Book names for URL.
     return this._currentQueryUrl
   }
 
   /**
-   * @protected
+   * todo reference need to switch trasnaltion key
+   *     /**
+   *      * BibleAPI.com is a pure API
+   *      * We used the Bible Gateway URL for the verse reference link
+   *
+   *     if (this._versionKey === 'webbe') {
+   *       //   replace bibleGatewayUrl webbe to web
+   *       return this.bibleGatewayUrl.replace('webbe', 'web')
+   *     }
    */
-  protected getVerseReferenceLink(): string {
-    /**
-     * BibleAPI.com is a pure API
-     * We used the Bible Gateway URL for the verse reference link
-     */
-    if (this._versionKey === 'webbe') {
-      //   replace bibleGatewayUrl webbe to web
-      return this.bibleGatewayUrl.replace('webbe', 'web')
-    }
-    return this.bibleGatewayUrl
+  public getOriginalVerseReferenceLink(): string {
+    return super.getOriginalVerseReferenceLink()
   }
 
   /**
