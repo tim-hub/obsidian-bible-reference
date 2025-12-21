@@ -47,6 +47,8 @@ export interface BibleReferencePluginSettings {
   bibleVersionStatusIndicator?: BibleVersionNameLengthEnum
   displayBibleIconPrefixAtHeader?: boolean // this is binding to to header collapsible option
   enableInternalLinking?: string
+  logosURIEnabled?: boolean
+  logosFallbackVersion?: string
 }
 
 export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
@@ -69,6 +71,8 @@ export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
   internalLinkingFormat: 'None',
   enableInternalLinking: 'None',
   versionCodeBLB: '',
+  logosURIEnabled: false,
+  logosFallbackVersion: 'niv2011',
 }
 
 export const API_WAITING_LABEL = 'Loading...'
