@@ -58,7 +58,9 @@ describe('referenceLogosLinking', () => {
     }
     const link = getLogosLink(settings, verseReference)
     // Should use nasb in URL (nasb95), but BBE in display text
-    expect(link).toContain('https://ref.ly/logosres/nasb95?ref=BibleNASB.Jn3.16')
+    expect(link).toContain(
+      'https://ref.ly/logosres/nasb95?ref=BibleNASB.Jn3.16'
+    )
     expect(link).toContain('[John 3:16 - BBE]')
   })
 })

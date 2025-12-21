@@ -152,7 +152,8 @@ export function getLogosLink(
   )
 
   if (!isSupported) {
-    logosTranslation = settings.logosFallbackVersion || LOGOS_SUPPORTED_TRANSLATIONS[0].key
+    logosTranslation =
+      settings.logosFallbackVersion || LOGOS_SUPPORTED_TRANSLATIONS[0].key
   }
 
   try {
