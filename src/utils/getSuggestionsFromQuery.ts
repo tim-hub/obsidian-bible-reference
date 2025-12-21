@@ -35,11 +35,31 @@ export const getSuggestionsFromQuery = async (
   const numbersPartsOfQueryString = queryWithoutPrefix.substring(
     rawBookName.length
   )
-  const numbers = numbersPartsOfQueryString.split(/[-:]+/)
 
-  const chapterNumber = parseInt(numbers[0].trim())
-  const verseNumber = parseInt(numbers[1])
-  const verseEndNumber = numbers.length === 3 ? parseInt(numbers[2]) : undefined
+  // Check for cross-chapter pattern first
+  const crossChapterMatch = numbersPartsOfQueryString.match(
+    /(\d+):(\d+)-(\d+):(\d+)/
+  )
+
+  let chapterNumber: number
+  let verseNumber: number
+  let verseEndNumber: number | undefined
+  let chapterNumberEnd: number | undefined
+  let verseNumberEndChapter: number | undefined
+
+  if (crossChapterMatch) {
+    // Cross-chapter reference
+    chapterNumber = parseInt(crossChapterMatch[1])
+    verseNumber = parseInt(crossChapterMatch[2])
+    chapterNumberEnd = parseInt(crossChapterMatch[3])
+    verseNumberEndChapter = parseInt(crossChapterMatch[4])
+  } else {
+    // Same-chapter parsing
+    const numbers = numbersPartsOfQueryString.split(/[-:]+/)
+    chapterNumber = parseInt(numbers[0].trim())
+    verseNumber = parseInt(numbers[1])
+    verseEndNumber = numbers.length === 3 ? parseInt(numbers[2]) : undefined
+  }
 
   const selectedBibleVersion = getBibleVersion(
     translation ? translation : settings.bibleVersion
@@ -53,7 +73,9 @@ export const getSuggestionsFromQuery = async (
     bookName,
     chapterNumber,
     verseNumber,
-    verseEndNumber
+    verseEndNumber,
+    chapterNumberEnd,
+    verseNumberEndChapter
   )
 
   console.debug(

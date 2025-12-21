@@ -12,6 +12,10 @@ import { IVerseSuggesting } from './IVerseSuggesting'
 import { getBLBUrl } from '../utils/referenceBLBAltLinking'
 import { getLogosUrl } from '../utils/referenceLogosLinking'
 import { getBibleGatewayUrl } from '../utils/referenceLink'
+import {
+  isCrossChapterReference,
+  splitIntoChapterSegments,
+} from '../utils/splitBibleReference'
 
 /**
  * Verse Suggesting
@@ -29,13 +33,17 @@ export class VerseSuggesting
     bookName: string,
     chapterNumber: number,
     verseNumber: number,
-    verseNumberEnd?: number
+    verseNumberEnd?: number,
+    chapterNumberEnd?: number,
+    verseNumberEndChapter?: number
   ) {
     super(settings, {
       bookName: bookName,
       chapterNumber: chapterNumber,
       verseNumber: verseNumber,
       verseNumberEnd: verseNumberEnd,
+      chapterNumberEnd: chapterNumberEnd,
+      verseNumberEndChapter: verseNumberEndChapter,
     })
     this.bibleVersion = settings.bibleVersion
   }
@@ -115,6 +123,12 @@ export class VerseSuggesting
           bibleVersion
         )
     }
+
+    // Check if cross-chapter reference
+    if (isCrossChapterReference(this.verseReference)) {
+      return this.getCrossChapterVerses()
+    }
+
     return this.bibleProvider.query(
       this.verseReference.bookName,
       this.verseReference.chapterNumber,
@@ -124,15 +138,67 @@ export class VerseSuggesting
     )
   }
 
+  /**
+   * Fetch verses from multiple chapters for cross-chapter references
+   */
+  private async getCrossChapterVerses(): Promise<IVerse[]> {
+    const segments = splitIntoChapterSegments(this.verseReference)
+
+    // Execute API calls in parallel for better performance
+    const results = await Promise.allSettled(
+      segments.map((segment) =>
+        this.bibleProvider.query(
+          segment.bookName,
+          segment.chapterNumber,
+          segment.verseEnd
+            ? [segment.verseStart, segment.verseEnd]
+            : [segment.verseStart, 999] // 999 as upper bound for "to end of chapter"
+        )
+      )
+    )
+
+    const verses: IVerse[] = []
+    let hadFailure = false
+
+    results.forEach((result, index) => {
+      if (result.status === 'fulfilled') {
+        verses.push(...result.value)
+      } else {
+        hadFailure = true
+        console.error(
+          `Failed to fetch chapter ${segments[index].chapterNumber}:`,
+          result.reason
+        )
+      }
+    })
+
+    if (hadFailure) {
+      console.warn(
+        'Some chapters could not be loaded. Showing partial results.'
+      )
+    }
+
+    return verses
+  }
+
   protected getUrlForReference(): string {
     const sourceOfReference = this.settings.sourceOfReference || 'biblegateway'
-    const { bookName, chapterNumber, verseNumber, verseNumberEnd } =
-      this.verseReference
+    const {
+      bookName,
+      chapterNumber,
+      verseNumber,
+      verseNumberEnd,
+      chapterNumberEnd,
+      verseNumberEndChapter,
+    } = this.verseReference
 
     // Helper function to generate Bible Gateway URL as fallback
     const getBibleGatewayFallback = (): string => {
       let versesString: string
-      if (verseNumberEnd) {
+      if (isCrossChapterReference(this.verseReference)) {
+        versesString = `${chapterNumber}:${verseNumber}-${chapterNumberEnd}:${verseNumberEndChapter}`
+        return `https://www.biblegateway.com/passage/?search=${encodeURIComponent(bookName)}+${versesString}&version=${this.bibleVersion.toUpperCase()}`
+      } else if (verseNumberEnd) {
         versesString = `${verseNumber}-${verseNumberEnd}`
       } else {
         versesString = verseNumber.toString()
@@ -165,6 +231,9 @@ export class VerseSuggesting
       case 'biblegateway': {
         // Bible Gateway
         try {
+          if (isCrossChapterReference(this.verseReference)) {
+            return getBibleGatewayFallback()
+          }
           let versesString: string
           if (verseNumberEnd) {
             versesString = `${verseNumber}-${verseNumberEnd}`
@@ -222,7 +291,21 @@ export class VerseSuggesting
   }
 
   protected getVerseReferenceLink(): string {
-    const head = this.bibleProvider.BibleReferenceHead
+    // For cross-chapter references, generate the full reference
+    let head: string
+    if (isCrossChapterReference(this.verseReference)) {
+      const {
+        bookName,
+        chapterNumber,
+        verseNumber,
+        chapterNumberEnd,
+        verseNumberEndChapter,
+      } = this.verseReference
+      head = `${bookName} ${chapterNumber}:${verseNumber}-${chapterNumberEnd}:${verseNumberEndChapter}`
+    } else {
+      head = this.bibleProvider.BibleReferenceHead
+    }
+
     const version = this.settings?.showVerseTranslation
       ? ` - ${this.bibleVersion.toUpperCase()}`
       : ''
