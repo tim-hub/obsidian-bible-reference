@@ -4,8 +4,6 @@ import { BibleVerseNumberFormat } from '../data/BibleVerseNumberFormat'
 import { VerseReference } from '../utils/splitBibleReference'
 import { BibleVerseFormat } from '../data/BibleVerseFormat'
 import { IVerse } from '../interfaces/IVerse'
-import { getBLBLink } from '../utils/referenceBLBAltLinking'
-import { getLogosLink } from '../utils/referenceLogosLinking'
 
 export abstract class BaseVerseFormatter {
   protected settings: BibleReferencePluginSettings
@@ -102,17 +100,7 @@ export abstract class BaseVerseFormatter {
       this.settings.referenceLinkPosition ===
         BibleVerseReferenceLinkPosition.AllAbove
     ) {
-      // Conditional BLB link
-      if (this.settings.versionCodeBLB && this.settings.enableHyperlinking) {
-        head += getBLBLink(this.settings, this.verseReference)
-      } else if (
-        this.settings.logosURIEnabled &&
-        this.settings.enableHyperlinking
-      ) {
-        head += getLogosLink(this.settings, this.verseReference)
-      } else {
-        head += this.getVerseReferenceLink()
-      }
+      head += this.getVerseReferenceLink()
     }
     return head
   }
@@ -126,17 +114,7 @@ export abstract class BaseVerseFormatter {
         BibleVerseReferenceLinkPosition.AllAbove
     ) {
       bottom += `> \n `
-      // Conditional BLB link
-      if (this.settings.versionCodeBLB && this.settings.enableHyperlinking) {
-        bottom += getBLBLink(this.settings, this.verseReference)
-      } else if (
-        this.settings.logosURIEnabled &&
-        this.settings.enableHyperlinking
-      ) {
-        bottom += getLogosLink(this.settings, this.verseReference)
-      } else {
-        bottom += this.getVerseReferenceLink()
-      }
+      bottom += this.getVerseReferenceLink()
     }
     return bottom
   }

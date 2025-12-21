@@ -1,7 +1,5 @@
 // utils/referenceBLBAltLinking.ts
 
-import { BibleReferencePluginSettings } from '../data/constants'
-import { VerseReference } from './splitBibleReference'
 import { BLB_BOOK_CODES } from '../data/abbreviations'
 
 /**
@@ -24,32 +22,4 @@ export function getBLBUrl(
     url += `-${verseNumberEnd}`
   }
   return url
-}
-
-/**
- * Generates a formatted BLB hyperlink for the verse reference.
- * @param settings - The plugin settings containing versionCodeBLB.
- * @param verseReference - The verse reference object with book, chapter, and verse details.
- * @returns A Markdown link string or an empty string if there's an error.
- */
-export function getBLBLink(
-  settings: BibleReferencePluginSettings,
-  verseReference: VerseReference
-): string {
-  const { bookName, chapterNumber, verseNumber, verseNumberEnd } =
-    verseReference
-  try {
-    const url = getBLBUrl(
-      settings.versionCodeBLB,
-      bookName,
-      chapterNumber,
-      verseNumber,
-      verseNumberEnd
-    )
-    const reference = `${bookName} ${chapterNumber}:${verseNumber}${verseNumberEnd ? `-${verseNumberEnd}` : ''}`
-    return ` [${reference}](${url})`
-  } catch (error) {
-    console.error('Error generating BLB URL:', error)
-    return '' // Return empty string for broken link
-  }
 }

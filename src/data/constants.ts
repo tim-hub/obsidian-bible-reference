@@ -37,7 +37,6 @@ export interface BibleReferencePluginSettings {
   bookBacklinking?: OutgoingLinkPositionEnum // this is refering to outgoing link
   chapterBacklinking?: OutgoingLinkPositionEnum // this is refering to outgoing link
   internalLinkingFormat: string // this is refering to internal link
-  versionCodeBLB: string
 
   // add this to ui at some point todo
   enableBibleVerseLookupRibbon?: boolean
@@ -47,8 +46,8 @@ export interface BibleReferencePluginSettings {
   bibleVersionStatusIndicator?: BibleVersionNameLengthEnum
   displayBibleIconPrefixAtHeader?: boolean // this is binding to to header collapsible option
   enableInternalLinking?: string
-  logosURIEnabled?: boolean
   logosFallbackVersion?: string
+  sourceOfReference?: 'original' | 'blb' | 'biblegateway' | 'logos'
 }
 
 export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
@@ -70,9 +69,8 @@ export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
   displayBibleIconPrefixAtHeader: true,
   internalLinkingFormat: 'None',
   enableInternalLinking: 'None',
-  versionCodeBLB: '',
-  logosURIEnabled: false,
   logosFallbackVersion: 'niv2011',
+  sourceOfReference: 'biblegateway',
 }
 
 export const API_WAITING_LABEL = 'Loading...'

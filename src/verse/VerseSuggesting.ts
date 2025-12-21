@@ -9,6 +9,9 @@ import { ProviderFactory } from '../provider/ProviderFactory'
 import { BaseBibleAPIProvider } from '../provider/BaseBibleAPIProvider'
 import { BaseVerseFormatter } from './BaseVerseFormatter'
 import { IVerseSuggesting } from './IVerseSuggesting'
+import { getBLBUrl } from '../utils/referenceBLBAltLinking'
+import { getLogosUrl } from '../utils/referenceLogosLinking'
+import { getBibleGatewayUrl } from '../utils/referenceLink'
 
 /**
  * Verse Suggesting
@@ -122,7 +125,100 @@ export class VerseSuggesting
   }
 
   protected getUrlForReference(): string {
-    return this.bibleProvider.getOriginalVerseReferenceLink()
+    const sourceOfReference = this.settings.sourceOfReference || 'biblegateway'
+    const { bookName, chapterNumber, verseNumber, verseNumberEnd } =
+      this.verseReference
+
+    // Helper function to generate Bible Gateway URL as fallback
+    const getBibleGatewayFallback = (): string => {
+      let versesString: string
+      if (verseNumberEnd) {
+        versesString = `${verseNumber}-${verseNumberEnd}`
+      } else {
+        versesString = verseNumber.toString()
+      }
+      return getBibleGatewayUrl(
+        this.bibleVersion,
+        bookName,
+        chapterNumber,
+        versesString
+      )
+    }
+
+    switch (sourceOfReference) {
+      case 'blb': {
+        // Blue Letter Bible
+        try {
+          return getBLBUrl(
+            this.bibleVersion,
+            bookName,
+            chapterNumber,
+            verseNumber,
+            verseNumberEnd
+          )
+        } catch (error) {
+          console.error('Error generating BLB URL:', error)
+          return getBibleGatewayFallback()
+        }
+      }
+
+      case 'biblegateway': {
+        // Bible Gateway
+        try {
+          let versesString: string
+          if (verseNumberEnd) {
+            versesString = `${verseNumber}-${verseNumberEnd}`
+          } else {
+            versesString = verseNumber.toString()
+          }
+          return getBibleGatewayUrl(
+            this.bibleVersion,
+            bookName,
+            chapterNumber,
+            versesString
+          )
+        } catch (error) {
+          console.error('Error generating Bible Gateway URL:', error)
+          return getBibleGatewayFallback()
+        }
+      }
+
+      case 'logos': {
+        // Logos
+        try {
+          return getLogosUrl(
+            this.bibleVersion,
+            bookName,
+            chapterNumber,
+            verseNumber,
+            verseNumberEnd
+          )
+        } catch (error) {
+          console.error('Error generating Logos URL:', error)
+          return getBibleGatewayFallback()
+        }
+      }
+
+      case 'original': {
+        // Original (API provider's URL)
+        // Ensure bibleProvider is initialized
+        if (!this.bibleProvider) {
+          const bibleVersion = getBibleVersion(this.bibleVersion)
+          if (bibleVersion) {
+            this.bibleProvider =
+              ProviderFactory.Instance.BuildBibleVersionAPIAdapterFromIBibleVersion(
+                bibleVersion
+              )
+          }
+        }
+        const originalUrl =
+          this.bibleProvider?.getOriginalVerseReferenceLink() || ''
+        return originalUrl || getBibleGatewayFallback()
+      }
+
+      default:
+        return getBibleGatewayFallback()
+    }
   }
 
   protected getVerseReferenceLink(): string {
