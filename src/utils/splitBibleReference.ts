@@ -40,12 +40,34 @@ export const splitBibleReference = (reference: string): VerseReference => {
   const crossChapterMatch = numbersPart.match(/^(\d+):(\d+)-(\d+):(\d+)$/)
 
   if (crossChapterMatch) {
+    const startChapter = parseInt(crossChapterMatch[1])
+    const startVerse = parseInt(crossChapterMatch[2])
+    const endChapter = parseInt(crossChapterMatch[3])
+    const endVerse = parseInt(crossChapterMatch[4])
+
+    // Validate that end chapter comes after start chapter
+    if (endChapter < startChapter) {
+      throw new Error(
+        `Invalid cross-chapter reference: end chapter ${endChapter} must be greater than or equal to start chapter ${startChapter}`
+      )
+    }
+
+    // If same chapter, treat as regular verse range instead
+    if (endChapter === startChapter) {
+      return {
+        bookName,
+        chapterNumber: startChapter,
+        verseNumber: startVerse,
+        verseNumberEnd: endVerse,
+      }
+    }
+
     return {
       bookName,
-      chapterNumber: parseInt(crossChapterMatch[1]),
-      verseNumber: parseInt(crossChapterMatch[2]),
-      chapterNumberEnd: parseInt(crossChapterMatch[3]),
-      verseNumberEndChapter: parseInt(crossChapterMatch[4]),
+      chapterNumber: startChapter,
+      verseNumber: startVerse,
+      chapterNumberEnd: endChapter,
+      verseNumberEndChapter: endVerse,
     }
   }
 

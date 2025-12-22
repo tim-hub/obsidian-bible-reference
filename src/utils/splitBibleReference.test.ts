@@ -139,3 +139,21 @@ test('splitIntoChapterSegments - multiple chapters', () => {
     },
   ])
 })
+
+test('splitBibleReference - validates backward chapter reference throws error', () => {
+  expect(() => {
+    splitBibleReference('Hebrews 10:1-9:14')
+  }).toThrow(
+    'Invalid cross-chapter reference: end chapter 9 must be greater than or equal to start chapter 10'
+  )
+})
+
+test('splitBibleReference - same chapter in cross-chapter format converts to single chapter', () => {
+  // John 3:1-3:16 should be treated as single chapter range
+  expect(splitBibleReference('John 3:1-3:16')).toEqual({
+    bookName: 'John',
+    chapterNumber: 3,
+    verseNumber: 1,
+    verseNumberEnd: 16,
+  })
+})
