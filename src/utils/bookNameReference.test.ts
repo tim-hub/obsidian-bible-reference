@@ -1,4 +1,4 @@
-import { getBookIdFromBookName } from './bookNameReference'
+import { getBookIdFromBookName, getFullBookName } from './bookNameReference'
 
 describe('test bookNameReference', () => {
   it('should return the book id', () => {
@@ -16,8 +16,25 @@ describe('test bookNameReference', () => {
   it('shoud throw an error is code is wrong or cannot find the book', () => {
     try {
       getBookIdFromBookName('Genesis', 'wrongCode')
-    } catch (e) {
-      expect(e.message).toBe('No translation found for language wrongcode')
+    } catch (e: unknown) {
+      const error = e as Error
+      expect(error.message).toBe('No translation found for language wrongcode')
     }
+  })
+})
+
+describe('test getFullBookName', () => {
+  it('should return full book name in English', () => {
+    expect(getFullBookName('Gen', 'en')).toBe('Genesis')
+  })
+
+  it('should return full book name for numbered books', () => {
+    expect(getFullBookName('1 John', 'en')).toBe('1 John')
+  })
+
+  it('should fallback to English name for unsupported language', () => {
+    // When language code is invalid, it should fallback to English
+    const result = getFullBookName('Genesis', 'invalidCode')
+    expect(result).toBe('Genesis')
   })
 })

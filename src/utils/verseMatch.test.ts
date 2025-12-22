@@ -15,6 +15,11 @@ test('test verse not match', () => {
   expect(result).toBe('John3:16')
 })
 
+test('test verse match returns empty for invalid format', () => {
+  const result = verseMatch('not a verse reference')
+  expect(result).toBe('')
+})
+
 test('test trigger prefix', () => {
   const result = matchTriggerPrefix('--')
   expect(result).toBe(true)
