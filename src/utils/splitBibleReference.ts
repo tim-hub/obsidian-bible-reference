@@ -106,7 +106,8 @@ const parseRange = (
   updateChapter: (chapter: number) => void
 ) => {
   const [startVerseStr, endPart] = rangePart.split('-')
-  const startVerse = parseInt(startVerseStr)
+  const startVerse =
+    startVerseStr.toLowerCase() === 'a' ? 1 : parseInt(startVerseStr)
 
   if (endPart.toLowerCase() === 'a') {
     // To end of chapter: 16-a
@@ -117,10 +118,13 @@ const parseRange = (
       verseEndNumber: lastVerse > 0 ? lastVerse : undefined,
     })
   } else if (endPart.includes(':')) {
-    // Multi-chapter range: 3:16-4:2
+    // Multi-chapter range: 3:16-4:2 or 3:16-4:a
     const [endChapterStr, endVerseStr] = endPart.split(':')
     const endChapter = parseInt(endChapterStr)
-    const endVerse = parseInt(endVerseStr)
+    const endVerse =
+      endVerseStr.toLowerCase() === 'a'
+        ? getVerseCount(bookName, endChapter)
+        : parseInt(endVerseStr)
 
     // First chapter: startVerse to end
     const lastVerseOfStartChapter = getVerseCount(bookName, startChapter)

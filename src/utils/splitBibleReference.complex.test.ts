@@ -1,4 +1,5 @@
 import { splitBibleReference } from './splitBibleReference'
+import { getVerseCount } from '../data/BibleVerseData'
 
 describe('splitBibleReference complex queries', () => {
   test('should handle single verse', () => {
@@ -108,6 +109,35 @@ describe('splitBibleReference complex queries', () => {
       chapterNumber: 3,
       verseNumber: 10,
     })
+  })
+
+  test('should handle John 3:a-4:1', () => {
+    const result = splitBibleReference('John 3:a-4:1')
+    // John 3:1 to end, then John 4:1
+    expect(result.chapterVerseRanges).toHaveLength(2)
+    expect(result.chapterVerseRanges[0].chapterNumber).toBe(3)
+    expect(result.chapterVerseRanges[0].verseNumber).toBe(1)
+    expect(result.chapterVerseRanges[0].verseEndNumber).toBe(
+      getVerseCount('John', 3)
+    )
+    expect(result.chapterVerseRanges[1].chapterNumber).toBe(4)
+    expect(result.chapterVerseRanges[1].verseNumber).toBe(1)
+  })
+
+  test('should handle John 3:32-4:a', () => {
+    const result = splitBibleReference('John 3:32-4:a')
+    // John 3:32 to end, then John 4:1 to end
+    expect(result.chapterVerseRanges).toHaveLength(2)
+    expect(result.chapterVerseRanges[0].chapterNumber).toBe(3)
+    expect(result.chapterVerseRanges[0].verseNumber).toBe(32)
+    expect(result.chapterVerseRanges[0].verseEndNumber).toBe(
+      getVerseCount('John', 3)
+    )
+    expect(result.chapterVerseRanges[1].chapterNumber).toBe(4)
+    expect(result.chapterVerseRanges[1].verseNumber).toBe(1)
+    expect(result.chapterVerseRanges[1].verseEndNumber).toBe(
+      getVerseCount('John', 4)
+    )
   })
 
   test('should handle complex combination', () => {

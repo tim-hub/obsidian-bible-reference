@@ -64,9 +64,17 @@ export abstract class BaseVerseFormatter {
           verse.verse !== prevVerse.verse + 1
         ) {
           if (this.settings?.verseFormatting === BibleVerseFormat.Paragraph) {
-            text += ' ---'
+            if (verse.chapter !== prevVerse.chapter) {
+              text += ` --- Chapter ${verse.chapter} ---`
+            } else {
+              text += ' ---'
+            }
           } else {
-            text += '> ---\n'
+            if (verse.chapter !== prevVerse.chapter) {
+              text += `> ---\n> ${verse.chapter}\n> ---\n`
+            } else {
+              text += '> ---\n'
+            }
           }
         }
       }
