@@ -14,5 +14,8 @@ export const getBibleGatewayUrl = (
   chapter: number,
   versesString: string
 ): string => {
-  return `https://www.biblegateway.com/passage/?search=${bookName}+${chapter}:${versesString}&version=${versionKey}`
+  const search = versesString.includes(':')
+    ? `${bookName.replace(/\s+/g, '+')}+${versesString}`
+    : `${bookName.replace(/\s+/g, '+')}+${chapter}:${versesString}`
+  return `https://www.biblegateway.com/passage/?search=${search}&version=${versionKey}`
 }

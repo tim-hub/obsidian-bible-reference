@@ -13,11 +13,7 @@ describe('test bookNameReference', () => {
     expect(getBookIdFromBookName('Génesis', 'sp')).toBe(1)
   })
 
-  it('shoud throw an error is code is wrong or cannot find the book', () => {
-    try {
-      getBookIdFromBookName('Genesis', 'wrongCode')
-    } catch (e) {
-      expect(e.message).toBe('No translation found for language wrongcode')
-    }
+  it('should fallback to English if code is wrong but book name is standard', () => {
+    expect(getBookIdFromBookName('Genesis', 'wrongCode')).toBe(1)
   })
 })

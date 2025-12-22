@@ -12,6 +12,7 @@ import { IVerseSuggesting } from './IVerseSuggesting'
 import { getBLBUrl } from '../utils/referenceBLBAltLinking'
 import { getLogosUrl } from '../utils/referenceLogosLinking'
 import { getBibleGatewayUrl } from '../utils/referenceLink'
+import { VerseReference, getReferenceHead } from '../utils/splitBibleReference'
 
 /**
  * Verse Suggesting
@@ -26,17 +27,9 @@ export class VerseSuggesting
 
   constructor(
     settings: BibleReferencePluginSettings,
-    bookName: string,
-    chapterNumber: number,
-    verseNumber: number,
-    verseNumberEnd?: number
+    verseReference: VerseReference
   ) {
-    super(settings, {
-      bookName: bookName,
-      chapterNumber: chapterNumber,
-      verseNumber: verseNumber,
-      verseNumberEnd: verseNumberEnd,
-    })
+    super(settings, verseReference)
     this.bibleVersion = settings.bibleVersion
   }
 
@@ -46,10 +39,16 @@ export class VerseSuggesting
       this.settings?.bookBacklinking === OutgoingLinkPositionEnum.Header
         ? ` [[${this.verseReference.bookName}]]`
         : ''
-    content +=
-      this.settings?.chapterBacklinking === OutgoingLinkPositionEnum.Header
-        ? ` [[${this.verseReference.bookName} ${this.verseReference.chapterNumber}]]`
-        : ''
+    if (this.settings?.chapterBacklinking === OutgoingLinkPositionEnum.Header) {
+      const uniqueChapters = Array.from(
+        new Set(
+          this.verseReference.chapterVerseRanges.map((r) => r.chapterNumber)
+        )
+      )
+      uniqueChapters.forEach((chapter) => {
+        content += ` [[${this.verseReference.bookName} ${chapter}]]`
+      })
+    }
     return content
   }
 
@@ -60,12 +59,18 @@ export class VerseSuggesting
       bottom += this.settings?.bookTagging
         ? ` #${this.verseReference.bookName.replace(/ /g, '')}` // Remove spaces from book names in tags
         : ''
-      bottom += this.settings?.chapterTagging
-        ? ` #${
-            this.verseReference.bookName.replace(/ /g, '') +
-            this.verseReference.chapterNumber // Remove spaces from book names in tags
+      if (this.settings?.chapterTagging) {
+        const uniqueChapters = Array.from(
+          new Set(
+            this.verseReference.chapterVerseRanges.map((r) => r.chapterNumber)
+          )
+        )
+        uniqueChapters.forEach((chapter) => {
+          bottom += ` #${
+            this.verseReference.bookName.replace(/ /g, '') + chapter
           }`
-        : ''
+        })
+      }
       bottom += ' %%'
     }
     if (
@@ -77,10 +82,18 @@ export class VerseSuggesting
         this.settings?.bookBacklinking === OutgoingLinkPositionEnum.Bottom
           ? ` [[${this.verseReference.bookName}]]`
           : ''
-      bottom +=
+      if (
         this.settings?.chapterBacklinking === OutgoingLinkPositionEnum.Bottom
-          ? ` [[${this.verseReference.bookName} ${this.verseReference.chapterNumber}]]`
-          : ''
+      ) {
+        const uniqueChapters = Array.from(
+          new Set(
+            this.verseReference.chapterVerseRanges.map((r) => r.chapterNumber)
+          )
+        )
+        uniqueChapters.forEach((chapter) => {
+          bottom += ` [[${this.verseReference.bookName} ${chapter}]]`
+        })
+      }
     }
     return bottom + '\n'
   }
@@ -115,46 +128,68 @@ export class VerseSuggesting
           bibleVersion
         )
     }
-    return this.bibleProvider.query(
-      this.verseReference.bookName,
-      this.verseReference.chapterNumber,
-      this.verseReference?.verseNumberEnd
-        ? [this.verseReference.verseNumber, this.verseReference.verseNumberEnd]
-        : [this.verseReference.verseNumber]
-    )
+
+    const allVerses: IVerse[] = []
+    for (const range of this.verseReference.chapterVerseRanges) {
+      const verses = await this.bibleProvider.query(
+        this.verseReference.bookName,
+        range.chapterNumber,
+        range.verseEndNumber
+          ? [range.verseNumber, range.verseEndNumber]
+          : [range.verseNumber]
+      )
+      allVerses.push(...verses)
+    }
+    return allVerses
   }
 
   protected getUrlForReference(): string {
     const sourceOfReference = this.settings.sourceOfReference || 'biblegateway'
-    const { bookName, chapterNumber, verseNumber, verseNumberEnd } =
-      this.verseReference
+    const { bookName, chapterVerseRanges } = this.verseReference
+    const firstRange = chapterVerseRanges[0]
 
     // Helper function to generate Bible Gateway URL as fallback
     const getBibleGatewayFallback = (): string => {
-      let versesString: string
-      if (verseNumberEnd) {
-        versesString = `${verseNumber}-${verseNumberEnd}`
-      } else {
-        versesString = verseNumber.toString()
-      }
+      let versesString = ''
+      chapterVerseRanges.forEach((range, index) => {
+        if (index > 0) {
+          if (
+            range.chapterNumber !== chapterVerseRanges[index - 1].chapterNumber
+          ) {
+            versesString += ';'
+          } else {
+            versesString += ','
+          }
+        }
+        if (
+          range.chapterNumber !==
+          (chapterVerseRanges[index - 1]?.chapterNumber || -1)
+        ) {
+          versesString += `${range.chapterNumber}:`
+        }
+        versesString += range.verseEndNumber
+          ? `${range.verseNumber}-${range.verseEndNumber}`
+          : range.verseNumber.toString()
+      })
+
       return getBibleGatewayUrl(
         this.bibleVersion,
         bookName,
-        chapterNumber,
+        firstRange.chapterNumber,
         versesString
       )
     }
 
     switch (sourceOfReference) {
       case 'blb': {
-        // Blue Letter Bible
+        // Blue Letter Bible - currently only supports one range
         try {
           return getBLBUrl(
             this.bibleVersion,
             bookName,
-            chapterNumber,
-            verseNumber,
-            verseNumberEnd
+            firstRange.chapterNumber,
+            firstRange.verseNumber,
+            firstRange.verseEndNumber
           )
         } catch (error) {
           console.error('Error generating BLB URL:', error)
@@ -165,18 +200,7 @@ export class VerseSuggesting
       case 'biblegateway': {
         // Bible Gateway
         try {
-          let versesString: string
-          if (verseNumberEnd) {
-            versesString = `${verseNumber}-${verseNumberEnd}`
-          } else {
-            versesString = verseNumber.toString()
-          }
-          return getBibleGatewayUrl(
-            this.bibleVersion,
-            bookName,
-            chapterNumber,
-            versesString
-          )
+          return getBibleGatewayFallback()
         } catch (error) {
           console.error('Error generating Bible Gateway URL:', error)
           return getBibleGatewayFallback()
@@ -184,14 +208,14 @@ export class VerseSuggesting
       }
 
       case 'logos': {
-        // Logos
+        // Logos - currently only supports one range
         try {
           return getLogosUrl(
             this.bibleVersion,
             bookName,
-            chapterNumber,
-            verseNumber,
-            verseNumberEnd
+            firstRange.chapterNumber,
+            firstRange.verseNumber,
+            firstRange.verseEndNumber
           )
         } catch (error) {
           console.error('Error generating Logos URL:', error)
@@ -222,7 +246,7 @@ export class VerseSuggesting
   }
 
   protected getVerseReferenceLink(): string {
-    const head = this.bibleProvider.BibleReferenceHead
+    const head = getReferenceHead(this.verseReference)
     const version = this.settings?.showVerseTranslation
       ? ` - ${this.bibleVersion.toUpperCase()}`
       : ''

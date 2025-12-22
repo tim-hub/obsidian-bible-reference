@@ -35,10 +35,10 @@ describe('referenceLogosLinking', () => {
     const settings = {
       bibleVersion: 'niv2011',
     } as BibleReferencePluginSettings
+    // @ts-ignore
     const verseReference = {
       bookName: 'John',
-      chapterNumber: 3,
-      verseNumber: 16,
+      chapterVerseRanges: [{ chapterNumber: 3, verseNumber: 16 }],
     }
     const link = getLogosLink(settings, verseReference)
     expect(link).toContain(
@@ -51,10 +51,10 @@ describe('referenceLogosLinking', () => {
       bibleVersion: 'bbe', // Not Logos-supported
       logosFallbackVersion: 'nasb',
     } as BibleReferencePluginSettings
+    // @ts-ignore
     const verseReference = {
       bookName: 'John',
-      chapterNumber: 3,
-      verseNumber: 16,
+      chapterVerseRanges: [{ chapterNumber: 3, verseNumber: 16 }],
     }
     const link = getLogosLink(settings, verseReference)
     // Should use nasb in URL (nasb95), but BBE in display text

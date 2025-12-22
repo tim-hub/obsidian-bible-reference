@@ -58,13 +58,14 @@ export const getEnhancedVod = async (
         userBibleVersion
       )
 
-    const verses = parsedReference.verseEndNumber
-      ? [parsedReference.verseNumber, parsedReference.verseEndNumber]
-      : [parsedReference.verseNumber]
+    const firstRange = parsedReference.chapterVerseRanges[0]
+    const verses = firstRange?.verseEndNumber
+      ? [firstRange.verseNumber, firstRange.verseEndNumber]
+      : [firstRange.verseNumber]
 
     const enhancedVerse = await provider.query(
       parsedReference.bookName,
-      parsedReference.chapterNumber,
+      firstRange.chapterNumber,
       verses
     )
 

@@ -1,7 +1,7 @@
 // utils/referenceLogosLinking.ts
 
 import { BibleReferencePluginSettings } from '../data/constants'
-import { VerseReference } from './splitBibleReference'
+import { VerseReference, getReferenceHead } from './splitBibleReference'
 import { LOGOS_SUPPORTED_TRANSLATIONS } from '../data/BibleVersionCollection'
 
 /**
@@ -142,8 +142,8 @@ export function getLogosLink(
   settings: BibleReferencePluginSettings,
   verseReference: VerseReference
 ): string {
-  const { bookName, chapterNumber, verseNumber, verseNumberEnd } =
-    verseReference
+  const { bookName, chapterVerseRanges } = verseReference
+  const firstRange = chapterVerseRanges[0]
   const translation = settings.bibleVersion || 'esv'
 
   let logosTranslation = translation
@@ -160,11 +160,11 @@ export function getLogosLink(
     const url = getLogosUrl(
       logosTranslation,
       bookName,
-      chapterNumber,
-      verseNumber,
-      verseNumberEnd
+      firstRange.chapterNumber,
+      firstRange.verseNumber,
+      firstRange.verseEndNumber
     )
-    const reference = `${bookName} ${chapterNumber}:${verseNumber}${verseNumberEnd ? `-${verseNumberEnd}` : ''}`
+    const reference = getReferenceHead(verseReference)
     return ` [${reference} - ${translation.toUpperCase()}](${url})`
   } catch (error) {
     console.error('Error generating Logos URL:', error)
