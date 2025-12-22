@@ -80,8 +80,10 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
         this.plugin.settings.bibleVersion = versionSelectionMatchResult // pick a version
         this.plugin.saveSettings() //todo this is an async function, so it may not be saved before the getSuggestions is called
       }
-      // If no version specified in query, use the current bibleVersion setting
-      // (which may have been set via quick translation hotkey)
+      // When a version IS specified in the query, update the plugin's bibleVersion setting
+      // so that version persists across subsequent lookups (including those from the
+      // quick-translation hotkey). When no version is specified, the fallback to
+      // settings.bibleVersion happens in getSuggestionsFromQuery.
 
       console.debug('trigger on', queryContent)
       return {

@@ -13,7 +13,7 @@ describe('test bookNameReference', () => {
     expect(getBookIdFromBookName('Génesis', 'sp')).toBe(1)
   })
 
-  it('shoud throw an error is code is wrong or cannot find the book', () => {
+  it('should throw an error if code is wrong or cannot find the book', () => {
     try {
       getBookIdFromBookName('Genesis', 'wrongCode')
     } catch (e: unknown) {

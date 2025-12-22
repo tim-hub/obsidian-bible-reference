@@ -142,7 +142,7 @@ export default class BibleReferencePlugin extends Plugin {
     })
   }
 
-  public switchToTranslation(versionKey: string): void {
+  private switchToTranslation(versionKey: string): void {
     this.settings.bibleVersion = versionKey
     this.saveSettings()
     pluginEvent.trigger('bible-reference:settings:version', [versionKey])
