@@ -63,7 +63,6 @@ export abstract class BaseBibleAPIProvider {
 
   protected updateOriginalReferenceUrl() {
     this._verseReferenceLink = this._currentQueryUrl
-    console.log(this._verseReferenceLink, 'updated verse reference link')
   }
 
   /**
