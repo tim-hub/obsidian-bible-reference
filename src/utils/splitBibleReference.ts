@@ -36,8 +36,8 @@ export const splitBibleReference = (reference: string): VerseReference => {
   const chapterVerseRanges: VerseRange[] = []
   let currentChapter = 1
 
-  // Split by comma for multiple verse selections
-  const segments = chapterVersePart.split(',')
+  // Split by comma or semicolon for multiple verse selections
+  const segments = chapterVersePart.split(/[,;]/)
 
   segments.forEach((segment) => {
     // Check for multi-chapter range or chapter start

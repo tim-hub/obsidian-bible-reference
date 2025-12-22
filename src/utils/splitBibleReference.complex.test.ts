@@ -111,6 +111,21 @@ describe('splitBibleReference complex queries', () => {
     })
   })
 
+  test('should handle John 3:34-36; 4:1-2 (semicolon)', () => {
+    const result = splitBibleReference('John 3:34-36; 4:1-2')
+    expect(result.chapterVerseRanges).toHaveLength(2)
+    expect(result.chapterVerseRanges[0]).toEqual({
+      chapterNumber: 3,
+      verseNumber: 34,
+      verseEndNumber: 36,
+    })
+    expect(result.chapterVerseRanges[1]).toEqual({
+      chapterNumber: 4,
+      verseNumber: 1,
+      verseEndNumber: 2,
+    })
+  })
+
   test('should handle John 3:a-4:1', () => {
     const result = splitBibleReference('John 3:a-4:1')
     // John 3:1 to end, then John 4:1
