@@ -129,13 +129,18 @@ export class VerseSuggesting
       return this.getCrossChapterVerses()
     }
 
-    return this.bibleProvider.query(
+    // Single chapter query
+    const verses = await this.bibleProvider.query(
       this.verseReference.bookName,
       this.verseReference.chapterNumber,
       this.verseReference?.verseNumberEnd
         ? [this.verseReference.verseNumber, this.verseReference.verseNumberEnd]
         : [this.verseReference.verseNumber]
     )
+    return verses.map((verse) => ({
+      ...verse,
+      chapter: this.verseReference.chapterNumber,
+    }))
   }
 
   /**
@@ -162,7 +167,12 @@ export class VerseSuggesting
 
     results.forEach((result, index) => {
       if (result.status === 'fulfilled') {
-        verses.push(...result.value)
+        const chapterNumber = segments[index].chapterNumber
+        const versesWithChapter = result.value.map((verse) => ({
+          ...verse,
+          chapter: chapterNumber,
+        }))
+        verses.push(...versesWithChapter)
       } else {
         hadFailure = true
         console.error(
