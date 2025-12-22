@@ -39,6 +39,7 @@ export default class BibleReferencePlugin extends Plugin {
 
     this.verseLookUpModal = new VerseLookupSuggestModal(this, this.settings)
     this.addVerseLookupCommand()
+    this.addQuickTranslationCommands()
     this.addRibbonButton()
 
     this.api = new BibleReferenceAPI(this.app, this.settings)
@@ -136,6 +137,68 @@ export default class BibleReferencePlugin extends Plugin {
       editorCallback: async (editor: Editor, view: MarkdownView) => {
         const vodSuggesting = await this.getAndCachedVerseOfDay()
         editor.replaceSelection(vodSuggesting.allFormattedContent)
+      },
+    })
+  }
+
+  private switchToTranslation(versionKey: string): void {
+    this.settings.bibleVersion = versionKey
+    this.saveSettings()
+    pluginEvent.trigger('bible-reference:settings:version', [versionKey])
+    new Notice(`Bible Reference - switched to ${versionKey.toUpperCase()}`)
+  }
+
+  private addQuickTranslationCommands(): void {
+    this.addCommand({
+      id: 'obr-switch-quick-translation-1',
+      name: 'Switch to Quick Translation 1',
+      callback: () => {
+        const version = this.settings.quickTranslation1
+        if (!version) {
+          new Notice(
+            'Quick Translation 1 is not configured. Set it in Bible Reference settings.'
+          )
+          return
+        }
+        this.switchToTranslation(version)
+      },
+    })
+
+    this.addCommand({
+      id: 'obr-switch-quick-translation-2',
+      name: 'Switch to Quick Translation 2',
+      callback: () => {
+        const version = this.settings.quickTranslation2
+        if (!version) {
+          new Notice(
+            'Quick Translation 2 is not configured. Set it in Bible Reference settings.'
+          )
+          return
+        }
+        this.switchToTranslation(version)
+      },
+    })
+
+    this.addCommand({
+      id: 'obr-switch-quick-translation-3',
+      name: 'Switch to Quick Translation 3',
+      callback: () => {
+        const version = this.settings.quickTranslation3
+        if (!version) {
+          new Notice(
+            'Quick Translation 3 is not configured. Set it in Bible Reference settings.'
+          )
+          return
+        }
+        this.switchToTranslation(version)
+      },
+    })
+
+    this.addCommand({
+      id: 'obr-switch-default-translation',
+      name: 'Switch to Default Translation',
+      callback: () => {
+        this.switchToTranslation(this.settings.defaultBibleVersion)
       },
     })
   }
