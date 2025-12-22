@@ -25,9 +25,6 @@ export enum BibleVersionNameLengthEnum {
 export interface BibleReferencePluginSettings {
   bibleVersion: string // the tmp version selected at editor
   defaultBibleVersion: string
-  quickTranslation1?: string
-  quickTranslation2?: string
-  quickTranslation3?: string
   referenceLinkPosition?: BibleVerseReferenceLinkPosition
   verseFormatting?: BibleVerseFormat
   verseNumberFormatting?: BibleVerseNumberFormat
@@ -56,9 +53,6 @@ export interface BibleReferencePluginSettings {
 export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
   bibleVersion: DEFAULT_BIBLE_VERSION.key,
   defaultBibleVersion: DEFAULT_BIBLE_VERSION.key,
-  quickTranslation1: '',
-  quickTranslation2: '',
-  quickTranslation3: '',
   referenceLinkPosition: BibleVerseReferenceLinkPosition.Header,
   verseFormatting: BibleVerseFormat.SingleLine,
   verseNumberFormatting: BibleVerseNumberFormat.Period,

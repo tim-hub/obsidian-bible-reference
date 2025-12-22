@@ -26,7 +26,6 @@ import {
 import { BibleAPISourceCollection } from '../data/BibleApiSourceCollection'
 import {
   APP_NAMING,
-  BibleReferencePluginSettings,
   BibleVersionNameLengthEnum,
   OutgoingLinkPositionEnum,
 } from '../data/constants'
@@ -68,13 +67,6 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
 
     this.containerEl.createEl('h1', { text: APP_NAMING.appName })
     this.setUpVersionSettingsAndVersionOptions()
-
-    // Quick translation dropdowns
-    const allAvailableVersionOptions =
-      allBibleVersionsWithLanguageNameAlphabetically
-    this.setUpQuickTranslationDropdown(1, allAvailableVersionOptions)
-    this.setUpQuickTranslationDropdown(2, allAvailableVersionOptions)
-    this.setUpQuickTranslationDropdown(3, allAvailableVersionOptions)
 
     this.containerEl.createEl('h2', { text: 'Verses Rendering' })
     this.setUpReferenceLinkPositionOptions()
@@ -283,45 +275,6 @@ Obsidian Bible Reference  is proudly powered by
             await this.plugin.saveSettings()
             pluginEvent.trigger('bible-reference:settings:version', [value])
             new Notice(`Bible Reference - use Version ${value.toUpperCase()}`)
-          })
-      })
-  }
-
-  private setUpQuickTranslationDropdown(
-    slotNumber: 1 | 2 | 3,
-    allAvailableVersionOptions: IBibleVersion[]
-  ): void {
-    const settingKey =
-      `quickTranslation${slotNumber}` as keyof BibleReferencePluginSettings
-
-    new Setting(this.containerEl)
-      .setName(`Quick Translation ${slotNumber}`)
-      .setDesc('Configure a quick-access translation (use hotkey to switch)')
-      .addDropdown((dropdown) => {
-        // Add the empty/none option first
-        dropdown.addOption('', '-- None --')
-
-        // Add all Bible versions
-        allAvailableVersionOptions.forEach((version: IBibleVersion) => {
-          dropdown.addOption(
-            version.key,
-            escapeHtml(
-              `${version.language} - (${version.key.toUpperCase()}) - ${
-                version.versionName
-              } @${version.apiSource.name}`
-            )
-          )
-        })
-
-        dropdown
-          .setValue((this.plugin.settings[settingKey] as string) || '')
-          .onChange(async (value) => {
-            const settings = this.plugin.settings as unknown as Record<
-              string,
-              unknown
-            >
-            settings[settingKey] = value
-            await this.plugin.saveSettings()
           })
       })
   }
