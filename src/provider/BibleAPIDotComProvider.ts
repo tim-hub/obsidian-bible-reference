@@ -75,11 +75,17 @@ export class BibleAPIDotComProvider extends BaseBibleAPIProvider {
    * - translation_note
    * @returns {Promise<IVerse[]>}
    */
-  protected formatBibleVerses(data: {
-    reference: string
-    verses: IVerse[]
-  }): IVerse[] {
+  protected formatBibleVerses(
+    data: {
+      reference: string
+      verses: IVerse[]
+    },
+    bookName: string,
+    chapter: number,
+    verse: number[],
+    versionName: string
+  ): IVerse[] {
     this._bibleReferenceHead = data.reference
-    return data.verses
+    return data.verses.map((v) => ({ ...v, chapter: v.chapter || chapter }))
   }
 }

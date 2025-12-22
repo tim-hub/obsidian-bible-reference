@@ -66,7 +66,7 @@ export class BollyLifeProvider extends BaseBibleAPIProvider {
         }) =>
           ({
             text: verse.text,
-            chapter: verse.chapter,
+            chapter: verse.chapter || chapter,
             book_id: verse.book,
             book_name: bookName, // this might be different than user typed
             verse: verse.verse,
