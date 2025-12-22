@@ -144,7 +144,7 @@ export class VerseSuggesting
   private async getCrossChapterVerses(): Promise<IVerse[]> {
     const segments = splitIntoChapterSegments(this.verseReference)
 
-    // Execute API calls in parallel for better performance
+    // Execute API calls in parallel
     const results = await Promise.allSettled(
       segments.map((segment) =>
         this.bibleProvider.query(

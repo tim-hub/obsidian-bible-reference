@@ -157,3 +157,39 @@ test('splitBibleReference - same chapter in cross-chapter format converts to sin
     verseNumberEnd: 16,
   })
 })
+
+test('splitBibleReference - no space single word book', () => {
+  expect(splitBibleReference('john1:1')).toEqual({
+    bookName: 'john',
+    chapterNumber: 1,
+    verseNumber: 1,
+    verseNumberEnd: undefined,
+  })
+})
+
+test('splitBibleReference - no space numbered book', () => {
+  expect(splitBibleReference('1John1:1')).toEqual({
+    bookName: '1John',
+    chapterNumber: 1,
+    verseNumber: 1,
+    verseNumberEnd: undefined,
+  })
+})
+
+test('splitBibleReference - no space verse range', () => {
+  expect(splitBibleReference('john1:1-5')).toEqual({
+    bookName: 'john',
+    chapterNumber: 1,
+    verseNumber: 1,
+    verseNumberEnd: 5,
+  })
+})
+
+test('splitBibleReference - hybrid space pattern (space after number, no space before chapter)', () => {
+  expect(splitBibleReference('1 John1:1')).toEqual({
+    bookName: '1 John',
+    chapterNumber: 1,
+    verseNumber: 1,
+    verseNumberEnd: undefined,
+  })
+})

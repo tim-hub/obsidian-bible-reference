@@ -1,3 +1,10 @@
+import {
+  NO_SPACE_REFERENCE_REG,
+  HYBRID_SPACE_REFERENCE_REG,
+  CROSS_CHAPTER_REG,
+  CHAPTER_VERSE_SEPARATOR_REG,
+} from './regs'
+
 /**
  * Reference to a verse or a range of verse in the Bible
  */
@@ -28,16 +35,38 @@ export type ChapterQuerySegment = {
  *
  */
 export const splitBibleReference = (reference: string): VerseReference => {
-  // split from last space,
-  const parts = reference.trim().split(' ')
-  const length = parts.length
+  const trimmedRef = reference.trim()
 
-  // the first one or two parts are book name
-  const bookName = parts.slice(0, length - 1).join(' ')
-  const numbersPart = parts[length - 1]
+  let bookName: string
+  let numbersPart: string
+
+  // Try to match hybrid space pattern first: "1 John1:1"
+  const hybridSpaceMatch = trimmedRef.match(HYBRID_SPACE_REFERENCE_REG)
+  if (hybridSpaceMatch) {
+    const [, leadingNumber, bookLetters, chapter, verseInfo] = hybridSpaceMatch
+    bookName = `${leadingNumber} ${bookLetters}`
+    numbersPart = `${chapter}:${verseInfo}`
+  } else {
+    // Try to match pattern without spaces: john1:1 or 1John1:1
+    const noSpaceMatch = trimmedRef.match(NO_SPACE_REFERENCE_REG)
+    if (noSpaceMatch) {
+      // Handle references without spaces
+      const [, leadingNumber, bookLetters, chapter, verseInfo] = noSpaceMatch
+      bookName = leadingNumber + bookLetters
+      numbersPart = `${chapter}:${verseInfo}`
+    } else {
+      // Handle references with spaces (original logic)
+      const parts = trimmedRef.split(' ')
+      const length = parts.length
+
+      // the first one or two parts are book name
+      bookName = parts.slice(0, length - 1).join(' ')
+      numbersPart = parts[length - 1]
+    }
+  }
 
   // Check for cross-chapter pattern: "9:1-10:14"
-  const crossChapterMatch = numbersPart.match(/^(\d+):(\d+)-(\d+):(\d+)$/)
+  const crossChapterMatch = numbersPart.match(CROSS_CHAPTER_REG)
 
   if (crossChapterMatch) {
     const startChapter = parseInt(crossChapterMatch[1])
@@ -72,7 +101,7 @@ export const splitBibleReference = (reference: string): VerseReference => {
   }
 
   // Same chapter logic
-  const numbers = numbersPart.split(/[-:]+/)
+  const numbers = numbersPart.split(CHAPTER_VERSE_SEPARATOR_REG)
 
   const chapterNumber = parseInt(numbers[0].trim())
   const verseNumber = parseInt(numbers[1])
