@@ -196,8 +196,15 @@ export class VerseSuggesting
     const getBibleGatewayFallback = (): string => {
       let versesString: string
       if (isCrossChapterReference(this.verseReference)) {
-        versesString = `${chapterNumber}:${verseNumber}-${chapterNumberEnd}:${verseNumberEndChapter}`
-        return `https://www.biblegateway.com/passage/?search=${encodeURIComponent(bookName)}+${versesString}&version=${this.bibleVersion.toUpperCase()}`
+        versesString = verseNumber.toString()
+        return getBibleGatewayUrl(
+          this.bibleVersion,
+          bookName,
+          chapterNumber,
+          versesString,
+          chapterNumberEnd,
+          verseNumberEndChapter
+        )
       } else if (verseNumberEnd) {
         versesString = `${verseNumber}-${verseNumberEnd}`
       } else {
