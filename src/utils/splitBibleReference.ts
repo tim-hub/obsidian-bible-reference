@@ -117,14 +117,23 @@ const parseRange = (
       verseNumber: startVerse,
       verseEndNumber: lastVerse > 0 ? lastVerse : undefined,
     })
-  } else if (endPart.includes(':')) {
-    // Multi-chapter range: 3:16-4:2 or 3:16-4:a
-    const [endChapterStr, endVerseStr] = endPart.split(':')
-    const endChapter = parseInt(endChapterStr)
-    const endVerse =
-      endVerseStr.toLowerCase() === 'a'
-        ? getVerseCount(bookName, endChapter)
-        : parseInt(endVerseStr)
+  } else if (endPart.includes(':') || /^\d+a$/i.test(endPart.toLowerCase())) {
+    // Multi-chapter range: 3:16-4:2 or 3:16-4:a or 3:32-4a
+    let endChapter: number
+    let endVerse: number
+
+    if (endPart.includes(':')) {
+      const [endChapterStr, endVerseStr] = endPart.split(':')
+      endChapter = parseInt(endChapterStr)
+      endVerse =
+        endVerseStr.toLowerCase() === 'a'
+          ? getVerseCount(bookName, endChapter)
+          : parseInt(endVerseStr)
+    } else {
+      // e.g. "4a"
+      endChapter = parseInt(endPart)
+      endVerse = getVerseCount(bookName, endChapter)
+    }
 
     // First chapter: startVerse to end
     const lastVerseOfStartChapter = getVerseCount(bookName, startChapter)

@@ -68,7 +68,7 @@ describe('BaseVerseFormatter', () => {
       { book_name: 'John', chapter: 4, verse: 1, text: 'v1' },
     ]
     const formatter = new MockFormatter(settings, verseReference, verses)
-    const expected = '> 5. v5 --- Chapter 4 --- 1. v1'
+    const expected = '> 5. v5\n> ---\n> 4\n> ---\n> 1. v1'
     expect(formatter.bodyContent).toBe(expected)
   })
 })

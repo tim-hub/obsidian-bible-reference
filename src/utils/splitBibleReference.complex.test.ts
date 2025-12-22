@@ -140,6 +140,25 @@ describe('splitBibleReference complex queries', () => {
     )
   })
 
+  test('should handle john3:a-4:1 (no space)', () => {
+    const result = splitBibleReference('john3:a-4:1')
+    expect(result.bookName).toBe('john')
+    expect(result.chapterVerseRanges[0].chapterNumber).toBe(3)
+    expect(result.chapterVerseRanges[0].verseNumber).toBe(1)
+  })
+
+  test('should handle John 3:32-4a', () => {
+    const result = splitBibleReference('John 3:32-4a')
+    expect(result.chapterVerseRanges).toHaveLength(2)
+    expect(result.chapterVerseRanges[0].chapterNumber).toBe(3)
+    expect(result.chapterVerseRanges[0].verseNumber).toBe(32)
+    expect(result.chapterVerseRanges[1].chapterNumber).toBe(4)
+    expect(result.chapterVerseRanges[1].verseNumber).toBe(1)
+    expect(result.chapterVerseRanges[1].verseEndNumber).toBe(
+      getVerseCount('John', 4)
+    )
+  })
+
   test('should handle complex combination', () => {
     const result = splitBibleReference('John 3:16-17,19,4:1-2,7')
     // 3:16-17
