@@ -23,6 +23,10 @@ import {
   BibleVerseNumberFormat,
   BibleVerseNumberFormatCollection,
 } from '../data/BibleVerseNumberFormat'
+import {
+  BibleMultiChapterSeparatorFormat,
+  BibleMultiChapterSeparatorFormatCollection,
+} from '../data/BibleMultiChapterSeparatorFormat'
 import { BibleAPISourceCollection } from '../data/BibleApiSourceCollection'
 import {
   APP_NAMING,
@@ -77,6 +81,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
 
     this.setUpVerseFormatOptions()
     this.setUpVerseNumberFormatOptions()
+    this.setUpMultiChapterSeparatorOptions()
     this.setUpBibleIconPrefixToggle()
     this.setUpCollapsibleToggle()
     this.setupCollapsedByDefault()
@@ -446,6 +451,32 @@ Obsidian Bible Reference  is proudly powered by
             console.debug('Bible Verse Number Format To: ' + value)
             await this.plugin.saveSettings()
             new Notice('Bible Verse Format Number Settings Updated')
+          })
+      })
+  }
+
+  private setUpMultiChapterSeparatorOptions(): void {
+    new Setting(this.containerEl)
+      .setName('Multi-Chapter Separator')
+      .setDesc(
+        'Choose how to display verses that span multiple chapters (e.g., John 1:1-2:5)'
+      )
+      .addDropdown((dropdown: DropdownComponent) => {
+        BibleMultiChapterSeparatorFormatCollection.forEach(
+          ({ name, description }) => {
+            dropdown.addOption(name, description)
+          }
+        )
+        dropdown
+          .setValue(
+            this.plugin.settings.multiChapterSeparatorFormat ??
+              BibleMultiChapterSeparatorFormat.ChapterSeparator
+          )
+          .onChange(async (value) => {
+            this.plugin.settings.multiChapterSeparatorFormat =
+              value as BibleMultiChapterSeparatorFormat
+            await this.plugin.saveSettings()
+            new Notice('Multi-Chapter Separator Settings Updated')
           })
       })
   }

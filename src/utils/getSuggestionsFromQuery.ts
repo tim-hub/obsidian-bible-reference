@@ -3,6 +3,7 @@ import { VerseSuggesting } from '../verse/VerseSuggesting'
 import { BOOK_REG } from './regs'
 import { getFullBookName } from './bookNameReference'
 import { getBibleVersion } from '../data/BibleVersionCollection'
+import { splitBibleReference } from './splitBibleReference'
 
 /**
  * Get suggestions from string query
@@ -32,20 +33,29 @@ export const getSuggestionsFromQuery = async (
     return []
   }
 
-  const numbersPartsOfQueryString = queryWithoutPrefix.substring(
-    rawBookName.length
-  )
-  const numbers = numbersPartsOfQueryString.split(/[-:]+/)
-
-  const chapterNumber = parseInt(numbers[0].trim())
-  const verseNumber = parseInt(numbers[1])
-  const verseEndNumber = numbers.length === 3 ? parseInt(numbers[2]) : undefined
-
   const selectedBibleVersion = getBibleVersion(
     translation ? translation : settings.bibleVersion
   )
   const bookName = getFullBookName(rawBookName, selectedBibleVersion?.code)
   console.debug('selected bookName', bookName)
+
+  // Use splitBibleReference for consistent parsing and validation
+  let verseRef
+  try {
+    verseRef = splitBibleReference(queryWithoutPrefix)
+  } catch (error) {
+    // Invalid reference (e.g., backwards chapter reference like Hebrews 10:1-9:14)
+    console.error('Invalid Bible reference:', error)
+    return []
+  }
+
+  const {
+    chapterNumber,
+    verseNumber,
+    verseNumberEnd,
+    chapterNumberEnd,
+    verseNumberEndChapter,
+  } = verseRef
 
   // todo get bibleVersion and language from settings
   const suggestingVerse = new VerseSuggesting(
@@ -53,14 +63,16 @@ export const getSuggestionsFromQuery = async (
     bookName,
     chapterNumber,
     verseNumber,
-    verseEndNumber
+    verseNumberEnd,
+    chapterNumberEnd,
+    verseNumberEndChapter
   )
 
   console.debug(
     bookName,
     chapterNumber,
     verseNumber,
-    verseEndNumber,
+    verseNumberEnd,
     suggestingVerse,
     settings
   )

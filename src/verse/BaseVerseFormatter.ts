@@ -3,6 +3,7 @@ import { BibleVerseReferenceLinkPosition } from '../data/BibleVerseReferenceLink
 import { BibleVerseNumberFormat } from '../data/BibleVerseNumberFormat'
 import { VerseReference } from '../utils/splitBibleReference'
 import { BibleVerseFormat } from '../data/BibleVerseFormat'
+import { BibleMultiChapterSeparatorFormat } from '../data/BibleMultiChapterSeparatorFormat'
 import { IVerse } from '../interfaces/IVerse'
 
 export abstract class BaseVerseFormatter {
@@ -48,12 +49,34 @@ export abstract class BaseVerseFormatter {
       return ''
     }
     let text = ''
+    let previousChapter: number | undefined = undefined
+
     if (this.settings?.verseFormatting === BibleVerseFormat.Paragraph) {
       text = '> '
     } else {
       text = ''
     }
     this.verses.forEach((verse, index) => {
+      // Detect chapter transition
+      const needsSeparator =
+        this.settings?.multiChapterSeparatorFormat ===
+          BibleMultiChapterSeparatorFormat.ChapterSeparator &&
+        previousChapter !== undefined &&
+        verse.chapter !== previousChapter
+
+      console.debug(
+        `Verse ${index}: chapter=${verse.chapter}, previousChapter=${previousChapter}, needsSeparator=${needsSeparator}, setting=${this.settings?.multiChapterSeparatorFormat}`
+      )
+
+      if (needsSeparator) {
+        console.debug('Adding chapter separator')
+        if (this.settings?.verseFormatting === BibleVerseFormat.Paragraph) {
+          text = text.trim() + '\n>\n> ---\n> '
+        } else {
+          text += '> ---\n'
+        }
+      }
+
       let singleVerseText = verse.text.trim()
       if (
         index === this.verses!.length - 1 &&
@@ -74,6 +97,9 @@ export abstract class BaseVerseFormatter {
           '\n'
         // Remove extraneous line breaks in KJV verses.
       }
+
+      // Update previous chapter tracker
+      previousChapter = verse.chapter
     })
     console.debug('text', text)
     return text.trim()
