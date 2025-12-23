@@ -23,6 +23,10 @@ import {
   BibleVerseNumberFormat,
   BibleVerseNumberFormatCollection,
 } from '../data/BibleVerseNumberFormat'
+import {
+  BibleMultiChapterSeparatorFormat,
+  BibleMultiChapterSeparatorFormatCollection,
+} from '../data/BibleMultiChapterSeparatorFormat'
 import { BibleAPISourceCollection } from '../data/BibleApiSourceCollection'
 import {
   APP_NAMING,
@@ -77,6 +81,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
 
     this.setUpVerseFormatOptions()
     this.setUpVerseNumberFormatOptions()
+    this.setUpMultiChapterSeparatorOptions()
     this.setUpBibleIconPrefixToggle()
     this.setUpCollapsibleToggle()
     this.setupCollapsedByDefault()
@@ -214,7 +219,7 @@ Obsidian Bible Reference  is proudly powered by
         .setName('Add Internal Linking to the Verse Numbers')
         .setDesc(
           'Choose how verse numbers should link internally to match your system. ' +
-            'Warning: Links will only work if matching notes/block IDs exist in your vault.'
+          'Warning: Links will only work if matching notes/block IDs exist in your vault.'
         )
         .addDropdown((dropdown) => {
           dropdown
@@ -260,8 +265,7 @@ Obsidian Bible Reference  is proudly powered by
           dropdown.addOption(
             version.key,
             escapeHtml(
-              `${version.language} - (${version.key.toUpperCase()}) - ${
-                version.versionName
+              `${version.language} - (${version.key.toUpperCase()}) - ${version.versionName
               } @${version.apiSource.name}`
             )
           )
@@ -299,7 +303,7 @@ Obsidian Bible Reference  is proudly powered by
         dropdown
           .setValue(
             this.plugin.settings.bibleVersionStatusIndicator ??
-              BibleVersionNameLengthEnum.Short
+            BibleVersionNameLengthEnum.Short
           )
           .onChange(async (value) => {
             this.plugin.settings.bibleVersionStatusIndicator =
@@ -326,7 +330,7 @@ Obsidian Bible Reference  is proudly powered by
         dropdown
           .setValue(
             this.plugin.settings.referenceLinkPosition ??
-              BibleVerseReferenceLinkPosition.None
+            BibleVerseReferenceLinkPosition.None
           )
           .onChange(async (value) => {
             this.plugin.settings.referenceLinkPosition =
@@ -438,7 +442,7 @@ Obsidian Bible Reference  is proudly powered by
         dropdown
           .setValue(
             this.plugin.settings.verseNumberFormatting ??
-              BibleVerseNumberFormat.Period
+            BibleVerseNumberFormat.Period
           )
           .onChange(async (value) => {
             this.plugin.settings.verseNumberFormatting =
@@ -446,6 +450,46 @@ Obsidian Bible Reference  is proudly powered by
             console.debug('Bible Verse Number Format To: ' + value)
             await this.plugin.saveSettings()
             new Notice('Bible Verse Format Number Settings Updated')
+          })
+      })
+  }
+
+  private setUpMultiChapterSeparatorOptions(): void {
+    new Setting(this.containerEl)
+      .setName('Multi-Chapter Separator')
+      .setDesc(
+        'Choose how to display verses that span multiple chapters (e.g., John 1:1-2:5)'
+      )
+      .addDropdown((dropdown: DropdownComponent) => {
+        BibleMultiChapterSeparatorFormatCollection.forEach(
+          ({ name, description }) => {
+            dropdown.addOption(name, description)
+          }
+        )
+        dropdown
+          .setValue(
+            this.plugin.settings.multiChapterSeparatorFormat ??
+            BibleMultiChapterSeparatorFormat.ChapterSeparator
+          )
+          .onChange(async (value) => {
+            this.plugin.settings.multiChapterSeparatorFormat =
+              value as BibleMultiChapterSeparatorFormat
+            await this.plugin.saveSettings()
+            new Notice('Multi-Chapter Separator Settings Updated')
+          })
+      })
+
+    new Setting(this.containerEl)
+      .setName('Show Chapter Number in Separator')
+      .setDesc(
+        'When using a chapter separator, include the chapter number (e.g., "--- 2 ---")'
+      )
+      .addToggle((toggle) => {
+        toggle
+          .setValue(!!this.plugin.settings?.showChapterNumberInSeparator)
+          .onChange(async (value) => {
+            this.plugin.settings.showChapterNumberInSeparator = value
+            await this.plugin.saveSettings()
           })
       })
   }

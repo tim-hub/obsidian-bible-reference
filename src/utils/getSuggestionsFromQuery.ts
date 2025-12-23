@@ -1,8 +1,9 @@
 import { BibleReferencePluginSettings } from '../data/constants'
 import { VerseSuggesting } from '../verse/VerseSuggesting'
+import { BOOK_REG } from './regs'
+import { getFullBookName } from './bookNameReference'
 import { getBibleVersion } from '../data/BibleVersionCollection'
 import { splitBibleReference } from './splitBibleReference'
-import { getFullBookName } from './bookNameReference'
 
 /**
  * Get suggestions from string query
@@ -22,9 +23,12 @@ export const getSuggestionsFromQuery = async (
     settings.defaultBibleVersion
   )
 
-  const verseReference = splitBibleReference(queryWithoutPrefix)
+  const bookNameMatchingResults = queryWithoutPrefix.match(BOOK_REG)
+  const rawBookName = bookNameMatchingResults?.length
+    ? bookNameMatchingResults[0]
+    : undefined
 
-  if (!verseReference.bookName) {
+  if (!rawBookName) {
     console.error(`could not find through query`, queryWithoutPrefix)
     return []
   }
@@ -32,15 +36,46 @@ export const getSuggestionsFromQuery = async (
   const selectedBibleVersion = getBibleVersion(
     translation ? translation : settings.bibleVersion
   )
-  verseReference.bookName = getFullBookName(
-    verseReference.bookName,
-    selectedBibleVersion?.code
+  const bookName = getFullBookName(rawBookName, selectedBibleVersion?.code)
+  console.debug('selected bookName', bookName)
+
+  // Use splitBibleReference for consistent parsing and validation
+  let verseRef
+  try {
+    verseRef = splitBibleReference(queryWithoutPrefix)
+  } catch (error) {
+    // Invalid reference (e.g., backwards chapter reference like Hebrews 10:1-9:14)
+    console.error('Invalid Bible reference:', error)
+    return []
+  }
+
+  const {
+    chapterNumber,
+    verseNumber,
+    verseNumberEnd,
+    chapterNumberEnd,
+    verseNumberEndChapter,
+  } = verseRef
+
+  // todo get bibleVersion and language from settings
+  const suggestingVerse = new VerseSuggesting(
+    settings,
+    bookName,
+    chapterNumber,
+    verseNumber,
+    verseNumberEnd,
+    chapterNumberEnd,
+    verseNumberEndChapter
   )
-  console.debug('selected bookName', verseReference.bookName)
 
-  const suggestingVerse = new VerseSuggesting(settings, verseReference)
-
-  console.debug(suggestingVerse, settings)
+  console.debug(
+    bookName,
+    chapterNumber,
+    verseNumber,
+    verseNumberEnd,
+    suggestingVerse,
+    settings
+  )
   await suggestingVerse.fetchAndSetVersesText()
   return [suggestingVerse]
 }

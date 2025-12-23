@@ -1,205 +1,179 @@
-import { getVerseCount } from '../data/BibleVerseData'
-import { BOOK_REG } from './regs'
+import {
+  NO_SPACE_REFERENCE_REG,
+  HYBRID_SPACE_REFERENCE_REG,
+  CROSS_CHAPTER_REG,
+  CHAPTER_VERSE_SEPARATOR_REG,
+} from './regs'
 
 /**
  * Reference to a verse or a range of verse in the Bible
  */
-export type VerseRange = {
-  chapterNumber: number
-  verseNumber: number
-  verseEndNumber?: number
-}
-
 export type VerseReference = {
   bookName: string
-  chapterVerseRanges: VerseRange[]
+  chapterNumber: number
+  verseNumber: number
+  verseNumberEnd?: number
+  chapterNumberEnd?: number // For cross-chapter references
+  verseNumberEndChapter?: number // End verse in the end chapter
 }
 
 /**
- * Split Bible Reference to book name and a series of chapter/verse ranges.
- * Examples:
- * "John 3:16" => { bookName: "John", chapterVerseRanges: [{ chapterNumber: 3, verseNumber: 16 }] }
- * "John 3:16-17" => { bookName: "John", chapterVerseRanges: [{ chapterNumber: 3, verseNumber: 16, verseEndNumber: 17 }] }
- * "John 3:16,19" => { bookName: "John", chapterVerseRanges: [{ chapterNumber: 3, verseNumber: 16 }, { chapterNumber: 3, verseNumber: 19 }] }
- * "John 3:16-4:2" => { bookName: "John", chapterVerseRanges: [{ chapterNumber: 3, verseNumber: 16, verseEndNumber: 36 }, { chapterNumber: 4, verseNumber: 1, verseEndNumber: 2 }] }
- * "John 3:a" => { bookName: "John", chapterVerseRanges: [{ chapterNumber: 3, verseNumber: 1, verseEndNumber: 36 }] }
+ * Represents a single chapter query segment for API calls
+ */
+export type ChapterQuerySegment = {
+  bookName: string
+  chapterNumber: number
+  verseStart: number
+  verseEnd?: number // undefined means "to end of chapter"
+}
+
+/**
+ * Split Bible Reference to book name, chapter number, and verse number, for example:
+ * 1 Corinthians 1:27 => { bookName: '1 Corinthians', chapterNumber: 1, verseNumber: 27 }
+ * 1 Corinthians 1:27-28 => { bookName: '1 Corinthians', chapterNumber: 1, verseNumber: 27, verseNumberEnd: 28 }
+ * Hebrews 9:1-10:14 => { bookName: 'Hebrews', chapterNumber: 9, verseNumber: 1, chapterNumberEnd: 10, verseNumberEndChapter: 14 }
+ *
  */
 export const splitBibleReference = (reference: string): VerseReference => {
-  const match = reference.match(BOOK_REG)
-  if (!match) {
-    return { bookName: '', chapterVerseRanges: [] }
+  const trimmedRef = reference.trim()
+
+  let bookName: string
+  let numbersPart: string
+
+  // Try to match hybrid space pattern first: "1 John1:1"
+  const hybridSpaceMatch = trimmedRef.match(HYBRID_SPACE_REFERENCE_REG)
+  if (hybridSpaceMatch) {
+    const [, leadingNumber, bookLetters, chapter, verseInfo] = hybridSpaceMatch
+    bookName = `${leadingNumber} ${bookLetters}`
+    numbersPart = `${chapter}:${verseInfo}`
+  } else {
+    // Try to match pattern without spaces: john1:1 or 1John1:1
+    const noSpaceMatch = trimmedRef.match(NO_SPACE_REFERENCE_REG)
+    if (noSpaceMatch) {
+      // Handle references without spaces
+      const [, leadingNumber, bookLetters, chapter, verseInfo] = noSpaceMatch
+      bookName = leadingNumber + bookLetters
+      numbersPart = `${chapter}:${verseInfo}`
+    } else {
+      // Handle references with spaces (original logic)
+      const parts = trimmedRef.split(' ')
+      const length = parts.length
+
+      // the first one or two parts are book name
+      bookName = parts.slice(0, length - 1).join(' ')
+      numbersPart = parts[length - 1]
+    }
   }
 
-  const bookName = match[0].trim()
-  const chapterVersePart = reference.substring(match[0].length).trim()
+  // Check for cross-chapter pattern: "9:1-10:14"
+  const crossChapterMatch = numbersPart.match(CROSS_CHAPTER_REG)
 
-  const chapterVerseRanges: VerseRange[] = []
-  let currentChapter = 1
+  if (crossChapterMatch) {
+    const startChapter = parseInt(crossChapterMatch[1])
+    const startVerse = parseInt(crossChapterMatch[2])
+    const endChapter = parseInt(crossChapterMatch[3])
+    const endVerse = parseInt(crossChapterMatch[4])
 
-  // Split by comma or semicolon for multiple verse selections
-  const segments = chapterVersePart.split(/[,;]/)
-
-  segments.forEach((segment) => {
-    // Check for multi-chapter range or chapter start
-    if (segment.includes(':')) {
-      const colonIndex = segment.indexOf(':')
-      const chapterPart = segment.substring(0, colonIndex)
-      const versePart = segment.substring(colonIndex + 1)
-      currentChapter = parseInt(chapterPart)
-
-      if (versePart.toLowerCase() === 'a') {
-        // Entire chapter: John 3:a
-        const lastVerse = getVerseCount(bookName, currentChapter)
-        chapterVerseRanges.push({
-          chapterNumber: currentChapter,
-          verseNumber: 1,
-          verseEndNumber: lastVerse > 0 ? lastVerse : undefined,
-        })
-      } else if (versePart.includes('-')) {
-        // Range within or across chapters: 3:16-17 or 3:16-4:2 or 3:16-a
-        parseRange(
-          bookName,
-          currentChapter,
-          versePart,
-          chapterVerseRanges,
-          (chapter) => (currentChapter = chapter)
-        )
-      } else {
-        // Single verse with chapter: 3:16
-        chapterVerseRanges.push({
-          chapterNumber: currentChapter,
-          verseNumber: parseInt(versePart),
-        })
-      }
-    } else if (segment.includes('-')) {
-      // Range without chapter (relative to last known chapter): 16-17 or 16-a
-      parseRange(
-        bookName,
-        currentChapter,
-        segment,
-        chapterVerseRanges,
-        (chapter) => (currentChapter = chapter)
+    // Validate that end chapter comes after start chapter
+    if (endChapter < startChapter) {
+      throw new Error(
+        `Invalid cross-chapter reference: end chapter ${endChapter} must be greater than or equal to start chapter ${startChapter}`
       )
-    } else {
-      // Single verse without chapter: 19
-      chapterVerseRanges.push({
-        chapterNumber: currentChapter,
-        verseNumber: parseInt(segment),
-      })
     }
-  })
+
+    // If same chapter, treat as regular verse range instead
+    if (endChapter === startChapter) {
+      return {
+        bookName,
+        chapterNumber: startChapter,
+        verseNumber: startVerse,
+        verseNumberEnd: endVerse,
+      }
+    }
+
+    return {
+      bookName,
+      chapterNumber: startChapter,
+      verseNumber: startVerse,
+      chapterNumberEnd: endChapter,
+      verseNumberEndChapter: endVerse,
+    }
+  }
+
+  // Same chapter logic
+  const numbers = numbersPart.split(CHAPTER_VERSE_SEPARATOR_REG)
+
+  const chapterNumber = parseInt(numbers[0].trim())
+  const verseNumber = parseInt(numbers[1])
+  const verseEndNumber = numbers.length === 3 ? parseInt(numbers[2]) : undefined
 
   return {
     bookName,
-    chapterVerseRanges,
+    chapterNumber,
+    verseNumber,
+    verseNumberEnd: verseEndNumber,
   }
 }
 
 /**
- * Helper to parse ranges like "16-17", "16-4:2", or "16-a"
+ * Detect if a reference spans multiple chapters
  */
-const parseRange = (
-  bookName: string,
-  startChapter: number,
-  rangePart: string,
-  outRanges: VerseRange[],
-  updateChapter: (chapter: number) => void
-) => {
-  const [startVerseStr, endPart] = rangePart.split('-')
-  const startVerse =
-    startVerseStr.toLowerCase() === 'a' ? 1 : parseInt(startVerseStr)
-
-  if (endPart.toLowerCase() === 'a') {
-    // To end of chapter: 16-a
-    const lastVerse = getVerseCount(bookName, startChapter)
-    outRanges.push({
-      chapterNumber: startChapter,
-      verseNumber: startVerse,
-      verseEndNumber: lastVerse > 0 ? lastVerse : undefined,
-    })
-  } else if (endPart.includes(':') || /^\d+a$/i.test(endPart.toLowerCase())) {
-    // Multi-chapter range: 3:16-4:2 or 3:16-4:a or 3:32-4a
-    let endChapter: number
-    let endVerse: number
-
-    if (endPart.includes(':')) {
-      const [endChapterStr, endVerseStr] = endPart.split(':')
-      endChapter = parseInt(endChapterStr)
-      endVerse =
-        endVerseStr.toLowerCase() === 'a'
-          ? getVerseCount(bookName, endChapter)
-          : parseInt(endVerseStr)
-    } else {
-      // e.g. "4a"
-      endChapter = parseInt(endPart)
-      endVerse = getVerseCount(bookName, endChapter)
-    }
-
-    // First chapter: startVerse to end
-    const lastVerseOfStartChapter = getVerseCount(bookName, startChapter)
-    outRanges.push({
-      chapterNumber: startChapter,
-      verseNumber: startVerse,
-      verseEndNumber:
-        lastVerseOfStartChapter > 0 ? lastVerseOfStartChapter : undefined,
-    })
-
-    // Intermediate chapters (if any)
-    for (let c = startChapter + 1; c < endChapter; c++) {
-      const lastV = getVerseCount(bookName, c)
-      outRanges.push({
-        chapterNumber: c,
-        verseNumber: 1,
-        verseEndNumber: lastV > 0 ? lastV : undefined,
-      })
-    }
-
-    // Last chapter: 1 to endVerse
-    outRanges.push({
-      chapterNumber: endChapter,
-      verseNumber: 1,
-      verseEndNumber: endVerse,
-    })
-
-    updateChapter(endChapter)
-  } else {
-    // Simple range: 16-17
-    outRanges.push({
-      chapterNumber: startChapter,
-      verseNumber: startVerse,
-      verseEndNumber: parseInt(endPart),
-    })
-  }
+export const isCrossChapterReference = (ref: VerseReference): boolean => {
+  return (
+    ref.chapterNumberEnd !== undefined &&
+    ref.chapterNumberEnd !== ref.chapterNumber
+  )
 }
 
 /**
- * Get a readable string representation of a VerseReference
+ * Split a cross-chapter reference into individual chapter query segments
+ * Example: Hebrews 9:1-12:14 produces:
+ * - Hebrews 9:1-end
+ * - Hebrews 10 (full)
+ * - Hebrews 11 (full)
+ * - Hebrews 12:1-14
  */
-export const getReferenceHead = (verseReference: VerseReference): string => {
-  const { bookName, chapterVerseRanges } = verseReference
-  if (!chapterVerseRanges.length) {
-    return bookName
+export const splitIntoChapterSegments = (
+  ref: VerseReference
+): ChapterQuerySegment[] => {
+  if (!isCrossChapterReference(ref)) {
+    return [
+      {
+        bookName: ref.bookName,
+        chapterNumber: ref.chapterNumber,
+        verseStart: ref.verseNumber,
+        verseEnd: ref.verseNumberEnd,
+      },
+    ]
   }
 
-  let result = bookName + ' '
-  chapterVerseRanges.forEach((range, index) => {
-    if (index > 0) {
-      if (range.chapterNumber !== chapterVerseRanges[index - 1].chapterNumber) {
-        result += '; '
-      } else {
-        result += ', '
-      }
-    }
-    if (
-      index === 0 ||
-      range.chapterNumber !== chapterVerseRanges[index - 1].chapterNumber
-    ) {
-      result += range.chapterNumber + ':'
-    }
-    result += range.verseNumber
-    if (range.verseEndNumber && range.verseEndNumber !== range.verseNumber) {
-      result += '-' + range.verseEndNumber
-    }
+  const segments: ChapterQuerySegment[] = []
+
+  // First chapter: from verseNumber to end of chapter
+  segments.push({
+    bookName: ref.bookName,
+    chapterNumber: ref.chapterNumber,
+    verseStart: ref.verseNumber,
+    verseEnd: undefined, // To end of chapter
   })
-  return result
+
+  // Middle chapters (full chapters)
+  for (let ch = ref.chapterNumber + 1; ch < ref.chapterNumberEnd!; ch++) {
+    segments.push({
+      bookName: ref.bookName,
+      chapterNumber: ch,
+      verseStart: 1,
+      verseEnd: undefined, // Full chapter
+    })
+  }
+
+  // Last chapter: from verse 1 to verseNumberEndChapter
+  segments.push({
+    bookName: ref.bookName,
+    chapterNumber: ref.chapterNumberEnd!,
+    verseStart: 1,
+    verseEnd: ref.verseNumberEndChapter,
+  })
+
+  return segments
 }

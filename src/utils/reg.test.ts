@@ -51,7 +51,7 @@ describe('test modal reg matching in different languages', () => {
     expect(reg.test(modal)).toBe(true)
   })
 
-  test('should match modal in English Withou Space', () => {
+  test('should match modal in English Without Space', () => {
     const modal = 'John1:1'
     const reg = new RegExp(BOOK_VERSE_REG)
     expect(reg.test(modal)).toBe(true)
@@ -73,5 +73,43 @@ describe('test modal reg matching in different languages', () => {
     const modal = 'John a:1'
     const reg = new RegExp(BOOK_VERSE_REG)
     expect(reg.test(modal)).toBe(false)
+  })
+})
+
+describe('cross-chapter regex matching', () => {
+  test('should match cross-chapter reference', () => {
+    const ref = 'Hebrews 9:1-10:14'
+    const reg = new RegExp(BOOK_VERSE_REG)
+    expect(reg.test(ref)).toBe(true)
+  })
+
+  test('should match cross-chapter reference without space', () => {
+    const ref = 'Hebrews9:1-10:14'
+    const reg = new RegExp(BOOK_VERSE_REG)
+    expect(reg.test(ref)).toBe(true)
+  })
+
+  test('should capture full cross-chapter reference', () => {
+    const ref = 'Hebrews 9:1-10:14'
+    const match = ref.match(BOOK_VERSE_REG)
+    expect(match?.[0]).toBe('Hebrews 9:1-10:14')
+  })
+
+  test('should match numbered book cross-chapter', () => {
+    const ref = '1 Corinthians 15:50-16:4'
+    const reg = new RegExp(BOOK_VERSE_REG)
+    expect(reg.test(ref)).toBe(true)
+  })
+
+  test('should still match same-chapter verse range', () => {
+    const ref = 'John 3:16-21'
+    const reg = new RegExp(BOOK_VERSE_REG)
+    expect(reg.test(ref)).toBe(true)
+  })
+
+  test('should still match single verse', () => {
+    const ref = 'John 3:16'
+    const reg = new RegExp(BOOK_VERSE_REG)
+    expect(reg.test(ref)).toBe(true)
   })
 })

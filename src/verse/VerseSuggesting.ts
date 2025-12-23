@@ -12,7 +12,10 @@ import { IVerseSuggesting } from './IVerseSuggesting'
 import { getBLBUrl } from '../utils/referenceBLBAltLinking'
 import { getLogosUrl } from '../utils/referenceLogosLinking'
 import { getBibleGatewayUrl } from '../utils/referenceLink'
-import { VerseReference, getReferenceHead } from '../utils/splitBibleReference'
+import {
+  isCrossChapterReference,
+  splitIntoChapterSegments,
+} from '../utils/splitBibleReference'
 
 /**
  * Verse Suggesting
@@ -27,9 +30,21 @@ export class VerseSuggesting
 
   constructor(
     settings: BibleReferencePluginSettings,
-    verseReference: VerseReference
+    bookName: string,
+    chapterNumber: number,
+    verseNumber: number,
+    verseNumberEnd?: number,
+    chapterNumberEnd?: number,
+    verseNumberEndChapter?: number
   ) {
-    super(settings, verseReference)
+    super(settings, {
+      bookName: bookName,
+      chapterNumber: chapterNumber,
+      verseNumber: verseNumber,
+      verseNumberEnd: verseNumberEnd,
+      chapterNumberEnd: chapterNumberEnd,
+      verseNumberEndChapter: verseNumberEndChapter,
+    })
     this.bibleVersion = settings.bibleVersion
   }
 
@@ -39,16 +54,10 @@ export class VerseSuggesting
       this.settings?.bookBacklinking === OutgoingLinkPositionEnum.Header
         ? ` [[${this.verseReference.bookName}]]`
         : ''
-    if (this.settings?.chapterBacklinking === OutgoingLinkPositionEnum.Header) {
-      const uniqueChapters = Array.from(
-        new Set(
-          this.verseReference.chapterVerseRanges.map((r) => r.chapterNumber)
-        )
-      )
-      uniqueChapters.forEach((chapter) => {
-        content += ` [[${this.verseReference.bookName} ${chapter}]]`
-      })
-    }
+    content +=
+      this.settings?.chapterBacklinking === OutgoingLinkPositionEnum.Header
+        ? ` [[${this.verseReference.bookName} ${this.verseReference.chapterNumber}]]`
+        : ''
     return content
   }
 
@@ -59,18 +68,12 @@ export class VerseSuggesting
       bottom += this.settings?.bookTagging
         ? ` #${this.verseReference.bookName.replace(/ /g, '')}` // Remove spaces from book names in tags
         : ''
-      if (this.settings?.chapterTagging) {
-        const uniqueChapters = Array.from(
-          new Set(
-            this.verseReference.chapterVerseRanges.map((r) => r.chapterNumber)
-          )
-        )
-        uniqueChapters.forEach((chapter) => {
-          bottom += ` #${
-            this.verseReference.bookName.replace(/ /g, '') + chapter
+      bottom += this.settings?.chapterTagging
+        ? ` #${
+            this.verseReference.bookName.replace(/ /g, '') +
+            this.verseReference.chapterNumber // Remove spaces from book names in tags
           }`
-        })
-      }
+        : ''
       bottom += ' %%'
     }
     if (
@@ -82,18 +85,10 @@ export class VerseSuggesting
         this.settings?.bookBacklinking === OutgoingLinkPositionEnum.Bottom
           ? ` [[${this.verseReference.bookName}]]`
           : ''
-      if (
+      bottom +=
         this.settings?.chapterBacklinking === OutgoingLinkPositionEnum.Bottom
-      ) {
-        const uniqueChapters = Array.from(
-          new Set(
-            this.verseReference.chapterVerseRanges.map((r) => r.chapterNumber)
-          )
-        )
-        uniqueChapters.forEach((chapter) => {
-          bottom += ` [[${this.verseReference.bookName} ${chapter}]]`
-        })
-      }
+          ? ` [[${this.verseReference.bookName} ${this.verseReference.chapterNumber}]]`
+          : ''
     }
     return bottom + '\n'
   }
@@ -129,67 +124,120 @@ export class VerseSuggesting
         )
     }
 
-    const allVerses: IVerse[] = []
-    for (const range of this.verseReference.chapterVerseRanges) {
-      const verses = await this.bibleProvider.query(
-        this.verseReference.bookName,
-        range.chapterNumber,
-        range.verseEndNumber
-          ? [range.verseNumber, range.verseEndNumber]
-          : [range.verseNumber]
-      )
-      allVerses.push(...verses)
+    // Check if cross-chapter reference
+    if (isCrossChapterReference(this.verseReference)) {
+      return this.getCrossChapterVerses()
     }
-    return allVerses
+
+    // Single chapter query
+    const verses = await this.bibleProvider.query(
+      this.verseReference.bookName,
+      this.verseReference.chapterNumber,
+      this.verseReference?.verseNumberEnd
+        ? [this.verseReference.verseNumber, this.verseReference.verseNumberEnd]
+        : [this.verseReference.verseNumber]
+    )
+    return verses.map((verse) => ({
+      ...verse,
+      chapter: this.verseReference.chapterNumber,
+    }))
+  }
+
+  /**
+   * Fetch verses from multiple chapters for cross-chapter references
+   */
+  private async getCrossChapterVerses(): Promise<IVerse[]> {
+    const segments = splitIntoChapterSegments(this.verseReference)
+
+    // Execute API calls in parallel
+    const results = await Promise.allSettled(
+      segments.map((segment) =>
+        this.bibleProvider.query(
+          segment.bookName,
+          segment.chapterNumber,
+          segment.verseEnd
+            ? [segment.verseStart, segment.verseEnd]
+            : [segment.verseStart, 999] // 999 as upper bound for "to end of chapter"
+        )
+      )
+    )
+
+    const verses: IVerse[] = []
+    let hadFailure = false
+
+    results.forEach((result, index) => {
+      if (result.status === 'fulfilled') {
+        const chapterNumber = segments[index].chapterNumber
+        const versesWithChapter = result.value.map((verse) => ({
+          ...verse,
+          chapter: chapterNumber,
+        }))
+        verses.push(...versesWithChapter)
+      } else {
+        hadFailure = true
+        console.error(
+          `Failed to fetch chapter ${segments[index].chapterNumber}:`,
+          result.reason
+        )
+      }
+    })
+
+    if (hadFailure) {
+      console.warn(
+        'Some chapters could not be loaded. Showing partial results.'
+      )
+    }
+
+    return verses
   }
 
   protected getUrlForReference(): string {
     const sourceOfReference = this.settings.sourceOfReference || 'biblegateway'
-    const { bookName, chapterVerseRanges } = this.verseReference
-    const firstRange = chapterVerseRanges[0]
+    const {
+      bookName,
+      chapterNumber,
+      verseNumber,
+      verseNumberEnd,
+      chapterNumberEnd,
+      verseNumberEndChapter,
+    } = this.verseReference
 
     // Helper function to generate Bible Gateway URL as fallback
     const getBibleGatewayFallback = (): string => {
-      let versesString = ''
-      chapterVerseRanges.forEach((range, index) => {
-        if (index > 0) {
-          if (
-            range.chapterNumber !== chapterVerseRanges[index - 1].chapterNumber
-          ) {
-            versesString += ';'
-          } else {
-            versesString += ','
-          }
-        }
-        if (
-          range.chapterNumber !==
-          (chapterVerseRanges[index - 1]?.chapterNumber || -1)
-        ) {
-          versesString += `${range.chapterNumber}:`
-        }
-        versesString += range.verseEndNumber
-          ? `${range.verseNumber}-${range.verseEndNumber}`
-          : range.verseNumber.toString()
-      })
-
+      let versesString: string
+      if (isCrossChapterReference(this.verseReference)) {
+        versesString = verseNumber.toString()
+        return getBibleGatewayUrl(
+          this.bibleVersion,
+          bookName,
+          chapterNumber,
+          versesString,
+          chapterNumberEnd,
+          verseNumberEndChapter
+        )
+      } else if (verseNumberEnd) {
+        versesString = `${verseNumber}-${verseNumberEnd}`
+      } else {
+        versesString = verseNumber.toString()
+      }
       return getBibleGatewayUrl(
         this.bibleVersion,
         bookName,
-        firstRange.chapterNumber,
+        chapterNumber,
         versesString
       )
     }
 
     switch (sourceOfReference) {
       case 'blb': {
-        // Blue Letter Bible - currently only supports one range
+        // Blue Letter Bible
         try {
           return getBLBUrl(
             this.bibleVersion,
             bookName,
-            firstRange.chapterNumber,
-            firstRange.verseNumber,
-            firstRange.verseEndNumber
+            chapterNumber,
+            verseNumber,
+            verseNumberEnd
           )
         } catch (error) {
           console.error('Error generating BLB URL:', error)
@@ -200,7 +248,21 @@ export class VerseSuggesting
       case 'biblegateway': {
         // Bible Gateway
         try {
-          return getBibleGatewayFallback()
+          if (isCrossChapterReference(this.verseReference)) {
+            return getBibleGatewayFallback()
+          }
+          let versesString: string
+          if (verseNumberEnd) {
+            versesString = `${verseNumber}-${verseNumberEnd}`
+          } else {
+            versesString = verseNumber.toString()
+          }
+          return getBibleGatewayUrl(
+            this.bibleVersion,
+            bookName,
+            chapterNumber,
+            versesString
+          )
         } catch (error) {
           console.error('Error generating Bible Gateway URL:', error)
           return getBibleGatewayFallback()
@@ -208,14 +270,14 @@ export class VerseSuggesting
       }
 
       case 'logos': {
-        // Logos - currently only supports one range
+        // Logos
         try {
           return getLogosUrl(
             this.bibleVersion,
             bookName,
-            firstRange.chapterNumber,
-            firstRange.verseNumber,
-            firstRange.verseEndNumber
+            chapterNumber,
+            verseNumber,
+            verseNumberEnd
           )
         } catch (error) {
           console.error('Error generating Logos URL:', error)
@@ -246,7 +308,21 @@ export class VerseSuggesting
   }
 
   protected getVerseReferenceLink(): string {
-    const head = getReferenceHead(this.verseReference)
+    // For cross-chapter references, generate the full reference
+    let head: string
+    if (isCrossChapterReference(this.verseReference)) {
+      const {
+        bookName,
+        chapterNumber,
+        verseNumber,
+        chapterNumberEnd,
+        verseNumberEndChapter,
+      } = this.verseReference
+      head = `${bookName} ${chapterNumber}:${verseNumber}-${chapterNumberEnd}:${verseNumberEndChapter}`
+    } else {
+      head = this.bibleProvider.BibleReferenceHead
+    }
+
     const version = this.settings?.showVerseTranslation
       ? ` - ${this.bibleVersion.toUpperCase()}`
       : ''

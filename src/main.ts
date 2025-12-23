@@ -8,6 +8,7 @@ import {
 import { BibleReferenceSettingTab } from './ui/BibleReferenceSettingTab'
 import { VerseEditorSuggester } from './suggesetor/VerseEditorSuggester'
 import { VerseLookupSuggestModal } from './suggesetor/VerseLookupSuggestModal'
+import { TranslationSwitcherModal } from './suggesetor/TranslationSwitcherModal'
 import { VerseOfDayEditorSuggester } from './suggesetor/VerseOfDayEditorSuggester'
 import { VerseOfDayModal } from './suggesetor/VerseOfDayModal'
 import { getEnhancedVod } from './provider/VODProvider'
@@ -39,6 +40,7 @@ export default class BibleReferencePlugin extends Plugin {
 
     this.verseLookUpModal = new VerseLookupSuggestModal(this, this.settings)
     this.addVerseLookupCommand()
+    this.addTranslationSwitchCommand()
     this.addRibbonButton()
 
     this.api = new BibleReferenceAPI(this.app, this.settings)
@@ -136,6 +138,31 @@ export default class BibleReferencePlugin extends Plugin {
       editorCallback: async (editor: Editor, view: MarkdownView) => {
         const vodSuggesting = await this.getAndCachedVerseOfDay()
         editor.replaceSelection(vodSuggesting.allFormattedContent)
+      },
+    })
+  }
+
+  public switchToTranslation(versionKey: string): void {
+    this.settings.bibleVersion = versionKey
+    this.saveSettings()
+    pluginEvent.trigger('bible-reference:settings:version', [versionKey])
+    new Notice(`Bible Reference - switched to ${versionKey.toUpperCase()}`)
+  }
+
+  private addTranslationSwitchCommand(): void {
+    this.addCommand({
+      id: 'obr-switch-translation',
+      name: 'Switch Bible Translation',
+      callback: () => {
+        new TranslationSwitcherModal(this.app, this).open()
+      },
+    })
+
+    this.addCommand({
+      id: 'obr-switch-default-translation',
+      name: 'Switch to Default Translation',
+      callback: () => {
+        this.switchToTranslation(this.settings.defaultBibleVersion)
       },
     })
   }

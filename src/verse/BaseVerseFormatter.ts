@@ -3,6 +3,7 @@ import { BibleVerseReferenceLinkPosition } from '../data/BibleVerseReferenceLink
 import { BibleVerseNumberFormat } from '../data/BibleVerseNumberFormat'
 import { VerseReference } from '../utils/splitBibleReference'
 import { BibleVerseFormat } from '../data/BibleVerseFormat'
+import { BibleMultiChapterSeparatorFormat } from '../data/BibleMultiChapterSeparatorFormat'
 import { IVerse } from '../interfaces/IVerse'
 
 export abstract class BaseVerseFormatter {
@@ -21,14 +22,11 @@ export abstract class BaseVerseFormatter {
     const { bookName } = this.verseReference
     this.verses = []
     if (verseTexts && verseTexts.length > 0) {
-      // Note: This legacy path for verseTexts might need more careful handling for multi-chapter
-      // but most callers use getVerses() which sets this.verses directly.
       this.verses = verseTexts.map((verse, index) => {
-        const firstRange = this.verseReference.chapterVerseRanges[0]
         return {
           book_name: bookName,
-          chapter: firstRange?.chapterNumber || 1,
-          verse: (firstRange?.verseNumber || 1) + index,
+          chapter: this.verseReference.chapterNumber,
+          verse: this.verseReference.verseNumber + index,
           text: verse,
         }
       })
@@ -50,32 +48,30 @@ export abstract class BaseVerseFormatter {
       return ''
     }
     let text = ''
+    let previousChapter: number | undefined = undefined
+
     if (this.settings?.verseFormatting === BibleVerseFormat.Paragraph) {
-      text = '>'
+      text = '> '
     } else {
       text = ''
     }
     this.verses.forEach((verse, index) => {
-      if (index > 0) {
-        const prevVerse = this.verses![index - 1]
-        // Add a separator if the chapter changes or if there is a gap in verses (comma selection)
-        if (
-          verse.chapter !== prevVerse.chapter ||
-          verse.verse !== prevVerse.verse + 1
-        ) {
-          if (this.settings?.verseFormatting === BibleVerseFormat.Paragraph) {
-            if (verse.chapter !== prevVerse.chapter) {
-              text += `\n> ---\n> ${verse.chapter}\n> ---\n>`
-            } else {
-              text += ' ---'
-            }
-          } else {
-            if (verse.chapter !== prevVerse.chapter) {
-              text += `> ---\n> ${verse.chapter}\n> ---\n`
-            } else {
-              text += '> ---\n'
-            }
-          }
+      // Detect chapter transition
+      const needsSeparator =
+        this.settings?.multiChapterSeparatorFormat ===
+        BibleMultiChapterSeparatorFormat.ChapterSeparator &&
+        previousChapter !== undefined &&
+        verse.chapter !== previousChapter
+
+      if (needsSeparator) {
+        const separator = this.settings?.showChapterNumberInSeparator
+          ? `--- ${verse.chapter} ---`
+          : `---`
+
+        if (this.settings?.verseFormatting === BibleVerseFormat.Paragraph) {
+          text = text.trim() + `\n>\n> ${separator}\n> `
+        } else {
+          text += `> ${separator}\n`
         }
       }
 
@@ -102,6 +98,9 @@ export abstract class BaseVerseFormatter {
           '\n'
         // Remove extraneous line breaks in KJV verses.
       }
+
+      // Update previous chapter tracker
+      previousChapter = verse.chapter
     })
     console.debug('text', text)
     return text.trim()
@@ -124,9 +123,9 @@ export abstract class BaseVerseFormatter {
 
     if (
       this.settings.referenceLinkPosition ===
-        BibleVerseReferenceLinkPosition.Header ||
+      BibleVerseReferenceLinkPosition.Header ||
       this.settings.referenceLinkPosition ===
-        BibleVerseReferenceLinkPosition.AllAbove
+      BibleVerseReferenceLinkPosition.AllAbove
     ) {
       head += this.getVerseReferenceLink()
     }
@@ -137,9 +136,9 @@ export abstract class BaseVerseFormatter {
     let bottom = ''
     if (
       this.settings.referenceLinkPosition ===
-        BibleVerseReferenceLinkPosition.Bottom ||
+      BibleVerseReferenceLinkPosition.Bottom ||
       this.settings.referenceLinkPosition ===
-        BibleVerseReferenceLinkPosition.AllAbove
+      BibleVerseReferenceLinkPosition.AllAbove
     ) {
       bottom += `> \n `
       bottom += this.getVerseReferenceLink()
