@@ -105,7 +105,6 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
   async getSuggestions(
     context: EditorSuggestContext
   ): Promise<VerseSuggesting[]> {
-    console.log(`context query : ${context.query}`)
     const { bookVerseQuery, translationQuery } =
       this.getBookVerseAndTranslation(context.query)
 

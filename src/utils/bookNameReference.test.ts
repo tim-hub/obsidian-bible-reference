@@ -16,9 +16,10 @@ describe('test bookNameReference', () => {
   it('should throw an error if code is wrong or cannot find the book', () => {
     try {
       getBookIdFromBookName('Genesis', 'wrongCode')
-    } catch (e: unknown) {
-      const error = e as Error
-      expect(error.message).toBe('No translation found for language wrongcode')
+    } catch (e) {
+      expect((e as Error).message).toBe(
+        'No translation found for language wrongcode'
+      )
     }
   })
 })
