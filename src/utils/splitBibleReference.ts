@@ -177,3 +177,28 @@ export const splitIntoChapterSegments = (
 
   return segments
 }
+/**
+ * Get a readable string representation of a VerseReference
+ */
+export const getReferenceHead = (verseReference: VerseReference): string => {
+  const {
+    bookName,
+    chapterNumber,
+    verseNumber,
+    verseNumberEnd,
+    chapterNumberEnd,
+    verseNumberEndChapter,
+  } = verseReference
+
+  let result = `${bookName} ${chapterNumber}:${verseNumber}`
+
+  if (chapterNumberEnd !== undefined && verseNumberEndChapter !== undefined) {
+    // Cross-chapter range: John 1:1-3:5
+    result += `-${chapterNumberEnd}:${verseNumberEndChapter}`
+  } else if (verseNumberEnd && verseNumberEnd !== verseNumber) {
+    // Single chapter range: John 3:16-18
+    result += `-${verseNumberEnd}`
+  }
+
+  return result
+}

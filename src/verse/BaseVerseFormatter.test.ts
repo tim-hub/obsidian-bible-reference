@@ -23,36 +23,57 @@ class MockFormatter extends BaseVerseFormatter {
 }
 
 describe('BaseVerseFormatter', () => {
-  it('should add separators for non-contiguous verses in list mode', () => {
+  it('should add separators for chapter changes in list mode (default: with chapter number)', () => {
     const settings = {
       ...DEFAULT_SETTINGS,
       verseFormatting: BibleVerseFormat.SingleLine,
       verseNumberFormatting: BibleVerseNumberFormat.Period,
+      showChapterNumberInSeparator: true,
     }
-    const verseReference = { bookName: 'John', chapterVerseRanges: [] }
+    const verseReference: VerseReference = {
+      bookName: 'John',
+      chapterNumber: 3,
+      verseNumber: 36,
+    }
     const verses = [
-      { book_name: 'John', chapter: 3, verse: 5, text: 'v5' },
-      { book_name: 'John', chapter: 3, verse: 8, text: 'v8' },
+      {
+        book_id: 'John',
+        book_name: 'John',
+        chapter: 3,
+        verse: 36,
+        text: 'v36',
+      },
+      { book_id: 'John', book_name: 'John', chapter: 4, verse: 1, text: 'v1' },
     ]
     const formatter = new MockFormatter(settings, verseReference, verses)
-    const expected = '> 5. v5\n> ---\n> 8. v8'
+    const expected = '> 36. v36\n> ---\n> 4\n> ---\n> 1. v1'
     expect(formatter.bodyContent).toBe(expected)
   })
 
-  it('should add separators with chapter number for chapter changes in list mode', () => {
+  it('should add separators for chapter changes in list mode without chapter number when disabled', () => {
     const settings = {
       ...DEFAULT_SETTINGS,
       verseFormatting: BibleVerseFormat.SingleLine,
       verseNumberFormatting: BibleVerseNumberFormat.Period,
+      showChapterNumberInSeparator: false,
     }
-    const verseReference = { bookName: 'John', chapterVerseRanges: [] }
+    const verseReference: VerseReference = {
+      bookName: 'John',
+      chapterNumber: 3,
+      verseNumber: 36,
+    }
     const verses = [
-      { book_name: 'John', chapter: 3, verse: 36, text: 'v36' },
-      { book_name: 'John', chapter: 4, verse: 1, text: 'v1' },
+      {
+        book_id: 'John',
+        book_name: 'John',
+        chapter: 3,
+        verse: 36,
+        text: 'v36',
+      },
+      { book_id: 'John', book_name: 'John', chapter: 4, verse: 1, text: 'v1' },
     ]
     const formatter = new MockFormatter(settings, verseReference, verses)
-    // Note: New format includes chapter number
-    const expected = '> 36. v36\n> ---\n> 4\n> ---\n> 1. v1'
+    const expected = '> 36. v36\n> ---\n> 1. v1'
     expect(formatter.bodyContent).toBe(expected)
   })
 
@@ -61,14 +82,19 @@ describe('BaseVerseFormatter', () => {
       ...DEFAULT_SETTINGS,
       verseFormatting: BibleVerseFormat.Paragraph,
       verseNumberFormatting: BibleVerseNumberFormat.Period,
+      showChapterNumberInSeparator: true,
     }
-    const verseReference = { bookName: 'John', chapterVerseRanges: [] }
+    const verseReference: VerseReference = {
+      bookName: 'John',
+      chapterNumber: 3,
+      verseNumber: 5,
+    }
     const verses = [
-      { book_name: 'John', chapter: 3, verse: 5, text: 'v5' },
-      { book_name: 'John', chapter: 4, verse: 1, text: 'v1' },
+      { book_id: 'John', book_name: 'John', chapter: 3, verse: 5, text: 'v5' },
+      { book_id: 'John', book_name: 'John', chapter: 4, verse: 1, text: 'v1' },
     ]
     const formatter = new MockFormatter(settings, verseReference, verses)
-    const expected = '> 5. v5\n> ---\n> 4\n> ---\n> 1. v1'
+    const expected = '> 5. v5\n>\n> ---\n> 4\n> ---\n> 1. v1'
     expect(formatter.bodyContent).toBe(expected)
   })
 })

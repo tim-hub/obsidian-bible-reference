@@ -51,7 +51,7 @@ export abstract class BaseVerseFormatter {
     let previousChapter: number | undefined = undefined
 
     if (this.settings?.verseFormatting === BibleVerseFormat.Paragraph) {
-      text = '> '
+      text = '>'
     } else {
       text = ''
     }
@@ -59,19 +59,24 @@ export abstract class BaseVerseFormatter {
       // Detect chapter transition
       const needsSeparator =
         this.settings?.multiChapterSeparatorFormat ===
-        BibleMultiChapterSeparatorFormat.ChapterSeparator &&
+          BibleMultiChapterSeparatorFormat.ChapterSeparator &&
         previousChapter !== undefined &&
         verse.chapter !== previousChapter
 
       if (needsSeparator) {
-        const separator = this.settings?.showChapterNumberInSeparator
-          ? `--- ${verse.chapter} ---`
-          : `---`
-
-        if (this.settings?.verseFormatting === BibleVerseFormat.Paragraph) {
-          text = text.trim() + `\n>\n> ${separator}\n> `
+        if (this.settings?.showChapterNumberInSeparator) {
+          if (this.settings?.verseFormatting === BibleVerseFormat.Paragraph) {
+            text = text.trim() + `\n>\n> ---\n> ${verse.chapter}\n> ---\n>`
+          } else {
+            text += `> ---\n> ${verse.chapter}\n> ---\n`
+          }
         } else {
-          text += `> ${separator}\n`
+          const separator = `---`
+          if (this.settings?.verseFormatting === BibleVerseFormat.Paragraph) {
+            text = text.trim() + `\n>\n> ${separator}\n>`
+          } else {
+            text += `> ${separator}\n`
+          }
         }
       }
 
@@ -123,9 +128,9 @@ export abstract class BaseVerseFormatter {
 
     if (
       this.settings.referenceLinkPosition ===
-      BibleVerseReferenceLinkPosition.Header ||
+        BibleVerseReferenceLinkPosition.Header ||
       this.settings.referenceLinkPosition ===
-      BibleVerseReferenceLinkPosition.AllAbove
+        BibleVerseReferenceLinkPosition.AllAbove
     ) {
       head += this.getVerseReferenceLink()
     }
@@ -136,9 +141,9 @@ export abstract class BaseVerseFormatter {
     let bottom = ''
     if (
       this.settings.referenceLinkPosition ===
-      BibleVerseReferenceLinkPosition.Bottom ||
+        BibleVerseReferenceLinkPosition.Bottom ||
       this.settings.referenceLinkPosition ===
-      BibleVerseReferenceLinkPosition.AllAbove
+        BibleVerseReferenceLinkPosition.AllAbove
     ) {
       bottom += `> \n `
       bottom += this.getVerseReferenceLink()
