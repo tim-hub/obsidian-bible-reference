@@ -3,6 +3,7 @@ import { BibleVerseReferenceLinkPosition } from './BibleVerseReferenceLinkPositi
 import { BibleVerseFormat } from './BibleVerseFormat'
 import { BibleVerseNumberFormat } from './BibleVerseNumberFormat'
 import { BibleMultiChapterSeparatorFormat } from './BibleMultiChapterSeparatorFormat'
+import { BibleVerseSegmentSeparatorFormat } from './BibleVerseSegmentSeparatorFormat'
 
 export const APP_NAMING = {
   appName: 'Bible Reference',
@@ -31,6 +32,7 @@ export interface BibleReferencePluginSettings {
   verseNumberFormatting?: BibleVerseNumberFormat
   multiChapterSeparatorFormat?: BibleMultiChapterSeparatorFormat
   showChapterNumberInSeparator?: boolean
+  verseSegmentSeparatorFormat?: BibleVerseSegmentSeparatorFormat
   collapsibleVerses?: boolean // this is binging to displayBibleIconPrefixAtHeader option
   collapsedByDefault?: boolean
   enableHyperlinking?: boolean
@@ -62,6 +64,7 @@ export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
   multiChapterSeparatorFormat:
     BibleMultiChapterSeparatorFormat.ChapterSeparator,
   showChapterNumberInSeparator: true,
+  verseSegmentSeparatorFormat: BibleVerseSegmentSeparatorFormat.VerseSeparator,
   collapsibleVerses: false,
   enableHyperlinking: true,
   showVerseTranslation: true,

@@ -55,6 +55,7 @@ export const getSuggestionsFromQuery = async (
     verseNumberEnd,
     chapterNumberEnd,
     verseNumberEndChapter,
+    ranges,
   } = verseRef
 
   // todo get bibleVersion and language from settings
@@ -65,7 +66,8 @@ export const getSuggestionsFromQuery = async (
     verseNumber,
     verseNumberEnd,
     chapterNumberEnd,
-    verseNumberEndChapter
+    verseNumberEndChapter,
+    ranges
   )
 
   console.debug(

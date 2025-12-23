@@ -39,6 +39,7 @@ describe('referenceLogosLinking', () => {
       bookName: 'John',
       chapterNumber: 3,
       verseNumber: 16,
+      ranges: [{ chapterNumber: 3, verseNumber: 16 }],
     }
     const link = getLogosLink(settings, verseReference)
     expect(link).toContain(
@@ -55,6 +56,7 @@ describe('referenceLogosLinking', () => {
       bookName: 'John',
       chapterNumber: 3,
       verseNumber: 16,
+      ranges: [{ chapterNumber: 3, verseNumber: 16 }],
     }
     const link = getLogosLink(settings, verseReference)
     // Should use nasb in URL (nasb95), but BBE in display text
@@ -62,5 +64,21 @@ describe('referenceLogosLinking', () => {
       'https://ref.ly/logosres/nasb95?ref=BibleNASB.Jn3.16'
     )
     expect(link).toContain('[John 3:16 - BBE]')
+  })
+
+  test('getLogosLink should fall back for WEB translation', () => {
+    const settings = {
+      bibleVersion: 'web',
+      logosFallbackVersion: 'niv2011',
+    } as BibleReferencePluginSettings
+    const verseReference = {
+      bookName: 'John',
+      chapterNumber: 3,
+      verseNumber: 1,
+      ranges: [{ chapterNumber: 3, verseNumber: 1 }],
+    }
+    const link = getLogosLink(settings, verseReference)
+    expect(link).toContain('https://ref.ly/logosres/niv2011?ref=BibleNIV.Jn3.1')
+    expect(link).toContain('[John 3:1 - WEB]')
   })
 })

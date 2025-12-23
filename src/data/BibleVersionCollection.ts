@@ -610,13 +610,13 @@ export const allBibleVersionsWithLanguageNameAlphabetically: IBibleVersion[] =
   })
 
 export const LOGOS_SUPPORTED_TRANSLATIONS = [
-  { key: 'niv2011', name: 'NIV' },
-  { key: 'nasb', name: 'NASB' },
-  { key: 'msg', name: 'MSG' },
   { key: 'esv', name: 'ESV' },
-  { key: 'lsb', name: 'LSB' },
-  { key: 'nlt', name: 'NLT' },
   { key: 'kjv', name: 'KJV' },
+  { key: 'lsb', name: 'LSB' },
+  { key: 'msg', name: 'MSG' },
+  { key: 'nasb', name: 'NASB' },
+  { key: 'niv2011', name: 'NIV' },
   { key: 'nkjv', name: 'NKJV' },
+  { key: 'nlt', name: 'NLT' },
   { key: 'rsv', name: 'RSV' },
 ]

@@ -4,6 +4,7 @@ import { BibleVerseNumberFormat } from '../data/BibleVerseNumberFormat'
 import { VerseReference } from '../utils/splitBibleReference'
 import { BibleVerseFormat } from '../data/BibleVerseFormat'
 import { BibleMultiChapterSeparatorFormat } from '../data/BibleMultiChapterSeparatorFormat'
+import { BibleVerseSegmentSeparatorFormat } from '../data/BibleVerseSegmentSeparatorFormat'
 import { IVerse } from '../interfaces/IVerse'
 
 export abstract class BaseVerseFormatter {
@@ -49,6 +50,7 @@ export abstract class BaseVerseFormatter {
     }
     let text = ''
     let previousChapter: number | undefined = undefined
+    let previousVerse: number | undefined = undefined
 
     if (this.settings?.verseFormatting === BibleVerseFormat.Paragraph) {
       text = '>'
@@ -78,6 +80,21 @@ export abstract class BaseVerseFormatter {
             text += `> ${separator}\n`
           }
         }
+      } else if (
+        this.settings?.verseSegmentSeparatorFormat ===
+          BibleVerseSegmentSeparatorFormat.VerseSeparator &&
+        previousChapter !== undefined &&
+        verse.chapter === previousChapter &&
+        previousVerse !== undefined &&
+        verse.verse !== previousVerse + 1
+      ) {
+        // Detect verse gap in same chapter
+        const separator = `---`
+        if (this.settings?.verseFormatting === BibleVerseFormat.Paragraph) {
+          text = text.trim() + `\n>\n> ${separator}\n>`
+        } else {
+          text += `> ${separator}\n`
+        }
       }
 
       let singleVerseText = verse.text.trim()
@@ -101,11 +118,11 @@ export abstract class BaseVerseFormatter {
           verseNumberFormatted +
           singleVerseText.replace(/\r\n|\n|\r/g, ' ') +
           '\n'
-        // Remove extraneous line breaks in KJV verses.
       }
 
-      // Update previous chapter tracker
+      // Update previous trackers
       previousChapter = verse.chapter
+      previousVerse = verse.verse
     })
     console.debug('text', text)
     return text.trim()
@@ -145,7 +162,7 @@ export abstract class BaseVerseFormatter {
       this.settings.referenceLinkPosition ===
         BibleVerseReferenceLinkPosition.AllAbove
     ) {
-      bottom += `> \n `
+      bottom += `> \n`
       bottom += this.getVerseReferenceLink()
     }
     return bottom
