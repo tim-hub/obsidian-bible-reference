@@ -235,7 +235,7 @@ Obsidian Bible Reference  is proudly powered by
             })
         })
 
-      new Setting(this.containerEl)
+      new Setting(this.expertSettingContainer)
         .setName('Multi-Chapter Separator')
         .setDesc(
           'Choose how to display verses that span multiple chapters (e.g., John 1:1-2:5)'
