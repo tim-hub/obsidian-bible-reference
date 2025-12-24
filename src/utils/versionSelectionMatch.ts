@@ -12,7 +12,7 @@ export const versionSelectionMatch = (
     return ''
   }
   const matchResults = verseWithVersionAtEnd.match(TRANSLATION_VERSION_KEY_REG)
-  console.log(`version selection reg match result : ${matchResults}`)
+  console.debug(`version selection reg match result : ${matchResults}`)
   if (!matchResults) {
     return ''
   } else {
