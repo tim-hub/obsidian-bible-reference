@@ -257,3 +257,27 @@ test('splitBibleReference - throws error for "a" at start of range', () => {
 test('splitBibleReference - throws error for start verse > end verse in cross-chapter format', () => {
   expect(() => splitBibleReference('John 3:16-3:5')).toThrow('Invalid range')
 })
+
+test('splitBibleReference - throws error for non-existent chapter', () => {
+  expect(() => splitBibleReference('John 99:1')).toThrow(
+    'Invalid chapter number'
+  )
+})
+
+test('splitBibleReference - throws error for non-existent verse', () => {
+  expect(() => splitBibleReference('John 3:500')).toThrow(
+    'Invalid verse number'
+  )
+})
+
+test('splitBibleReference - throws error for non-existent end chapter in cross-chapter range', () => {
+  expect(() => splitBibleReference('John 1:1-25:1')).toThrow(
+    'Invalid end chapter number'
+  )
+})
+
+test('splitBibleReference - throws error for non-existent end verse in same chapter', () => {
+  expect(() => splitBibleReference('John 3:16-500')).toThrow(
+    'Invalid end verse'
+  )
+})
