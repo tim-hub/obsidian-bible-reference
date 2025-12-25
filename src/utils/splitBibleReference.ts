@@ -1,9 +1,16 @@
 import { BOOK_REG } from './regs'
+import { getVerseCount } from '../data/BibleVerseData'
 
 /**
- * Reference to a verse or a range of verse in the Bible
+ * Helper to safely parse integers and throw error on NaN
  */
-import { getVerseCount } from '../data/BibleVerseData'
+const safeParseInt = (value: string, fieldName: string): number => {
+  const result = parseInt(value)
+  if (isNaN(result)) {
+    throw new Error(`Invalid ${fieldName}: "${value}" is not a number`)
+  }
+  return result
+}
 
 /**
  * Reference to a verse range within or across chapters
@@ -54,7 +61,8 @@ export const splitBibleReference = (reference: string): VerseReference => {
   const bookMatch = trimmedRef.match(BOOK_REG)
   if (bookMatch) {
     bookName = bookMatch[0].trim()
-    chapterVersePart = trimmedRef.slice(bookMatch[0].length).trim()
+    const index = bookMatch.index ?? 0
+    chapterVersePart = trimmedRef.slice(index + bookMatch[0].length).trim()
     // In case of no space between book and chapter: john1:1
     if (chapterVersePart.startsWith(':')) {
       // This shouldn't happen with BOOK_REG and digits following, but safe check
@@ -80,7 +88,7 @@ export const splitBibleReference = (reference: string): VerseReference => {
     let versePart: string
     if (segment.includes(':')) {
       const parts = segment.split(':')
-      currentChapter = parseInt(parts[0])
+      currentChapter = safeParseInt(parts[0], 'chapter number')
       versePart = parts.slice(1).join(':')
     } else {
       // Check if the whole segment is a chapter (e.g. "John 3")
@@ -92,7 +100,7 @@ export const splitBibleReference = (reference: string): VerseReference => {
         !isNaN(parseInt(segment)) &&
         !segment.toLowerCase().includes('a')
       ) {
-        currentChapter = parseInt(segment)
+        currentChapter = safeParseInt(segment, 'chapter number')
         versePart = 'a' // Match entire chapter
       } else {
         versePart = segment
@@ -108,7 +116,10 @@ export const splitBibleReference = (reference: string): VerseReference => {
       // Check for cross-chapter in the end part: "16-4:2"
       if (endStr.includes(':')) {
         const endChapterParts = endStr.split(':')
-        const endChapterNum = parseInt(endChapterParts[0])
+        const endChapterNum = safeParseInt(
+          endChapterParts[0],
+          'end chapter number'
+        )
         const endVerseStr = endChapterParts[1]
 
         if (endChapterNum < currentChapter) {
@@ -117,11 +128,12 @@ export const splitBibleReference = (reference: string): VerseReference => {
           )
         }
 
-        const startVerse = startStr === 'a' ? 1 : parseInt(startStr)
+        const startVerse =
+          startStr === 'a' ? 1 : safeParseInt(startStr, 'start verse')
         const endVerse =
           endVerseStr === 'a'
             ? getVerseCount(bookName, endChapterNum)
-            : parseInt(endVerseStr)
+            : safeParseInt(endVerseStr, 'end verse')
 
         if (endChapterNum === currentChapter) {
           ranges.push({
@@ -140,11 +152,12 @@ export const splitBibleReference = (reference: string): VerseReference => {
         }
       } else {
         // Single chapter range: "16-17" or "16-a"
-        const startVerse = startStr === 'a' ? 1 : parseInt(startStr)
+        const startVerse =
+          startStr === 'a' ? 1 : safeParseInt(startStr, 'start verse')
         const endVerse =
           endStr === 'a'
             ? getVerseCount(bookName, currentChapter)
-            : parseInt(endStr)
+            : safeParseInt(endStr, 'end verse')
 
         ranges.push({
           chapterNumber: currentChapter,
@@ -154,7 +167,10 @@ export const splitBibleReference = (reference: string): VerseReference => {
       }
     } else {
       // Single verse or 'a'
-      const v = versePart.toLowerCase() === 'a' ? 1 : parseInt(versePart)
+      const v =
+        versePart.toLowerCase() === 'a'
+          ? 1
+          : safeParseInt(versePart, 'verse number')
       const vEnd =
         versePart.toLowerCase() === 'a'
           ? getVerseCount(bookName, currentChapter)

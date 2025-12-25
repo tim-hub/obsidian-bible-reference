@@ -215,3 +215,39 @@ test('splitBibleReference - hybrid space pattern (space after number, no space b
     verseNumberEnd: undefined,
   })
 })
+
+test('splitBibleReference - throws error for invalid chapter number', () => {
+  expect(() => splitBibleReference('John abc:16')).toThrow(
+    'Invalid chapter number'
+  )
+})
+
+test('splitBibleReference - throws error for invalid verse number', () => {
+  expect(() => splitBibleReference('John 3:abc')).toThrow(
+    'Invalid verse number'
+  )
+})
+
+test('splitBibleReference - throws error for invalid start verse in range', () => {
+  expect(() => splitBibleReference('John 3:abc-17')).toThrow(
+    'Invalid start verse'
+  )
+})
+
+test('splitBibleReference - throws error for invalid end verse in range', () => {
+  expect(() => splitBibleReference('John 3:16-abc')).toThrow(
+    'Invalid end verse'
+  )
+})
+
+test('splitBibleReference - throws error for invalid end chapter in cross-chapter range', () => {
+  expect(() => splitBibleReference('John 3:16-abc:2')).toThrow(
+    'Invalid end chapter number'
+  )
+})
+
+test('splitBibleReference - throws error for invalid start verse in range and is not partially matched', () => {
+  expect(() => splitBibleReference('John 3:abc-17')).toThrow(
+    'Invalid start verse'
+  )
+})
