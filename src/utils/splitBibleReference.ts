@@ -163,6 +163,12 @@ export const splitBibleReference = (reference: string): VerseReference => {
             ? getVerseCount(bookName, endChapterNum)
             : safeParseInt(endVerseStr, 'end verse')
 
+        if (endVerseStr === 'a' && endVerse === 0) {
+          throw new Error(
+            `Could not resolve "a" indicator: metadata for "${bookName} ${endChapterNum}" not found`
+          )
+        }
+
         // Validate verse counts
         const startChapterMaxVerses = getVerseCount(bookName, currentChapter)
         if (startChapterMaxVerses > 0 && startVerse > startChapterMaxVerses) {
@@ -212,6 +218,12 @@ export const splitBibleReference = (reference: string): VerseReference => {
             ? getVerseCount(bookName, currentChapter)
             : safeParseInt(endStr, 'end verse')
 
+        if (endStr === 'a' && endVerse === 0) {
+          throw new Error(
+            `Could not resolve "a" indicator: metadata for "${bookName} ${currentChapter}" not found`
+          )
+        }
+
         // Validate verse counts
         const maxVerses = getVerseCount(bookName, currentChapter)
         if (maxVerses > 0) {
@@ -249,6 +261,12 @@ export const splitBibleReference = (reference: string): VerseReference => {
         versePart.toLowerCase() === 'a'
           ? getVerseCount(bookName, currentChapter)
           : undefined
+
+      if (versePart.toLowerCase() === 'a' && vEnd === 0) {
+        throw new Error(
+          `Could not resolve "a" indicator: metadata for "${bookName} ${currentChapter}" not found`
+        )
+      }
 
       // Validate verse exists
       const maxVerses = getVerseCount(bookName, currentChapter)

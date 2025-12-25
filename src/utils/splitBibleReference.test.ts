@@ -281,3 +281,9 @@ test('splitBibleReference - throws error for non-existent end verse in same chap
     'Invalid end verse'
   )
 })
+
+test('splitBibleReference - throws error when "a" indicator cannot be resolved due to missing metadata', () => {
+  expect(() => splitBibleReference('NonExistentBook 1:a')).toThrow(
+    'Could not resolve "a" indicator'
+  )
+})
