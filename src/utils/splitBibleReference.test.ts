@@ -246,8 +246,14 @@ test('splitBibleReference - throws error for invalid end chapter in cross-chapte
   )
 })
 
-test('splitBibleReference - throws error for invalid start verse in range and is not partially matched', () => {
-  expect(() => splitBibleReference('John 3:abc-17')).toThrow(
-    'Invalid start verse'
-  )
+test('splitBibleReference - throws error for start verse > end verse', () => {
+  expect(() => splitBibleReference('John 3:19-16')).toThrow('Invalid range')
+})
+
+test('splitBibleReference - throws error for "a" at start of range', () => {
+  expect(() => splitBibleReference('John 3:a-16')).toThrow('Invalid range')
+})
+
+test('splitBibleReference - throws error for start verse > end verse in cross-chapter format', () => {
+  expect(() => splitBibleReference('John 3:16-3:5')).toThrow('Invalid range')
 })

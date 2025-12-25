@@ -128,12 +128,22 @@ export const splitBibleReference = (reference: string): VerseReference => {
           )
         }
 
-        const startVerse =
-          startStr === 'a' ? 1 : safeParseInt(startStr, 'start verse')
+        if (startStr === 'a') {
+          throw new Error(
+            'Invalid range: "a" indicator cannot be used as the start of a range'
+          )
+        }
+        const startVerse = safeParseInt(startStr, 'start verse')
         const endVerse =
           endVerseStr === 'a'
             ? getVerseCount(bookName, endChapterNum)
             : safeParseInt(endVerseStr, 'end verse')
+
+        if (endChapterNum === currentChapter && endVerse < startVerse) {
+          throw new Error(
+            `Invalid range: end verse ${endVerse} must be greater than or equal to start verse ${startVerse}`
+          )
+        }
 
         if (endChapterNum === currentChapter) {
           ranges.push({
@@ -152,12 +162,22 @@ export const splitBibleReference = (reference: string): VerseReference => {
         }
       } else {
         // Single chapter range: "16-17" or "16-a"
-        const startVerse =
-          startStr === 'a' ? 1 : safeParseInt(startStr, 'start verse')
+        if (startStr === 'a') {
+          throw new Error(
+            'Invalid range: "a" indicator cannot be used as the start of a range'
+          )
+        }
+        const startVerse = safeParseInt(startStr, 'start verse')
         const endVerse =
           endStr === 'a'
             ? getVerseCount(bookName, currentChapter)
             : safeParseInt(endStr, 'end verse')
+
+        if (endVerse < startVerse) {
+          throw new Error(
+            `Invalid range: end verse ${endVerse} must be greater than or equal to start verse ${startVerse}`
+          )
+        }
 
         ranges.push({
           chapterNumber: currentChapter,
