@@ -495,6 +495,28 @@ Obsidian Bible Reference  is proudly powered by
   }
 
   private setUpMultiChapterSeparatorOptions(): void {
+    const chapterNumberSetting = new Setting(this.containerEl)
+      .setName('Show Chapter Number in Separator')
+      .setDesc(
+        'When using a chapter separator, include the chapter number (e.g., "--- 2 ---")'
+      )
+      .addToggle((toggle) => {
+        toggle
+          .setValue(!!this.plugin.settings?.showChapterNumberInSeparator)
+          .onChange(async (value) => {
+            this.plugin.settings.showChapterNumberInSeparator = value
+            await this.plugin.saveSettings()
+          })
+      })
+
+    const updateChapterNumberVisibility = (value: string) => {
+      if (value === BibleMultiChapterSeparatorFormat.ChapterSeparator) {
+        chapterNumberSetting.settingEl.show()
+      } else {
+        chapterNumberSetting.settingEl.hide()
+      }
+    }
+
     new Setting(this.containerEl)
       .setName('Multi-Chapter Separator')
       .setDesc(
@@ -519,28 +541,6 @@ Obsidian Bible Reference  is proudly powered by
             new Notice('Multi-Chapter Separator Settings Updated')
           })
       })
-
-    const chapterNumberSetting = new Setting(this.containerEl)
-      .setName('Show Chapter Number in Separator')
-      .setDesc(
-        'When using a chapter separator, include the chapter number (e.g., "--- 2 ---")'
-      )
-      .addToggle((toggle) => {
-        toggle
-          .setValue(!!this.plugin.settings?.showChapterNumberInSeparator)
-          .onChange(async (value) => {
-            this.plugin.settings.showChapterNumberInSeparator = value
-            await this.plugin.saveSettings()
-          })
-      })
-
-    const updateChapterNumberVisibility = (value: string) => {
-      if (value === BibleMultiChapterSeparatorFormat.ChapterSeparator) {
-        chapterNumberSetting.settingEl.show()
-      } else {
-        chapterNumberSetting.settingEl.hide()
-      }
-    }
 
     // Initialize visibility
     updateChapterNumberVisibility(
