@@ -142,9 +142,9 @@ export class VerseSuggesting
 
     const allVerses: IVerse[] = []
 
-    for (const range of this.verseReference.ranges) {
+    const rangePromises = this.verseReference.ranges.map(async (range) => {
       if (isCrossChapterReference(range)) {
-        allVerses.push(...(await this.getCrossChapterVerses(range)))
+        return this.getCrossChapterVerses(range)
       } else {
         const verses = await this.bibleProvider.query(
           this.verseReference.bookName,
@@ -153,13 +153,19 @@ export class VerseSuggesting
             ? [range.verseNumber, range.verseNumberEnd]
             : [range.verseNumber]
         )
-        const versesWithChapter = verses.map((verse) => ({
+        return verses.map((verse) => ({
           ...verse,
           chapter: range.chapterNumber,
         }))
-        allVerses.push(...versesWithChapter)
       }
-    }
+    })
+
+    const results = await Promise.allSettled(rangePromises)
+    results.forEach((result) => {
+      if (result.status === 'fulfilled') {
+        allVerses.push(...result.value)
+      }
+    })
     return allVerses
   }
 
