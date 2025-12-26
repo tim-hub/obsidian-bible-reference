@@ -294,32 +294,34 @@ test('splitBibleReference - throws error when "a" indicator cannot be resolved d
   )
 })
 
-test('splitBibleReference - throws error for non-existent chapter', () => {
-  expect(() => splitBibleReference('John 99:1')).toThrow(
-    'Invalid chapter number'
+test('splitBibleReference - throws error for malformed range with multiple dashes', () => {
+  expect(() => splitBibleReference('John 3:1-2-3')).toThrow(
+    'Invalid verse range'
   )
 })
 
-test('splitBibleReference - throws error for non-existent verse', () => {
-  expect(() => splitBibleReference('John 3:500')).toThrow(
-    'Invalid verse number'
+test('splitBibleReference - throws error for empty range start', () => {
+  expect(() => splitBibleReference('John 3:-4')).toThrow('Invalid verse range')
+})
+
+test('splitBibleReference - throws error for empty range end', () => {
+  expect(() => splitBibleReference('John 3:1-')).toThrow('Invalid verse range')
+})
+
+test('splitBibleReference - throws error for malformed cross-chapter end with multiple colons', () => {
+  expect(() => splitBibleReference('John 3:16-4:2:8')).toThrow(
+    'Invalid cross-chapter verse range'
   )
 })
 
-test('splitBibleReference - throws error for non-existent end chapter in cross-chapter range', () => {
-  expect(() => splitBibleReference('John 1:1-25:1')).toThrow(
-    'Invalid end chapter number'
+test('splitBibleReference - throws error for empty cross-chapter chapter', () => {
+  expect(() => splitBibleReference('John 3:16-:2')).toThrow(
+    'Invalid cross-chapter verse range'
   )
 })
 
-test('splitBibleReference - throws error for non-existent end verse in same chapter', () => {
-  expect(() => splitBibleReference('John 3:16-500')).toThrow(
-    'Invalid end verse'
-  )
-})
-
-test('splitBibleReference - throws error when "a" indicator cannot be resolved due to missing metadata', () => {
-  expect(() => splitBibleReference('NonExistentBook 1:a')).toThrow(
-    'Could not resolve "a" indicator'
+test('splitBibleReference - throws error for empty cross-chapter verse', () => {
+  expect(() => splitBibleReference('John 3:16-4:')).toThrow(
+    'Invalid cross-chapter verse range'
   )
 })

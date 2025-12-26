@@ -126,12 +126,33 @@ export const splitBibleReference = (reference: string): VerseReference => {
     // Parse versePart (could be "16", "16-17", "16-a", "16-4:2", "a")
     if (versePart.includes('-')) {
       const rangeParts = versePart.split('-')
+
+      if (
+        rangeParts.length !== 2 ||
+        !rangeParts[0].trim() ||
+        !rangeParts[1].trim()
+      ) {
+        throw new Error(
+          `Invalid verse range "${versePart}". Expected format "start-end".`
+        )
+      }
+
       const startStr = rangeParts[0].trim().toLowerCase()
       const endStr = rangeParts[1].trim().toLowerCase()
 
       // Check for cross-chapter in the end part: "16-4:2"
       if (endStr.includes(':')) {
         const endChapterParts = endStr.split(':')
+
+        if (
+          endChapterParts.length !== 2 ||
+          !endChapterParts[0].trim() ||
+          !endChapterParts[1].trim()
+        ) {
+          throw new Error(
+            `Invalid cross-chapter verse range "${versePart}". Expected format "startChapter:startVerse-endChapter:endVerse".`
+          )
+        }
         const endChapterNum = safeParseInt(
           endChapterParts[0],
           'end chapter number'
