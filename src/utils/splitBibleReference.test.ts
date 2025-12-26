@@ -264,6 +264,42 @@ test('splitBibleReference - throws error for non-existent chapter', () => {
   )
 })
 
+test('splitBibleReference - throws error for non-existent end chapter', () => {
+  expect(() => splitBibleReference('John 3:16-99:1')).toThrow(
+    'Invalid end chapter number'
+  )
+})
+
+test('splitBibleReference - throws error for non-existent start verse', () => {
+  expect(() => splitBibleReference('John 3:500')).toThrow(
+    'Invalid verse number'
+  )
+})
+
+test('splitBibleReference - throws error for non-existent start verse in range', () => {
+  expect(() => splitBibleReference('John 3:500-501')).toThrow(
+    'Invalid start verse'
+  )
+})
+
+test('splitBibleReference - throws error for non-existent end verse in same chapter', () => {
+  expect(() => splitBibleReference('John 3:16-500')).toThrow(
+    'Invalid end verse'
+  )
+})
+
+test('splitBibleReference - throws error when "a" indicator cannot be resolved due to missing metadata', () => {
+  expect(() => splitBibleReference('NonExistentBook 1:a')).toThrow(
+    'Could not resolve "a" indicator'
+  )
+})
+
+test('splitBibleReference - throws error for non-existent chapter', () => {
+  expect(() => splitBibleReference('John 99:1')).toThrow(
+    'Invalid chapter number'
+  )
+})
+
 test('splitBibleReference - throws error for non-existent verse', () => {
   expect(() => splitBibleReference('John 3:500')).toThrow(
     'Invalid verse number'

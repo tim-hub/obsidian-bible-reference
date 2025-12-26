@@ -208,6 +208,9 @@ export const splitBibleReference = (reference: string): VerseReference => {
       } else {
         // Single chapter range: "16-17" or "16-a"
         if (startStr === 'a') {
+          // NOTE: "a" as the start of a range (e.g., "John 3:a-16") is blocked
+          // because it creates a semantically odd range meaning "from verse 1 to verse 16".
+          // Using verse 1 directly (e.g., "1-16") is preferred.
           throw new Error(
             'Invalid range: "a" indicator cannot be used as the start of a range'
           )
