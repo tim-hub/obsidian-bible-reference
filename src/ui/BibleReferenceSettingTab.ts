@@ -244,7 +244,30 @@ Obsidian Bible Reference  is proudly powered by
               new Notice('Internal Linking Format Updated')
             })
         })
-      // this.setUpOptOutEventsOptions(this.expertSettingContainer)
+
+      new Setting(this.expertSettingContainer)
+        .setName('Multi-Chapter Separator')
+        .setDesc(
+          'Choose how to display verses that span multiple chapters (e.g., John 1:1-2:5)'
+        )
+        .addDropdown((dropdown: DropdownComponent) => {
+          BibleMultiChapterSeparatorFormatCollection.forEach(
+            ({ name, description }) => {
+              dropdown.addOption(name, description)
+            }
+          )
+          dropdown
+            .setValue(
+              this.plugin.settings.multiChapterSeparatorFormat ??
+                BibleMultiChapterSeparatorFormat.ChapterSeparator
+            )
+            .onChange(async (value) => {
+              this.plugin.settings.multiChapterSeparatorFormat =
+                value as BibleMultiChapterSeparatorFormat
+              await this.plugin.saveSettings()
+              new Notice('Multi-Chapter Separator Settings Updated')
+            })
+        })
     }
   }
 
@@ -574,7 +597,6 @@ Obsidian Bible Reference  is proudly powered by
           })
       })
   }
-
   private setUpBibleIconPrefixToggle(): void {
     new Setting(this.containerEl)
       .setName('Show Bible Icon Prefix "[!Bible]" *')
@@ -663,63 +685,6 @@ Obsidian Bible Reference  is proudly powered by
             await this.plugin.saveSettings()
             pluginEvent.trigger('bible-reference:settings:advanced', [value])
             // todo add event log stats fire
-          })
-      )
-  }
-
-  private setUpBookTagging(): void {
-    this.expertSettingContainer &&
-      new Setting(this.expertSettingContainer)
-        .setName('Add a Book Tag')
-        .setDesc('Add a hidden book tag at bottom, for example #John')
-        .addToggle((toggle) =>
-          toggle
-            .setValue(!!this.plugin.settings?.bookTagging)
-            .onChange(async (value) => {
-              this.plugin.settings.bookTagging = value
-              await this.plugin.saveSettings()
-            })
-        )
-  }
-
-  private setUpChapterTagging(): void {
-    this.expertSettingContainer &&
-      new Setting(this.expertSettingContainer)
-        .setName('Add a Chapter Tag')
-        .setDesc('Add a hidden chapter tag at bottom, for example #John1')
-        .addToggle((toggle) =>
-          toggle
-            .setValue(!!this.plugin.settings?.chapterTagging)
-            .onChange(async (value) => {
-              this.plugin.settings.chapterTagging = value
-              await this.plugin.saveSettings()
-            })
-        )
-  }
-
-  private setUpOptOutEventsOptions(
-    container: HTMLElement = this.containerEl
-  ): void {
-    new Setting(container)
-      .setName('Opt Out of Events Logging')
-      .setDesc(
-        'We used events logging to improve the plugin, this is very helpful for us, but if you want to opt out, you can do it here. (Excluding Errors Logs))'
-      )
-      .addToggle((toggle) =>
-        toggle
-          .setValue(!!this.plugin.settings?.optOutToEvents)
-          .onChange(async (value) => {
-            this.plugin.settings.optOutToEvents = value
-            await this.plugin.saveSettings()
-            if (value) {
-              new Notice(
-                'You have opted out of events logging, we will not log any events from now on'
-              )
-            } else {
-              new Notice(
-                'Thanks for opting in to events logging, this is really valuable for us to improve the plugin'
-              )
-            }
           })
       )
   }
