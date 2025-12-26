@@ -86,6 +86,6 @@ export class BibleAPIDotComProvider extends BaseBibleAPIProvider {
     versionName: string
   ): IVerse[] {
     this._bibleReferenceHead = data.reference
-    return data.verses.map((v) => ({ ...v, chapter: v.chapter || chapter }))
+    return data.verses.map((v) => ({ ...v, chapter: v.chapter ?? chapter }))
   }
 }
