@@ -716,22 +716,20 @@ Obsidian Bible Reference  is proudly powered by
       this.plugin.settings.bibleVersion ||
       this.plugin.settings.defaultBibleVersion
     const selectedVersion = getBibleVersion(versionKey)
-    const isEnglish = selectedVersion?.language
-      ?.toLowerCase()
-      .includes('english')
+    const isEnglish =
+      selectedVersion?.language?.toLowerCase().includes('english') ?? true
+    const shouldShowBookNameLanguageSetting =
+      !!selectedVersion && isEnglish === false
+
     console.debug('updateBookNameLanguageVisibility', {
       versionKey,
       language: selectedVersion?.language,
       isEnglish,
+      shouldShow: shouldShowBookNameLanguageSetting,
       hasSetting: !!this.bookNameLanguageSetting,
     })
 
     if (this.bookNameLanguageSetting) {
-      const isEnglish =
-        selectedVersion?.language?.toLowerCase().includes('english') ?? true
-      const shouldShowBookNameLanguageSetting =
-        !!selectedVersion && isEnglish === false
-
       if (shouldShowBookNameLanguageSetting) {
         this.bookNameLanguageSetting.settingEl.show()
       } else {
