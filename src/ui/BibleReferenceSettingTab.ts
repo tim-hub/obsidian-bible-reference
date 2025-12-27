@@ -727,7 +727,12 @@ Obsidian Bible Reference  is proudly powered by
     })
 
     if (this.bookNameLanguageSetting) {
-      if (selectedVersion && !isEnglish) {
+      const isEnglish =
+        selectedVersion?.language?.toLowerCase().includes('english') ?? true
+      const shouldShowBookNameLanguageSetting =
+        !!selectedVersion && isEnglish === false
+
+      if (shouldShowBookNameLanguageSetting) {
         this.bookNameLanguageSetting.settingEl.show()
       } else {
         this.bookNameLanguageSetting.settingEl.hide()

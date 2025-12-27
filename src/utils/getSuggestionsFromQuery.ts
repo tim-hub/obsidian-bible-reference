@@ -37,7 +37,9 @@ export const getSuggestionsFromQuery = async (
     translation ? translation : settings.bibleVersion
   )
   const bookNameLanguageCode =
-    settings.bookNameLanguage === 'English' ? 'en' : selectedBibleVersion?.code
+    settings.bookNameLanguage === 'English'
+      ? 'en'
+      : (selectedBibleVersion?.code ?? 'en')
   const bookName = getFullBookName(rawBookName, bookNameLanguageCode)
   console.debug('selected bookName', bookName)
 
