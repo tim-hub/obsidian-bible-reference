@@ -86,7 +86,6 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     this.setUpShowVerseTranslationOptions()
     this.setUpHyperlinkingOptions()
     this.setUpSourceOfReferenceOptions()
-
     this.setUpVerseFormatOptions()
     this.setUpVerseNumberFormatOptions()
     this.setUpMultiChapterSeparatorOptions()
@@ -714,9 +713,9 @@ Obsidian Bible Reference  is proudly powered by
   private updateBookNameLanguageVisibility(): void {
     if (this.bookNameLanguageSetting) {
       const selectedVersion = getBibleVersion(
-        this.plugin.settings.defaultBibleVersion
+        this.plugin.settings.bibleVersion
       )
-      if (selectedVersion?.language !== 'English') {
+      if (selectedVersion && !selectedVersion.language.startsWith('English')) {
         this.bookNameLanguageSetting.settingEl.show()
       } else {
         this.bookNameLanguageSetting.settingEl.hide()
