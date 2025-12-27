@@ -17,9 +17,16 @@ export function getBLBUrl(
   if (!bookCode) {
     throw new Error(`Book code not found for ${bookName}`)
   }
-  let url = `https://www.blueletterbible.org/${versionCode}/${bookCode}/${chapterNumber}/${verseNumber}`
+
+  // Map internal version keys to BLB version codes
+  let blbVersion = versionCode.toLowerCase()
+  if (blbVersion === 'niv2011') {
+    blbVersion = 'niv'
+  }
+
+  let url = `https://www.blueletterbible.org/${blbVersion}/${bookCode.toLowerCase()}/${chapterNumber}/${verseNumber}`
   if (verseNumberEnd) {
     url += `-${verseNumberEnd}`
   }
-  return url
+  return url + '/'
 }
