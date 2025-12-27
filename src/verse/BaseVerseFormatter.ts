@@ -4,6 +4,7 @@ import { BibleVerseNumberFormat } from '../data/BibleVerseNumberFormat'
 import { VerseReference } from '../utils/splitBibleReference'
 import { BibleVerseFormat } from '../data/BibleVerseFormat'
 import { BibleMultiChapterSeparatorFormat } from '../data/BibleMultiChapterSeparatorFormat'
+import { BibleVerseSegmentSeparatorFormat } from '../data/BibleVerseSegmentSeparatorFormat'
 import { IVerse } from '../interfaces/IVerse'
 
 export abstract class BaseVerseFormatter {
@@ -19,19 +20,18 @@ export abstract class BaseVerseFormatter {
   ) {
     this.settings = settings
     this.verseReference = verseReference
-    const { bookName, chapterNumber, verseNumber, verseNumberEnd } =
-      this.verseReference
-    if (verseNumberEnd && verseNumberEnd - verseNumber !== verseTexts?.length) {
-      console.error('Verse text length does not match verse numbers')
+    const { bookName } = this.verseReference
+    this.verses = []
+    if (verseTexts && verseTexts.length > 0) {
+      this.verses = verseTexts.map((verse, index) => {
+        return {
+          book_name: bookName,
+          chapter: this.verseReference.chapterNumber,
+          verse: this.verseReference.verseNumber + index,
+          text: verse,
+        }
+      })
     }
-    this.verses = verseTexts?.map((verse, index) => {
-      return {
-        book_name: bookName,
-        chapter: chapterNumber,
-        verse: verseNumber + index,
-        text: verse,
-      }
-    })
   }
 
   /**
@@ -50,9 +50,10 @@ export abstract class BaseVerseFormatter {
     }
     let text = ''
     let previousChapter: number | undefined = undefined
+    let previousVerse: number | undefined = undefined
 
     if (this.settings?.verseFormatting === BibleVerseFormat.Paragraph) {
-      text = '> '
+      text = '>'
     } else {
       text = ''
     }
@@ -64,16 +65,35 @@ export abstract class BaseVerseFormatter {
         previousChapter !== undefined &&
         verse.chapter !== previousChapter
 
-      console.debug(
-        `Verse ${index}: chapter=${verse.chapter}, previousChapter=${previousChapter}, needsSeparator=${needsSeparator}, setting=${this.settings?.multiChapterSeparatorFormat}`
-      )
-
       if (needsSeparator) {
-        console.debug('Adding chapter separator')
-        if (this.settings?.verseFormatting === BibleVerseFormat.Paragraph) {
-          text = text.trim() + '\n>\n> ---\n> '
+        if (this.settings?.showChapterNumberInSeparator) {
+          if (this.settings?.verseFormatting === BibleVerseFormat.Paragraph) {
+            text = text.trim() + `\n>\n> ---\n> ${verse.chapter}\n> ---\n>`
+          } else {
+            text += `> ---\n> ${verse.chapter}\n> ---\n`
+          }
         } else {
-          text += '> ---\n'
+          const separator = `---`
+          if (this.settings?.verseFormatting === BibleVerseFormat.Paragraph) {
+            text = text.trim() + `\n>\n> ${separator}\n>`
+          } else {
+            text += `> ${separator}\n`
+          }
+        }
+      } else if (
+        this.settings?.verseSegmentSeparatorFormat ===
+          BibleVerseSegmentSeparatorFormat.VerseSeparator &&
+        previousChapter !== undefined &&
+        verse.chapter === previousChapter &&
+        previousVerse !== undefined &&
+        verse.verse !== previousVerse + 1
+      ) {
+        // Detect verse gap in same chapter
+        const separator = `---`
+        if (this.settings?.verseFormatting === BibleVerseFormat.Paragraph) {
+          text = text.trim() + `\n>\n> ${separator}\n>`
+        } else {
+          text += `> ${separator}\n`
         }
       }
 
@@ -85,7 +105,10 @@ export abstract class BaseVerseFormatter {
         // Remove the last <br/> tag that appears in LSB verses.
         singleVerseText = singleVerseText.slice(0, -5)
       }
-      const verseNumberFormatted = this.formatVerseNumber(verse.verse)
+      const verseNumberFormatted = this.formatVerseNumber(
+        verse.verse,
+        verse.chapter
+      )
       if (this.settings?.verseFormatting === BibleVerseFormat.Paragraph) {
         text +=
           ' ' + verseNumberFormatted + singleVerseText.replaceAll('\n', ' ')
@@ -95,11 +118,11 @@ export abstract class BaseVerseFormatter {
           verseNumberFormatted +
           singleVerseText.replace(/\r\n|\n|\r/g, ' ') +
           '\n'
-        // Remove extraneous line breaks in KJV verses.
       }
 
-      // Update previous chapter tracker
+      // Update previous trackers
       previousChapter = verse.chapter
+      previousVerse = verse.verse
     })
     console.debug('text', text)
     return text.trim()
@@ -139,7 +162,7 @@ export abstract class BaseVerseFormatter {
       this.settings.referenceLinkPosition ===
         BibleVerseReferenceLinkPosition.AllAbove
     ) {
-      bottom += `> \n `
+      bottom += `> \n`
       bottom += this.getVerseReferenceLink()
     }
     return bottom
@@ -147,8 +170,8 @@ export abstract class BaseVerseFormatter {
 
   protected abstract getVerseReferenceLink(): string
 
-  protected getVerseLink(verseNumber: number): string {
-    const { bookName, chapterNumber } = this.verseReference
+  protected getVerseLink(verseNumber: number, chapterNumber: number): string {
+    const { bookName } = this.verseReference
     const verseNumberLinkFormat = this.settings.internalLinkingFormat || 'None'
     if (verseNumberLinkFormat === 'None') return ''
     const verseNumStr = verseNumber.toString()
@@ -164,9 +187,12 @@ export abstract class BaseVerseFormatter {
     }
   }
 
-  protected formatVerseNumber(verseNumber: number | string): string {
+  protected formatVerseNumber(
+    verseNumber: number | string,
+    chapterNumber: number
+  ): string {
     const verseNumStr2 = verseNumber.toString()
-    const verseNumLink = this.getVerseLink(Number(verseNumber))
+    const verseNumLink = this.getVerseLink(Number(verseNumber), chapterNumber)
     const verseNumberFormatted = verseNumLink || verseNumStr2
 
     switch (this.settings.verseNumberFormatting) {

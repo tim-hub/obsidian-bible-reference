@@ -1,7 +1,7 @@
 // utils/referenceLogosLinking.ts
 
 import { BibleReferencePluginSettings } from '../data/constants'
-import { VerseReference } from './splitBibleReference'
+import { VerseReference, getReferenceHead } from './splitBibleReference'
 import { LOGOS_SUPPORTED_TRANSLATIONS } from '../data/BibleVersionCollection'
 
 /**
@@ -136,6 +136,25 @@ export function getLogosUrl(
 }
 
 /**
+ * Determines which Logos translation key to use, applying fallback if the preferred
+ * version is not supported by Logos.
+ */
+export function getLogosTranslation(
+  settings: BibleReferencePluginSettings,
+  translation: string
+): string {
+  const isSupported = LOGOS_SUPPORTED_TRANSLATIONS.some(
+    (l) => l.key === translation
+  )
+
+  if (isSupported) {
+    return translation
+  }
+
+  return settings.logosFallbackVersion || LOGOS_SUPPORTED_TRANSLATIONS[0].key
+}
+
+/**
  * Generates a formatted Logos hyperlink for the verse reference.
  */
 export function getLogosLink(
@@ -145,16 +164,7 @@ export function getLogosLink(
   const { bookName, chapterNumber, verseNumber, verseNumberEnd } =
     verseReference
   const translation = settings.bibleVersion || 'esv'
-
-  let logosTranslation = translation
-  const isSupported = LOGOS_SUPPORTED_TRANSLATIONS.some(
-    (l) => l.key === translation
-  )
-
-  if (!isSupported) {
-    logosTranslation =
-      settings.logosFallbackVersion || LOGOS_SUPPORTED_TRANSLATIONS[0].key
-  }
+  const logosTranslation = getLogosTranslation(settings, translation)
 
   try {
     const url = getLogosUrl(
@@ -164,7 +174,7 @@ export function getLogosLink(
       verseNumber,
       verseNumberEnd
     )
-    const reference = `${bookName} ${chapterNumber}:${verseNumber}${verseNumberEnd ? `-${verseNumberEnd}` : ''}`
+    const reference = getReferenceHead(verseReference)
     return ` [${reference} - ${translation.toUpperCase()}](${url})`
   } catch (error) {
     console.error('Error generating Logos URL:', error)

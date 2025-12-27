@@ -1,6 +1,6 @@
 import { BaseVerseFormatter } from './BaseVerseFormatter'
 import { BibleReferencePluginSettings } from '../data/constants'
-import { VerseReference } from '../utils/splitBibleReference'
+import { VerseReference, getReferenceHead } from '../utils/splitBibleReference'
 
 export class VerseOfDaySuggesting extends BaseVerseFormatter {
   constructor(
@@ -12,10 +12,7 @@ export class VerseOfDaySuggesting extends BaseVerseFormatter {
   }
 
   public getVerseReferenceLink(): string {
-    const { bookName, chapterNumber, verseNumber, verseNumberEnd } =
-      this.verseReference
-    return ` Verse of the Day [${bookName} ${chapterNumber}:${verseNumber}${
-      verseNumberEnd ? `-${verseNumberEnd}` : ''
-    }](https://beta.ourmanna.com/api/v1/get?format=json&order=daily)`
+    const head = getReferenceHead(this.verseReference)
+    return ` Verse of the Day [${head}](https://beta.ourmanna.com/api/v1/get?format=json&order=daily)`
   }
 }

@@ -9,6 +9,7 @@ import BibleReferencePlugin from './../main'
 import {
   allBibleVersionsWithLanguageNameAlphabetically,
   DEFAULT_BIBLE_VERSION,
+  LOGOS_SUPPORTED_TRANSLATIONS,
 } from '../data/BibleVersionCollection'
 import { IBibleVersion } from '../interfaces/IBibleVersion'
 import {
@@ -27,6 +28,10 @@ import {
   BibleMultiChapterSeparatorFormat,
   BibleMultiChapterSeparatorFormatCollection,
 } from '../data/BibleMultiChapterSeparatorFormat'
+import {
+  BibleVerseSegmentSeparatorFormat,
+  BibleVerseSegmentSeparatorFormatCollection,
+} from '../data/BibleVerseSegmentSeparatorFormat'
 import { BibleAPISourceCollection } from '../data/BibleApiSourceCollection'
 import {
   APP_NAMING,
@@ -47,6 +52,7 @@ function escapeHtml(unsafe: string) {
 export class BibleReferenceSettingTab extends PluginSettingTab {
   private plugin: BibleReferencePlugin
   private expertSettingContainer?: HTMLElement
+  private logosFallbackSetting?: Setting
 
   constructor(app: App, plugin: BibleReferencePlugin) {
     super(app, plugin)
@@ -81,13 +87,17 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
 
     this.setUpVerseFormatOptions()
     this.setUpVerseNumberFormatOptions()
-
+    this.setUpMultiChapterSeparatorOptions()
+    this.setUpVerseSegmentSeparatorOptions()
     this.setUpBibleIconPrefixToggle()
     this.setUpCollapsibleToggle()
     this.setupCollapsedByDefault()
     this.setUpStatusIndicationOptions()
     this.containerEl.createEl('h2', { text: 'Others' })
     this.setUpExpertSettings()
+
+    // Initialize conditional visibilities
+    this.updateLogosFallbackVisibility()
 
     this.containerEl.createSpan({}, (span) => {
       span.innerHTML = `
@@ -305,6 +315,34 @@ Obsidian Bible Reference  is proudly powered by
             new Notice(`Bible Reference - use Version ${value.toUpperCase()}`)
           })
       })
+
+    this.logosFallbackSetting = new Setting(this.containerEl)
+      .setName('Logos Fallback Version')
+      .setDesc(
+        'Choose the Bible version to use for Logos links when your selected version is not supported by Logos'
+      )
+      .addDropdown((dropdown) => {
+        LOGOS_SUPPORTED_TRANSLATIONS.forEach((version) => {
+          dropdown.addOption(version.key, version.name)
+        })
+        dropdown
+          .setValue(this.plugin.settings.logosFallbackVersion || 'niv2011')
+          .onChange(async (value) => {
+            this.plugin.settings.logosFallbackVersion = value
+            await this.plugin.saveSettings()
+            new Notice('Logos Fallback Version Updated')
+          })
+      })
+  }
+
+  private updateLogosFallbackVisibility(): void {
+    if (this.logosFallbackSetting) {
+      if (this.plugin.settings.sourceOfReference === 'logos') {
+        this.logosFallbackSetting.settingEl.show()
+      } else {
+        this.logosFallbackSetting.settingEl.hide()
+      }
+    }
   }
 
   private setUpStatusIndicationOptions(): void {
@@ -448,6 +486,7 @@ Obsidian Bible Reference  is proudly powered by
           | 'blb'
           | 'biblegateway'
           | 'logos'
+        this.updateLogosFallbackVisibility()
         await this.plugin.saveSettings()
         pluginEvent.trigger('bible-reference:settings:re-render', [])
         new Notice('Reference Link Source Updated')
@@ -478,6 +517,86 @@ Obsidian Bible Reference  is proudly powered by
       })
   }
 
+  private setUpMultiChapterSeparatorOptions(): void {
+    const chapterNumberSetting = new Setting(this.containerEl)
+      .setName('Show Chapter Number in Separator')
+      .setDesc(
+        'When using a chapter separator, include the chapter number (e.g., "--- 2 ---")'
+      )
+      .addToggle((toggle) => {
+        toggle
+          .setValue(!!this.plugin.settings?.showChapterNumberInSeparator)
+          .onChange(async (value) => {
+            this.plugin.settings.showChapterNumberInSeparator = value
+            await this.plugin.saveSettings()
+          })
+      })
+
+    const updateChapterNumberVisibility = (value: string) => {
+      if (value === BibleMultiChapterSeparatorFormat.ChapterSeparator) {
+        chapterNumberSetting.settingEl.show()
+      } else {
+        chapterNumberSetting.settingEl.hide()
+      }
+    }
+
+    new Setting(this.containerEl)
+      .setName('Multi-Chapter Separator')
+      .setDesc(
+        'Choose how to display verses that span multiple chapters (e.g., John 1:1-2:5)'
+      )
+      .addDropdown((dropdown: DropdownComponent) => {
+        BibleMultiChapterSeparatorFormatCollection.forEach(
+          ({ name, description }) => {
+            dropdown.addOption(name, description)
+          }
+        )
+        dropdown
+          .setValue(
+            this.plugin.settings.multiChapterSeparatorFormat ??
+              BibleMultiChapterSeparatorFormat.ChapterSeparator
+          )
+          .onChange(async (value) => {
+            this.plugin.settings.multiChapterSeparatorFormat =
+              value as BibleMultiChapterSeparatorFormat
+            updateChapterNumberVisibility(value)
+            await this.plugin.saveSettings()
+            new Notice('Multi-Chapter Separator Settings Updated')
+          })
+      })
+
+    // Initialize visibility
+    updateChapterNumberVisibility(
+      this.plugin.settings.multiChapterSeparatorFormat ??
+        BibleMultiChapterSeparatorFormat.ChapterSeparator
+    )
+  }
+
+  private setUpVerseSegmentSeparatorOptions(): void {
+    new Setting(this.containerEl)
+      .setName('Verse Segment Separator')
+      .setDesc(
+        'Choose how to display non-contiguous verses (e.g., John 3:16, 19)'
+      )
+      .addDropdown((dropdown: DropdownComponent) => {
+        BibleVerseSegmentSeparatorFormatCollection.forEach(
+          ({ name, description }) => {
+            dropdown.addOption(name, description)
+          }
+        )
+        dropdown
+          .setValue(
+            this.plugin.settings.verseSegmentSeparatorFormat ??
+              BibleVerseSegmentSeparatorFormat.VerseSeparator
+          )
+          .onChange(async (value) => {
+            this.plugin.settings.verseSegmentSeparatorFormat =
+              value as BibleVerseSegmentSeparatorFormat
+            await this.plugin.saveSettings()
+            new Notice('Verse Segment Separator Settings Updated')
+          })
+      })
+  }
   private setUpBibleIconPrefixToggle(): void {
     new Setting(this.containerEl)
       .setName('Show Bible Icon Prefix "[!Bible]" *')

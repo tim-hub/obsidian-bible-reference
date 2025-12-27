@@ -92,7 +92,7 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
           line: cursor.line,
           ch: queryContent.lastIndexOf(verseMatchResult),
         },
-        query: `${verseMatchResult}@${versionSelectionMatchResult}`,
+        query: `${bookVerseQuery}@${versionSelectionMatchResult}`,
       }
     }
     return null
