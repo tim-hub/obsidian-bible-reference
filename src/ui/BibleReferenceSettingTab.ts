@@ -711,18 +711,23 @@ Obsidian Bible Reference  is proudly powered by
   }
 
   private updateBookNameLanguageVisibility(): void {
+    const versionKey =
+      this.plugin.settings.bibleVersion ||
+      this.plugin.settings.defaultBibleVersion
+    const selectedVersion = getBibleVersion(versionKey)
+    const isEnglish = selectedVersion?.language?.toLowerCase().includes('english')
+    console.debug('updateBookNameLanguageVisibility', {
+      versionKey,
+      language: selectedVersion?.language,
+      isEnglish,
+      hasSetting: !!this.bookNameLanguageSetting,
+    })
+
     if (this.bookNameLanguageSetting) {
-      const selectedVersion = getBibleVersion(
-        this.plugin.settings.bibleVersion ||
-        this.plugin.settings.defaultBibleVersion
-      )
-      const isEnglish = selectedVersion?.language?.toLowerCase().includes('english');
       if (selectedVersion && !isEnglish) {
-        this.bookNameLanguageSetting.settingEl.classList.remove('setting-item-hidden');
-        this.bookNameLanguageSetting.settingEl.style.display = '';
+        this.bookNameLanguageSetting.settingEl.show()
       } else {
-        this.bookNameLanguageSetting.settingEl.classList.add('setting-item-hidden');
-        this.bookNameLanguageSetting.settingEl.style.display = 'none';
+        this.bookNameLanguageSetting.settingEl.hide()
       }
     }
   }
