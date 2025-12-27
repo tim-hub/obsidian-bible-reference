@@ -22,6 +22,7 @@ import {
   VerseRange,
   VerseReference,
 } from '../utils/splitBibleReference'
+import { getFullBookName } from '../utils/bookNameReference'
 
 /**
  * Verse Suggesting
@@ -29,8 +30,7 @@ import {
  */
 export class VerseSuggesting
   extends BaseVerseFormatter
-  implements IVerseSuggesting
-{
+  implements IVerseSuggesting {
   public bibleVersion: string
   private bibleProvider: BaseBibleAPIProvider
 
@@ -85,10 +85,9 @@ export class VerseSuggesting
         ? ` #${this.verseReference.bookName.replace(/ /g, '')}` // Remove spaces from book names in tags
         : ''
       bottom += this.settings?.chapterTagging
-        ? ` #${
-            this.verseReference.bookName.replace(/ /g, '') +
-            this.verseReference.chapterNumber // Remove spaces from book names in tags
-          }`
+        ? ` #${this.verseReference.bookName.replace(/ /g, '') +
+        this.verseReference.chapterNumber // Remove spaces from book names in tags
+        }`
         : ''
       bottom += ' %%'
     }
@@ -147,7 +146,7 @@ export class VerseSuggesting
         return this.getCrossChapterVerses(range)
       } else {
         const verses = await this.bibleProvider.query(
-          this.verseReference.bookName,
+          getFullBookName(this.verseReference.bookName, 'en'),
           range.chapterNumber,
           range?.verseNumberEnd
             ? [range.verseNumber, range.verseNumberEnd]
@@ -182,7 +181,7 @@ export class VerseSuggesting
     const results = await Promise.allSettled(
       segments.map((segment) =>
         this.bibleProvider.query(
-          this.verseReference.bookName,
+          getFullBookName(this.verseReference.bookName, 'en'),
           segment.chapterNumber,
           segment.verseEnd
             ? [segment.verseStart, segment.verseEnd]

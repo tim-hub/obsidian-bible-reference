@@ -36,7 +36,9 @@ export const getSuggestionsFromQuery = async (
   const selectedBibleVersion = getBibleVersion(
     translation ? translation : settings.bibleVersion
   )
-  const bookName = getFullBookName(rawBookName, selectedBibleVersion?.code)
+  const bookNameLanguageCode =
+    settings.bookNameLanguage === 'English' ? 'en' : selectedBibleVersion?.code
+  const bookName = getFullBookName(rawBookName, bookNameLanguageCode)
   console.debug('selected bookName', bookName)
 
   // Use splitBibleReference for consistent parsing and validation
