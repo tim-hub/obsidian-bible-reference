@@ -6,10 +6,10 @@
  * Hebrews9:1-10:14
  */
 export const BOOK_VERSE_REG =
-  /([123])*\s*((?:\p{L}|\p{M}|[\\\[\]^_`a-zA-Z]){2,100}|\p{Script=Han}{1,})\s*\d{1,3}([\d:;,\-\s]|a(?!\p{L}))*/isu
+  /([123])*\s*((?:\p{L}|\p{M}|[\\[\]^_`a-zA-Z]){2,100}|\p{Script=Han}{1,})\s*\d{1,3}([\d:;,\-\s]|a(?!\p{L}))*/isu
 
 export const BOOK_REG =
-  /([123])*\s*((?:\p{L}|\p{M}|[\\\[\]^_`a-zA-Z]){2,100}|\p{Script=Han}{1,})/isu
+  /([123])*\s*((?:\p{L}|\p{M}|[\\[\]^_`a-zA-Z]){2,100}|\p{Script=Han}{1,})/isu
 
 export const TRANSLATION_VERSION_KEY_REG = /^[a-zA-Z]+-?[a-zA-Z0-9]*$/isu
 
