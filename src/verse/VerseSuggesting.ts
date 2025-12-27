@@ -30,7 +30,8 @@ import { getFullBookName } from '../utils/bookNameReference'
  */
 export class VerseSuggesting
   extends BaseVerseFormatter
-  implements IVerseSuggesting {
+  implements IVerseSuggesting
+{
   public bibleVersion: string
   private bibleProvider: BaseBibleAPIProvider
 
@@ -85,9 +86,10 @@ export class VerseSuggesting
         ? ` #${this.verseReference.bookName.replace(/ /g, '')}` // Remove spaces from book names in tags
         : ''
       bottom += this.settings?.chapterTagging
-        ? ` #${this.verseReference.bookName.replace(/ /g, '') +
-        this.verseReference.chapterNumber // Remove spaces from book names in tags
-        }`
+        ? ` #${
+            this.verseReference.bookName.replace(/ /g, '') +
+            this.verseReference.chapterNumber // Remove spaces from book names in tags
+          }`
         : ''
       bottom += ' %%'
     }
