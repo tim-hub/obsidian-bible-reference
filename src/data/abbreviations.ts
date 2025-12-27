@@ -513,6 +513,7 @@ export const BLB_BOOK_CODES: { [key: string]: string } = {
   Esther: 'Est',
   Job: 'Job',
   Psalms: 'Psa',
+  Psalm: 'Psa',
   Proverbs: 'Pro',
   Ecclesiastes: 'Ecc',
   'Song of Solomon': 'Sng',
