@@ -48,7 +48,7 @@ describe('BaseVerseFormatter', () => {
       { book_id: 'John', book_name: 'John', chapter: 4, verse: 1, text: 'v1' },
     ]
     const formatter = new MockFormatter(settings, verseReference, verses)
-    const expected = '> 36. v36\n> ---\n> 4\n> ---\n> 1. v1'
+    const expected = '> 36. v36\n>\n> ---\n> 4\n> ---\n> 1. v1'
     expect(formatter.bodyContent).toBe(expected)
   })
 
@@ -76,7 +76,7 @@ describe('BaseVerseFormatter', () => {
       { book_id: 'John', book_name: 'John', chapter: 4, verse: 1, text: 'v1' },
     ]
     const formatter = new MockFormatter(settings, verseReference, verses)
-    const expected = '> 36. v36\n> ---\n> 1. v1'
+    const expected = '> 36. v36\n>\n> ---\n> 1. v1'
     expect(formatter.bodyContent).toBe(expected)
   })
 
@@ -133,7 +133,7 @@ describe('BaseVerseFormatter', () => {
       },
     ]
     const formatter = new MockFormatter(settings, verseReference, verses)
-    const expected = '> 16. v16\n> ---\n> 19. v19'
+    const expected = '> 16. v16\n>\n> ---\n> 19. v19'
     expect(formatter.bodyContent).toBe(expected)
   })
 
