@@ -70,14 +70,14 @@ export abstract class BaseVerseFormatter {
           if (this.settings?.verseFormatting === BibleVerseFormat.Paragraph) {
             text = text.trim() + `\n>\n> ---\n> ${verse.chapter}\n> ---\n>`
           } else {
-            text += `> ---\n> ${verse.chapter}\n> ---\n`
+            text += `>\n> ---\n> ${verse.chapter}\n> ---\n`
           }
         } else {
           const separator = `---`
           if (this.settings?.verseFormatting === BibleVerseFormat.Paragraph) {
             text = text.trim() + `\n>\n> ${separator}\n>`
           } else {
-            text += `> ${separator}\n`
+            text += `>\n> ${separator}\n`
           }
         }
       } else if (
@@ -93,7 +93,7 @@ export abstract class BaseVerseFormatter {
         if (this.settings?.verseFormatting === BibleVerseFormat.Paragraph) {
           text = text.trim() + `\n>\n> ${separator}\n>`
         } else {
-          text += `> ${separator}\n`
+          text += `>\n> ${separator}\n`
         }
       }
 
