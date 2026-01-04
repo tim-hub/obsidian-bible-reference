@@ -8,6 +8,7 @@ import { BibleVerseFormat } from '../data/BibleVerseFormat'
 import { BibleVerseNumberFormat } from '../data/BibleVerseNumberFormat'
 import { BibleVerseSegmentSeparatorFormat } from '../data/BibleVerseSegmentSeparatorFormat'
 import { IVerse } from '../interfaces/IVerse'
+import { BibleVerseReferenceLinkPosition } from '../data/BibleVerseReferenceLinkPosition'
 
 class MockFormatter extends BaseVerseFormatter {
   constructor(
@@ -170,5 +171,79 @@ describe('BaseVerseFormatter', () => {
     const formatter = new MockFormatter(settings, verseReference, verses)
     const expected = '> 16. v16\n>\n> ---\n> 19. v19'
     expect(formatter.bodyContent).toBe(expected)
+  })
+
+  it('should add extra newline when position is Bottom', () => {
+    const settings = {
+      ...DEFAULT_SETTINGS,
+      referenceLinkPosition: BibleVerseReferenceLinkPosition.Bottom,
+    }
+    const verseReference: VerseReference = {
+      bookName: 'John',
+      chapterNumber: 3,
+      verseNumber: 16,
+      ranges: [{ chapterNumber: 3, verseNumber: 16 }],
+    }
+    const verses = [
+      {
+        book_id: 'John',
+        book_name: 'John',
+        chapter: 3,
+        verse: 16,
+        text: 'v16',
+      },
+    ]
+    const formatter = new MockFormatter(settings, verseReference, verses)
+    expect(formatter.allFormattedContent.endsWith('\n')).toBe(true)
+    expect(formatter.allFormattedContent.endsWith('\n\n')).toBe(false)
+  })
+
+  it('should NOT add extra newline when position is Header', () => {
+    const settings = {
+      ...DEFAULT_SETTINGS,
+      referenceLinkPosition: BibleVerseReferenceLinkPosition.Header,
+    }
+    const verseReference: VerseReference = {
+      bookName: 'John',
+      chapterNumber: 3,
+      verseNumber: 16,
+      ranges: [{ chapterNumber: 3, verseNumber: 16 }],
+    }
+    const verses = [
+      {
+        book_id: 'John',
+        book_name: 'John',
+        chapter: 3,
+        verse: 16,
+        text: 'v16',
+      },
+    ]
+    const formatter = new MockFormatter(settings, verseReference, verses)
+    expect(formatter.allFormattedContent.endsWith('\n')).toBe(false)
+  })
+
+  it('should add extra newline when position is Both', () => {
+    const settings = {
+      ...DEFAULT_SETTINGS,
+      referenceLinkPosition: BibleVerseReferenceLinkPosition.AllAbove,
+    }
+    const verseReference: VerseReference = {
+      bookName: 'John',
+      chapterNumber: 3,
+      verseNumber: 16,
+      ranges: [{ chapterNumber: 3, verseNumber: 16 }],
+    }
+    const verses = [
+      {
+        book_id: 'John',
+        book_name: 'John',
+        chapter: 3,
+        verse: 16,
+        text: 'v16',
+      },
+    ]
+    const formatter = new MockFormatter(settings, verseReference, verses)
+    expect(formatter.allFormattedContent.endsWith('\n')).toBe(true)
+    expect(formatter.allFormattedContent.endsWith('\n\n')).toBe(false)
   })
 })
