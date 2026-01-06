@@ -53,6 +53,7 @@ export interface BibleReferencePluginSettings {
   enableInternalLinking?: string
   logosFallbackVersion?: string
   sourceOfReference?: 'original' | 'blb' | 'biblegateway' | 'logos'
+  bookNameLanguage?: 'English' | 'Version-Specific'
 }
 
 export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
@@ -80,6 +81,7 @@ export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
   enableInternalLinking: 'None',
   logosFallbackVersion: 'niv2011',
   sourceOfReference: 'biblegateway',
+  bookNameLanguage: 'Version-Specific',
 }
 
 export const API_WAITING_LABEL = 'Loading...'

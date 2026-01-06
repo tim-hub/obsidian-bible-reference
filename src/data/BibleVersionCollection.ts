@@ -456,12 +456,14 @@ export const BibleVersionCollectionPolish = [
     key: 'bg',
     versionName: 'Biblia gdańska, 1881',
     language: 'Polish',
+    code: 'pl',
     apiSource: BibleAPISourceCollection.bollsLife,
   },
   {
     key: 'bw',
     versionName: 'Biblia warszawska, 1975',
     language: 'Polish',
+    code: 'pl',
     apiSource: BibleAPISourceCollection.bollsLife,
   },
 ]
@@ -471,6 +473,7 @@ export const BibleVersionCollectionIndonesian = [
     key: 'tb',
     versionName: 'Terjemahan Baru',
     language: 'Indonesian',
+    code: 'id',
     apiSource: BibleAPISourceCollection.bollsLife,
   },
 ]
@@ -480,6 +483,7 @@ export const BibleVersionCollectionRussian = [
     key: 'bti',
     versionName: 'Библия под ред. М.П. Кулакова и М.М. Кулакова, 2015',
     language: 'Russian',
+    code: 'ru',
     apiSource: BibleAPISourceCollection.bollsLife,
   },
 ]
@@ -489,6 +493,7 @@ export const BibleVersionCollectionUkrainian = [
     key: 'utt',
     versionName: 'Українська Біблія LXX УБТ Рафаїла Турконяка (2011) 77 книг',
     language: 'Ukrainian',
+    code: 'uk',
     apiSource: BibleAPISourceCollection.bollsLife,
   },
 ]
@@ -498,6 +503,7 @@ export const BibleVersionCollectionFrench = [
     key: 'nbs',
     versionName: 'Nouvelle Bible Segond, 2002',
     language: 'French',
+    code: 'fr',
     apiSource: BibleAPISourceCollection.bollsLife,
   },
 ]
@@ -507,6 +513,7 @@ export const BibleVersionCollectionTamil = [
     key: 'tbsi',
     versionName: 'The Bible Society of India - Tamil - O.V.',
     language: 'Tamil',
+    code: 'ta',
     apiSource: BibleAPISourceCollection.bollsLife,
   },
 ]
@@ -516,6 +523,7 @@ export const BibleVersionCollectionHindi = [
     key: 'hiov',
     versionName: 'Hindi O.V. - Re-edited (BSI)',
     language: 'Hindi',
+    code: 'hi',
     apiSource: BibleAPISourceCollection.bollsLife,
   },
 ]
@@ -526,6 +534,7 @@ export const BibleVersionCollectionMalayalam = [
     key: 'mov',
     versionName: 'സത്യവേദപുസ്തകം O.V.',
     language: 'Malayalam',
+    code: 'ml',
     apiSource: BibleAPISourceCollection.bollsLife,
   },
 ]
@@ -536,6 +545,7 @@ export const BibleVersionCollectionKorean = [
     key: 'krv',
     versionName: 'KRV (개역한글)',
     language: 'Korean',
+    code: 'ko',
     apiSource: BibleAPISourceCollection.bollsLife,
   },
 ]
@@ -546,12 +556,14 @@ export const BibleVersionCollectionDutch = [
     key: 'hsv17',
     versionName: 'Herziene Statenvertaling 2017',
     language: 'Dutch',
+    code: 'nl',
     apiSource: BibleAPISourceCollection.bollsLife,
   },
   {
     key: 'svrj',
     versionName: 'Statenvertaling',
     language: 'Dutch',
+    code: 'nl',
     apiSource: BibleAPISourceCollection.bollsLife,
   },
 ]
