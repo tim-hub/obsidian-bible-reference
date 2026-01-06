@@ -41,7 +41,17 @@ export abstract class BaseVerseFormatter {
     if (!this.verses?.length) {
       console.error('No verses found')
     }
-    return [this.head, this.bodyContent, this.bottom].join('\n')
+    const parts = [this.head, this.bodyContent, this.bottom].filter(
+      (p) => p !== ''
+    )
+    const content = parts.join('\n')
+    const shouldAddNewLine =
+      this.settings.referenceLinkPosition ===
+        BibleVerseReferenceLinkPosition.Bottom ||
+      this.settings.referenceLinkPosition ===
+        BibleVerseReferenceLinkPosition.AllAbove
+
+    return shouldAddNewLine ? content + '\n' : content
   }
 
   public get bodyContent(): string {

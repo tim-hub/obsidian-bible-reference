@@ -597,6 +597,7 @@ Obsidian Bible Reference  is proudly powered by
           })
       })
   }
+
   private setUpBibleIconPrefixToggle(): void {
     new Setting(this.containerEl)
       .setName('Show Bible Icon Prefix "[!Bible]" *')
