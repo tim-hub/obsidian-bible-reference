@@ -538,6 +538,12 @@ export const BibleVersionCollectionKorean = [
     language: 'Korean',
     apiSource: BibleAPISourceCollection.bollsLife,
   },
+  {
+    key: 'rnksv',
+    versionName: 'RNKSV (새번역)',
+    language: 'Korean',
+    apiSource: BibleAPISourceCollection.bollsLife,
+  },
 ]
 
 // Dutch
