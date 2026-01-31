@@ -52,7 +52,12 @@ export interface BibleReferencePluginSettings {
   displayBibleIconPrefixAtHeader?: boolean // this is binding to to header collapsible option
   enableInternalLinking?: string
   logosFallbackVersion?: string
-  sourceOfReference?: 'original' | 'blb' | 'biblegateway' | 'logos'
+  sourceOfReference?:
+    | 'original'
+    | 'blb'
+    | 'biblegateway'
+    | 'logos'
+    | 'stepbible'
 }
 
 export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
