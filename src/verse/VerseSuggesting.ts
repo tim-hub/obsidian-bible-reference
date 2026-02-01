@@ -327,7 +327,9 @@ export class VerseSuggesting
             bookName,
             chapterNumber,
             verseNumber,
-            verseNumberEnd
+            verseNumberEnd,
+            chapterNumberEnd,
+            verseNumberEndChapter
           )
         } catch (error) {
           console.error('Error generating StepBible URL:', error)
