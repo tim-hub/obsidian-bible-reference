@@ -15,6 +15,7 @@ import {
   getLogosTranslation,
 } from '../utils/referenceLogosLinking'
 import { getBibleGatewayUrl } from '../utils/referenceLink'
+import { getStepbibleUrl } from '../utils/referenceStepbibleLinking'
 import {
   isCrossChapterReference,
   splitIntoChapterSegments,
@@ -314,6 +315,24 @@ export class VerseSuggesting
           )
         } catch (error) {
           console.error('Error generating Logos URL:', error)
+          return getBibleGatewayFallback()
+        }
+      }
+
+      case 'stepbible': {
+        // StepBible
+        try {
+          return getStepbibleUrl(
+            this.bibleVersion,
+            bookName,
+            chapterNumber,
+            verseNumber,
+            verseNumberEnd,
+            chapterNumberEnd,
+            verseNumberEndChapter
+          )
+        } catch (error) {
+          console.error('Error generating StepBible URL:', error)
           return getBibleGatewayFallback()
         }
       }
