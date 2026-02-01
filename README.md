@@ -94,6 +94,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Marvive"><img src="https://avatars.githubusercontent.com/u/24214254?v=4?s=65" width="65px;" alt="Michael Marvive"/><br /><sub><b>Michael Marvive</b></sub></a><br /><a href="https://github.com/tim-hub/obsidian-bible-reference/commits?author=Marvive" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="http://www.jonzfisher.com"><img src="https://avatars.githubusercontent.com/u/6652546?v=4?s=65" width="65px;" alt="Jonathan Fisher"/><br /><sub><b>Jonathan Fisher</b></sub></a><br /><a href="https://github.com/tim-hub/obsidian-bible-reference/commits?author=jonzfisher" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/lordmiss"><img src="https://avatars.githubusercontent.com/u/31772?v=4?s=65" width="65px;" alt="Hanjo Kim"/><br /><sub><b>Hanjo Kim</b></sub></a><br /><a href="https://github.com/tim-hub/obsidian-bible-reference/commits?author=lordmiss" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
