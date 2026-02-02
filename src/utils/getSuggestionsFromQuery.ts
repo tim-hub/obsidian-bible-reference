@@ -1,4 +1,7 @@
-import { BibleReferencePluginSettings } from '../data/constants'
+import {
+  BibleReferencePluginSettings,
+  BookNameLanguageEnum,
+} from '../data/constants'
 import { VerseSuggesting } from '../verse/VerseSuggesting'
 import { BOOK_REG } from './regs'
 import { getFullBookName } from './bookNameReference'
@@ -37,7 +40,7 @@ export const getSuggestionsFromQuery = async (
     translation ? translation : settings.bibleVersion
   )
   const bookNameLanguageCode =
-    settings.bookNameLanguage === 'English'
+    settings.bookNameLanguage === BookNameLanguageEnum.English
       ? 'en'
       : (selectedBibleVersion?.code ?? 'en')
   const bookName = getFullBookName(rawBookName, bookNameLanguageCode)

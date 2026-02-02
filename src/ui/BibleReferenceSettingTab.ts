@@ -37,6 +37,7 @@ import { BibleAPISourceCollection } from '../data/BibleApiSourceCollection'
 import {
   APP_NAMING,
   BibleVersionNameLengthEnum,
+  BookNameLanguageEnum,
   OutgoingLinkPositionEnum,
 } from '../data/constants'
 import { pluginEvent } from '../obsidian/PluginEvent'
@@ -324,14 +325,22 @@ Obsidian Bible Reference  is proudly powered by
         'Choose whether to display book names in English or the language of the selected version'
       )
       .addDropdown((dropdown) => {
-        dropdown.addOption('English', 'English')
-        dropdown.addOption('Version-Specific', 'Version-Specific')
+        dropdown.addOption(
+          BookNameLanguageEnum.English,
+          BookNameLanguageEnum.English
+        )
+        dropdown.addOption(
+          BookNameLanguageEnum.VersionSpecific,
+          BookNameLanguageEnum.VersionSpecific
+        )
         dropdown
-          .setValue(this.plugin.settings.bookNameLanguage || 'Version-Specific')
+          .setValue(
+            this.plugin.settings.bookNameLanguage ||
+              BookNameLanguageEnum.VersionSpecific
+          )
           .onChange(async (value) => {
-            this.plugin.settings.bookNameLanguage = value as
-              | 'English'
-              | 'Version-Specific'
+            this.plugin.settings.bookNameLanguage =
+              value as BookNameLanguageEnum
             await this.plugin.saveSettings()
             new Notice(`Book Name Language set to ${value}`)
           })
