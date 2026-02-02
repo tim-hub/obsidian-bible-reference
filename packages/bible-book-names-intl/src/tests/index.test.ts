@@ -1,8 +1,7 @@
 import languageToBookWithAbbreviationsDict from '../index';
 
 describe('test book names', () => {
-
-  test('it should have at least 10 languages translations', ()=>{
+  test('it should have at least 10 languages translations', () => {
     expect(languageToBookWithAbbreviationsDict.size).toBeGreaterThanOrEqual(10);
     //    it has English translation
     expect(languageToBookWithAbbreviationsDict.has('en')).toBe(true);
@@ -10,8 +9,7 @@ describe('test book names', () => {
     expect(languageToBookWithAbbreviationsDict.has('jp')).toBe(true);
     expect(languageToBookWithAbbreviationsDict.has('fr')).toBe(true);
     expect(languageToBookWithAbbreviationsDict.has('zh_CN')).toBe(true);
-  })
-
+  });
 
   const books = languageToBookWithAbbreviationsDict.get('en');
   test('it has English translation', () => {

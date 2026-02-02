@@ -4,7 +4,11 @@
   "2": { "name": "निर्गमन", "shortNames": ["निर्गम"], "startNumber": 0 },
   "3": { "name": "लैव्यव्यवस्था", "shortNames": ["लैव"], "startNumber": 0 },
   "4": { "name": "गिनती", "shortNames": ["गिन"], "startNumber": 0 },
-  "5": { "name": "व्यवस्थाविवरण", "shortNames": ["व्यवस्था"], "startNumber": 0 },
+  "5": {
+    "name": "व्यवस्थाविवरण",
+    "shortNames": ["व्यवस्था"],
+    "startNumber": 0
+  },
   "6": { "name": "येहोशु", "shortNames": ["यहो"], "startNumber": 0 },
   "7": { "name": "न्यायियों", "shortNames": ["न्याय"], "startNumber": 0 },
   "8": { "name": "रूत", "shortNames": ["रू"], "startNumber": 0 },
@@ -42,8 +46,12 @@
   "40": { "name": "मत्ती", "shortNames": ["मथ"], "startNumber": 0 },
   "41": { "name": "मरकुस", "shortNames": ["मरक"], "startNumber": 0 },
   "42": { "name": "लूका", "shortNames": ["लू"], "startNumber": 0 },
-  "43": { "name": "यूहन्ना", "shortNames": ["यूह","युहा"], "startNumber": 0 },
-  "44": { "name": "प्रेरितों के काम", "shortNames": ["प्रेरित"], "startNumber": 0 },
+  "43": { "name": "यूहन्ना", "shortNames": ["यूह", "युहा"], "startNumber": 0 },
+  "44": {
+    "name": "प्रेरितों के काम",
+    "shortNames": ["प्रेरित"],
+    "startNumber": 0
+  },
   "45": { "name": "रोमियों", "shortNames": ["रोम"], "startNumber": 0 },
   "46": { "name": "कुरिन्थियों", "shortNames": ["कुरी"], "startNumber": 1 },
   "47": { "name": "कुरिन्थियों", "shortNames": ["कुरी"], "startNumber": 2 },
