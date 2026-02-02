@@ -55,7 +55,8 @@
     // "rootDirs": [],                        /* List of root folders whose combined content represents the structure of the project at runtime. */
     // "typeRoots": [],                       /* List of folders to include type definitions from. */
     // "types": [],                           /* Type declaration files to be included in compilation. */
-    "types": ["bun-types"],
+    // Prefer Node types for library builds to avoid conflicting browser/bun globals.
+    "types": ["node"],
     // "allowSyntheticDefaultImports": true,  /* Allow default imports from modules with no default export. This does not affect code emit, just typechecking. */
     "esModuleInterop": true,
     /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */
@@ -70,14 +71,15 @@
     /* Experimental Options */
     // "experimentalDecorators": true,        /* Enables experimental support for ES7 decorators. */
     // "emitDecoratorMetadata": true,         /* Enables experimental support for emitting type metadata for decorators. */
+    // Remove 'dom' to avoid duplicate browser globals (fetch, EventSource) when other type packages are present.
     "lib": [
-      "decorators",
-      "dom",
-      "es5",
-      "scripthost",
+      "es2017",
       "es2015.collection",
-      "es2015.promise"
-    ]
+      "es2015.promise",
+      "scripthost"
+    ],
+    // Skip type checking of declaration files from dependencies to avoid incompatible external typings (bun-types, lib.dom, etc.).
+    "skipLibCheck": true
   },
   "include": ["src/**/*.ts", "index.ts"],
   "exclude": ["node_modules", "**/*.test.ts"]
