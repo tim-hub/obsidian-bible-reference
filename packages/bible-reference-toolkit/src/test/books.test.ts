@@ -13,7 +13,16 @@ describe('test books', () => {
   });
 
   test('should support da, de, fr, pt, it, ro, sp, zh-CN', () => {
-    expect(SupportedLanguages).toContain('da', 'de', 'fr', 'pt', 'it', 'ro', 'sp', 'zh-CN');
+    expect(SupportedLanguages).toContain(
+      'da',
+      'de',
+      'fr',
+      'pt',
+      'it',
+      'ro',
+      'sp',
+      'zh-CN'
+    );
   });
 
   test('book count should be 66', () => {
