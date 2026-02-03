@@ -9,6 +9,7 @@ import BibleReferencePlugin from './../main'
 import {
   allBibleVersionsWithLanguageNameAlphabetically,
   DEFAULT_BIBLE_VERSION,
+  getBibleVersion,
   LOGOS_SUPPORTED_TRANSLATIONS,
 } from '../data/BibleVersionCollection'
 import { IBibleVersion } from '../interfaces/IBibleVersion'
@@ -36,6 +37,7 @@ import { BibleAPISourceCollection } from '../data/BibleApiSourceCollection'
 import {
   APP_NAMING,
   BibleVersionNameLengthEnum,
+  BookNameLanguageEnum,
   OutgoingLinkPositionEnum,
 } from '../data/constants'
 import { pluginEvent } from '../obsidian/PluginEvent'
@@ -53,6 +55,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
   private plugin: BibleReferencePlugin
   private expertSettingContainer?: HTMLElement
   private logosFallbackSetting?: Setting
+  private bookNameLanguageSetting?: Setting
 
   constructor(app: App, plugin: BibleReferencePlugin) {
     super(app, plugin)
@@ -84,7 +87,6 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     this.setUpShowVerseTranslationOptions()
     this.setUpHyperlinkingOptions()
     this.setUpSourceOfReferenceOptions()
-
     this.setUpVerseFormatOptions()
     this.setUpVerseNumberFormatOptions()
     this.setUpMultiChapterSeparatorOptions()
@@ -311,10 +313,39 @@ Obsidian Bible Reference  is proudly powered by
             this.plugin.settings.defaultBibleVersion = value
             console.debug('Default Bible Version: ' + value)
             await this.plugin.saveSettings()
+            this.updateBookNameLanguageVisibility()
             pluginEvent.trigger('bible-reference:settings:version', [value])
             new Notice(`Bible Reference - use Version ${value.toUpperCase()}`)
           })
       })
+
+    this.bookNameLanguageSetting = new Setting(this.containerEl)
+      .setName('Book Name Language')
+      .setDesc(
+        'Choose whether to display book names in English or the language of the selected version'
+      )
+      .addDropdown((dropdown) => {
+        dropdown.addOption(
+          BookNameLanguageEnum.English,
+          BookNameLanguageEnum.English
+        )
+        dropdown.addOption(
+          BookNameLanguageEnum.VersionSpecific,
+          BookNameLanguageEnum.VersionSpecific
+        )
+        dropdown
+          .setValue(
+            this.plugin.settings.bookNameLanguage ||
+              BookNameLanguageEnum.VersionSpecific
+          )
+          .onChange(async (value) => {
+            this.plugin.settings.bookNameLanguage =
+              value as BookNameLanguageEnum
+            await this.plugin.saveSettings()
+            new Notice(`Book Name Language set to ${value}`)
+          })
+      })
+    this.updateBookNameLanguageVisibility()
 
     this.logosFallbackSetting = new Setting(this.containerEl)
       .setName('Logos Fallback Version')
@@ -688,5 +719,32 @@ Obsidian Bible Reference  is proudly powered by
             // todo add event log stats fire
           })
       )
+  }
+
+  private updateBookNameLanguageVisibility(): void {
+    const versionKey =
+      this.plugin.settings.bibleVersion ||
+      this.plugin.settings.defaultBibleVersion
+    const selectedVersion = getBibleVersion(versionKey)
+    const isEnglish =
+      selectedVersion?.language?.toLowerCase().includes('english') ?? true
+    const shouldShowBookNameLanguageSetting =
+      !!selectedVersion && isEnglish === false
+
+    console.debug('updateBookNameLanguageVisibility', {
+      versionKey,
+      language: selectedVersion?.language,
+      isEnglish,
+      shouldShow: shouldShowBookNameLanguageSetting,
+      hasSetting: !!this.bookNameLanguageSetting,
+    })
+
+    if (this.bookNameLanguageSetting) {
+      if (shouldShowBookNameLanguageSetting) {
+        this.bookNameLanguageSetting.settingEl.show()
+      } else {
+        this.bookNameLanguageSetting.settingEl.hide()
+      }
+    }
   }
 }
