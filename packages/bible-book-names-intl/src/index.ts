@@ -2,6 +2,7 @@ import baseData from './data/base.json';
 import en from './data/translations/en.json';
 import it from './data/translations/it.json';
 import jp from './data/translations/jp.json';
+import hi from './data/translations/hi.json';
 import sp from './data/translations/sp.json';
 import da from './data/translations/da.json';
 import de from './data/translations/de.json';
@@ -16,6 +17,7 @@ const allTranslations = [
   en,
   it,
   jp,
+  hi,
   sp,
   // add new translations here
   da,
