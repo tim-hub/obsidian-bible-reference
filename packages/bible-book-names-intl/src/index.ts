@@ -11,6 +11,7 @@ import pt from './data/translations/pt.json';
 import ro from './data/translations/ro.json';
 import zh_CN from './data/translations/zh_CN.json';
 import zh_TW from './data/translations/zh_TW.json';
+import ko from './data/translations/ko.json';
 // add new translations here
 
 const allTranslations = [
@@ -27,6 +28,7 @@ const allTranslations = [
   ro,
   zh_CN,
   zh_TW,
+  ko,
 ];
 
 type OriginalBookType = {
