@@ -38,7 +38,9 @@ export interface BibleReferencePluginSettings {
   enableHyperlinking?: boolean
   showVerseTranslation?: boolean
   bookTagging?: boolean
+  bookTaggingFormat: string
   chapterTagging?: boolean
+  chapterTaggingFormat: string
   bookBacklinking?: OutgoingLinkPositionEnum // this is refering to outgoing link
   chapterBacklinking?: OutgoingLinkPositionEnum // this is refering to outgoing link
   internalLinkingFormat: string // this is refering to internal link
@@ -69,7 +71,9 @@ export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
   enableHyperlinking: true,
   showVerseTranslation: true,
   bookTagging: false,
+  bookTaggingFormat: '#{book}',
   chapterTagging: false,
+  chapterTaggingFormat: '#{book}{chapter}',
   enableBibleVerseLookupRibbon: false,
   optOutToEvents: false,
   bookBacklinking: OutgoingLinkPositionEnum.None,

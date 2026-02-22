@@ -156,8 +156,23 @@ Obsidian Bible Reference  is proudly powered by
             .onChange(async (value) => {
               this.plugin.settings.bookTagging = value
               await this.plugin.saveSettings()
+              await this.display()
             })
         )
+
+      new Setting(this.expertSettingContainer)
+        .setName('Book Tag Format')
+        .setDesc('Customize the format of the created book tag')
+        .addText((text) =>
+          text
+            .setDisabled(!this.plugin.settings?.bookTagging)
+            .setPlaceholder('#{{book}}')
+            .onChange(async (value) => {
+              this.plugin.settings.bookTaggingFormat = value || '#{{book}}'
+              await this.plugin.saveSettings()
+            })
+        )
+
       new Setting(this.expertSettingContainer)
         .setName('Add a Chapter Tag')
         .setDesc('Add a hidden chapter tag at bottom, for example #John1')
@@ -166,6 +181,21 @@ Obsidian Bible Reference  is proudly powered by
             .setValue(!!this.plugin.settings?.chapterTagging)
             .onChange(async (value) => {
               this.plugin.settings.chapterTagging = value
+              await this.plugin.saveSettings()
+              await this.display()
+            })
+        )
+
+      new Setting(this.expertSettingContainer)
+        .setName('Chapter Tag Format')
+        .setDesc('Customize the format of the created chapter tag')
+        .addText((text) =>
+          text
+            .setDisabled(!this.plugin.settings?.chapterTagging)
+            .setPlaceholder('#{{book}}{{chapter}}')
+            .onChange(async (value) => {
+              this.plugin.settings.chapterTaggingFormat =
+                value || '#{{book}}{{chapter}}'
               await this.plugin.saveSettings()
             })
         )
