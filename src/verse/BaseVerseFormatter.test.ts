@@ -246,4 +246,101 @@ describe('BaseVerseFormatter', () => {
     expect(formatter.allFormattedContent.endsWith('\n')).toBe(true)
     expect(formatter.allFormattedContent.endsWith('\n\n')).toBe(false)
   })
+
+  it('should not add book tag when bookTagging setting is false', () => {
+    const settings = {
+      ...DEFAULT_SETTINGS,
+      bookTagging: false,
+      bookTaggingFormat: '{{book}}',
+    }
+    const verseReference: VerseReference = {
+      bookName: 'John',
+      chapterNumber: 3,
+      verseNumber: 16,
+      ranges: [{ chapterNumber: 3, verseNumber: 16 }],
+    }
+    const verses = [
+      {
+        book_id: 'John',
+        book_name: 'John',
+        chapter: 3,
+        verse: 16,
+        text: 'v16',
+      },
+    ]
+    const formatter = new MockFormatter(settings, verseReference, verses)
+    expect(formatter.allFormattedContent).not.toContain('#John')
+  })
+  it('should not add chapter tag when chapterTagging setting is false', () => {
+    const settings = {
+      ...DEFAULT_SETTINGS,
+      chapterTagging: false,
+      chapterTaggingFormat: '{{book}}{{chapter}}',
+    }
+    const verseReference: VerseReference = {
+      bookName: 'John',
+      chapterNumber: 3,
+      verseNumber: 16,
+      ranges: [{ chapterNumber: 3, verseNumber: 16 }],
+    }
+    const verses = [
+      {
+        book_id: 'John',
+        book_name: 'John',
+        chapter: 3,
+        verse: 16,
+        text: 'v16',
+      },
+    ]
+    const formatter = new MockFormatter(settings, verseReference, verses)
+    expect(formatter.allFormattedContent).not.toContain('#John3')
+  })
+  it('should add book tag when bookTagging setting is true', () => {
+    const settings = {
+      ...DEFAULT_SETTINGS,
+      bookTagging: true,
+      bookTaggingFormat: '{{book}}',
+    }
+    const verseReference: VerseReference = {
+      bookName: 'John',
+      chapterNumber: 3,
+      verseNumber: 16,
+      ranges: [{ chapterNumber: 3, verseNumber: 16 }],
+    }
+    const verses = [
+      {
+        book_id: 'John',
+        book_name: 'John',
+        chapter: 3,
+        verse: 16,
+        text: 'v16',
+      },
+    ]
+    const formatter = new MockFormatter(settings, verseReference, verses)
+    expect(formatter.allFormattedContent).toContain('#John')
+  })
+  it('should add chapter tag when chapterTagging setting is true', () => {
+    const settings = {
+      ...DEFAULT_SETTINGS,
+      chapterTagging: true,
+      chapterTaggingFormat: '{{book}}{{chapter}}',
+    }
+    const verseReference: VerseReference = {
+      bookName: 'John',
+      chapterNumber: 3,
+      verseNumber: 16,
+      ranges: [{ chapterNumber: 3, verseNumber: 16 }],
+    }
+    const verses = [
+      {
+        book_id: 'John',
+        book_name: 'John',
+        chapter: 3,
+        verse: 16,
+        text: 'v16',
+      },
+    ]
+    const formatter = new MockFormatter(settings, verseReference, verses)
+    expect(formatter.allFormattedContent).toContain('#John3')
+  })
 })

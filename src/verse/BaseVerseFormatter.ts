@@ -6,6 +6,7 @@ import { BibleVerseFormat } from '../data/BibleVerseFormat'
 import { BibleMultiChapterSeparatorFormat } from '../data/BibleMultiChapterSeparatorFormat'
 import { BibleVerseSegmentSeparatorFormat } from '../data/BibleVerseSegmentSeparatorFormat'
 import { IVerse } from '../interfaces/IVerse'
+import { getBookTag, getChapterTag } from '../utils/getTags'
 
 export abstract class BaseVerseFormatter {
   protected settings: BibleReferencePluginSettings
@@ -174,6 +175,23 @@ export abstract class BaseVerseFormatter {
     ) {
       bottom += `> \n`
       bottom += this.getVerseReferenceLink()
+    }
+    if (this.settings?.bookTagging || this.settings?.chapterTagging) {
+      bottom += ' %%'
+      bottom += this.settings?.bookTagging
+        ? getBookTag(
+            this.verseReference.bookName,
+            this.settings.bookTaggingFormat
+          )
+        : ''
+      bottom += this.settings?.chapterTagging
+        ? getChapterTag(
+            this.verseReference.bookName,
+            this.verseReference.chapterNumber,
+            this.settings.chapterTaggingFormat
+          )
+        : ''
+      bottom += ' %%'
     }
     return bottom
   }
