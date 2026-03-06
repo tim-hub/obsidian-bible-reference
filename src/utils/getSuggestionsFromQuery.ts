@@ -1,4 +1,7 @@
-import { BibleReferencePluginSettings } from '../data/constants'
+import {
+  BibleReferencePluginSettings,
+  BookNameLanguageEnum,
+} from '../data/constants'
 import { VerseSuggesting } from '../verse/VerseSuggesting'
 import { BOOK_REG } from './regs'
 import { getFullBookName } from './bookNameReference'
@@ -36,7 +39,11 @@ export const getSuggestionsFromQuery = async (
   const selectedBibleVersion = getBibleVersion(
     translation ? translation : settings.bibleVersion
   )
-  const bookName = getFullBookName(rawBookName, selectedBibleVersion?.code)
+  const bookNameLanguageCode =
+    settings.bookNameLanguage === BookNameLanguageEnum.English
+      ? 'en'
+      : (selectedBibleVersion?.code ?? 'en')
+  const bookName = getFullBookName(rawBookName, bookNameLanguageCode)
   console.debug('selected bookName', bookName)
 
   // Use splitBibleReference for consistent parsing and validation
