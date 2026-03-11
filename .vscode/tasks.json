@@ -4,7 +4,7 @@
     {
       "label": "dev",
       "type": "shell",
-      "command": "pnpm run dev",
+      "command": "bun run dev",
       "group": "build",
       "isBackground": true,
       "problemMatcher": [],
@@ -18,7 +18,7 @@
     {
       "label": "build",
       "type": "shell",
-      "command": "pnpm run build",
+      "command": "bun run build",
       "group": {
         "kind": "build",
         "isDefault": true
@@ -34,7 +34,7 @@
     {
       "label": "test",
       "type": "shell",
-      "command": "pnpm run test",
+      "command": "bun run test",
       "group": {
         "kind": "test",
         "isDefault": true
@@ -45,21 +45,21 @@
     {
       "label": "lint:fix",
       "type": "shell",
-      "command": "pnpm run lint:fix",
+      "command": "bun run lint:fix",
       "problemMatcher": [],
       "detail": "Fix ESLint issues"
     },
     {
       "label": "prettier:fix",
       "type": "shell",
-      "command": "pnpm run prettier:fix",
+      "command": "bun run prettier:fix",
       "problemMatcher": [],
       "detail": "Format code with Prettier"
     },
     {
       "label": "version",
       "type": "shell",
-      "command": "pnpm run version",
+      "command": "bun run version",
       "problemMatcher": [],
       "detail": "Bump version and stage manifest.json + versions.json"
     }
