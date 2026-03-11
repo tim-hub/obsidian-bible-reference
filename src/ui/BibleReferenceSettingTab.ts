@@ -466,7 +466,7 @@ Obsidian Bible Reference  is proudly powered by
     const setting = new Setting(this.containerEl)
       .setName('Reference Link Source')
       .setDesc(
-        'Choose the source for verse reference links: Original (API provider), Blue Letter Bible, Bible Gateway, Logos, or Route.Bible'
+        'Choose the source for verse reference links: Original (API provider), Blue Letter Bible, Bible Gateway, Logos, or route.bible'
       )
     setting.setTooltip(
       'Select which service to use for generating verse reference links. This only applies when hyperlinking is enabled.'
@@ -476,7 +476,7 @@ Obsidian Bible Reference  is proudly powered by
       dropdown.addOption('blb', 'Blue Letter Bible (BLB)')
       dropdown.addOption('biblegateway', 'Bible Gateway')
       dropdown.addOption('logos', 'Logos')
-      dropdown.addOption('routebible', 'Route.Bible')
+      dropdown.addOption('routebible', 'route.bible')
       dropdown.setValue(
         this.plugin.settings.sourceOfReference || 'biblegateway'
       )

@@ -29,7 +29,7 @@
 
 You can also get a "verse of the day" by typing `--vod`.
 
-When hyperlinking is enabled, the generated verse reference links can target Original, Blue Letter Bible, Bible Gateway, Logos, or Route.Bible.
+When hyperlinking is enabled, the generated verse reference links can target Original, Blue Letter Bible, Bible Gateway, Logos, or route.bible.
 
 > Read more about [How to use](https://github.com/tim-hub/obsidian-bible-reference/blob/master/docs/howto.md)
 
