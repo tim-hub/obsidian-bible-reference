@@ -5,18 +5,18 @@
   "main": "main.js",
   "engines": {
     "node": ">=24.6.0",
-    "bun": ">=1.0.0"
+    "pnpm": ">=10.15.0"
   },
   "scripts": {
-    "dev": "bun scripts/esbuild.config.mjs",
-    "build": "tsc -noEmit -skipLibCheck && bun scripts/esbuild.config.mjs production",
-    "version": "bun scripts/version-bump.mjs && git add manifest.json versions.json",
+    "dev": "node scripts/esbuild.config.mjs",
+    "build": "tsc -noEmit -skipLibCheck && node scripts/esbuild.config.mjs production",
+    "version": "node scripts/version-bump.mjs && git add manifest.json versions.json",
     "lint": "eslint --ext .ts,.tsx .",
     "lint:fix": "eslint --ext .ts,.tsx . --fix",
     "prettier": "prettier --check .",
     "prettier:fix": "prettier --write .",
     "prepare": "husky install",
-    "precommit": "bun run lint && bun run prettier",
+    "precommit": "pnpm run lint && pnpm run prettier",
     "test": "jest src"
   },
   "keywords": [
