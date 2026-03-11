@@ -5,7 +5,7 @@ describe('getRouteBibleUrl', () => {
     const url = getRouteBibleUrl('John 3:16', 'kjv')
 
     expect(url).toBe(
-      'https://route.bible/?q=John+3%3A16&v=KJV&src=obsidian_bible_reference&utm_source=obsidian_bible_reference&utm_medium=obsidian_plugin'
+      'https://route.bible/?q=John+3%3A16&v=KJV&src=obsidian_bible_reference&utm_source=obsidian_bible_reference&utm_medium=obsidian_plugin&utm_campaign=reference_link_source'
     )
   })
 

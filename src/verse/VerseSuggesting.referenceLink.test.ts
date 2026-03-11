@@ -44,7 +44,7 @@ describe('VerseSuggesting reference link sources', () => {
     })
 
     expect(suggesting.getReferenceUrl()).toBe(
-      'https://route.bible/?q=John+3%3A16&v=KJV&src=obsidian_bible_reference&utm_source=obsidian_bible_reference&utm_medium=obsidian_plugin'
+      'https://route.bible/?q=John+3%3A16&v=KJV&src=obsidian_bible_reference&utm_source=obsidian_bible_reference&utm_medium=obsidian_plugin&utm_campaign=reference_link_source'
     )
   })
 
