@@ -40,7 +40,7 @@ import {
   OutgoingLinkPositionEnum,
 } from '../data/constants'
 import { pluginEvent } from '../obsidian/PluginEvent'
-import { getBookTag, getChapterTag } from 'src/utils/getTags'
+import { getBookTag, getChapterTag } from '../utils/getTags'
 
 function escapeHtml(unsafe: string) {
   return unsafe
