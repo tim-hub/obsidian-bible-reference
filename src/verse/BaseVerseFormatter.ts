@@ -179,13 +179,15 @@ export abstract class BaseVerseFormatter {
     if (this.settings?.bookTagging || this.settings?.chapterTagging) {
       bottom += ' %%'
       bottom += this.settings?.bookTagging
-        ? ' ' + getBookTag(
+        ? ' ' +
+          getBookTag(
             this.verseReference.bookName,
             this.settings.bookTaggingFormat
           )
         : ''
       bottom += this.settings?.chapterTagging
-        ? ' ' + getChapterTag(
+        ? ' ' +
+          getChapterTag(
             this.verseReference.bookName,
             this.verseReference.chapterNumber,
             this.settings.chapterTaggingFormat

@@ -367,6 +367,8 @@ describe('BaseVerseFormatter', () => {
       },
     ]
     const formatter = new MockFormatter(settings, verseReference, verses)
-    expect(formatter.allFormattedContent.endsWith('%% #John #John3 %%')).toBe(true)
+    expect(formatter.allFormattedContent.endsWith('%% #John #John3 %%')).toBe(
+      true
+    )
   })
 })
