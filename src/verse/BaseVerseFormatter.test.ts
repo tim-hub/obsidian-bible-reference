@@ -343,4 +343,30 @@ describe('BaseVerseFormatter', () => {
     const formatter = new MockFormatter(settings, verseReference, verses)
     expect(formatter.allFormattedContent).toContain('#John3')
   })
+  it('should separate book and chapter tags by spaces', () => {
+    const settings = {
+      ...DEFAULT_SETTINGS,
+      bookTagging: true,
+      bookTaggingFormat: '{{book}}',
+      chapterTagging: true,
+      chapterTaggingFormat: '{{book}}{{chapter}}',
+    }
+    const verseReference: VerseReference = {
+      bookName: 'John',
+      chapterNumber: 3,
+      verseNumber: 16,
+      ranges: [{ chapterNumber: 3, verseNumber: 16 }],
+    }
+    const verses = [
+      {
+        book_id: 'John',
+        book_name: 'John',
+        chapter: 3,
+        verse: 16,
+        text: 'v16',
+      },
+    ]
+    const formatter = new MockFormatter(settings, verseReference, verses)
+    expect(formatter.allFormattedContent.endsWith('%% #John #John3 %%')).toBe(true)
+  })
 })
