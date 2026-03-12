@@ -17,3 +17,6 @@ data.json
 .eslintignore
 .stignore
 /dist/
+
+#pnpm
+pnpm-workspace.yaml

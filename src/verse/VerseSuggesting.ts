@@ -79,19 +79,6 @@ export class VerseSuggesting
 
   public get bottom(): string {
     let bottom = super.bottom
-    if (this.settings?.bookTagging || this.settings?.chapterTagging) {
-      bottom += ' %%'
-      bottom += this.settings?.bookTagging
-        ? ` #${this.verseReference.bookName.replace(/ /g, '')}` // Remove spaces from book names in tags
-        : ''
-      bottom += this.settings?.chapterTagging
-        ? ` #${
-            this.verseReference.bookName.replace(/ /g, '') +
-            this.verseReference.chapterNumber // Remove spaces from book names in tags
-          }`
-        : ''
-      bottom += ' %%'
-    }
     if (
       this.settings?.bookBacklinking === OutgoingLinkPositionEnum.Bottom ||
       this.settings?.chapterBacklinking === OutgoingLinkPositionEnum.Bottom
