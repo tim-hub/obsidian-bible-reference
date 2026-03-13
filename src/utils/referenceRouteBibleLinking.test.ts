@@ -1,7 +1,7 @@
 import { getRouteBibleUrl } from './referenceRouteBibleLinking'
 
 describe('getRouteBibleUrl', () => {
-  test('generates a Route.Bible URL for a single verse', () => {
+  test('generates a route.bible URL for a single verse', () => {
     const url = getRouteBibleUrl('John 3:16', 'kjv')
 
     expect(url).toBe(

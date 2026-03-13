@@ -326,7 +326,7 @@ export class VerseSuggesting
             this.bibleVersion
           )
         } catch (error) {
-          console.error('Error generating Route.Bible URL:', error)
+          console.error('Error generating route.bible URL:', error)
           return getBibleGatewayFallback()
         }
       }

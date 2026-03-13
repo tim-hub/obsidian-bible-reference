@@ -37,7 +37,7 @@ describe('VerseSuggesting reference link sources', () => {
       verseNumberEndChapter
     )
 
-  test('uses Route.Bible when selected as the reference link source', () => {
+  test('uses route.bible when selected as the reference link source', () => {
     const suggesting = createVerseSuggesting({
       sourceOfReference: 'routebible',
       bibleVersion: 'kjv',
@@ -48,7 +48,7 @@ describe('VerseSuggesting reference link sources', () => {
     )
   })
 
-  test('preserves same-chapter ranges for Route.Bible links', () => {
+  test('preserves same-chapter ranges for route.bible links', () => {
     const suggesting = createVerseSuggesting(
       {
         sourceOfReference: 'routebible',
