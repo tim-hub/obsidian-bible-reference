@@ -10,6 +10,7 @@ import { BaseBibleAPIProvider } from '../provider/BaseBibleAPIProvider'
 import { BaseVerseFormatter } from './BaseVerseFormatter'
 import { IVerseSuggesting } from './IVerseSuggesting'
 import { getBLBUrl } from '../utils/referenceBLBAltLinking'
+import { getRouteBibleUrl } from '../utils/referenceRouteBibleLinking'
 import {
   getLogosUrl,
   getLogosTranslation,
@@ -314,6 +315,18 @@ export class VerseSuggesting
           )
         } catch (error) {
           console.error('Error generating Logos URL:', error)
+          return getBibleGatewayFallback()
+        }
+      }
+
+      case 'routebible': {
+        try {
+          return getRouteBibleUrl(
+            getReferenceHead(this.verseReference),
+            this.bibleVersion
+          )
+        } catch (error) {
+          console.error('Error generating route.bible URL:', error)
           return getBibleGatewayFallback()
         }
       }
