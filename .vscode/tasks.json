@@ -1,0 +1,67 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "dev",
+      "type": "shell",
+      "command": "pnpm run dev",
+      "group": "build",
+      "isBackground": true,
+      "problemMatcher": [],
+      "options": {
+        "env": {
+          "OUT_DIR": "${env:HOME}/Documents/ObsidianRepo/ObsidianNotes/.obsidian/plugins/obsidian-bible-reference/"
+        }
+      },
+      "detail": "Watch and build to Obsidian plugins folder"
+    },
+    {
+      "label": "build",
+      "type": "shell",
+      "command": "pnpm run build",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": [],
+      "options": {
+        "env": {
+          "OUT_DIR": "${env:HOME}/Documents/ObsidianRepo/ObsidianNotes/.obsidian/plugins/obsidian-bible-reference/"
+        }
+      },
+      "detail": "Type-check and build to Obsidian plugins folder"
+    },
+    {
+      "label": "test",
+      "type": "shell",
+      "command": "pnpm run test",
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "problemMatcher": [],
+      "detail": "Run Jest tests"
+    },
+    {
+      "label": "lint:fix",
+      "type": "shell",
+      "command": "pnpm run lint:fix",
+      "problemMatcher": [],
+      "detail": "Fix ESLint issues"
+    },
+    {
+      "label": "prettier:fix",
+      "type": "shell",
+      "command": "pnpm run prettier:fix",
+      "problemMatcher": [],
+      "detail": "Format code with Prettier"
+    },
+    {
+      "label": "version",
+      "type": "shell",
+      "command": "pnpm run version",
+      "problemMatcher": [],
+      "detail": "Bump version and stage manifest.json + versions.json"
+    }
+  ]
+}

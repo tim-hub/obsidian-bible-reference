@@ -22,6 +22,7 @@ import {
   VerseRange,
   VerseReference,
 } from '../utils/splitBibleReference'
+import { getFullBookName } from '../utils/bookNameReference'
 
 /**
  * Verse Suggesting
@@ -134,7 +135,7 @@ export class VerseSuggesting
         return this.getCrossChapterVerses(range)
       } else {
         const verses = await this.bibleProvider.query(
-          this.verseReference.bookName,
+          getFullBookName(this.verseReference.bookName, 'en'),
           range.chapterNumber,
           range?.verseNumberEnd
             ? [range.verseNumber, range.verseNumberEnd]
@@ -169,7 +170,7 @@ export class VerseSuggesting
     const results = await Promise.allSettled(
       segments.map((segment) =>
         this.bibleProvider.query(
-          this.verseReference.bookName,
+          getFullBookName(this.verseReference.bookName, 'en'),
           segment.chapterNumber,
           segment.verseEnd
             ? [segment.verseStart, segment.verseEnd]

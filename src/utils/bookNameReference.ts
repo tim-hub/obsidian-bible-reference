@@ -20,6 +20,7 @@ export const getFullBookName = (
 ): string => {
   console.debug('getFullBookName', name, languageCode)
   const bookId = getBookIdFromBookName(name, languageCode)
+
   try {
     return Reference.bookNameFromTranslationAndId(languageCode, bookId)
   } catch (e) {

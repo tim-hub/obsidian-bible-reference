@@ -24,6 +24,11 @@ export enum BibleVersionNameLengthEnum {
   Hide = 'Hide',
 }
 
+export enum BookNameLanguageEnum {
+  English = 'English',
+  VersionSpecific = 'Version-Specific',
+}
+
 export interface BibleReferencePluginSettings {
   bibleVersion: string // the tmp version selected at editor
   defaultBibleVersion: string
@@ -55,6 +60,7 @@ export interface BibleReferencePluginSettings {
   enableInternalLinking?: string
   logosFallbackVersion?: string
   sourceOfReference?: 'original' | 'blb' | 'biblegateway' | 'logos'
+  bookNameLanguage?: BookNameLanguageEnum
 }
 
 export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
@@ -84,6 +90,7 @@ export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
   enableInternalLinking: 'None',
   logosFallbackVersion: 'niv2011',
   sourceOfReference: 'biblegateway',
+  bookNameLanguage: BookNameLanguageEnum.VersionSpecific,
 }
 
 export const API_WAITING_LABEL = 'Loading...'
