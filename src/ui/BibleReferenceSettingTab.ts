@@ -37,10 +37,12 @@ import { BibleAPISourceCollection } from '../data/BibleApiSourceCollection'
 import {
   APP_NAMING,
   BibleVersionNameLengthEnum,
+  DEFAULT_SETTINGS,
   BookNameLanguageEnum,
   OutgoingLinkPositionEnum,
 } from '../data/constants'
 import { pluginEvent } from '../obsidian/PluginEvent'
+import { getBookTag, getChapterTag } from '../utils/getTags'
 
 function escapeHtml(unsafe: string) {
   return unsafe
@@ -158,8 +160,34 @@ Obsidian Bible Reference  is proudly powered by
             .onChange(async (value) => {
               this.plugin.settings.bookTagging = value
               await this.plugin.saveSettings()
+              await this.display()
             })
         )
+
+      const bookTagFormatSetting = new Setting(this.expertSettingContainer)
+        .setName('Book Tag Format')
+        .setDesc(
+          `Customize the format of the created book tag: ${getBookTag('John', this.plugin.settings.bookTaggingFormat)}`
+        )
+        .addText((text) => {
+          text.setValue(
+            this.plugin.settings?.bookTaggingFormat ||
+              DEFAULT_SETTINGS.bookTaggingFormat
+          )
+          text.inputEl.readOnly = !this.plugin.settings?.bookTagging
+          text.inputEl.style.opacity = !this.plugin.settings?.bookTagging
+            ? '0.5'
+            : '1'
+          text.onChange(async (value) => {
+            this.plugin.settings.bookTaggingFormat = value
+            await this.plugin.saveSettings()
+
+            bookTagFormatSetting.setDesc(
+              `Customize the format of the created book tag: ${getBookTag('John', this.plugin.settings.bookTaggingFormat)}`
+            )
+          })
+        })
+
       new Setting(this.expertSettingContainer)
         .setName('Add a Chapter Tag')
         .setDesc('Add a hidden chapter tag at bottom, for example #John1')
@@ -169,8 +197,33 @@ Obsidian Bible Reference  is proudly powered by
             .onChange(async (value) => {
               this.plugin.settings.chapterTagging = value
               await this.plugin.saveSettings()
+              await this.display()
             })
         )
+
+      const chapterTagFormatSetting = new Setting(this.expertSettingContainer)
+        .setName('Chapter Tag Format')
+        .setDesc(
+          `Customize the format of the created chapter tag: ${getChapterTag('John', 1, this.plugin.settings.chapterTaggingFormat)}`
+        )
+        .addText((text) => {
+          text.setValue(
+            this.plugin.settings?.chapterTaggingFormat ||
+              DEFAULT_SETTINGS.chapterTaggingFormat
+          )
+          text.inputEl.readOnly = !this.plugin.settings?.chapterTagging
+          text.inputEl.style.opacity = !this.plugin.settings?.chapterTagging
+            ? '0.5'
+            : '1'
+          text.onChange(async (value) => {
+            this.plugin.settings.chapterTaggingFormat = value
+            await this.plugin.saveSettings()
+
+            chapterTagFormatSetting.setDesc(
+              `Customize the format of the created chapter tag: ${getChapterTag('John', 1, this.plugin.settings.chapterTaggingFormat)}`
+            )
+          })
+        })
 
       /**
        * Function to get the outgoing link position to stay compatible with the old version
