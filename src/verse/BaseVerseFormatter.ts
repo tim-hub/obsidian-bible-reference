@@ -185,14 +185,19 @@ export abstract class BaseVerseFormatter {
             this.settings.bookTaggingFormat
           )
         : ''
-      bottom += this.settings?.chapterTagging
-        ? ' ' +
-          getChapterTag(
-            this.verseReference.bookName,
-            this.verseReference.chapterNumber,
-            this.settings.chapterTaggingFormat
-          )
-        : ''
+      if (this.settings?.chapterTagging) {
+        const startChapter = this.verseReference.chapterNumber
+        const endChapter = this.verseReference.chapterNumberEnd ?? startChapter
+        for (let ch = startChapter; ch <= endChapter; ch++) {
+          bottom +=
+            ' ' +
+            getChapterTag(
+              this.verseReference.bookName,
+              ch,
+              this.settings.chapterTaggingFormat
+            )
+        }
+      }
       bottom += ' %%'
     }
     return bottom
