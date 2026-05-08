@@ -371,4 +371,97 @@ describe('BaseVerseFormatter', () => {
       true
     )
   })
+  it('should add multiple chapter tags for cross-chapter reference (e.g. James 1:1-2:1)', () => {
+    const settings = {
+      ...DEFAULT_SETTINGS,
+      chapterTagging: true,
+      chapterTaggingFormat: '{{book}}{{chapter}}',
+    }
+    const verseReference: VerseReference = {
+      bookName: 'James',
+      chapterNumber: 1,
+      verseNumber: 1,
+      chapterNumberEnd: 2,
+      verseNumberEndChapter: 1,
+      ranges: [
+        {
+          chapterNumber: 1,
+          verseNumber: 1,
+          chapterNumberEnd: 2,
+          verseNumberEndChapter: 1,
+        },
+      ],
+    }
+    const verses = [
+      {
+        book_id: 'James',
+        book_name: 'James',
+        chapter: 1,
+        verse: 1,
+        text: 'v1',
+      },
+      {
+        book_id: 'James',
+        book_name: 'James',
+        chapter: 2,
+        verse: 1,
+        text: 'v2',
+      },
+    ]
+    const formatter = new MockFormatter(settings, verseReference, verses)
+    expect(formatter.allFormattedContent).toContain('#James1')
+    expect(formatter.allFormattedContent).toContain('#James2')
+  })
+  it('should add multiple chapter tags including book tag for cross-chapter reference', () => {
+    const settings = {
+      ...DEFAULT_SETTINGS,
+      bookTagging: true,
+      bookTaggingFormat: '{{book}}',
+      chapterTagging: true,
+      chapterTaggingFormat: '{{book}}{{chapter}}',
+    }
+    const verseReference: VerseReference = {
+      bookName: 'Hebrews',
+      chapterNumber: 9,
+      verseNumber: 1,
+      chapterNumberEnd: 11,
+      verseNumberEndChapter: 3,
+      ranges: [
+        {
+          chapterNumber: 9,
+          verseNumber: 1,
+          chapterNumberEnd: 11,
+          verseNumberEndChapter: 3,
+        },
+      ],
+    }
+    const verses = [
+      {
+        book_id: 'Hebrews',
+        book_name: 'Hebrews',
+        chapter: 9,
+        verse: 1,
+        text: 'a',
+      },
+      {
+        book_id: 'Hebrews',
+        book_name: 'Hebrews',
+        chapter: 10,
+        verse: 1,
+        text: 'b',
+      },
+      {
+        book_id: 'Hebrews',
+        book_name: 'Hebrews',
+        chapter: 11,
+        verse: 3,
+        text: 'c',
+      },
+    ]
+    const formatter = new MockFormatter(settings, verseReference, verses)
+    expect(formatter.allFormattedContent).toContain('#Hebrews')
+    expect(formatter.allFormattedContent).toContain('#Hebrews9')
+    expect(formatter.allFormattedContent).toContain('#Hebrews10')
+    expect(formatter.allFormattedContent).toContain('#Hebrews11')
+  })
 })
