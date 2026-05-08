@@ -13,6 +13,15 @@ Bump version across all metadata files, refresh the lockfile, commit, tag, and p
 
 `YY.MM.DD` — e.g. `26.05.08` for 2026-05-08. Append `-2`, `-3` for multiple same-day releases.
 
+## Preflight
+
+Run before touching any version files. Do not proceed if either fails.
+
+```bash
+pnpm run build   # must exit 0
+pnpm test        # must exit 0
+```
+
 ## Steps
 
 1. **Pull latest master**
@@ -52,6 +61,8 @@ Bump version across all metadata files, refresh the lockfile, commit, tag, and p
 
 ## Checklist
 
+- [ ] Build passes (`pnpm run build`)
+- [ ] Tests pass (`pnpm test`)
 - [ ] `package.json` version matches new version
 - [ ] `manifest.json` version matches new version
 - [ ] `versions.json` has entry for new version

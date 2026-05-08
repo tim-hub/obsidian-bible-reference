@@ -20,5 +20,5 @@ data.json
 
 #pnpm
 pnpm-workspace.yaml
-.claude/
-!.claude/skills/
+.claude/*
+!.claude/skills
