@@ -457,14 +457,14 @@ export const BibleVersionCollectionPolish = [
     versionName: 'Biblia gdańska, 1881',
     language: 'Polish',
     code: 'pl',
-    apiSource: BibleAPISourceCollection.bollsLife,
+    apiSource: BibleAPISourceCollection.bibleSuperSearch,
   },
   {
-    key: 'bw',
-    versionName: 'Biblia warszawska, 1975',
+    key: 'ubg',
+    versionName: 'Uwspółcześniona Biblia Gdańska, 2017',
     language: 'Polish',
     code: 'pl',
-    apiSource: BibleAPISourceCollection.bollsLife,
+    apiSource: BibleAPISourceCollection.bibleSuperSearch,
   },
 ]
 

@@ -6,6 +6,8 @@ This plugin Bible Verse Query Functionality is currently powered by
   - It is an open source web api that provides a RESTful API for grabbing bible verses and passages.
 - [bolls life bible API](https://bolls.life/api/)
   - It supports more languages and versions, and it has a WEB UI for bible reading as well.
+- [Bible SuperSearch API](https://api.biblesupersearch.com/)
+  - It provides a free API with broad language support, including Polish modules such as UBG and BG.
 
 > The back-end API might be changed in the future to support more languages and versions.
 
@@ -29,6 +31,9 @@ This plugin Bible Verse Query Functionality is currently powered by
   - **LSB**: Legacy Standard Bible (Bolls Life)
   - **DRB**: Douay-Rheims Bible (Bolls Life)
   - and more
+- Bible SuperSearch
+  - **UBG**: Uwspółcześniona Biblia Gdańska, 2017
+  - **BG**: Biblia gdańska, 1881
 
 ### Credits
 
@@ -38,3 +43,4 @@ I must say thanks to all of you, for the help and support. 🙇‍
 | :------------- | :------------------------------------------: | --------------------------------------------------------------------------- |
 | Tim Morgan     |    [@seven1m](https://github.com/seven1m)    | For the open source bible-api project and the maintenance of bible-api.com. |
 | Bolls Life API | [@bpavlisinec](mailto:bpavlisinec@gmail.com) | For the free public bible API.                                              |
+| Bible SuperSearch API | [Bible SuperSearch](https://api.biblesupersearch.com/) | For API access to additional translations including Polish modules. |

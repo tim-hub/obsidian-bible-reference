@@ -29,6 +29,8 @@
 
 You can also get a "verse of the day" by typing `--vod`.
 
+Polish translations are available as well, including **UBG** (Uwspółcześniona Biblia Gdańska) and **BG** (Biblia gdańska).
+
 > Read more about [How to use](https://github.com/tim-hub/obsidian-bible-reference/blob/master/docs/howto.md)
 
 > On iOS devices, there is a known issue about conflict between `Smart Punctuation` and double hyphens `--`.
