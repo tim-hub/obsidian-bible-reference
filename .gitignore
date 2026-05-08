@@ -21,3 +21,4 @@ data.json
 #pnpm
 pnpm-workspace.yaml
 .claude/
+!.claude/skills/
