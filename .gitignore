@@ -20,5 +20,7 @@ data.json
 
 #pnpm
 pnpm-workspace.yaml
-.claude/*
+.claude/sessions
+.claude/stats
+.claude/settings.local.json
 !.claude/skills
