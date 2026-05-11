@@ -7,6 +7,7 @@ Last release: see `manifest.json` / `versions.json`
 ## Phase 1: Fix unrecognized book abbreviations (Sng, etc.)
 
 Created: 2026-05-12
+Issue: [#347](https://github.com/tim-hub/obsidian-bible-reference/issues/347)
 
 **Goal**: Make common Bible book abbreviations from the plugin's own `src/data/abbreviations.ts` (e.g. `Sng`, `Exo`, `Kgs`) resolve correctly when users type them as input (e.g. `--Sng1:1`). Today these fail with "no book matched X" because `getBookIdFromBookName` delegates straight to `bible-reference-toolkit`, which does not recognize all of the abbreviations listed in this plugin's own data. The dormant `ALL_BOOKS` constant in `abbreviations.ts` (already flagged with a `todo consider ... use this` comment) becomes the canonical local fallback.
 
