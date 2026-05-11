@@ -24,3 +24,21 @@ pnpm-workspace.yaml
 .claude/stats
 .claude/settings.local.json
 !.claude/skills
+
+# ---- Harness managed begin ----
+# Claude Code / Harness runtime files
+.claude/sessions/
+.claude/logs/
+.claude/state/
+.claude/worktrees/
+.claude/settings.local.json
+
+
+# Force-track Harness configuration (do not ignore these)
+!.claude/memory/
+!.claude/output-styles/
+!.claude/rules/
+!.claude/scripts/
+!.claude/skills/
+!.claude/settings.json
+# ---- Harness managed end ----
