@@ -226,7 +226,7 @@ export const BibleVersionCollectionPortuguese = [
     versionName: 'João Ferreira de Almeida',
     language: 'Portuguese',
     code: 'pt',
-    apiSource: BibleAPISourceCollection.bibleApi,
+    apiSource: BibleAPISourceCollection.bollsLife,
   },
 ]
 
