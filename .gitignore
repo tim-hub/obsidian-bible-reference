@@ -42,3 +42,5 @@ pnpm-workspace.yaml
 !.claude/skills/
 !.claude/settings.json
 # ---- Harness managed end ----
+.pytest_cache/
+.idea/

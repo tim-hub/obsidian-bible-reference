@@ -15,7 +15,11 @@
       "Bash(grep:*)",
       "Bash(ls:*)",
       "Bash(cat:*)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(bun:*)",
+      "Bash(npx:*)",
+      "Bash(git:*)",
+      "Bash(gh:*)"
     ],
     "deny": []
   }
