@@ -1,5 +1,6 @@
 import { BOOK_REG } from './regs'
 import { getVerseCount, getChapterCount } from '../data/BibleVerseData'
+import { getFullBookName } from './bookNameReference'
 
 /**
  * Helper to safely parse integers and throw error on NaN
@@ -75,6 +76,17 @@ export const splitBibleReference = (reference: string): VerseReference => {
     chapterVersePart = parts[length - 1]
   }
 
+  // Normalize the book name for metadata lookups only (e.g. "1 cor" -> "1 Corinthians").
+  // The returned reference keeps the raw bookName; only the verse-count/chapter guards
+  // below use the normalized form so abbreviations are validated like full names.
+  let lookupBookName = bookName
+  try {
+    const full = getFullBookName(bookName)
+    if (full) lookupBookName = full
+  } catch {
+    /* unknown book; getVerseCount returns 0 */
+  }
+
   const ranges: VerseRange[] = []
   // Split by comma or semicolon for multiple selections
   const segments = chapterVersePart.split(/[,;]/)
@@ -90,7 +102,7 @@ export const splitBibleReference = (reference: string): VerseReference => {
       const parts = segment.split(':')
       currentChapter = safeParseInt(parts[0], 'chapter number')
 
-      const maxChapters = getChapterCount(bookName)
+      const maxChapters = getChapterCount(lookupBookName)
       if (maxChapters > 0 && currentChapter > maxChapters) {
         throw new Error(
           `Invalid chapter number: chapter ${currentChapter} not found in book "${bookName}"`
@@ -110,7 +122,7 @@ export const splitBibleReference = (reference: string): VerseReference => {
       ) {
         currentChapter = safeParseInt(segment, 'chapter number')
 
-        const maxChapters = getChapterCount(bookName)
+        const maxChapters = getChapterCount(lookupBookName)
         if (maxChapters > 0 && currentChapter > maxChapters) {
           throw new Error(
             `Invalid chapter number: chapter ${currentChapter} not found in book "${bookName}"`
@@ -158,7 +170,7 @@ export const splitBibleReference = (reference: string): VerseReference => {
           'end chapter number'
         )
 
-        const maxChapters = getChapterCount(bookName)
+        const maxChapters = getChapterCount(lookupBookName)
         if (maxChapters > 0 && endChapterNum > maxChapters) {
           throw new Error(
             `Invalid end chapter number: chapter ${endChapterNum} not found in book "${bookName}"`
@@ -181,7 +193,7 @@ export const splitBibleReference = (reference: string): VerseReference => {
         const startVerse = safeParseInt(startStr, 'start verse')
         const endVerse =
           endVerseStr === 'a'
-            ? getVerseCount(bookName, endChapterNum)
+            ? getVerseCount(lookupBookName, endChapterNum)
             : safeParseInt(endVerseStr, 'end verse')
 
         if (endVerseStr === 'a' && endVerse === 0) {
@@ -191,14 +203,17 @@ export const splitBibleReference = (reference: string): VerseReference => {
         }
 
         // Validate verse counts
-        const startChapterMaxVerses = getVerseCount(bookName, currentChapter)
+        const startChapterMaxVerses = getVerseCount(
+          lookupBookName,
+          currentChapter
+        )
         if (startChapterMaxVerses > 0 && startVerse > startChapterMaxVerses) {
           throw new Error(
             `Invalid start verse: verse ${startVerse} not found in "${bookName} ${currentChapter}"`
           )
         }
 
-        const endChapterMaxVerses = getVerseCount(bookName, endChapterNum)
+        const endChapterMaxVerses = getVerseCount(lookupBookName, endChapterNum)
         if (endChapterMaxVerses > 0 && endVerse > endChapterMaxVerses) {
           throw new Error(
             `Invalid end verse: verse ${endVerse} not found in "${bookName} ${endChapterNum}"`
@@ -239,7 +254,7 @@ export const splitBibleReference = (reference: string): VerseReference => {
         const startVerse = safeParseInt(startStr, 'start verse')
         const endVerse =
           endStr === 'a'
-            ? getVerseCount(bookName, currentChapter)
+            ? getVerseCount(lookupBookName, currentChapter)
             : safeParseInt(endStr, 'end verse')
 
         if (endStr === 'a' && endVerse === 0) {
@@ -249,7 +264,7 @@ export const splitBibleReference = (reference: string): VerseReference => {
         }
 
         // Validate verse counts
-        const maxVerses = getVerseCount(bookName, currentChapter)
+        const maxVerses = getVerseCount(lookupBookName, currentChapter)
         if (maxVerses > 0) {
           if (startVerse > maxVerses) {
             throw new Error(
@@ -283,7 +298,7 @@ export const splitBibleReference = (reference: string): VerseReference => {
           : safeParseInt(versePart, 'verse number')
       const vEnd =
         versePart.toLowerCase() === 'a'
-          ? getVerseCount(bookName, currentChapter)
+          ? getVerseCount(lookupBookName, currentChapter)
           : undefined
 
       if (versePart.toLowerCase() === 'a' && vEnd === 0) {
@@ -293,7 +308,7 @@ export const splitBibleReference = (reference: string): VerseReference => {
       }
 
       // Validate verse exists
-      const maxVerses = getVerseCount(bookName, currentChapter)
+      const maxVerses = getVerseCount(lookupBookName, currentChapter)
       if (maxVerses > 0 && v > maxVerses) {
         throw new Error(
           `Invalid verse number: verse ${v} not found in "${bookName} ${currentChapter}"`
