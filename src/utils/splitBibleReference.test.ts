@@ -329,7 +329,7 @@ test('splitBibleReference - throws error for empty cross-chapter verse', () => {
 describe('splitBibleReference - multi-word book abbreviations', () => {
   // The book name is normalized for metadata lookups, so abbreviations are
   // validated like full names. Over-range references are blocked everywhere.
-  // (1 Corinthians 2 = 16 verses, Romans 9 = 33 verses, 16 chapters;
+  // (1 Corinthians 2 = 16 verses, Romans 9 = 33 verses, 16 chapters,
   // 2 Timothy 1 = 18 verses, 4 chapters)
 
   test('blocks over-range end verse for an abbreviation', () => {
