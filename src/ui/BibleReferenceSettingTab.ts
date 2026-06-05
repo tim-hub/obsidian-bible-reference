@@ -561,10 +561,7 @@ Obsidian Bible Reference  is proudly powered by
       dropdown.addOption('biblegateway', 'Bible Gateway')
       dropdown.addOption('logos', 'Logos')
       dropdown.addOption('stepbible', 'StepBible')
-      dropdown.setValue(this.plugin.settings.sourceOfReference || 'original')
-      if (!this.plugin.settings?.enableHyperlinking) {
-        dropdown.setDisabled(true)
-      }
+      dropdown.setValue(this.plugin.settings.sourceOfReference || 'biblegateway')
       dropdown.onChange(async (value) => {
         this.plugin.settings.sourceOfReference = value as
           | 'original'
