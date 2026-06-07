@@ -226,7 +226,42 @@ export const BibleVersionCollectionPortuguese = [
     versionName: 'João Ferreira de Almeida',
     language: 'Portuguese',
     code: 'pt',
-    apiSource: BibleAPISourceCollection.bibleApi,
+    apiSource: BibleAPISourceCollection.bollsLife,
+  },
+  {
+    key: 'ara',
+    versionName: 'Almeida Revista e Atualizada 1993 @Bolls Life',
+    language: 'Portuguese',
+    code: 'pt',
+    apiSource: BibleAPISourceCollection.bollsLife,
+  },
+  {
+    key: 'ntlh',
+    versionName: 'Nova Tradução na Linguagem de Hoje @Bolls Life',
+    language: 'Portuguese',
+    code: 'pt',
+    apiSource: BibleAPISourceCollection.bollsLife,
+  },
+  {
+    key: 'naa',
+    versionName: 'Nova Almeida Atualizada 2017 @Bolls Life',
+    language: 'Portuguese',
+    code: 'pt',
+    apiSource: BibleAPISourceCollection.bollsLife,
+  },
+  {
+    key: 'arc09',
+    versionName: 'Almeida Revista e Corrigida 2009 @Bolls Life',
+    language: 'Portuguese',
+    code: 'pt',
+    apiSource: BibleAPISourceCollection.bollsLife,
+  },
+  {
+    key: 'nvipt',
+    versionName: 'Nova Versão Internacional Português @Bolls Life',
+    language: 'Portuguese',
+    code: 'pt',
+    apiSource: BibleAPISourceCollection.bollsLife,
   },
 ]
 
