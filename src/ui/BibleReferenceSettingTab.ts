@@ -136,7 +136,7 @@ Obsidian Bible Reference  is proudly powered by
       if (this.plugin.settings.advancedSettings) {
         this.displayExpertSettings()
       } else {
-        this?.expertSettingContainer && this.expertSettingContainer.empty()
+        this.expertSettingContainer?.empty()
       }
     })
 
