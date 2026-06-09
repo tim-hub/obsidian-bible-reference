@@ -172,7 +172,7 @@ Obsidian Bible Reference  is proudly powered by
         .addText((text) => {
           text.setValue(
             this.plugin.settings?.bookTaggingFormat ||
-              DEFAULT_SETTINGS.bookTaggingFormat
+            DEFAULT_SETTINGS.bookTaggingFormat
           )
           text.inputEl.readOnly = !this.plugin.settings?.bookTagging
           text.inputEl.style.opacity = !this.plugin.settings?.bookTagging
@@ -209,7 +209,7 @@ Obsidian Bible Reference  is proudly powered by
         .addText((text) => {
           text.setValue(
             this.plugin.settings?.chapterTaggingFormat ||
-              DEFAULT_SETTINGS.chapterTaggingFormat
+            DEFAULT_SETTINGS.chapterTaggingFormat
           )
           text.inputEl.readOnly = !this.plugin.settings?.chapterTagging
           text.inputEl.style.opacity = !this.plugin.settings?.chapterTagging
@@ -284,7 +284,7 @@ Obsidian Bible Reference  is proudly powered by
         .setName('Add Internal Linking to the Verse Numbers')
         .setDesc(
           'Choose how verse numbers should link internally to match your system. ' +
-            'Warning: Links will only work if matching notes/block IDs exist in your vault.'
+          'Warning: Links will only work if matching notes/block IDs exist in your vault.'
         )
         .addDropdown((dropdown) => {
           dropdown
@@ -314,7 +314,7 @@ Obsidian Bible Reference  is proudly powered by
           dropdown
             .setValue(
               this.plugin.settings.multiChapterSeparatorFormat ??
-                BibleMultiChapterSeparatorFormat.ChapterSeparator
+              BibleMultiChapterSeparatorFormat.ChapterSeparator
             )
             .onChange(async (value) => {
               this.plugin.settings.multiChapterSeparatorFormat =
@@ -353,8 +353,7 @@ Obsidian Bible Reference  is proudly powered by
           dropdown.addOption(
             version.key,
             escapeHtml(
-              `${version.language} - (${version.key.toUpperCase()}) - ${
-                version.versionName
+              `${version.language} - (${version.key.toUpperCase()}) - ${version.versionName
               } @${version.apiSource.name}`
             )
           )
@@ -389,7 +388,7 @@ Obsidian Bible Reference  is proudly powered by
         dropdown
           .setValue(
             this.plugin.settings.bookNameLanguage ||
-              BookNameLanguageEnum.VersionSpecific
+            BookNameLanguageEnum.VersionSpecific
           )
           .onChange(async (value) => {
             this.plugin.settings.bookNameLanguage =
@@ -449,7 +448,7 @@ Obsidian Bible Reference  is proudly powered by
         dropdown
           .setValue(
             this.plugin.settings.bibleVersionStatusIndicator ??
-              BibleVersionNameLengthEnum.Short
+            BibleVersionNameLengthEnum.Short
           )
           .onChange(async (value) => {
             this.plugin.settings.bibleVersionStatusIndicator =
@@ -476,7 +475,7 @@ Obsidian Bible Reference  is proudly powered by
         dropdown
           .setValue(
             this.plugin.settings.referenceLinkPosition ??
-              BibleVerseReferenceLinkPosition.None
+            BibleVerseReferenceLinkPosition.None
           )
           .onChange(async (value) => {
             this.plugin.settings.referenceLinkPosition =
@@ -562,7 +561,7 @@ Obsidian Bible Reference  is proudly powered by
       dropdown.addOption('logos', 'Logos')
       dropdown.addOption('stepbible', 'StepBible')
       dropdown.setValue(this.plugin.settings.sourceOfReference || 'original')
-        
+
       dropdown.onChange(async (value) => {
         this.plugin.settings.sourceOfReference = value as
           | 'original'
@@ -571,8 +570,8 @@ Obsidian Bible Reference  is proudly powered by
           | 'logos'
           | 'stepbible'
         this.updateLogosFallbackVisibility()
-      await this.plugin.saveSettings()
-      pluginEvent.trigger('bible-reference:settings:re-render', [])
+        await this.plugin.saveSettings()
+        pluginEvent.trigger('bible-reference:settings:re-render', [])
         new Notice('Reference Link Source Updated')
       })
     })
@@ -589,7 +588,7 @@ Obsidian Bible Reference  is proudly powered by
         dropdown
           .setValue(
             this.plugin.settings.verseNumberFormatting ??
-              BibleVerseNumberFormat.Period
+            BibleVerseNumberFormat.Period
           )
           .onChange(async (value) => {
             this.plugin.settings.verseNumberFormatting =
@@ -638,7 +637,7 @@ Obsidian Bible Reference  is proudly powered by
         dropdown
           .setValue(
             this.plugin.settings.multiChapterSeparatorFormat ??
-              BibleMultiChapterSeparatorFormat.ChapterSeparator
+            BibleMultiChapterSeparatorFormat.ChapterSeparator
           )
           .onChange(async (value) => {
             this.plugin.settings.multiChapterSeparatorFormat =
@@ -652,7 +651,7 @@ Obsidian Bible Reference  is proudly powered by
     // Initialize visibility
     updateChapterNumberVisibility(
       this.plugin.settings.multiChapterSeparatorFormat ??
-        BibleMultiChapterSeparatorFormat.ChapterSeparator
+      BibleMultiChapterSeparatorFormat.ChapterSeparator
     )
   }
 
@@ -671,7 +670,7 @@ Obsidian Bible Reference  is proudly powered by
         dropdown
           .setValue(
             this.plugin.settings.verseSegmentSeparatorFormat ??
-              BibleVerseSegmentSeparatorFormat.VerseSeparator
+            BibleVerseSegmentSeparatorFormat.VerseSeparator
           )
           .onChange(async (value) => {
             this.plugin.settings.verseSegmentSeparatorFormat =
