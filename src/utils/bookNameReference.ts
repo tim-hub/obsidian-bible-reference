@@ -7,7 +7,7 @@ export const getBookIdFromBookName = (
   try {
     console.debug('get book id first time', bookName, languageCode)
     return Reference.bookIdFromTranslationAndName(languageCode, bookName)
-  } catch (e) {
+  } catch {
     // try in slow but in all supported languages
     console.debug('get book id from all translations', bookName)
     return Reference.bookIdFromName(bookName)
@@ -23,7 +23,7 @@ export const getFullBookName = (
 
   try {
     return Reference.bookNameFromTranslationAndId(languageCode, bookId)
-  } catch (e) {
+  } catch {
     return Reference.bookEnglishFullNameFromId(bookId)
   }
 }
