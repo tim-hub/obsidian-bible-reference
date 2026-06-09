@@ -562,9 +562,7 @@ Obsidian Bible Reference  is proudly powered by
       dropdown.addOption('logos', 'Logos')
       dropdown.addOption('stepbible', 'StepBible')
       dropdown.setValue(this.plugin.settings.sourceOfReference || 'original')
-          if (!this.plugin.settings?.enableHyperlinking) {
-      dropdown.setDisabled(true)
-    }
+        
       dropdown.onChange(async (value) => {
         this.plugin.settings.sourceOfReference = value as
           | 'original'
@@ -573,8 +571,6 @@ Obsidian Bible Reference  is proudly powered by
           | 'logos'
           | 'stepbible'
         this.updateLogosFallbackVisibility()
-        await this.plugin.saveSettings()
-        pluginEvent.trigger('bible-reference:settings:re-render', [])
         new Notice('Reference Link Source Updated')
       })
     })
