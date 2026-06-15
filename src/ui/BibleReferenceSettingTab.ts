@@ -574,7 +574,6 @@ Obsidian Bible Reference  is proudly powered by
           | 'stepbible'
         this.updateLogosFallbackVisibility()
         await this.plugin.saveSettings()
-        pluginEvent.trigger('bible-reference:settings:re-render', [])
         new Notice('Reference Link Source Updated')
       })
     })
