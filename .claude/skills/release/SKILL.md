@@ -1,6 +1,7 @@
 ---
 name: release
 description: Use when releasing a new version of this plugin — version needs bumping across package.json, manifest.json, versions.json, then tagged and pushed
+model: haiku
 ---
 
 # Release Obsidian Bible Reference Plugin

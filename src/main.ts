@@ -46,11 +46,11 @@ export default class BibleReferencePlugin extends Plugin {
     this.api = new BibleReferenceAPI(this.app, this.settings)
     // Register the api globally
     // @ts-ignore
-    ;(window['BibleReferenceAPI'] = this.api) &&
-      this.register(() => {
-        // @ts-ignore
-        delete window['BibleReferenceAPI']
-      })
+    window['BibleReferenceAPI'] = this.api
+    this.register(() => {
+      // @ts-ignore
+      delete window['BibleReferenceAPI']
+    })
 
     // enable vod
     this.registerEditorSuggest(

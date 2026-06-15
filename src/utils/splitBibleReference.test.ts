@@ -325,3 +325,62 @@ test('splitBibleReference - throws error for empty cross-chapter verse', () => {
     'Invalid cross-chapter verse range'
   )
 })
+
+describe('splitBibleReference - multi-word book abbreviations', () => {
+  // The book name is normalized for metadata lookups, so abbreviations are
+  // validated like full names. Over-range references are blocked everywhere.
+  // (1 Corinthians 2 = 16 verses, Romans 9 = 33 verses, 16 chapters,
+  // 2 Timothy 1 = 18 verses, 4 chapters)
+
+  test('blocks over-range end verse for an abbreviation', () => {
+    expect(() => splitBibleReference('1 cor 2:1-18')).toThrow(
+      'Invalid end verse'
+    )
+  })
+
+  test('blocks over-range end verse for an abbreviation', () => {
+    expect(() => splitBibleReference('rom 9:30-40')).toThrow(
+      'Invalid end verse'
+    )
+  })
+
+  test('blocks over-range end verse for an abbreviation (2 Timothy)', () => {
+    expect(() => splitBibleReference('2 tim 1:1-50')).toThrow(
+      'Invalid end verse'
+    )
+  })
+
+  test('blocks over-range single verse for an abbreviation', () => {
+    expect(() => splitBibleReference('2 tim 1:50')).toThrow(
+      'Invalid verse number'
+    )
+  })
+
+  test('blocks over-range chapter for an abbreviation', () => {
+    expect(() => splitBibleReference('1 cor 99:1')).toThrow(
+      'Invalid chapter number'
+    )
+  })
+
+  test('parses a valid in-range abbreviation and keeps the raw book name', () => {
+    expect(splitBibleReference('1 cor 2:1-16')).toMatchObject({
+      bookName: '1 cor',
+      chapterNumber: 2,
+      verseNumber: 1,
+      verseNumberEnd: 16,
+    })
+  })
+
+  // Regression guards: full names and one-word books already blocked over-range.
+  test('still blocks over-range for the full multi-word name', () => {
+    expect(() => splitBibleReference('1 corinthians 2:1-18')).toThrow(
+      'Invalid end verse'
+    )
+  })
+
+  test('still blocks over-range for a one-word book', () => {
+    expect(() => splitBibleReference('John 3:16-99')).toThrow(
+      'Invalid end verse'
+    )
+  })
+})
