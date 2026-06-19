@@ -32,6 +32,14 @@ describe('test bookNameReference', () => {
       )
     }
   })
+
+  it('should map php to Philippians (50)', () => {
+    expect(getBookIdFromBookName('php')).toBe(50)
+  })
+
+  it('should override isa to map to Isaiah (23)', () => {
+    expect(getBookIdFromBookName('isa')).toBe(23)
+  })
 })
 
 describe('test getFullBookName', () => {
@@ -52,5 +60,13 @@ describe('test getFullBookName', () => {
     // When language code is invalid, it should fallback to English
     const result = getFullBookName('Genesis', 'invalidCode')
     expect(result).toBe('Genesis')
+  })
+
+  it('should return Philippians for php in English', () => {
+    expect(getFullBookName('php', 'en')).toBe('Philippians')
+  })
+
+  it('should return Isaiah for isa in English', () => {
+    expect(getFullBookName('isa', 'en')).toBe('Isaiah')
   })
 })
