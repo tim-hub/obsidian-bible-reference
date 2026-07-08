@@ -1,5 +1,33 @@
 import Reference from 'bible-reference-toolkit'
 
+const SUPPORTED_BOOK_NAME_LANGUAGE_CODES = [
+  'en',
+  'it',
+  'jp',
+  'hi',
+  'sp',
+  'da',
+  'de',
+  'fr',
+  'pt',
+  'cn',
+  'ko',
+  'ar',
+  'ru',
+]
+
+const getBookIdFromSupportedTranslations = (bookName: string): number => {
+  for (const languageCode of SUPPORTED_BOOK_NAME_LANGUAGE_CODES) {
+    try {
+      return Reference.bookIdFromTranslationAndName(languageCode, bookName)
+    } catch {
+      // Try the next supported translation.
+    }
+  }
+
+  throw new Error(`No book matched "${bookName}"`)
+}
+
 export const getBookIdFromBookName = (
   bookName: string,
   languageCode: string = 'en'
@@ -10,7 +38,11 @@ export const getBookIdFromBookName = (
   } catch {
     // try in slow but in all supported languages
     console.debug('get book id from all translations', bookName)
-    return Reference.bookIdFromName(bookName)
+    try {
+      return Reference.bookIdFromName(bookName)
+    } catch {
+      return getBookIdFromSupportedTranslations(bookName)
+    }
   }
 }
 

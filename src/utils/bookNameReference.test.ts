@@ -13,6 +13,13 @@ describe('test bookNameReference', () => {
     expect(getBookIdFromBookName('Génesis', 'sp')).toBe(1)
   })
 
+  it('should return the correct ids for numbered Spanish book names', () => {
+    expect(getBookIdFromBookName('1 Reyes')).toBe(11)
+    expect(getBookIdFromBookName('2 Reyes')).toBe(12)
+    expect(getBookIdFromBookName('1 Corintios')).toBe(46)
+    expect(getBookIdFromBookName('2 Corintios')).toBe(47)
+  })
+
   it('should return the correct id for Hindi book names', () => {
     expect(getBookIdFromBookName('उत्पत्ति', 'hi')).toBe(1)
     expect(getBookIdFromBookName('भजन संहिता', 'hi')).toBe(19)
@@ -41,6 +48,13 @@ describe('test getFullBookName', () => {
 
   it('should return full book name for numbered books', () => {
     expect(getFullBookName('1 John', 'en')).toBe('1 John')
+  })
+
+  it('should resolve numbered Spanish book names back to English', () => {
+    expect(getFullBookName('1 Reyes', 'en')).toBe('1 Kings')
+    expect(getFullBookName('2 Reyes', 'en')).toBe('2 Kings')
+    expect(getFullBookName('1 Corintios', 'en')).toBe('1 Corinthians')
+    expect(getFullBookName('2 Corintios', 'en')).toBe('2 Corinthians')
   })
 
   it('should return Hindi book name when language is hi', () => {
