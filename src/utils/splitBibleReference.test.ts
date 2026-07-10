@@ -216,6 +216,34 @@ test('splitBibleReference - hybrid space pattern (space after number, no space b
   })
 })
 
+test('splitBibleReference - validates common Spanish book aliases', () => {
+  expect(splitBibleReference('Hechos 1:1')).toMatchObject({
+    bookName: 'Hechos',
+    chapterNumber: 1,
+    verseNumber: 1,
+  })
+  expect(splitBibleReference('Zacarías 1:1')).toMatchObject({
+    bookName: 'Zacarías',
+    chapterNumber: 1,
+    verseNumber: 1,
+  })
+  expect(splitBibleReference('Zacarias 1:1')).toMatchObject({
+    bookName: 'Zacarias',
+    chapterNumber: 1,
+    verseNumber: 1,
+  })
+  expect(splitBibleReference('Cantar de los Cantares 1:1')).toMatchObject({
+    bookName: 'Cantar de los Cantares',
+    chapterNumber: 1,
+    verseNumber: 1,
+  })
+  expect(splitBibleReference('1 Cronicas 1:1')).toMatchObject({
+    bookName: '1 Cronicas',
+    chapterNumber: 1,
+    verseNumber: 1,
+  })
+})
+
 test('splitBibleReference - throws error for invalid chapter number', () => {
   expect(() => splitBibleReference('John abc:16')).toThrow(
     'Invalid chapter number'

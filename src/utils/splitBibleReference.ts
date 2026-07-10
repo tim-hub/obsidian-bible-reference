@@ -58,22 +58,31 @@ export const splitBibleReference = (reference: string): VerseReference => {
   let bookName = ''
   let chapterVersePart = ''
 
-  // Use BOOK_REG for robust book name extraction
-  const bookMatch = trimmedRef.match(BOOK_REG)
-  if (bookMatch) {
-    bookName = bookMatch[0].trim()
-    const index = bookMatch.index ?? 0
-    chapterVersePart = trimmedRef.slice(index + bookMatch[0].length).trim()
-    // In case of no space between book and chapter: john1:1
-    if (chapterVersePart.startsWith(':')) {
-      // This shouldn't happen with BOOK_REG and digits following, but safe check
-    }
+  const spacedReferenceMatch = trimmedRef.match(
+    /^([^:,;]+?)\s+(\d{1,3}(?::|$).*)$/u
+  )
+
+  if (spacedReferenceMatch) {
+    bookName = spacedReferenceMatch[1].trim()
+    chapterVersePart = spacedReferenceMatch[2].trim()
   } else {
-    // Fallback to original logic if BOOK_REG fails (unlikely)
-    const parts = trimmedRef.split(' ')
-    const length = parts.length
-    bookName = parts.slice(0, length - 1).join(' ')
-    chapterVersePart = parts[length - 1]
+    // Use BOOK_REG for robust no-space book name extraction, e.g. john1:1.
+    const bookMatch = trimmedRef.match(BOOK_REG)
+    if (bookMatch) {
+      bookName = bookMatch[0].trim()
+      const index = bookMatch.index ?? 0
+      chapterVersePart = trimmedRef.slice(index + bookMatch[0].length).trim()
+      // In case of no space between book and chapter: john1:1
+      if (chapterVersePart.startsWith(':')) {
+        // This shouldn't happen with BOOK_REG and digits following, but safe check
+      }
+    } else {
+      // Fallback to original logic if BOOK_REG fails (unlikely)
+      const parts = trimmedRef.split(' ')
+      const length = parts.length
+      bookName = parts.slice(0, length - 1).join(' ')
+      chapterVersePart = parts[length - 1]
+    }
   }
 
   // Normalize the book name for metadata lookups only (e.g. "1 cor" -> "1 Corinthians").
