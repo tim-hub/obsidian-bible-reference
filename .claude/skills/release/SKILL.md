@@ -10,12 +10,16 @@ model: haiku
 
 This is a Bun workspace monorepo. The **plugin `package.json`** at
 `packages/obsidian-bible-reference/package.json` is the **single source of truth**
-for the version. The `version` script reads it and syncs `manifest.json` and
-`versions.json` at the repo root. This project uses date-based versioning (`YY.MM.DD`).
+for the version. The `version` script auto-derives today's date version, writes it
+into the plugin `package.json`, and syncs `manifest.json` and `versions.json` at the
+repo root. This project uses date-based versioning (`YY.MM.DD`).
 
 ## Version Format
 
-`YY.MM.DD` — e.g. `26.05.08` for 2026-05-08. Append `-2`, `-3` for multiple same-day releases.
+`YY.MM.DD` — e.g. `26.05.08` for 2026-05-08. The version script generates this from
+the current date automatically. If today already has a release tag, it appends
+`-1`, `-2`, … for the next same-day release. Pass an explicit version as an argument
+to override the date (e.g. `bun run --filter obsidian-bible-reference version 26.07.14`).
 
 ## Preflight
 
@@ -33,37 +37,40 @@ bun test        # must exit 0
    git checkout master && git pull origin master
    ```
 
-2. **Bump the version (source of truth)** — set `version` in
-   `packages/obsidian-bible-reference/package.json` to the new date version.
+2. **Bump + sync the version (one command)** — auto-sets today's `YY.MM.DD`
+   into the plugin `package.json`, `manifest.json`, and `versions.json`:
+   ```bash
+   bun run --filter obsidian-bible-reference version
+   ```
+   It prints `version set to <NEW_VERSION>`. Capture it for the commit/tag:
+   ```bash
+   VERSION=$(node -p "require('./packages/obsidian-bible-reference/package.json').version")
+   echo "$VERSION"
+   ```
+   > Note: the version script only adds an entry to `versions.json` when
+   > `minAppVersion` hasn't been seen before. If skipped, add
+   > `"<VERSION>": "0.12.0"` to `versions.json` manually.
 
 3. **Refresh lockfile**
    ```bash
    bun install
    ```
 
-4. **Sync `manifest.json` and `versions.json`** from the plugin package.json:
-   ```bash
-   bun run --filter obsidian-bible-reference version
-   ```
-   > Note: the version script only adds an entry to `versions.json` when
-   > `minAppVersion` hasn't been seen before. If skipped, add
-   > `"<NEW>": "0.12.0"` to `versions.json` manually.
-
-5. **Stage and commit**
+4. **Stage and commit**
    ```bash
    git add packages/obsidian-bible-reference/package.json bun.lock manifest.json versions.json
-   git commit -m "<NEW_VERSION>"
+   git commit -m "$VERSION"
    ```
 
-6. **Tag** (no `v` prefix — Obsidian guideline)
+5. **Tag** (no `v` prefix — Obsidian guideline)
    ```bash
-   git tag <NEW_VERSION>
+   git tag "$VERSION"
    ```
 
-7. **Push commit and tag**
+6. **Push commit and tag**
    ```bash
    git push origin master
-   git push origin <NEW_VERSION>
+   git push origin "$VERSION"
    ```
 
 ## Checklist
