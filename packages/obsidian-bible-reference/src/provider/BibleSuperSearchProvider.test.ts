@@ -1,17 +1,12 @@
+import { afterEach, describe, expect, it, mock, spyOn } from 'bun:test'
 import { BibleSuperSearchProvider } from './BibleSuperSearchProvider'
 import { BibleAPISourceCollection } from '../data/BibleApiSourceCollection'
 
-jest.mock(
-  'obsidian',
-  () => ({
-    Notice: jest.fn(),
-  }),
-  { virtual: true }
-)
+// `obsidian` is mocked globally in the bun test preload (see bunfig.toml).
 
 describe('BibleSuperSearchProvider', () => {
   afterEach(() => {
-    jest.restoreAllMocks()
+    mock.restore()
   })
 
   it('builds query URL with mapped bg module', () => {
@@ -40,7 +35,7 @@ describe('BibleSuperSearchProvider', () => {
       apiSource: BibleAPISourceCollection.bibleSuperSearch,
     })
 
-    const fetchMock = jest.spyOn(global, 'fetch').mockResolvedValue({
+    const fetchMock = spyOn(global, 'fetch').mockResolvedValue({
       json: async () => ({
         errors: [],
         error_level: 0,

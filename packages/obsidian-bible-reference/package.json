@@ -1,0 +1,49 @@
+{
+  "name": "obsidian-bible-reference",
+  "version": "26.06.07",
+  "private": true,
+  "description": "Taking Bible Study note in Obsidian.md application easily. Automatically suggesting Bible Verses as references. ",
+  "main": "../../main.js",
+  "scripts": {
+    "dev": "bun scripts/esbuild.config.mjs",
+    "build": "tsc -noEmit -skipLibCheck && bun scripts/esbuild.config.mjs production",
+    "version": "bun scripts/version-bump.mjs",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "prettier": "prettier --check .",
+    "prettier:fix": "prettier --write .",
+    "test": "bun test"
+  },
+  "keywords": [
+    "bible",
+    "bible reference",
+    "bible notes",
+    "bible study",
+    "theology study",
+    "obsidian",
+    "obsidian.md",
+    "obsidian plugin",
+    "obsidian bible"
+  ],
+  "author": "tim-hub",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/ackee-tracker": "5.0.4",
+    "@types/node": "24.3.0",
+    "@eslint/js": "^9.0.0",
+    "builtin-modules": "3.3.0",
+    "bun-types": "^1.1.0",
+    "esbuild": "0.28.0",
+    "eslint": "^10.0.0",
+    "globals": "^16.0.0",
+    "typescript-eslint": "^8.0.0",
+    "obsidian": "1.8.7",
+    "prettier": "3.8.3",
+    "tslib": "^2.8.1",
+    "typescript": "5.3.3"
+  },
+  "dependencies": {
+    "ackee-tracker": "5.1.0",
+    "bible-reference-toolkit": "workspace:*"
+  }
+}

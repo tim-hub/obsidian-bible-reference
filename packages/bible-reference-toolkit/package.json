@@ -24,6 +24,7 @@
   ],
   "main": "dist/index.js",
   "devDependencies": {
+    "@types/node": "^24.3.0",
     "bun-types": "^1.0.1",
     "prettier": "^3.0.3",
     "rimraf": "^6.0.1",

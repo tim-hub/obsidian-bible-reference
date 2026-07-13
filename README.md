@@ -117,9 +117,20 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 ## Packages in this Monorepo
 
-This repository is a monorepo. Alongside the Obsidian plugin (at the root), it contains the following packages under [`packages/`](packages/), which the plugin consumes locally via the pnpm workspace:
+This repository is a [Bun](https://bun.sh) workspace monorepo. The repository root doubles as the installable Obsidian plugin folder (`manifest.json`, `versions.json`, `styles.css`, and the built `main.js` live at the root), while all source lives under [`packages/`](packages/):
 
+- [`obsidian-bible-reference`](packages/obsidian-bible-reference) — the Obsidian plugin source (this README documents it). Its build emits `main.js` to the repository root.
 - [`bible-reference-toolkit`](packages/bible-reference-toolkit/README.md) — Normalize Bible references, convert them to machine-readable formats, query and manipulate them.
 - [`bible-book-names-intl`](packages/bible-book-names-intl/README.md) — Bible book names in multiple languages (the source used to resolve non-English book names).
 
-Both packages are also published on npm. They were merged in from [Antioch-Tech/bible-reference-toolkit](https://github.com/Antioch-Tech/bible-reference-toolkit) with their full commit history preserved.
+The plugin consumes `bible-reference-toolkit` locally via the workspace (`workspace:*`). The two toolkit packages are also published on npm and were merged in from [Antioch-Tech/bible-reference-toolkit](https://github.com/Antioch-Tech/bible-reference-toolkit) with their full commit history preserved.
+
+### Development
+
+```bash
+bun install          # install all workspace deps
+bun run build        # build the plugin (main.js -> repo root)
+bun run dev          # watch build
+bun test             # run all package tests
+bun run lint         # lint the plugin package
+```

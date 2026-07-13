@@ -4,6 +4,7 @@ import builtins from "builtin-modules";
 import path from "path";
 import fs from "fs/promises";
 import { watch } from "fs";
+import { fileURLToPath } from "url";
 
 const banner =
 `/*
@@ -12,9 +13,18 @@ if you want to view the source, please visit the github repository of this plugi
 */
 `;
 
+// This script lives at packages/obsidian-bible-reference/scripts/.
+// The plugin source is in ../src; the shippable artifacts (main.js, manifest.json,
+// versions.json, styles.css) live at the repo root so the repo root doubles as the
+// installable Obsidian plugin folder.
+const scriptsDir = path.dirname(fileURLToPath(import.meta.url));
+const packageDir = path.resolve(scriptsDir, "..");
+const repoRoot = path.resolve(packageDir, "..", "..");
+
 const prod = (process.argv[2] === "production");
-// Allow overriding output directory with env OUT_DIR or third CLI arg
-const outDir = process.env.OUT_DIR || process.argv[3] || './';
+// Default output is the repo root. Override with OUT_DIR or the third CLI arg
+// (e.g. a vault's plugin folder) for local hot-dev.
+const outDir = process.env.OUT_DIR || process.argv[3] || repoRoot;
 const resolvedOutDir = path.resolve(outDir);
 
 const staticFiles = [
@@ -24,15 +34,14 @@ const staticFiles = [
 ];
 
 async function copyStaticFiles() {
+	// When building to the repo root the static files already live there.
+	if (resolvedOutDir === repoRoot) {
+		return;
+	}
 	try {
-
-    if (outDir === './') {
-      return; // Skip copying if output directory is current directory
-    }
-
 		await fs.mkdir(resolvedOutDir, { recursive: true });
 		for (const f of staticFiles) {
-			const src = path.resolve(f);
+			const src = path.join(repoRoot, f);
 			const dest = path.join(resolvedOutDir, path.basename(f));
 			try {
 				await fs.copyFile(src, dest);
@@ -50,7 +59,7 @@ const context = await esbuild.context({
 	banner: {
 		js: banner,
 	},
-	entryPoints: ['src/main.ts'],
+	entryPoints: [path.join(packageDir, 'src/main.ts')],
 	bundle: true,
 	external: [
 		"obsidian",
@@ -91,7 +100,7 @@ if (prod) {
 	// Watch the static files and copy on change so dev:out stays up-to-date
 	for (const f of staticFiles) {
 		try {
-			watch(f, { persistent: false }, (eventType) => {
+			watch(path.join(repoRoot, f), { persistent: false }, (eventType) => {
 				if (eventType === 'change' || eventType === 'rename') {
 					copyStaticFiles().catch(err => console.error('error copying static files:', err));
 				}
