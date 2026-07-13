@@ -2,16 +2,20 @@ import { readFileSync, writeFileSync } from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 
-// manifest.json and versions.json live at the repo root (two levels up from this
-// script's package), so resolve them relative to this file rather than the CWD.
+// The plugin package.json is the single source of truth for the version.
+// This script reads that version and syncs it into the root manifest.json
+// (which Obsidian reads) and versions.json.
 const scriptsDir = path.dirname(fileURLToPath(import.meta.url));
-const repoRoot = path.resolve(scriptsDir, "..", "..", "..");
+const packageDir = path.resolve(scriptsDir, "..");
+const repoRoot = path.resolve(packageDir, "..", "..");
+
+const packageJsonPath = path.join(packageDir, "package.json");
 const manifestPath = path.join(repoRoot, "manifest.json");
 const versionsPath = path.join(repoRoot, "versions.json");
 
-const targetVersion = process.env.npm_package_version;
+const targetVersion = JSON.parse(readFileSync(packageJsonPath, "utf8")).version;
 
-// read minAppVersion from manifest.json and bump version to target version
+// bump manifest.json to the package.json version
 const manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
 const { minAppVersion } = manifest;
 manifest.version = targetVersion;

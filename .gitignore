@@ -44,3 +44,4 @@ packages/*/dist/
 # ---- Harness managed end ----
 .pytest_cache/
 .idea/
+.vscode/
