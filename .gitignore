@@ -17,9 +17,9 @@ data.json
 .eslintignore
 .stignore
 /dist/
+packages/*/dist/
 
 #pnpm
-pnpm-workspace.yaml
 .claude/sessions
 .claude/stats
 .claude/settings.local.json

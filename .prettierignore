@@ -14,6 +14,7 @@ versions.json
 data.json
 manifest.json
 biblejs-name-converter/
+packages/
 .all-contributorsrc
 .claude/
 Plans.md

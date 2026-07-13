@@ -114,3 +114,12 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 - [Bible Vector Search](https://bible-search.antioch.tech/) To search Bible verses in meaning not in keywords.
   This is another open source project I built recently to implement AI Embedding and Vector Search for Bible verses (in BBE translation).
+
+## Packages in this Monorepo
+
+This repository is a monorepo. Alongside the Obsidian plugin (at the root), it contains the following packages under [`packages/`](packages/), which the plugin consumes locally via the pnpm workspace:
+
+- [`bible-reference-toolkit`](packages/bible-reference-toolkit/README.md) — Normalize Bible references, convert them to machine-readable formats, query and manipulate them.
+- [`bible-book-names-intl`](packages/bible-book-names-intl/README.md) — Bible book names in multiple languages (the source used to resolve non-English book names).
+
+Both packages are also published on npm. They were merged in from [Antioch-Tech/bible-reference-toolkit](https://github.com/Antioch-Tech/bible-reference-toolkit) with their full commit history preserved.

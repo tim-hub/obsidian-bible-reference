@@ -83,6 +83,6 @@
   },
   "dependencies": {
     "ackee-tracker": "5.1.0",
-    "bible-reference-toolkit": "^26.2.4"
+    "bible-reference-toolkit": "workspace:*"
   }
 }
