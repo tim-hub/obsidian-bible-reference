@@ -8,7 +8,7 @@ import {
 } from 'obsidian'
 import BibleReferencePlugin from '../main'
 import { BibleReferencePluginSettings } from '../data/constants'
-import { getEnhancedVod } from '../provider/VODProvider'
+import { getEnhancedVod } from '../provider/verseOfDayApi'
 import { VerseOfDaySuggesting } from '../verse/VerseOfDaySuggesting'
 import { splitBibleReference } from '../utils/splitBibleReference'
 import { matchTriggerPrefix } from '../utils/verseMatch'

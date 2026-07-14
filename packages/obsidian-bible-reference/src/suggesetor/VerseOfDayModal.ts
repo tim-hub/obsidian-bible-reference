@@ -1,6 +1,6 @@
 import { Modal } from 'obsidian'
 import BibleReferencePlugin from '../main'
-import { getEnhancedVod } from '../provider/VODProvider'
+import { getEnhancedVod } from '../provider/verseOfDayApi'
 import { BibleReferencePluginSettings } from '../data/constants'
 
 export class VerseOfDayModal extends Modal {
