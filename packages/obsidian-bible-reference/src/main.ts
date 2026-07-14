@@ -17,6 +17,7 @@ import { VerseOfDaySuggesting } from './verse/VerseOfDaySuggesting'
 import { getBibleVersion } from './data/BibleVersionCollection'
 import { pluginEvent } from './obsidian/PluginEvent'
 import { BibleReferenceAPI } from './api/PluginAPI'
+import { verseCache } from './provider/verseCache'
 
 export default class BibleReferencePlugin extends Plugin {
   settings: BibleReferencePluginSettings
@@ -68,15 +69,36 @@ export default class BibleReferencePlugin extends Plugin {
     this.removeRibbonButton()
     this.tryRemoveStatusBarIndicator()
     pluginEvent.offAll() // so that we don't have to worry about off ref in multiple places
+    verseCache.flushNow()
   }
 
   async loadSettings() {
-    this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData())
+    const data = (await this.loadData()) ?? {}
+    const { verseCache: cacheBlob, ...settingsData } = data as Record<
+      string,
+      unknown
+    >
+    this.settings = Object.assign({}, DEFAULT_SETTINGS, settingsData)
+    verseCache.setPersist(() => {
+      void this.persistData()
+    })
+    verseCache.hydrate(cacheBlob)
     console.debug('settings is loaded')
   }
 
+  /**
+   * The single writer for data.json: always serializes settings and the verse
+   * cache together, so no saveSettings() call can clobber the cache blob.
+   */
+  private async persistData(): Promise<void> {
+    await this.saveData({
+      ...this.settings,
+      verseCache: verseCache.serialize(),
+    })
+  }
+
   async saveSettings() {
-    await this.saveData(this.settings)
+    await this.persistData()
   }
 
   private async getAndCachedVerseOfDay(): Promise<VerseOfDaySuggesting> {

@@ -1,6 +1,7 @@
 import { IVerse } from '../interfaces/IVerse'
 import { Notice } from 'obsidian'
 import { IBibleVersion } from '../interfaces/IBibleVersion'
+import { verseCache, expandRequestedVerses } from './verseCache'
 
 export abstract class BaseBibleAPIProvider {
   protected _versionKey: string // the version selected, for example kjv
@@ -10,6 +11,8 @@ export abstract class BaseBibleAPIProvider {
   protected _bibleVersion: IBibleVersion
   protected _verseReferenceLink: string = ''
   protected bibleGatewayUrl: string = ''
+  // BollyLife fetches the whole chapter then filters, so a miss fetches [1,999].
+  protected fetchesWholeChapter = false
 
   constructor(bibleVersion: IBibleVersion) {
     this._bibleVersion = bibleVersion
@@ -81,17 +84,50 @@ export abstract class BaseBibleAPIProvider {
     if (!this._versionKey && versionName) {
       throw new Error('version (language) not set yet')
     }
-    const url = this.buildRequestURL(
+    const translationKey = versionName || this._versionKey
+
+    // The reference link must reflect the USER'S requested range (used by the
+    // 'original' source link), independent of what we actually fetch below.
+    const referenceUrl = this.buildRequestURL(
       bookName,
       chapter,
       verse,
-      versionName || this._versionKey
+      translationKey
     )
-    this._currentQueryUrl = url
+    this._currentQueryUrl = referenceUrl
     this.updateOriginalReferenceUrl()
-    console.debug(url, 'url to query')
+
+    // Full cache hit? Serve without touching the network.
+    const requested = expandRequestedVerses(verse)
+    let missing: number[] | null = null
+    if (requested) {
+      const { hits, missing: gap } = verseCache.getVerses(
+        translationKey,
+        bookName,
+        chapter,
+        requested
+      )
+      if (gap.length === 0 && hits.length) {
+        return hits
+      }
+      missing = gap
+    }
+
+    // Fetch only the gap (whole chapter for BollyLife-style providers).
+    const fetchVerses = this.fetchesWholeChapter
+      ? [1, 999]
+      : missing?.length
+        ? missing
+        : verse
+    const fetchUrl = this.buildRequestURL(
+      bookName,
+      chapter,
+      fetchVerses,
+      translationKey
+    )
+    console.debug(fetchUrl, 'url to query')
     try {
-      const response = await fetch(url, {
+      const response = await fetch(fetchUrl, {
         method: 'get',
         // headers: {
         //   'Content-Type': 'application/json',
@@ -100,16 +136,33 @@ export abstract class BaseBibleAPIProvider {
         cache: 'force-cache',
       })
       const data = await response.json()
-      return this.formatBibleVerses(
+      const fetched = this.formatBibleVerses(
         data,
         bookName,
         chapter,
-        verse,
-        versionName || this._versionKey
+        fetchVerses,
+        translationKey
       )
+      verseCache.putVerses(translationKey, bookName, chapter, fetched)
+      // Restore the requested-range reference link (buildRequestURL for the
+      // fetched subset overwrote it as a side effect).
+      this._currentQueryUrl = referenceUrl
+      this.updateOriginalReferenceUrl()
+      if (requested) {
+        const { hits } = verseCache.getVerses(
+          translationKey,
+          bookName,
+          chapter,
+          requested
+        )
+        return hits.length ? hits : fetched
+      }
+      return fetched
     } catch (e) {
+      this._currentQueryUrl = referenceUrl
+      this.updateOriginalReferenceUrl()
       console.error('error while querying', e)
-      new Notice(`Error while querying ${url}`)
+      new Notice(`Error while querying ${fetchUrl}`)
       return await Promise.reject(e)
     }
   }

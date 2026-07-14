@@ -6,6 +6,8 @@ import { getBookIdFromBookName } from '../utils/bookNameReference'
 export class BollyLifeProvider extends BaseBibleAPIProvider {
   //private _verseApiUrl: string; // we do not support get verse api yet, but the api supported it
   private _chapterApiUrl: string
+  // Fetches the whole chapter then filters, so any miss fetches [1,999].
+  protected fetchesWholeChapter = true
 
   public constructor(bibleVersion: IBibleVersion) {
     super(bibleVersion)
