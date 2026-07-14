@@ -1,7 +1,6 @@
 // utils/referenceLogosLinking.ts
 
 import { BibleReferencePluginSettings } from '../data/constants'
-import { VerseReference, getReferenceHead } from './splitBibleReference'
 import { LOGOS_SUPPORTED_TRANSLATIONS } from '../data/BibleVersionCollection'
 
 /**
@@ -152,32 +151,4 @@ export function getLogosTranslation(
   }
 
   return settings.logosFallbackVersion || LOGOS_SUPPORTED_TRANSLATIONS[0].key
-}
-
-/**
- * Generates a formatted Logos hyperlink for the verse reference.
- */
-export function getLogosLink(
-  settings: BibleReferencePluginSettings,
-  verseReference: VerseReference
-): string {
-  const { bookName, chapterNumber, verseNumber, verseNumberEnd } =
-    verseReference
-  const translation = settings.bibleVersion || 'esv'
-  const logosTranslation = getLogosTranslation(settings, translation)
-
-  try {
-    const url = getLogosUrl(
-      logosTranslation,
-      bookName,
-      chapterNumber,
-      verseNumber,
-      verseNumberEnd
-    )
-    const reference = getReferenceHead(verseReference)
-    return ` [${reference} - ${translation.toUpperCase()}](${url})`
-  } catch (error) {
-    console.error('Error generating Logos URL:', error)
-    return ''
-  }
 }

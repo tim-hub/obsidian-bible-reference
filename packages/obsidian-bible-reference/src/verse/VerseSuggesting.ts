@@ -243,101 +243,60 @@ export class VerseSuggesting
       )
     }
 
-    switch (sourceOfReference) {
-      case 'blb': {
-        // Blue Letter Bible
-        try {
-          return getBLBUrl(
-            this.bibleVersion,
-            bookName,
-            chapterNumber,
-            verseNumber,
-            verseNumberEnd
-          )
-        } catch (error) {
-          console.error('Error generating BLB URL:', error)
-          return getBibleGatewayFallback()
+    // 'original' resolves through the API provider, not a URL template.
+    if (sourceOfReference === 'original') {
+      if (!this.bibleProvider) {
+        const bibleVersion = getBibleVersion(this.bibleVersion)
+        if (bibleVersion) {
+          this.bibleProvider = buildProvider(bibleVersion)
         }
       }
+      return (
+        this.bibleProvider?.getOriginalVerseReferenceLink() ||
+        getBibleGatewayFallback()
+      )
+    }
 
-      case 'biblegateway': {
-        // Bible Gateway
-        try {
-          if (isCrossChapterReference(this.verseReference)) {
-            return getBibleGatewayFallback()
-          }
-          let versesString: string
-          if (verseNumberEnd) {
-            versesString = `${verseNumber}-${verseNumberEnd}`
-          } else {
-            versesString = verseNumber.toString()
-          }
-          return getBibleGatewayUrl(
-            this.bibleVersion,
-            bookName,
-            chapterNumber,
-            versesString
-          )
-        } catch (error) {
-          console.error('Error generating Bible Gateway URL:', error)
-          return getBibleGatewayFallback()
-        }
-      }
+    // Each external source builds its own URL; any failure falls back to
+    // Bible Gateway. ('biblegateway' and any unknown source ARE the fallback.)
+    const urlBuilders: { [source: string]: () => string } = {
+      blb: () =>
+        getBLBUrl(
+          this.bibleVersion,
+          bookName,
+          chapterNumber,
+          verseNumber,
+          verseNumberEnd
+        ),
+      logos: () =>
+        getLogosUrl(
+          getLogosTranslation(this.settings, this.bibleVersion),
+          bookName,
+          chapterNumber,
+          verseNumber,
+          verseNumberEnd
+        ),
+      stepbible: () =>
+        getStepbibleUrl(
+          this.bibleVersion,
+          bookName,
+          chapterNumber,
+          verseNumber,
+          verseNumberEnd,
+          chapterNumberEnd,
+          verseNumberEndChapter
+        ),
+    }
 
-      case 'logos': {
-        // Logos
-        try {
-          const logosTranslation = getLogosTranslation(
-            this.settings,
-            this.bibleVersion
-          )
-          return getLogosUrl(
-            logosTranslation,
-            bookName,
-            chapterNumber,
-            verseNumber,
-            verseNumberEnd
-          )
-        } catch (error) {
-          console.error('Error generating Logos URL:', error)
-          return getBibleGatewayFallback()
-        }
-      }
-
-      case 'stepbible': {
-        // StepBible
-        try {
-          return getStepbibleUrl(
-            this.bibleVersion,
-            bookName,
-            chapterNumber,
-            verseNumber,
-            verseNumberEnd,
-            chapterNumberEnd,
-            verseNumberEndChapter
-          )
-        } catch (error) {
-          console.error('Error generating StepBible URL:', error)
-          return getBibleGatewayFallback()
-        }
-      }
-
-      case 'original': {
-        // Original (API provider's URL)
-        // Ensure bibleProvider is initialized
-        if (!this.bibleProvider) {
-          const bibleVersion = getBibleVersion(this.bibleVersion)
-          if (bibleVersion) {
-            this.bibleProvider = buildProvider(bibleVersion)
-          }
-        }
-        const originalUrl =
-          this.bibleProvider?.getOriginalVerseReferenceLink() || ''
-        return originalUrl || getBibleGatewayFallback()
-      }
-
-      default:
-        return getBibleGatewayFallback()
+    const buildUrl = urlBuilders[sourceOfReference]
+    if (!buildUrl) {
+      return getBibleGatewayFallback()
+    }
+    try {
+      return buildUrl()
+    } catch (error) {
+      console.error(`Error generating ${sourceOfReference} URL:`, error)
+      return getBibleGatewayFallback()
     }
   }
 

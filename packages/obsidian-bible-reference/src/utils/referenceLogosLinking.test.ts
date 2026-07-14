@@ -1,4 +1,4 @@
-import { getLogosUrl, getLogosLink } from './referenceLogosLinking'
+import { getLogosUrl, getLogosTranslation } from './referenceLogosLinking'
 import { BibleReferencePluginSettings } from '../data/constants'
 
 describe('referenceLogosLinking', () => {
@@ -31,54 +31,15 @@ describe('referenceLogosLinking', () => {
     expect(() => getLogosUrl('esv', 'UnknownBook', 1, 1)).toThrow()
   })
 
-  test('getLogosLink should use bibleVersion from settings', () => {
-    const settings = {
-      bibleVersion: 'niv2011',
-    } as BibleReferencePluginSettings
-    const verseReference = {
-      bookName: 'John',
-      chapterNumber: 3,
-      verseNumber: 16,
-      ranges: [{ chapterNumber: 3, verseNumber: 16 }],
-    }
-    const link = getLogosLink(settings, verseReference)
-    expect(link).toContain(
-      'https://ref.ly/logosres/niv2011?ref=BibleNIV.Jn3.16'
-    )
+  test('getLogosTranslation keeps a Logos-supported version', () => {
+    const settings = {} as BibleReferencePluginSettings
+    expect(getLogosTranslation(settings, 'esv')).toBe('esv')
   })
 
-  test('getLogosLink should fall back to specified supported version for unsupported translation', () => {
+  test('getLogosTranslation falls back to logosFallbackVersion when unsupported', () => {
     const settings = {
-      bibleVersion: 'bbe', // Not Logos-supported
       logosFallbackVersion: 'nasb',
     } as BibleReferencePluginSettings
-    const verseReference = {
-      bookName: 'John',
-      chapterNumber: 3,
-      verseNumber: 16,
-      ranges: [{ chapterNumber: 3, verseNumber: 16 }],
-    }
-    const link = getLogosLink(settings, verseReference)
-    // Should use nasb in URL (nasb95), but BBE in display text
-    expect(link).toContain(
-      'https://ref.ly/logosres/nasb95?ref=BibleNASB.Jn3.16'
-    )
-    expect(link).toContain('[John 3:16 - BBE]')
-  })
-
-  test('getLogosLink should fall back for WEB translation', () => {
-    const settings = {
-      bibleVersion: 'web',
-      logosFallbackVersion: 'niv2011',
-    } as BibleReferencePluginSettings
-    const verseReference = {
-      bookName: 'John',
-      chapterNumber: 3,
-      verseNumber: 1,
-      ranges: [{ chapterNumber: 3, verseNumber: 1 }],
-    }
-    const link = getLogosLink(settings, verseReference)
-    expect(link).toContain('https://ref.ly/logosres/niv2011?ref=BibleNIV.Jn3.1')
-    expect(link).toContain('[John 3:1 - WEB]')
+    expect(getLogosTranslation(settings, 'bbe')).toBe('nasb')
   })
 })
