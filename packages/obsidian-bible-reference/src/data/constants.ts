@@ -52,7 +52,6 @@ export interface BibleReferencePluginSettings {
 
   // add this to ui at some point todo
   enableBibleVerseLookupRibbon?: boolean
-  optOutToEvents?: boolean
 
   advancedSettings?: boolean
   bibleVersionStatusIndicator?: BibleVersionNameLengthEnum
@@ -86,7 +85,6 @@ export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
   chapterTagging: false,
   chapterTaggingFormat: '{{book}}{{chapter}}',
   enableBibleVerseLookupRibbon: false,
-  optOutToEvents: false,
   bookBacklinking: OutgoingLinkPositionEnum.None,
   chapterBacklinking: OutgoingLinkPositionEnum.None,
   bibleVersionStatusIndicator: BibleVersionNameLengthEnum.Short,
