@@ -220,11 +220,13 @@ export const BibleVersionCollectionEnglish = [
 
 export const BibleVersionCollectionLatin = [
   {
-    key: 'clementine',
+    // bible-api.com dropped this translation (returns 404), so it resolves via
+    // bolls.life's 'VULG' (Biblia Sacra juxta Vulgatam Clementinam) instead.
+    key: 'vulg',
     versionName: 'Clementine Latin Vulgate',
     language: 'Latin',
     code: 'la',
-    apiSource: BibleAPISourceCollection.bibleApi,
+    apiSource: BibleAPISourceCollection.bollsLife,
   },
 ]
 

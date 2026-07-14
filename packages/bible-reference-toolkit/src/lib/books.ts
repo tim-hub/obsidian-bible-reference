@@ -35,12 +35,16 @@ const getAllBibleBooksInAllSupportedLanguages = (): BookWithAbbreviations[] => {
   for (let i = 0; i < 66; i++) {
     // @ts-ignore
     const enTranslation = LanguageToBookWithAbbreviationsDict?.get('en')[i];
-    const { fullName, verses, name } = enTranslation;
+    const { fullName, verses, name, startNumber } = enTranslation;
 
     const book: BookWithAbbreviations = {
       name, // this is the name of the book in English
       fullName, // this is the full name of the book in English
       verses,
+      // Preserve startNumber so the cross-language ordinal fallback can match
+      // localized numbered books (e.g. "1 Könige", "2 Corintios"); without it,
+      // numbered books only resolved through the per-translation lookup.
+      startNumber,
       abbreviations: [] as string[], // this will be the list of abbreviations and names for the book in all languages
     };
 
