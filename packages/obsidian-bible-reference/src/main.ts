@@ -91,9 +91,13 @@ export default class BibleReferencePlugin extends Plugin {
    * cache together, so no saveSettings() call can clobber the cache blob.
    */
   private async persistData(): Promise<void> {
+    const blob = verseCache.serialize()
+    console.debug(
+      `[verseCache] persistData -> saveData translations=[${Object.keys(blob.translations)}]`
+    )
     await this.saveData({
       ...this.settings,
-      verseCache: verseCache.serialize(),
+      verseCache: blob,
     })
   }
 

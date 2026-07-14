@@ -113,11 +113,15 @@ export abstract class BaseBibleAPIProvider {
       missing = gap
     }
 
-    // Fetch only the gap (whole chapter for BollyLife-style providers).
+    // Fetch the gap. Whole chapter for BollyLife-style providers. On a partial
+    // hit fetch only the still-missing verses; on a full miss keep the caller's
+    // compact range (e.g. [1,51] -> "1-51", not the expanded "1&2&...&51").
+    const partialHit =
+      !!missing?.length && !!requested && missing.length < requested.length
     const fetchVerses = this.fetchesWholeChapter
       ? [1, 999]
-      : missing?.length
-        ? missing
+      : partialHit
+        ? missing!
         : verse
     const fetchUrl = this.buildRequestURL(
       bookName,

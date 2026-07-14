@@ -48,6 +48,9 @@ class VerseCache {
         missing.push(verseNumber)
       }
     }
+    console.debug(
+      `[verseCache] getVerses ${translationKey} ${chapterKeyOf(bookName, chapter)} req=[${verseNumbers}] hits=[${hits.map((h) => h.verse)}] missing=[${missing}]`
+    )
     return { hits, missing }
   }
 
@@ -62,6 +65,9 @@ class VerseCache {
     verses: IVerse[]
   ): void {
     if (!verses?.length) {
+      console.debug(
+        `[verseCache] putVerses SKIP (empty) ${translationKey} ${chapterKeyOf(bookName, chapter)}`
+      )
       return
     }
     const key = chapterKeyOf(bookName, chapter)
@@ -70,6 +76,9 @@ class VerseCache {
     for (const verse of verses) {
       chapterData[verse.verse] = verse
     }
+    console.debug(
+      `[verseCache] putVerses ${translationKey} ${key} stored=[${verses.map((v) => v.verse)}]`
+    )
     this.markDirty()
   }
 
@@ -77,6 +86,11 @@ class VerseCache {
     const blob = serialized as SerializedVerseCache | undefined
     if (blob?.version === SCHEMA_VERSION && blob.translations) {
       this.data = blob.translations
+      console.debug(
+        `[verseCache] hydrate loaded translations=[${Object.keys(this.data)}]`
+      )
+    } else {
+      console.debug('[verseCache] hydrate empty (no/incompatible blob)')
     }
   }
 
@@ -98,6 +112,7 @@ class VerseCache {
     }
     if (this.dirty) {
       this.dirty = false
+      console.debug('[verseCache] flushNow (onunload) -> persist()')
       this.persist?.()
     }
   }
@@ -122,6 +137,7 @@ class VerseCache {
       this.flushTimer = null
       if (this.dirty) {
         this.dirty = false
+        console.debug('[verseCache] flush -> persist()')
         this.persist?.()
       }
     }, FLUSH_DELAY_MS)

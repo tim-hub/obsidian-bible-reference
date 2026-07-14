@@ -125,8 +125,6 @@ This repository is a [Bun](https://bun.sh) workspace monorepo. The repository ro
 - [`bible-reference-toolkit`](packages/bible-reference-toolkit/README.md) — Normalize Bible references, convert them to machine-readable formats, query and manipulate them.
 - [`bible-book-names-intl`](packages/bible-book-names-intl/README.md) — Bible book names in multiple languages (the source used to resolve non-English book names).
 
-The plugin consumes `bible-reference-toolkit` locally via the workspace (`workspace:*`). The two toolkit packages are also published on npm and were merged in from [Antioch-Tech/bible-reference-toolkit](https://github.com/Antioch-Tech/bible-reference-toolkit) with their full commit history preserved.
-
 ### Development
 
 ```bash
