@@ -9,6 +9,11 @@ main.js
 
 # obsidian
 data.json
+
+# local env (Bun auto-loads .env; holds OUT_DIR for hot-dev)
+.env
+.env.local
+.env.*.local
 /coverage/lcov-report/
 /coverage/
 
@@ -17,9 +22,9 @@ data.json
 .eslintignore
 .stignore
 /dist/
+packages/*/dist/
 
 #pnpm
-pnpm-workspace.yaml
 .claude/sessions
 .claude/stats
 .claude/settings.local.json
@@ -44,3 +49,4 @@ pnpm-workspace.yaml
 # ---- Harness managed end ----
 .pytest_cache/
 .idea/
+.vscode/

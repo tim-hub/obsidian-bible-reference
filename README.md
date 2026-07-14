@@ -27,6 +27,8 @@
 2. In a note, for example type `--John1:1`
 3. Select the suggestion
 
+> Type `--John1:a` to insert **all verses in a chapter** (`a` = the whole chapter).
+
 You can also get a "verse of the day" by typing `--vod`.
 
 Polish translations are available as well, including **UBG** (Uwspółcześniona Biblia Gdańska) and **BG** (Biblia gdańska).
@@ -114,3 +116,21 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 - [Bible Vector Search](https://bible-search.antioch.tech/) To search Bible verses in meaning not in keywords.
   This is another open source project I built recently to implement AI Embedding and Vector Search for Bible verses (in BBE translation).
+
+## Packages in this Monorepo
+
+This repository is a [Bun](https://bun.sh) workspace monorepo. The repository root doubles as the installable Obsidian plugin folder (`manifest.json`, `versions.json`, `styles.css`, and the built `main.js` live at the root), while all source lives under [`packages/`](packages/):
+
+- [`obsidian-bible-reference`](packages/obsidian-bible-reference) — the Obsidian plugin source (this README documents it). Its build emits `main.js` to the repository root.
+- [`bible-reference-toolkit`](packages/bible-reference-toolkit/README.md) — Normalize Bible references, convert them to machine-readable formats, query and manipulate them.
+- [`bible-book-names-intl`](packages/bible-book-names-intl/README.md) — Bible book names in multiple languages (the source used to resolve non-English book names).
+
+### Development
+
+```bash
+bun install          # install all workspace deps
+bun run build        # build the plugin (main.js -> repo root)
+bun run dev          # watch build
+bun test             # run all package tests
+bun run lint         # lint the plugin package
+```

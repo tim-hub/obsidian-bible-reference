@@ -1,0 +1,3 @@
+[test]
+# Runs before any test file is imported so the `obsidian` module is mocked in time.
+preload = ["./packages/obsidian-bible-reference/test/setup.ts"]

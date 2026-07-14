@@ -1,0 +1,42 @@
+{
+  "name": "bible-book-names-intl",
+  "version": "26.2.4",
+  "description": "Bible Book Names in Multiple Languages",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tim-hub/bible-reference-toolkit"
+  },
+  "files": [
+    "dist"
+  ],
+  "author": "@tim-hub",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tim-hub/bible-reference-toolkit/issues"
+  },
+  "homepage": "https://github.com/tim-hub/bible-reference-toolkit",
+  "keywords": [
+    "bible",
+    "biblejs",
+    "bible books",
+    "bible books reference",
+    "bible reference toolkit"
+  ],
+  "main": "dist/index.js",
+  "devDependencies": {
+    "bun-types": "^1.0.1",
+    "prettier": "^3.0.3",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.2.2"
+  },
+  "scripts": {
+    "build": "rimraf dist && tsc",
+    "start": "bun run src/index.ts",
+    "test": "bun test src/**/*.test.ts ",
+    "prettier": "prettier . --check",
+    "prettier:fix": "prettier . --write"
+  },
+  "dependencies": {
+    "@types/jest": "^29.5.13"
+  }
+}

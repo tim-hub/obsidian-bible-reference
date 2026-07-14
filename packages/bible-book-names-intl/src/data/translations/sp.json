@@ -1,0 +1,333 @@
+{
+  "language": "sp",
+  "1": {
+    "name": "Génesis",
+    "shortNames": ["Gen", "Gn"],
+    "startNumber": 0
+  },
+  "2": {
+    "name": "Éxodo",
+    "shortNames": ["Exo", "Ex"],
+    "startNumber": 0
+  },
+  "3": {
+    "name": "Levítico",
+    "shortNames": ["Lev", "Lv"],
+    "startNumber": 0
+  },
+  "4": {
+    "name": "Números",
+    "shortNames": ["Num", "Nm"],
+    "startNumber": 0
+  },
+  "5": {
+    "name": "Deuteronomio",
+    "shortNames": ["Deu", "Dt"],
+    "startNumber": 0
+  },
+  "6": {
+    "name": "Josué",
+    "shortNames": ["Jos"],
+    "startNumber": 0
+  },
+  "7": {
+    "name": "Jueces",
+    "shortNames": ["Jue"],
+    "startNumber": 0
+  },
+  "8": {
+    "name": "Rut",
+    "shortNames": ["Rt"],
+    "startNumber": 0
+  },
+  "9": {
+    "name": "Samuel",
+    "shortNames": ["Sam", "S"],
+    "startNumber": 1
+  },
+  "10": {
+    "name": "Samuel",
+    "shortNames": ["Sam", "S"],
+    "startNumber": 2
+  },
+  "11": {
+    "name": "Reyes",
+    "shortNames": ["Rey", "Re", "R"],
+    "startNumber": 1
+  },
+  "12": {
+    "name": "Reyes",
+    "shortNames": ["Rey", "Re", "R"],
+    "startNumber": 2
+  },
+  "13": {
+    "name": "Crónicas",
+    "shortNames": ["Cro", "Cr"],
+    "startNumber": 1
+  },
+  "14": {
+    "name": "Crónicas",
+    "shortNames": ["Cro", "Cr"],
+    "startNumber": 2
+  },
+  "15": {
+    "name": "Esdras",
+    "shortNames": ["Esd"],
+    "startNumber": 0
+  },
+  "16": {
+    "name": "Nehemías",
+    "shortNames": ["Neh"],
+    "startNumber": 0
+  },
+  "17": {
+    "name": "Ester",
+    "shortNames": ["Est"],
+    "startNumber": 0
+  },
+  "18": {
+    "name": "Job",
+    "shortNames": [],
+    "startNumber": 0
+  },
+  "19": {
+    "name": "Salmos",
+    "shortNames": ["Sal"],
+    "startNumber": 0
+  },
+  "20": {
+    "name": "Proverbios",
+    "shortNames": ["Pro", "Pr"],
+    "startNumber": 0
+  },
+  "21": {
+    "name": "Eclesiastés",
+    "shortNames": ["Ecl", "Ec"],
+    "startNumber": 0
+  },
+  "22": {
+    "name": "Cantar de los Cantares",
+    "shortNames": ["Can", "Cantares", "Cnt"],
+    "startNumber": 0
+  },
+  "23": {
+    "name": "Isaías",
+    "shortNames": ["Isa", "Is"],
+    "startNumber": 0
+  },
+  "24": {
+    "name": "Jeremías",
+    "shortNames": ["Jer", "Jr"],
+    "startNumber": 0
+  },
+  "25": {
+    "name": "Lamentaciones",
+    "shortNames": ["Lam", "Lm"],
+    "startNumber": 0
+  },
+  "26": {
+    "name": "Ezequiel",
+    "shortNames": ["Eze", "Ez"],
+    "startNumber": 0
+  },
+  "27": {
+    "name": "Daniel",
+    "shortNames": ["Dan", "Dn"],
+    "startNumber": 0
+  },
+  "28": {
+    "name": "Oseas",
+    "shortNames": ["Ose", "Os"],
+    "startNumber": 0
+  },
+  "29": {
+    "name": "Joel",
+    "shortNames": ["Joe", "Jl"],
+    "startNumber": 0
+  },
+  "30": {
+    "name": "Amós",
+    "shortNames": ["Amo", "Am"],
+    "startNumber": 0
+  },
+  "31": {
+    "name": "Abdías",
+    "shortNames": ["Abd"],
+    "startNumber": 0
+  },
+  "32": {
+    "name": "Jonás",
+    "shortNames": ["Jon"],
+    "startNumber": 0
+  },
+  "33": {
+    "name": "Miqueas",
+    "shortNames": ["Miq", "Mi"],
+    "startNumber": 0
+  },
+  "34": {
+    "name": "Nahúm",
+    "shortNames": ["Nah"],
+    "startNumber": 0
+  },
+  "35": {
+    "name": "Habacuc",
+    "shortNames": ["Hab"],
+    "startNumber": 0
+  },
+  "36": {
+    "name": "Sofonías",
+    "shortNames": ["Sof"],
+    "startNumber": 0
+  },
+  "37": {
+    "name": "Hageo",
+    "shortNames": ["Hag"],
+    "startNumber": 0
+  },
+  "38": {
+    "name": "Zaccarías",
+    "shortNames": ["Zac"],
+    "startNumber": 0
+  },
+  "39": {
+    "name": "Malaquías",
+    "shortNames": ["Mal"],
+    "startNumber": 0
+  },
+  "40": {
+    "name": "Mateo",
+    "shortNames": ["Mat", "Mt"],
+    "startNumber": 0
+  },
+  "41": {
+    "name": "Marcos",
+    "shortNames": ["Mar", "Mr"],
+    "startNumber": 0
+  },
+  "42": {
+    "name": "Lucas",
+    "shortNames": ["Luc", "Lc"],
+    "startNumber": 0
+  },
+  "43": {
+    "name": "Juan",
+    "shortNames": ["Jua", "Jn"],
+    "startNumber": 0
+  },
+  "44": {
+    "name": "Hechos de los Apóstoles",
+    "shortNames": ["Hch"],
+    "startNumber": 0
+  },
+  "45": {
+    "name": "Romanos",
+    "shortNames": ["Rom", "Ro"],
+    "startNumber": 0
+  },
+  "46": {
+    "name": "Corintios",
+    "shortNames": ["Cor", "Co"],
+    "startNumber": 1
+  },
+  "47": {
+    "name": "Corintios",
+    "shortNames": ["Cor", "Co"],
+    "startNumber": 2
+  },
+  "48": {
+    "name": "Gálatas",
+    "shortNames": ["Gal", "Ga"],
+    "startNumber": 0
+  },
+  "49": {
+    "name": "Efesios",
+    "shortNames": ["Efe", "Ef"],
+    "startNumber": 0
+  },
+  "50": {
+    "name": "Filipenses",
+    "shortNames": ["Fil"],
+    "startNumber": 0
+  },
+  "51": {
+    "name": "Colosenses",
+    "shortNames": ["Col"],
+    "startNumber": 0
+  },
+  "52": {
+    "name": "Tesalonicenses",
+    "shortNames": ["Tes", "Ts"],
+    "startNumber": 1
+  },
+  "53": {
+    "name": "Tesalonicenses",
+    "shortNames": ["Tes", "Ts"],
+    "startNumber": 2
+  },
+  "54": {
+    "name": "Timoteo",
+    "shortNames": ["Tim", "Ti"],
+    "startNumber": 1
+  },
+  "55": {
+    "name": "Timoteo",
+    "shortNames": ["Tim", "Ti"],
+    "startNumber": 2
+  },
+  "56": {
+    "name": "Tito",
+    "shortNames": ["Tit"],
+    "startNumber": 0
+  },
+  "57": {
+    "name": "Filemón",
+    "shortNames": ["Flm"],
+    "startNumber": 0
+  },
+  "58": {
+    "name": "Hebreos",
+    "shortNames": ["Heb", "He"],
+    "startNumber": 0
+  },
+  "59": {
+    "name": "Santiago",
+    "shortNames": ["Stg"],
+    "startNumber": 0
+  },
+  "60": {
+    "name": "Pedro",
+    "shortNames": ["Pe", "P"],
+    "startNumber": 1
+  },
+  "61": {
+    "name": "Pedro",
+    "shortNames": ["Pe", "P"],
+    "startNumber": 2
+  },
+  "62": {
+    "name": "Juan",
+    "shortNames": ["Jua", "Jn"],
+    "startNumber": 1
+  },
+  "63": {
+    "name": "Juan",
+    "shortNames": ["Jua", "Jn"],
+    "startNumber": 2
+  },
+  "64": {
+    "name": "Juan",
+    "shortNames": ["Jua", "Jn"],
+    "startNumber": 3
+  },
+  "65": {
+    "name": "Judas",
+    "shortNames": ["Jud"],
+    "startNumber": 0
+  },
+  "66": {
+    "name": "Apocalipsis",
+    "shortNames": ["Apo", "Rev", "Ap"],
+    "startNumber": 0
+  }
+}
