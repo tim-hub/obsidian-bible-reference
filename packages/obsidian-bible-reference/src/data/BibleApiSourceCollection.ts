@@ -12,4 +12,8 @@ export const BibleAPISourceCollection = {
     name: 'Bible SuperSearch',
     apiUrl: 'https://api.biblesupersearch.com',
   },
+  offline: {
+    name: 'Offline',
+    apiUrl: '',
+  },
 }

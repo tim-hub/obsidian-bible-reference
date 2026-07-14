@@ -4,6 +4,7 @@ import { BaseBibleAPIProvider } from './BaseBibleAPIProvider'
 import { BibleAPISourceCollection } from '../data/BibleApiSourceCollection'
 import { BollyLifeProvider } from './BollyLifeProvider'
 import { BibleSuperSearchProvider } from './BibleSuperSearchProvider'
+import { OfflineProvider } from './OfflineProvider'
 
 /**
  * Build the Bible API provider for the given Bible version.
@@ -17,6 +18,8 @@ export const buildProvider = (
       return new BollyLifeProvider(bibleVersion)
     case BibleAPISourceCollection.bibleSuperSearch:
       return new BibleSuperSearchProvider(bibleVersion)
+    case BibleAPISourceCollection.offline:
+      return new OfflineProvider(bibleVersion)
     case BibleAPISourceCollection.bibleApi:
     default:
       return new BibleAPIDotComProvider(bibleVersion)

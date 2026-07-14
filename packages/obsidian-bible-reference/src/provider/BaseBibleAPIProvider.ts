@@ -2,6 +2,7 @@ import { IVerse } from '../interfaces/IVerse'
 import { Notice } from 'obsidian'
 import { IBibleVersion } from '../interfaces/IBibleVersion'
 import { verseCache, expandRequestedVerses } from './verseCache'
+import { offlineLookup } from './offlineBible'
 
 export abstract class BaseBibleAPIProvider {
   protected _versionKey: string // the version selected, for example kjv
@@ -166,6 +167,13 @@ export abstract class BaseBibleAPIProvider {
       this._currentQueryUrl = referenceUrl
       this.updateOriginalReferenceUrl()
       console.error('error while querying', e)
+      // Graceful degrade: fall back to the bundled WEB text for this lookup.
+      // Not written to verseCache, so the selected version's cache stays clean.
+      const offline = offlineLookup(bookName, chapter, verse)
+      if (offline.length) {
+        console.debug('falling back to bundled offline WEB verses')
+        return offline
+      }
       new Notice(`Error while querying ${fetchUrl}`)
       return await Promise.reject(e)
     }

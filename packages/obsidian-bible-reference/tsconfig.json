@@ -11,6 +11,7 @@
     "importHelpers": true,
     "isolatedModules": true,
     "esModuleInterop": true,
+    "resolveJsonModule": true,
     "strictNullChecks": true,
     "lib": [
       "DOM",

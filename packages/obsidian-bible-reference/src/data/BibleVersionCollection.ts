@@ -6,7 +6,15 @@ import { BibleAPISourceCollection } from './BibleApiSourceCollection'
  * the key cannot start with a number, at least 3 characters long
  */
 export const DEFAULT_BIBLE_VERSION_KEY = 'bbe'
+export const OFFLINE_VERSION_KEY = 'web-offline'
 export const BibleVersionCollectionEnglish = [
+  {
+    key: OFFLINE_VERSION_KEY,
+    versionName: 'World English Bible',
+    language: 'English',
+    code: 'en',
+    apiSource: BibleAPISourceCollection.offline,
+  },
   {
     key: 'amp',
     versionName: 'Amplified Bible',

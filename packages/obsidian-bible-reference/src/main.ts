@@ -14,7 +14,10 @@ import { VerseOfDayModal } from './suggesetor/VerseOfDayModal'
 import { getEnhancedVod } from './provider/verseOfDayApi'
 import { splitBibleReference } from './utils/splitBibleReference'
 import { VerseOfDaySuggesting } from './verse/VerseOfDaySuggesting'
-import { getBibleVersion } from './data/BibleVersionCollection'
+import {
+  getBibleVersion,
+  OFFLINE_VERSION_KEY,
+} from './data/BibleVersionCollection'
 import { pluginEvent } from './obsidian/PluginEvent'
 import { BibleReferenceAPI } from './api/PluginAPI'
 import { verseCache } from './provider/verseCache'
@@ -79,6 +82,11 @@ export default class BibleReferencePlugin extends Plugin {
       unknown
     >
     this.settings = Object.assign({}, DEFAULT_SETTINGS, settingsData)
+    // Offline Mode forces the bundled WEB version; defaultBibleVersion is left
+    // intact so turning Offline Mode off restores the user's prior version.
+    if (this.settings.offlineMode) {
+      this.settings.bibleVersion = OFFLINE_VERSION_KEY
+    }
     verseCache.setPersist(() => {
       void this.persistData()
     })

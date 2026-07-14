@@ -32,6 +32,7 @@ export enum BookNameLanguageEnum {
 export interface BibleReferencePluginSettings {
   bibleVersion: string // the tmp version selected at editor
   defaultBibleVersion: string
+  offlineMode?: boolean // force bundled offline Bible, no network
   referenceLinkPosition?: BibleVerseReferenceLinkPosition
   verseFormatting?: BibleVerseFormat
   verseNumberFormatting?: BibleVerseNumberFormat
@@ -70,6 +71,7 @@ export interface BibleReferencePluginSettings {
 export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
   bibleVersion: DEFAULT_BIBLE_VERSION.key,
   defaultBibleVersion: DEFAULT_BIBLE_VERSION.key,
+  offlineMode: false,
   referenceLinkPosition: BibleVerseReferenceLinkPosition.Header,
   verseFormatting: BibleVerseFormat.SingleLine,
   verseNumberFormatting: BibleVerseNumberFormat.Period,

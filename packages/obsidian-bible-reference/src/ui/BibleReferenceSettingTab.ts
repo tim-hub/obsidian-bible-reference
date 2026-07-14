@@ -11,6 +11,7 @@ import {
   DEFAULT_BIBLE_VERSION,
   getBibleVersion,
   LOGOS_SUPPORTED_TRANSLATIONS,
+  OFFLINE_VERSION_KEY,
 } from '../data/BibleVersionCollection'
 import { IBibleVersion } from '../interfaces/IBibleVersion'
 import {
@@ -350,12 +351,14 @@ Obsidian Bible Reference  is proudly powered by
       .setDesc('Choose the Bible version you prefer')
       .addDropdown((dropdown) => {
         allAvailableVersionOptions.forEach((version: IBibleVersion) => {
+          const offlineSuffix =
+            version.key === OFFLINE_VERSION_KEY ? ' (Offline)' : ''
           dropdown.addOption(
             version.key,
             escapeHtml(
               `${version.language} - (${version.key.toUpperCase()}) - ${
                 version.versionName
-              } @${version.apiSource.name}`
+              } @${version.apiSource.name}${offlineSuffix}`
             )
           )
         })
@@ -371,6 +374,27 @@ Obsidian Bible Reference  is proudly powered by
             new Notice(`Bible Reference - use Version ${value.toUpperCase()}`)
           })
       })
+
+    new Setting(this.containerEl)
+      .setName('Offline Mode')
+      .setDesc(
+        'Use the bundled World English Bible with no network. Verses always resolve offline.'
+      )
+      .addToggle((toggle) =>
+        toggle
+          .setValue(!!this.plugin.settings?.offlineMode)
+          .onChange(async (value) => {
+            this.plugin.settings.offlineMode = value
+            this.plugin.settings.bibleVersion = value
+              ? OFFLINE_VERSION_KEY
+              : this.plugin.settings.defaultBibleVersion
+            await this.plugin.saveSettings()
+            pluginEvent.trigger('bible-reference:settings:version', [
+              this.plugin.settings.bibleVersion,
+            ])
+            await this.display()
+          })
+      )
 
     this.bookNameLanguageSetting = new Setting(this.containerEl)
       .setName('Book Name Language')
