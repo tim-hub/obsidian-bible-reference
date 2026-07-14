@@ -7,7 +7,11 @@ import {
   TFile,
 } from 'obsidian'
 import BibleReferencePlugin from '../main'
-import { verseMatch, matchTriggerPrefix } from '../utils/verseMatch'
+import {
+  verseMatch,
+  matchTriggerPrefix,
+  hasExplicitVerse,
+} from '../utils/verseMatch'
 import { VerseSuggesting } from '../verse/VerseSuggesting'
 import { BibleReferencePluginSettings } from '../data/constants'
 import { getSuggestionsFromQuery } from '../utils/getSuggestionsFromQuery'
@@ -84,6 +88,10 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
       // so that version persists across subsequent lookups (including those from the
       // quick-translation hotkey). When no version is specified, the fallback to
       // settings.bibleVersion happens in getSuggestionsFromQuery.
+
+      if (!hasExplicitVerse(bookVerseQuery)) {
+        return null // bare chapter is a transient typing state; wait for ":<verse>" or ":a"
+      }
 
       console.debug('trigger on', queryContent)
       return {

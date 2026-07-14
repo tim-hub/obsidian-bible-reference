@@ -27,6 +27,8 @@
 2. In a note, for example type `--John1:1`
 3. Select the suggestion
 
+> Type `--John1:a` to insert **all verses in a chapter** (`a` = the whole chapter).
+
 You can also get a "verse of the day" by typing `--vod`.
 
 Polish translations are available as well, including **UBG** (Uwspółcześniona Biblia Gdańska) and **BG** (Biblia gdańska).

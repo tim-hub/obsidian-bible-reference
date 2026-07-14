@@ -1,5 +1,5 @@
 import { MarkdownView, SuggestModal } from 'obsidian'
-import { verseMatch } from '../utils/verseMatch'
+import { verseMatch, hasExplicitVerse } from '../utils/verseMatch'
 import { BibleReferencePluginSettings } from '../data/constants'
 import { VerseSuggesting } from '../verse/VerseSuggesting'
 import { getSuggestionsFromQuery } from '../utils/getSuggestionsFromQuery'
@@ -15,7 +15,11 @@ export class VerseLookupSuggestModal extends SuggestModal<VerseSuggesting> {
     super(plugin.app)
     this.settings = settings
     this.setInstructions([
-      { command: '', purpose: 'Select verses to insert, ex: John1:1-3' },
+      {
+        command: '',
+        purpose:
+          'Select verses to insert, ex: John1:1-3  ·  John1:a for a whole chapter',
+      },
     ])
   }
 
@@ -25,6 +29,9 @@ export class VerseLookupSuggestModal extends SuggestModal<VerseSuggesting> {
 
   async getSuggestions(query: string): Promise<VerseSuggesting[]> {
     const match = verseMatch(query)
+    if (!hasExplicitVerse(query)) {
+      return []
+    }
     if (match) {
       console.debug('trigger on', query)
       return getSuggestionsFromQuery(`${query}`, this.settings)
