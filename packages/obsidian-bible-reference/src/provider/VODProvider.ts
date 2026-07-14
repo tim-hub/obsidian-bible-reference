@@ -1,4 +1,4 @@
-import { ProviderFactory } from './ProviderFactory'
+import { buildProvider } from './buildProvider'
 import { splitBibleReference } from '../utils/splitBibleReference'
 import { getBibleVersion } from '../data/BibleVersionCollection'
 import { IVerse } from '../interfaces/IVerse'
@@ -53,10 +53,7 @@ export const getEnhancedVod = async (
       return vodResponse
     }
 
-    const provider =
-      ProviderFactory.Instance.BuildBibleVersionAPIAdapterFromIBibleVersion(
-        userBibleVersion
-      )
+    const provider = buildProvider(userBibleVersion)
 
     const verses = parsedReference.verseNumberEnd
       ? [parsedReference.verseNumber, parsedReference.verseNumberEnd]

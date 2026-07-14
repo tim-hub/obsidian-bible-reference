@@ -5,7 +5,7 @@ import {
 } from '../data/constants'
 import { getBibleVersion } from '../data/BibleVersionCollection'
 import { IVerse } from '../interfaces/IVerse'
-import { ProviderFactory } from '../provider/ProviderFactory'
+import { buildProvider } from '../provider/buildProvider'
 import { BaseBibleAPIProvider } from '../provider/BaseBibleAPIProvider'
 import { BaseVerseFormatter } from './BaseVerseFormatter'
 import { IVerseSuggesting } from './IVerseSuggesting'
@@ -123,10 +123,7 @@ export class VerseSuggesting
       this.bibleProvider.BibleVersionKey !== bibleVersion?.key
     ) {
       // make sure this is only 1 adapter, and it is the same bible version
-      this.bibleProvider =
-        ProviderFactory.Instance.BuildBibleVersionAPIAdapterFromIBibleVersion(
-          bibleVersion
-        )
+      this.bibleProvider = buildProvider(bibleVersion)
     }
 
     const allVerses: IVerse[] = []
@@ -331,10 +328,7 @@ export class VerseSuggesting
         if (!this.bibleProvider) {
           const bibleVersion = getBibleVersion(this.bibleVersion)
           if (bibleVersion) {
-            this.bibleProvider =
-              ProviderFactory.Instance.BuildBibleVersionAPIAdapterFromIBibleVersion(
-                bibleVersion
-              )
+            this.bibleProvider = buildProvider(bibleVersion)
           }
         }
         const originalUrl =
