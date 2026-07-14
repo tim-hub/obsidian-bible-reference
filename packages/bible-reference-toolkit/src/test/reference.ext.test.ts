@@ -57,3 +57,20 @@ describe('Reference Original Test in Other Languages', () => {
     expect(Reference.bookNameFromTranslationAndId('sp', 62)).toBe('1 Juan');
   });
 });
+
+// Regression: localized numbered books must resolve through the cross-language
+// bookIdFromName fallback, not only per-translation lookup. The provider maps a
+// localized name to English via this path, so failure here dropped the verse
+// text (issues #355, #342).
+describe('Cross-language numbered book resolution (bookIdFromName)', () => {
+  test.each([
+    ['1 Könige', 11],
+    ['1Könige', 11],
+    ['1 Reyes', 11],
+    ['2 Corintios', 47],
+    ['1 Corinthians', 46],
+    ['1 Kings', 11],
+  ])('resolves %s', (name, expectedId) => {
+    expect(Reference.bookIdFromName(name)).toBe(expectedId);
+  });
+});

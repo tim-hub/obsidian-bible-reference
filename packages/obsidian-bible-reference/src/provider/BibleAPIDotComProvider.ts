@@ -7,7 +7,7 @@ import { BaseBibleAPIProvider } from './BaseBibleAPIProvider'
  * const translationKeysFromBibleAPIDotCom: string[] = allBibleVersionsWithLanguageNameAlphabetically.filter(
  *     (version) => version.apiSource.name === 'Bible API'
  *   ).map((version) => version.key)
- * ['cherokee', 'bbe', 'kjv', 'oeb-us', 'web', 'oeb-cw', 'webbe', 'clementine', 'almeida', 'rccv']
+ * ['cherokee', 'bbe', 'kjv', 'oeb-us', 'web', 'oeb-cw', 'webbe', 'almeida', 'rccv']
  */
 
 // const bibleGatewaySupportedTranslations = [
