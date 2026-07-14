@@ -8,7 +8,6 @@ import { IVerse } from '../interfaces/IVerse'
 import { buildProvider } from '../provider/buildProvider'
 import { BaseBibleAPIProvider } from '../provider/BaseBibleAPIProvider'
 import { BaseVerseFormatter } from './BaseVerseFormatter'
-import { IVerseSuggesting } from './IVerseSuggesting'
 import { getBLBUrl } from '../utils/referenceBLBAltLinking'
 import {
   getLogosUrl,
@@ -29,10 +28,7 @@ import { getFullBookName } from '../utils/bookNameReference'
  * Verse Suggesting
  * Pass Bible Book, Chapter, Verse Numbers to get Bible Content (verses)
  */
-export class VerseSuggesting
-  extends BaseVerseFormatter
-  implements IVerseSuggesting
-{
+export class VerseSuggesting extends BaseVerseFormatter {
   public bibleVersion: string
   private bibleProvider: BaseBibleAPIProvider
 

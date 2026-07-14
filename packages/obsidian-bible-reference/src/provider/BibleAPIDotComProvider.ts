@@ -51,21 +51,6 @@ export class BibleAPIDotComProvider extends BaseBibleAPIProvider {
   }
 
   /**
-   * todo reference need to switch trasnaltion key
-   *     /**
-   *      * BibleAPI.com is a pure API
-   *      * We used the Bible Gateway URL for the verse reference link
-   *
-   *     if (this._versionKey === 'webbe') {
-   *       //   replace bibleGatewayUrl webbe to web
-   *       return this.bibleGatewayUrl.replace('webbe', 'web')
-   *     }
-   */
-  public getOriginalVerseReferenceLink(): string {
-    return super.getOriginalVerseReferenceLink()
-  }
-
-  /**
    * Format response from Bible-Api.com
    * - reference
    * - text
