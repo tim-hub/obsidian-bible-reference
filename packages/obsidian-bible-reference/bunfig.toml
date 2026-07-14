@@ -1,0 +1,5 @@
+[test]
+# Runs before any test file is imported so the `obsidian` module is mocked in
+# time. Package-relative so `bun test` works when run from this package (e.g.
+# `bun run --filter obsidian-bible-reference test`), not only from the repo root.
+preload = ["./test/setup.ts"]
