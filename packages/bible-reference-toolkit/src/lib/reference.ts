@@ -33,8 +33,9 @@ export class Reference implements IReference {
       reference = reference.replace(/\./g, '');
       this.source = reference;
 
-      // Match up to last letter - thats the book. Everything else === the chapter/verse
-      const referenceParts = reference.match(/(.+[A-Za-z])\s+(.+)/);
+      // Match up to last letter - thats the book. Everything else === the chapter/verse.
+      // Anchored (^...$) to avoid super-linear backtracking (ReDoS) on long inputs.
+      const referenceParts = reference.match(/^(.+[A-Za-z])\s+(.+)$/);
 
       if (!referenceParts?.length || referenceParts?.length < 3) {
         throw new Error(
