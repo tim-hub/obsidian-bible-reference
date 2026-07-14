@@ -33,19 +33,25 @@ export class Reference implements IReference {
       reference = reference.replace(/\./g, '');
       this.source = reference;
 
-      // Match up to last letter - thats the book. Everything else === the chapter/verse.
-      // Anchored (^...$) and the separator (\s+) owns all whitespace while the
-      // chapter/verse group starts with a non-space (\S) so no two quantifiers
-      // overlap - avoids super-linear backtracking (ReDoS) on long inputs.
-      const referenceParts = reference.match(/^(.+[A-Za-z])\s+(\S.*)$/);
+      // Split at the last whitespace run that is preceded by a letter: everything
+      // before is the book, everything after is the chapter/verse. The matcher
+      // (a letter, then whitespace, then a non-space) has no overlapping
+      // quantifiers, so scanning stays linear - no ReDoS. (A single greedy regex
+      // like /(.+[A-Za-z])\s+(.+)/ backtracks polynomially on long input.)
+      const separator = /[A-Za-z]\s+(?=\S)/g;
+      let splitIndex = -1;
+      let match: RegExpExecArray | null;
+      while ((match = separator.exec(reference)) !== null) {
+        splitIndex = match.index + 1;
+      }
 
-      if (!referenceParts?.length || referenceParts?.length < 3) {
+      if (splitIndex === -1) {
         throw new Error(
           'You must supply a Bible reference, either a string (i.e. "Mark 2") or an object (i.e. { book: 1, chapter: 2, verse: 1 })'
         );
       }
-      const bookName = referenceParts[1];
-      const chapterAndVerse = referenceParts[2];
+      const bookName = reference.slice(0, splitIndex);
+      const chapterAndVerse = reference.slice(splitIndex).replace(/^\s+/, '');
 
       // Lookup the book
       book = Reference.bookIdFromName(bookName);
