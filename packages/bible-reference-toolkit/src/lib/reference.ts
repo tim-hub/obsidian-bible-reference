@@ -34,8 +34,10 @@ export class Reference implements IReference {
       this.source = reference;
 
       // Match up to last letter - thats the book. Everything else === the chapter/verse.
-      // Anchored (^...$) to avoid super-linear backtracking (ReDoS) on long inputs.
-      const referenceParts = reference.match(/^(.+[A-Za-z])\s+(.+)$/);
+      // Anchored (^...$) and the separator (\s+) owns all whitespace while the
+      // chapter/verse group starts with a non-space (\S) so no two quantifiers
+      // overlap - avoids super-linear backtracking (ReDoS) on long inputs.
+      const referenceParts = reference.match(/^(.+[A-Za-z])\s+(\S.*)$/);
 
       if (!referenceParts?.length || referenceParts?.length < 3) {
         throw new Error(
