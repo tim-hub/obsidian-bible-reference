@@ -4,19 +4,10 @@ export const getBookIdFromBookName = (
   bookName: string,
   languageCode: string = 'en'
 ): number => {
-  const normalized = bookName.trim().toLowerCase()
-  if (normalized === 'php') {
-    return 50
-  }
-  if (normalized === 'isa') {
-    return 23
-  }
   try {
-    console.debug('get book id first time', bookName, languageCode)
     return Reference.bookIdFromTranslationAndName(languageCode, bookName)
   } catch {
-    // try in slow but in all supported languages
-    console.debug('get book id from all translations', bookName)
+    // fall back to a slower search across all supported languages
     return Reference.bookIdFromName(bookName)
   }
 }

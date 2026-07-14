@@ -244,20 +244,39 @@ export class Reference implements IReference {
     name: string
   ): number {
     const lowerName = name.toLowerCase();
-    const relativeBooks = books.filter((book) => {
-      let bookNames = [book.name, ...book.abbreviations];
-      if (book?.startNumber && book.startNumber > 0) {
-        bookNames = generateOrdinalNameVariations(book.startNumber, bookNames);
-      } // todo instead of get all books from the lib, use the getfunction and map here to get all books
+
+    // Exact pass first: a real name/abbreviation must win over a generated
+    // ordinal variant. Otherwise e.g. "Isa" (Isaiah) loses to the "I"+"Sa"
+    // variant of 1 Samuel, which sorts earlier.
+    const exactMatch = books.find((book) => {
+      const exactNames =
+        book?.startNumber && book.startNumber > 0
+          ? [book.fullName] // numbered books resolve their bare names via the ordinal pass
+          : [book.fullName, book.name, ...book.abbreviations];
+      return exactNames.map((n) => n.toLowerCase()).indexOf(lowerName) > -1;
+    });
+    if (exactMatch) {
+      return books.indexOf(exactMatch) + 1;
+    }
+
+    // Fall back to ordinal variations for numbered books ("1 John", "I John"…).
+    const ordinalMatch = books.find((book) => {
+      if (!book?.startNumber || book.startNumber <= 0) {
+        return false;
+      }
       return (
-        [book.fullName, ...bookNames]
-          .map((name) => name.toLowerCase())
+        generateOrdinalNameVariations(book.startNumber, [
+          book.name,
+          ...book.abbreviations,
+        ])
+          .map((n) => n.toLowerCase())
           .indexOf(lowerName) > -1
       );
     });
-    if (relativeBooks?.length) {
-      return books.indexOf(relativeBooks[0]) + 1;
+    if (ordinalMatch) {
+      return books.indexOf(ordinalMatch) + 1;
     }
+
     const msg = `No book matched "${name}"`;
     console.error(msg);
     throw new Error(msg);
