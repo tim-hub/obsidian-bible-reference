@@ -8,7 +8,7 @@ describe('test book names', () => {
     expect(languageToBookWithAbbreviationsDict.has('de')).toBe(true);
     expect(languageToBookWithAbbreviationsDict.has('jp')).toBe(true);
     expect(languageToBookWithAbbreviationsDict.has('fr')).toBe(true);
-    expect(languageToBookWithAbbreviationsDict.has('zh_CN')).toBe(true);
+    expect(languageToBookWithAbbreviationsDict.has('zh_cn')).toBe(true);
   });
 
   const books = languageToBookWithAbbreviationsDict.get('en');

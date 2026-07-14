@@ -1,7 +1,7 @@
 import { IVerse } from '../interfaces/IVerse'
 import { IBibleVersion } from '../interfaces/IBibleVersion'
 import { BaseBibleAPIProvider } from './BaseBibleAPIProvider'
-import { getBookIdFromBookName } from '../utils/bookNameReference'
+import { bookIdForVersion } from '../utils/bookNameLocalization'
 
 export class BollyLifeProvider extends BaseBibleAPIProvider {
   //private _verseApiUrl: string; // we do not support get verse api yet, but the api supported it
@@ -27,7 +27,7 @@ export class BollyLifeProvider extends BaseBibleAPIProvider {
     versionName?: string
   ): string {
     const baseUrl = this._chapterApiUrl
-    const bookId = getBookIdFromBookName(bookName, this._bibleVersion.code)
+    const bookId = bookIdForVersion(bookName, this._bibleVersion)
     this._currentQueryUrl = `${baseUrl}/${versionName?.toUpperCase()}/${bookId}/${chapter}/`
     // if build bible gateway url here, the VerseLinkURL will be different
     return this._currentQueryUrl
