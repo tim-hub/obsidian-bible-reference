@@ -5,14 +5,12 @@ Quick starting guide for new plugin devs:
 
 - Make a copy of this repo as a template with the "Use this template" button (login to GitHub if you don't see it).
 - Clone your repo to a local development folder. For convenience, you can place this folder in your `.obsidian/plugins/your-plugin-name` folder.
-- Install NodeJS, then run `npm i` in the command line under your repo folder.
-- Run `npm run dev` to compile your plugin from `main.ts` to `main.js`.
-  - If you get an error related to `biblejs-name-converter`, go to that folder. If it is empty, clone `https://github.com/tim-hub/biblejs-name-converter` into that folder.
-  - Run `npm i` in that folder. 
+- Install NodeJS and bun, then run `bun install` and `bun build:packages` in the command line under your repo folder.
+- Run `bun run dev` to compile your plugin from `main.ts` to `main.js`.
 - Make changes to `main.ts` (or create new `.ts` files). Those changes should be automatically compiled into `main.js`.
 - Reload Obsidian to load the new version of your plugin.
 - Enable plugin in settings window.
-- For updates to the Obsidian API run `npm update` in the command line under your repo folder.
+- For updates to the Obsidian API run `bun update` in the command line under your repo folder.
 
 
 ### Adding your plugin to the community plugin list
@@ -24,8 +22,8 @@ Quick starting guide for new plugin devs:
 ### How to use
 
 - Clone this repo.
-- `npm i` or `yarn` to install dependencies
-- `npm run dev` to start compilation in watch mode.
+- `bun install` and `bun build:packages` to install and build dependencies
+- `bun run dev` to start compilation in watch mode.
 
 
 ### Manually installing the plugin
