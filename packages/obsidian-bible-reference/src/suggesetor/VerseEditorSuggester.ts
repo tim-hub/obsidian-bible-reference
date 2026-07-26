@@ -11,6 +11,7 @@ import {
   verseMatch,
   matchTriggerPrefix,
   hasExplicitVerse,
+  isIncompleteReference,
 } from '../utils/verseMatch'
 import { VerseSuggesting } from '../verse/VerseSuggesting'
 import { BibleReferencePluginSettings } from '../data/constants'
@@ -91,6 +92,10 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
 
       if (!hasExplicitVerse(bookVerseQuery)) {
         return null // bare chapter is a transient typing state; wait for ":<verse>" or ":a"
+      }
+
+      if (isIncompleteReference(bookVerseQuery)) {
+        return null // half-typed range like "John 3:16-"; wait for the end of it
       }
 
       console.debug('trigger on', queryContent)

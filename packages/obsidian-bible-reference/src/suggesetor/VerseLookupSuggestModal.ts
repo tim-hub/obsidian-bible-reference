@@ -1,5 +1,9 @@
 import { MarkdownView, SuggestModal } from 'obsidian'
-import { verseMatch, hasExplicitVerse } from '../utils/verseMatch'
+import {
+  verseMatch,
+  hasExplicitVerse,
+  isIncompleteReference,
+} from '../utils/verseMatch'
 import { BibleReferencePluginSettings } from '../data/constants'
 import { VerseSuggesting } from '../verse/VerseSuggesting'
 import { getSuggestionsFromQuery } from '../utils/getSuggestionsFromQuery'
@@ -29,7 +33,7 @@ export class VerseLookupSuggestModal extends SuggestModal<VerseSuggesting> {
 
   async getSuggestions(query: string): Promise<VerseSuggesting[]> {
     const match = verseMatch(query)
-    if (!hasExplicitVerse(query)) {
+    if (!hasExplicitVerse(query) || isIncompleteReference(query)) {
       return []
     }
     if (match) {

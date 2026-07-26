@@ -1,9 +1,9 @@
 import {
   getTranslationBooks,
   BookWithAbbreviations,
-} from 'bible-book-names-intl';
-import { generateOrdinalNameVariations } from './utils';
-import { AllBibleBooksInAllSupportedLanguages as AllBooks } from './books';
+} from "bible-book-names-intl";
+import { generateOrdinalNameVariations } from "./utils";
+import { AllBibleBooksInAllSupportedLanguages as AllBooks } from "./books";
 
 // Internally, no strings are stored - only numbers.
 //
@@ -28,9 +28,9 @@ export class Reference implements IReference {
     let verse;
 
     // If reference is a string
-    if (typeof reference === 'string') {
+    if (typeof reference === "string") {
       // Strip out any periods, usually used for abbreviations, i.e. Mk. 2
-      reference = reference.replace(/\./g, '');
+      reference = reference.replace(/\./g, "");
       this.source = reference;
 
       // Split at the last whitespace run that is preceded by a letter: everything
@@ -47,18 +47,18 @@ export class Reference implements IReference {
 
       if (splitIndex === -1) {
         throw new Error(
-          'You must supply a Bible reference, either a string (i.e. "Mark 2") or an object (i.e. { book: 1, chapter: 2, verse: 1 })'
+          'You must supply a Bible reference, either a string (i.e. "Mark 2") or an object (i.e. { book: 1, chapter: 2, verse: 1 })',
         );
       }
       const bookName = reference.slice(0, splitIndex);
-      const chapterAndVerse = reference.slice(splitIndex).replace(/^\s+/, '');
+      const chapterAndVerse = reference.slice(splitIndex).replace(/^\s+/, "");
 
       // Lookup the book
       book = Reference.bookIdFromName(bookName);
 
       // Split on ":" for chapter and verse. If it's a chapter reference
       // (e.g. John 1) then @verse === undefined
-      const chapterAndVerseParts = chapterAndVerse.split(':');
+      const chapterAndVerseParts = chapterAndVerse.split(":");
       chapter = Number(chapterAndVerseParts[0]);
       verse = chapterAndVerseParts[1]
         ? Number(chapterAndVerseParts[1])
@@ -75,7 +75,7 @@ export class Reference implements IReference {
       verse = reference?.verse;
     } else {
       throw new Error(
-        'You must supply a Bible reference, either a string (i.e. "Mark 2") or an object (i.e. { book: 1, chapter: 2, verse: 1 })'
+        'You must supply a Bible reference, either a string (i.e. "Mark 2") or an object (i.e. { book: 1, chapter: 2, verse: 1 })',
       );
     }
 
@@ -91,12 +91,12 @@ export class Reference implements IReference {
    */
   public static bookIdFromTranslationAndName(
     language: string,
-    nameInTranslation: string
+    nameInTranslation: string,
   ): number {
     const booksInTranslation = getTranslationBooks(language.toLowerCase());
     return Reference.getBookIdFromTranslationAndName(
       booksInTranslation,
-      nameInTranslation
+      nameInTranslation,
     );
   }
 
@@ -104,22 +104,22 @@ export class Reference implements IReference {
   public static bookIdFromName(nameInAnySupportedTranslation: string): number {
     return Reference.getBookIdFromTranslationAndName(
       AllBooks,
-      nameInAnySupportedTranslation
+      nameInAnySupportedTranslation,
     );
   }
 
   // Given a book id, get the full length book name
   public static bookEnglishFullNameFromId(id: number): string {
-    return Reference.bookNameFromTranslationAndId('en', id);
+    return Reference.bookNameFromTranslationAndId("en", id);
   }
 
   public static bookNameFromTranslationAndId(
     language: string,
-    id: number
+    id: number,
   ): string {
     const book = getTranslationBooks(language.toLowerCase())[id - 1];
     if (!book) {
-      throw new Error('Book id out of range (no such book)');
+      throw new Error("Book id out of range (no such book)");
     }
     return book.fullName;
   }
@@ -150,8 +150,8 @@ export class Reference implements IReference {
       bookIndex += 1;
     }
     throw new Error(
-      'There was a problem creating the a reference from chapter id ' +
-        chapterId
+      "There was a problem creating the a reference from chapter id " +
+        chapterId,
     );
   }
 
@@ -181,7 +181,7 @@ export class Reference implements IReference {
       bookIndex += 1;
     }
     throw new Error(
-      'There was a problem creating the a reference from verse id ' + verseId
+      "There was a problem creating the a reference from verse id " + verseId,
     );
   }
 
@@ -189,7 +189,7 @@ export class Reference implements IReference {
   public static versesInBookId(bookId: number): number {
     return AllBooks[bookId - 1].verses.reduce(function sum(
       a: number,
-      b: number
+      b: number,
     ) {
       return a + b;
     });
@@ -241,9 +241,17 @@ export class Reference implements IReference {
 
   private static getBookIdFromTranslationAndName(
     books: BookWithAbbreviations[],
-    name: string
+    name: string,
   ): number {
-    const lowerName = name.toLowerCase();
+    // Normalize the way the string constructor does (see above): drop the
+    // periods abbreviations are written with ("Eph." -> "Eph") and collapse
+    // whitespace runs, since the generated ordinal variants are single-spaced
+    // ("1 John"), so "1  Jn." would otherwise miss.
+    const lowerName = name
+      .replace(/\./g, "")
+      .replace(/\s+/g, " ")
+      .trim()
+      .toLowerCase();
 
     // Exact pass first: a real name/abbreviation must win over a generated
     // ordinal variant. Otherwise e.g. "Isa" (Isaiah) loses to the "I"+"Sa"
@@ -288,24 +296,24 @@ export class Reference implements IReference {
   }
 
   // go to start of given unit, will make change to this reference
-  public startOf(unit: 'chapter' | 'book', clone: Reference = this): Reference {
-    if (unit === 'chapter') {
+  public startOf(unit: "chapter" | "book", clone: Reference = this): Reference {
+    if (unit === "chapter") {
       clone.verse = 1;
-    } else if (unit === 'book') {
+    } else if (unit === "book") {
       clone.verse = 1;
       clone.chapter = 1;
     } else {
       throw new Error(
-        'Unknown unit ' +
+        "Unknown unit " +
           unit +
-          ' supplied to startOf() - supported units are: "book", "chapter"'
+          ' supplied to startOf() - supported units are: "book", "chapter"',
       );
     }
     return clone;
   }
 
   // Create a clone of this reference, and set it to the start of the given unit
-  public cloneToStartOf(unit: 'chapter' | 'book'): Reference {
+  public cloneToStartOf(unit: "chapter" | "book"): Reference {
     const clone = this.clone();
     return this.startOf(unit, clone);
   }
@@ -316,9 +324,9 @@ export class Reference implements IReference {
 
   public toString(): string {
     const bookName = AllBooks[this.book - 1].fullName;
-    let tmpString = bookName + ' ' + this.chapter;
+    let tmpString = bookName + " " + this.chapter;
     if (this.verse) {
-      tmpString += ':' + this.verse;
+      tmpString += ":" + this.verse;
     }
     return tmpString;
   }
