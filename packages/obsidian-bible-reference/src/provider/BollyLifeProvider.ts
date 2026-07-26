@@ -17,7 +17,9 @@ export class BollyLifeProvider extends BaseBibleAPIProvider {
   }
 
   public getOriginalVerseReferenceLink(): string {
-    return this._currentQueryUrl.replace('/get-text', '')
+    // _currentQueryUrl is only set by buildRequestURL during a fetch; link-only
+    // insertion never fetches, so '' lets the caller fall back to Bible Gateway.
+    return this._currentQueryUrl?.replace('/get-text', '') ?? ''
   }
 
   public buildRequestURL(

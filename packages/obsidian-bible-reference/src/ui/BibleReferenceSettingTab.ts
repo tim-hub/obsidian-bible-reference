@@ -89,6 +89,7 @@ export class BibleReferenceSettingTab extends PluginSettingTab {
     // 2 options for reference
     this.setUpShowVerseTranslationOptions()
     this.setUpHyperlinkingOptions()
+    this.setUpLinkOnlyOptions()
     this.setUpSourceOfReferenceOptions()
     this.setUpVerseFormatOptions()
     this.setUpVerseNumberFormatOptions()
@@ -570,23 +571,47 @@ Obsidian Bible Reference  is proudly powered by
     })
   }
 
+  private setUpLinkOnlyOptions(): void {
+    const setting = new Setting(this.containerEl)
+      .setName('Link Only')
+      .setDesc(
+        'Insert only a markdown link to the reference, without fetching the verse text (works offline).'
+      )
+    setting.setTooltip(
+      'For users who read passages in a dedicated Bible app. The Verse Of The Day is not affected.'
+    )
+    setting.addToggle((toggle) => {
+      toggle
+        .setValue(!!this.plugin.settings?.linkOnlyMode)
+        .onChange(async (value) => {
+          this.plugin.settings.linkOnlyMode = value
+          await this.plugin.saveSettings()
+          pluginEvent.trigger('bible-reference:settings:re-render', [])
+        })
+    })
+  }
+
   private setUpSourceOfReferenceOptions(): void {
     const setting = new Setting(this.containerEl)
       .setName('Reference Link Source')
       .setDesc(
-        'Choose the source for verse reference links: Original (API provider), Blue Letter Bible, Bible Gateway, Logos, or StepBible'
+        'Choose the source for verse reference links: Original (API provider), Blue Letter Bible, Bible Gateway, Literal Word, Logos, or StepBible'
       )
     setting.setTooltip(
-      'Select which service to use for generating verse reference links. This only applies when hyperlinking is enabled.'
+      'Select which service to use for generating verse reference links. This only applies when hyperlinking or Link Only is enabled.'
     )
     setting.addDropdown((dropdown: DropdownComponent) => {
       dropdown.addOption('original', 'Original (API Provider)')
       dropdown.addOption('blb', 'Blue Letter Bible (BLB)')
       dropdown.addOption('biblegateway', 'Bible Gateway')
+      dropdown.addOption('literalword', 'Literal Word')
       dropdown.addOption('logos', 'Logos')
       dropdown.addOption('stepbible', 'StepBible')
       dropdown.setValue(this.plugin.settings.sourceOfReference || 'original')
-      if (!this.plugin.settings?.enableHyperlinking) {
+      if (
+        !this.plugin.settings?.enableHyperlinking &&
+        !this.plugin.settings?.linkOnlyMode
+      ) {
         dropdown.setDisabled(true)
       }
       dropdown.onChange(async (value) => {
@@ -594,6 +619,7 @@ Obsidian Bible Reference  is proudly powered by
           | 'original'
           | 'blb'
           | 'biblegateway'
+          | 'literalword'
           | 'logos'
           | 'stepbible'
         this.updateLogosFallbackVisibility()

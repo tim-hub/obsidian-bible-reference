@@ -8,11 +8,14 @@ import { splitBibleReference } from './splitBibleReference'
  * Get suggestions from string query
  * @param queryWithoutPrefix without the prefix trigger
  * @param settings
+ * @param translation
+ * @param linkOnly skip the verse text fetch, the caller only needs a link
  */
 export const getSuggestionsFromQuery = async (
   queryWithoutPrefix: string,
   settings: BibleReferencePluginSettings,
-  translation?: string
+  translation?: string,
+  linkOnly = false
 ): Promise<VerseSuggesting[]> => {
   console.debug(
     'get suggestion for query ',
@@ -77,6 +80,8 @@ export const getSuggestionsFromQuery = async (
     suggestingVerse,
     settings
   )
-  await suggestingVerse.fetchAndSetVersesText()
+  if (!linkOnly) {
+    await suggestingVerse.fetchAndSetVersesText()
+  }
   return [suggestingVerse]
 }

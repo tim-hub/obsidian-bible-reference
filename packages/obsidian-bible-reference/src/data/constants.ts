@@ -42,6 +42,7 @@ export interface BibleReferencePluginSettings {
   collapsibleVerses?: boolean // this is binging to displayBibleIconPrefixAtHeader option
   collapsedByDefault?: boolean
   enableHyperlinking?: boolean
+  linkOnlyMode?: boolean // insert only a markdown link, never fetch the verse text
   showVerseTranslation?: boolean
   bookTagging?: boolean
   bookTaggingFormat: string
@@ -63,6 +64,7 @@ export interface BibleReferencePluginSettings {
     | 'original'
     | 'blb'
     | 'biblegateway'
+    | 'literalword'
     | 'logos'
     | 'stepbible'
   bookNameLanguage?: BookNameLanguageEnum
@@ -81,6 +83,7 @@ export const DEFAULT_SETTINGS: BibleReferencePluginSettings = {
   verseSegmentSeparatorFormat: BibleVerseSegmentSeparatorFormat.VerseSeparator,
   collapsibleVerses: false,
   enableHyperlinking: true,
+  linkOnlyMode: false,
   showVerseTranslation: true,
   bookTagging: false,
   bookTaggingFormat: '{{book}}',

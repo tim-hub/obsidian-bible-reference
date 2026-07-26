@@ -44,6 +44,7 @@ export default class BibleReferencePlugin extends Plugin {
 
     this.verseLookUpModal = new VerseLookupSuggestModal(this, this.settings)
     this.addVerseLookupCommand()
+    this.addVerseLinkCommand()
     this.addTranslationSwitchCommand()
     this.addRibbonButton()
 
@@ -144,6 +145,20 @@ export default class BibleReferencePlugin extends Plugin {
       name: 'Verse Lookup',
       callback: () => {
         this.verseLookUpModal.open()
+      },
+    })
+  }
+
+  /**
+   * Insert just a markdown link to the reference, regardless of the
+   * Link Only setting. Never fetches, so it works offline.
+   */
+  private addVerseLinkCommand(): void {
+    this.addCommand({
+      id: 'obr-insert-reference-link',
+      name: 'Insert Bible Reference Link (no verse text)',
+      callback: () => {
+        new VerseLookupSuggestModal(this, this.settings, true).open()
       },
     })
   }

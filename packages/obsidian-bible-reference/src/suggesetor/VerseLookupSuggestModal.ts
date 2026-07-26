@@ -14,17 +14,23 @@ export class VerseLookupSuggestModal extends SuggestModal<VerseSuggesting> {
 
   constructor(
     plugin: BibleReferencePlugin,
-    settings: BibleReferencePluginSettings
+    settings: BibleReferencePluginSettings,
+    private forceLinkOnly = false
   ) {
     super(plugin.app)
     this.settings = settings
     this.setInstructions([
       {
         command: '',
-        purpose:
-          'Select verses to insert, ex: John1:1-3  ·  John1:a for a whole chapter',
+        purpose: forceLinkOnly
+          ? 'Select a reference to insert as a link, ex: John1:1-3  ·  John1:a for a whole chapter'
+          : 'Select verses to insert, ex: John1:1-3  ·  John1:a for a whole chapter',
       },
     ])
+  }
+
+  private get isLinkOnly(): boolean {
+    return this.forceLinkOnly || !!this.settings?.linkOnlyMode
   }
 
   public onOpen() {
@@ -38,13 +44,18 @@ export class VerseLookupSuggestModal extends SuggestModal<VerseSuggesting> {
     }
     if (match) {
       console.debug('trigger on', query)
-      return getSuggestionsFromQuery(`${query}`, this.settings)
+      return getSuggestionsFromQuery(
+        `${query}`,
+        this.settings,
+        undefined,
+        this.isLinkOnly
+      )
     }
     return []
   }
 
   renderSuggestion(suggestion: VerseSuggesting, el: HTMLElement) {
-    suggestion.renderSuggestion(el)
+    suggestion.renderSuggestion(el, this.isLinkOnly)
   }
 
   onChooseSuggestion(item: VerseSuggesting, evt: MouseEvent | KeyboardEvent) {
@@ -52,6 +63,9 @@ export class VerseLookupSuggestModal extends SuggestModal<VerseSuggesting> {
     if (!editor) {
       return
     }
-    editor.replaceRange(item.allFormattedContent, editor.getCursor())
+    editor.replaceRange(
+      this.isLinkOnly ? item.linkOnlyContent : item.allFormattedContent,
+      editor.getCursor()
+    )
   }
 }
