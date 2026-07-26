@@ -1,5 +1,6 @@
 # Ignore artifacts:
 build
+dist
 coverage
 *.js
 *.mjs
@@ -13,10 +14,11 @@ tsconfig.json
 versions.json
 data.json
 manifest.json
-src/data/offlineBible.web.json
+**/src/data/offlineBible.web.json
 biblejs-name-converter/
-packages/
 .all-contributorsrc
+.npmrc
 .claude/
+.agents/
 Plans.md
 plans.json
