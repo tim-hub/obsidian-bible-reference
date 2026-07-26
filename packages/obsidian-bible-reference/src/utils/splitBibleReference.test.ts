@@ -3,6 +3,7 @@ import {
   isCrossChapterReference,
   splitIntoChapterSegments,
 } from './splitBibleReference'
+import { DASH_CHARS } from './regs'
 
 test('splitBibleReference - single verse', () => {
   expect(splitBibleReference('1 Corinthians 1:27')).toMatchObject({
@@ -380,6 +381,108 @@ describe('splitBibleReference - multi-word book abbreviations', () => {
 
   test('still blocks over-range for a one-word book', () => {
     expect(() => splitBibleReference('John 3:16-99')).toThrow(
+      'Invalid end verse'
+    )
+  })
+})
+
+describe('splitBibleReference - abbreviations written with a period', () => {
+  // Citations copied out of books and articles carry the abbreviating period.
+  // The period is dropped from the returned book name; nothing else changes.
+  test.each([
+    ['Eph. 2:8', 'Eph', 2, 8],
+    ['Matt. 5:3', 'Matt', 5, 3],
+    ['Gen. 1:1', 'Gen', 1, 1],
+    ['Mk. 2:1', 'Mk', 2, 1],
+  ])('parses %s', (ref, bookName, chapterNumber, verseNumber) => {
+    expect(splitBibleReference(ref)).toMatchObject({
+      bookName,
+      chapterNumber,
+      verseNumber,
+    })
+  })
+
+  test('parses a numbered book abbreviation with a period', () => {
+    expect(splitBibleReference('1 Cor. 13:4-7')).toMatchObject({
+      bookName: '1 Cor',
+      chapterNumber: 13,
+      verseNumber: 4,
+      verseNumberEnd: 7,
+    })
+  })
+
+  test('validates a dotted abbreviation like a full name', () => {
+    expect(() => splitBibleReference('1 Cor. 99:1')).toThrow(
+      'Invalid chapter number'
+    )
+  })
+})
+
+describe('splitBibleReference - multi-word book names', () => {
+  test.each(['Song of Solomon 1:1', 'Song of Songs 1:1'])(
+    'parses %s without losing the trailing words',
+    (ref) => {
+      expect(splitBibleReference(ref)).toMatchObject({
+        chapterNumber: 1,
+        verseNumber: 1,
+      })
+    }
+  )
+
+  test('keeps the whole multi-word name', () => {
+    expect(splitBibleReference('Song of Solomon 2:1').bookName).toBe(
+      'Song of Solomon'
+    )
+  })
+
+  test('validates a multi-word name like any other', () => {
+    // Song of Solomon has 8 chapters
+    expect(() => splitBibleReference('Song of Solomon 99:1')).toThrow(
+      'Invalid chapter number'
+    )
+  })
+})
+
+describe('splitBibleReference - unicode dashes in verse ranges', () => {
+  // The regression these guard: only the ASCII hyphen entered the range branch,
+  // so "John 3:16-18" written with an en dash fell through to the single-verse
+  // path and parseInt quietly returned verse 16 with no error at all.
+  test.each([...DASH_CHARS])('parses a verse range across %s', (dash) => {
+    expect(splitBibleReference(`John 3:16${dash}18`)).toMatchObject({
+      bookName: 'John',
+      chapterNumber: 3,
+      verseNumber: 16,
+      verseNumberEnd: 18,
+    })
+  })
+
+  test.each([...DASH_CHARS])(
+    'parses a cross-chapter range across %s',
+    (dash) => {
+      expect(splitBibleReference(`Hebrews 9:1${dash}10:14`)).toMatchObject({
+        chapterNumber: 9,
+        verseNumber: 1,
+        chapterNumberEnd: 10,
+        verseNumberEndChapter: 14,
+      })
+    }
+  )
+
+  test('every dash parses identically to the ASCII hyphen', () => {
+    const ascii = splitBibleReference('John 3:16-18')
+    for (const dash of DASH_CHARS) {
+      expect(splitBibleReference(`John 3:16${dash}18`)).toEqual(ascii)
+    }
+  })
+
+  test('a malformed range throws rather than half-parsing', () => {
+    expect(() => splitBibleReference('John 3:1–2–3')).toThrow(
+      'Invalid verse range'
+    )
+  })
+
+  test('validation applies across a unicode dash too', () => {
+    expect(() => splitBibleReference('John 3:16–500')).toThrow(
       'Invalid end verse'
     )
   })

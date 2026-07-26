@@ -1,6 +1,6 @@
-import { BOOK_REG } from './regs'
+import { BOOK_REG, normalizeDashes } from './regs'
 import { getVerseCount, getChapterCount } from '../data/BibleVerseData'
-import { getFullBookName } from './bookNameReference'
+import { getFullBookName, resolveBookName } from './bookNameReference'
 
 /**
  * Helper to safely parse integers and throw error on NaN
@@ -54,25 +54,26 @@ export type ChapterQuerySegment = {
  * Hebrews 9:1-10:14 => { bookName: 'Hebrews', ..., ranges: [{ch:9, v:1, chEnd:10, vEndCh:14}] }
  */
 export const splitBibleReference = (reference: string): VerseReference => {
-  const trimmedRef = reference.trim()
+  // Fold en/em dashes and friends to the ASCII hyphen up front so every range
+  // check below only has one dash form to recognize. Without this, "3:16–18"
+  // misses the range branch entirely and parseInt silently yields verse 16.
+  const trimmedRef = normalizeDashes(reference).trim()
   let bookName = ''
   let chapterVersePart = ''
 
   // Use BOOK_REG for robust book name extraction
   const bookMatch = trimmedRef.match(BOOK_REG)
   if (bookMatch) {
-    bookName = bookMatch[0].trim()
+    // BOOK_REG matches greedily across words, so hand the candidate to the
+    // resolver to strip abbreviation periods and any leading non-book words.
+    bookName = resolveBookName(bookMatch[0])
     const index = bookMatch.index ?? 0
     chapterVersePart = trimmedRef.slice(index + bookMatch[0].length).trim()
-    // In case of no space between book and chapter: john1:1
-    if (chapterVersePart.startsWith(':')) {
-      // This shouldn't happen with BOOK_REG and digits following, but safe check
-    }
   } else {
     // Fallback to original logic if BOOK_REG fails (unlikely)
     const parts = trimmedRef.split(' ')
     const length = parts.length
-    bookName = parts.slice(0, length - 1).join(' ')
+    bookName = resolveBookName(parts.slice(0, length - 1).join(' '))
     chapterVersePart = parts[length - 1]
   }
 

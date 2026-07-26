@@ -11,6 +11,7 @@ import {
   verseMatch,
   matchTriggerPrefix,
   hasExplicitVerse,
+  isIncompleteReference,
 } from '../utils/verseMatch'
 import { VerseSuggesting } from '../verse/VerseSuggesting'
 import { BibleReferencePluginSettings } from '../data/constants'
@@ -97,12 +98,22 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
         return null // bare chapter is a transient typing state; wait for ":<verse>" or ":a"
       }
 
+      if (isIncompleteReference(bookVerseQuery)) {
+        return null // half-typed range like "John 3:16-"; wait for the end of it
+      }
+
       console.debug('trigger on', queryContent)
       return {
         end: cursor,
         start: {
           line: cursor.line,
-          ch: queryContent.lastIndexOf(verseMatchResult),
+          // The trigger prefix is checked against the first two characters of
+          // the line, so it always sits at column 0 and the whole span up to
+          // the cursor is ours to replace. Deriving this from the match's index
+          // inside queryContent instead was off by the prefix length whenever
+          // the match did not start at the very beginning ("--i am reading
+          // Genesis 1:1" left a stray "-" behind).
+          ch: 0,
         },
         query: `${bookVerseQuery}@${versionSelectionMatchResult}`,
       }
