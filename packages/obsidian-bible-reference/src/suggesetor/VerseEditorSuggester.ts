@@ -103,7 +103,13 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
         end: cursor,
         start: {
           line: cursor.line,
-          ch: queryContent.lastIndexOf(verseMatchResult),
+          // The trigger prefix is checked against the first two characters of
+          // the line, so it always sits at column 0 and the whole span up to
+          // the cursor is ours to replace. Deriving this from the match's index
+          // inside queryContent instead was off by the prefix length whenever
+          // the match did not start at the very beginning ("--i am reading
+          // Genesis 1:1" left a stray "-" behind).
+          ch: 0,
         },
         query: `${bookVerseQuery}@${versionSelectionMatchResult}`,
       }

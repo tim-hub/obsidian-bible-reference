@@ -40,6 +40,24 @@ export const resolveBookName = (
   return candidate.trim().replace(/\./g, '')
 }
 
+/**
+ * Whether the catalog recognizes the candidate as a whole. Unlike
+ * resolveBookName this does not shrink the candidate, so "Genesis" is a book
+ * and "am reading Genesis" is not - which is what separates a reference from
+ * prose that merely contains one.
+ */
+export const isKnownBookName = (
+  candidate: string,
+  languageCode: string = 'en'
+): boolean => {
+  try {
+    getBookIdFromBookName(candidate, languageCode)
+    return true
+  } catch {
+    return false
+  }
+}
+
 export const getFullBookName = (
   name: string,
   languageCode: string = 'en'

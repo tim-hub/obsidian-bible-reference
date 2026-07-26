@@ -239,19 +239,26 @@ export class Reference implements IReference {
     return count;
   }
 
+  /**
+   * Fold a book name to the form both sides of a lookup are compared in: drop
+   * the periods abbreviations are written with ("Eph." -> "Eph"), collapse
+   * whitespace runs, lowercase. The string constructor already strips periods
+   * (see above); this is the same rule, applied to the catalog entries too so
+   * a dotted query and a dotted catalog entry still meet.
+   */
+  private static normalizeBookName(value: string): string {
+    return value.replace(/\./g, "").replace(/\s+/g, " ").trim().toLowerCase();
+  }
+
   private static getBookIdFromTranslationAndName(
     books: BookWithAbbreviations[],
     name: string,
   ): number {
-    // Normalize the way the string constructor does (see above): drop the
-    // periods abbreviations are written with ("Eph." -> "Eph") and collapse
-    // whitespace runs, since the generated ordinal variants are single-spaced
-    // ("1 John"), so "1  Jn." would otherwise miss.
-    const lowerName = name
-      .replace(/\./g, "")
-      .replace(/\s+/g, " ")
-      .trim()
-      .toLowerCase();
+    // Both sides go through normalizeBookName, never just the query: several
+    // catalog entries carry periods of their own (German "1. Mose", Romanian
+    // "F. Ap."), and those books have startNumber 0, so the exact pass is their
+    // only chance to match.
+    const lowerName = Reference.normalizeBookName(name);
 
     // Exact pass first: a real name/abbreviation must win over a generated
     // ordinal variant. Otherwise e.g. "Isa" (Isaiah) loses to the "I"+"Sa"
@@ -261,7 +268,7 @@ export class Reference implements IReference {
         book?.startNumber && book.startNumber > 0
           ? [book.fullName] // numbered books resolve their bare names via the ordinal pass
           : [book.fullName, book.name, ...book.abbreviations];
-      return exactNames.map((n) => n.toLowerCase()).indexOf(lowerName) > -1;
+      return exactNames.map(Reference.normalizeBookName).indexOf(lowerName) > -1;
     });
     if (exactMatch) {
       return books.indexOf(exactMatch) + 1;
@@ -277,17 +284,14 @@ export class Reference implements IReference {
           book.name,
           ...book.abbreviations,
         ])
-          .map((n) => n.toLowerCase())
+          .map(Reference.normalizeBookName)
           .indexOf(lowerName) > -1
       );
     });
     if (ordinalMatch) {
       return books.indexOf(ordinalMatch) + 1;
     }
-
-    const msg = `No book matched "${name}"`;
-    console.error(msg);
-    throw new Error(msg);
+    throw new Error(`No book matched "${name}"`);
   }
 
   // Is a Chapter level reference (no verse)

@@ -21,8 +21,8 @@ describe('hasExplicitVerse', () => {
 })
 
 describe('verseMatch', () => {
-  // verseMatch must hand back a literal substring of what was typed: the editor
-  // suggester locates its replacement range with lastIndexOf on the raw line.
+  // verseMatch hands back a literal substring of what was typed rather than a
+  // normalized form, so callers can relate the result back to the raw line.
   test.each([
     'John 3:16',
     'John 3:16-18',
@@ -46,6 +46,34 @@ describe('verseMatch', () => {
   test('returns an empty string when there is no reference', () => {
     expect(verseMatch('no reference here')).toBe('')
   })
+
+  // The pattern spans whitespace so multi-word book names survive whole, which
+  // also lets it read a run of prose words as a book name. And it is unanchored,
+  // so it can skip past whatever it cannot match. The match has to cover the
+  // whole query, and the catalog is the authority on what is actually a book.
+  test.each([
+    'i am reading Genesis 1:1',
+    'see Eph. 2:8',
+    'note: Genesis 1:1',
+    'today, Genesis 1:1',
+    'todo item 3: 1 thing',
+    'Notabook 1:1',
+    'Genesis 1:1 and then some notes',
+    '11 John 1:1', // typo: matched as "1 John" and fetched the Gospel of John
+    '123 John 1:1',
+  ])('rejects %s, which is prose rather than a reference', (text) => {
+    expect(verseMatch(text)).toBe('')
+  })
+
+  // Book names that carry a period of their own, rather than one that marks an
+  // abbreviation. "Ap." alone is Romanian for Revelation, so losing the "F."
+  // silently fetched the wrong book.
+  test.each(['F. Ap. 2:1', '1. Mose 1:1', '5. Mose 6:4'])(
+    'keeps %s whole',
+    (reference) => {
+      expect(verseMatch(reference)).toBe(reference)
+    }
+  )
 })
 
 describe('isIncompleteReference', () => {

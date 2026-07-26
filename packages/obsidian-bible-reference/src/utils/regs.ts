@@ -41,10 +41,11 @@ const BOOK_CHAR = '(?:\\p{L}|\\p{M}|[\\\\[\\]^_`])'
  * Words of a book name, each optionally closed by the period an abbreviation is
  * written with ("Eph.", "Cor."). The first word keeps the two-character floor -
  * a lone letter must not read as a book name, or the pattern starts matching
- * stray letters in prose. Later words have no such risk, the first word already
- * anchors the match.
+ * stray letters in prose. A single letter that carries a period is exempt: it is
+ * unambiguously an abbreviation, and Romanian writes Acts as "F. Ap.". Later
+ * words have no such risk, the first word already anchors the match.
  */
-const BOOK_WORD_HEAD = `${BOOK_CHAR}{2,100}\\.?`
+const BOOK_WORD_HEAD = `(?:${BOOK_CHAR}{2,100}\\.?|${BOOK_CHAR}\\.)`
 const BOOK_WORD_TAIL = `${BOOK_CHAR}{1,100}\\.?`
 
 /**
@@ -57,6 +58,15 @@ const BOOK_WORD_TAIL = `${BOOK_CHAR}{1,100}\\.?`
 const BOOK_NAME = `(?:${BOOK_WORD_HEAD}(?:\\s+${BOOK_WORD_TAIL}){0,5}|\\p{Script=Han}{1,})`
 
 /**
+ * The ordinal a numbered book starts with, optionally with the period German
+ * writes it with ("1. Mose"). Runs to 5 because German numbers the Pentateuch
+ * that way; English stops at 3 John. Exactly one digit: "11 John" is a typo,
+ * not a book, and letting the quantifier repeat made it match as "1 John".
+ * An ordinal no book uses is caught later, when the name is looked up.
+ */
+const BOOK_ORDINAL = '([1-5]\\.?)?'
+
+/**
  * regular expression to match
  * John12:1-3
  * John1:1
@@ -65,13 +75,15 @@ const BOOK_NAME = `(?:${BOOK_WORD_HEAD}(?:\\s+${BOOK_WORD_TAIL}){0,5}|\\p{Script
  * Eph. 2:8
  * Song of Solomon 1:1
  * John 3:16–18
+ * 1. Mose 1:1
+ * F. Ap. 2:1
  */
 export const BOOK_VERSE_REG = new RegExp(
-  `([123])*\\s*(${BOOK_NAME})\\s*\\d{1,3}(?:[\\d:;,\\s${DASH_CLASS_BODY}]|a(?!\\p{L}))*`,
+  `${BOOK_ORDINAL}\\s*(${BOOK_NAME})\\s*\\d{1,3}(?:[\\d:;,\\s${DASH_CLASS_BODY}]|a(?!\\p{L}))*`,
   'isu'
 )
 
-export const BOOK_REG = new RegExp(`([123])*\\s*(${BOOK_NAME})`, 'isu')
+export const BOOK_REG = new RegExp(`${BOOK_ORDINAL}\\s*(${BOOK_NAME})`, 'isu')
 
 export const TRANSLATION_VERSION_KEY_REG = /^[a-zA-Z]+-?[a-zA-Z0-9]*$/isu
 
