@@ -14,10 +14,12 @@
     "build:packages": "bun run --filter bible-book-names-intl build && bun run --filter bible-reference-toolkit build",
     "build": "bun run build:packages && bun run --filter obsidian-bible-reference build",
     "test": "bun test",
-    "lint": "bun run --filter obsidian-bible-reference lint",
-    "prettier": "bun run --filter obsidian-bible-reference prettier",
+    "lint": "eslint .",
+    "prettier": "prettier --check .",
     "precommit": "bun run lint && bun run prettier",
-    "prepare": "husky"
+    "prepare": "husky",
+    "lint:fix": "eslint . --fix",
+    "prettier:fix": "prettier --write ."
   },
   "keywords": [
     "bible",
@@ -29,7 +31,12 @@
   "author": "tim-hub",
   "license": "MIT",
   "devDependencies": {
+    "@eslint/js": "^9.0.0",
     "all-contributors-cli": "6.26.1",
-    "husky": "^9.1.7"
+    "eslint": "^10.0.0",
+    "globals": "^16.0.0",
+    "husky": "^9.1.7",
+    "prettier": "3.8.3",
+    "typescript-eslint": "^8.0.0"
   }
 }
