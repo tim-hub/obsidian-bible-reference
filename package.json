@@ -13,6 +13,7 @@
     "dev": "bun run --filter obsidian-bible-reference dev",
     "build:packages": "bun run --filter bible-book-names-intl build && bun run --filter bible-reference-toolkit build",
     "build": "bun run build:packages && bun run --filter obsidian-bible-reference build",
+    "pretest": "bun run build:packages",
     "test": "bun test",
     "lint": "eslint .",
     "prettier": "prettier --check .",

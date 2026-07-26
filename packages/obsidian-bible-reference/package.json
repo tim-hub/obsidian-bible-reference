@@ -8,10 +8,6 @@
     "dev": "bun scripts/esbuild.config.mjs",
     "build": "tsc -noEmit -skipLibCheck && bun scripts/esbuild.config.mjs production",
     "version": "bun scripts/version-bump.mjs",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "prettier": "prettier --check .",
-    "prettier:fix": "prettier --write .",
     "test": "bun test"
   },
   "keywords": [
