@@ -278,14 +278,12 @@ export default class BibleReferencePlugin extends Plugin {
   }
 
   private updateStatusBarIndicator(): void {
-    if (
-      this.statusBarIndicator &&
-      'getElementsByClassName' in this.statusBarIndicator
-    ) {
-      const el = this.statusBarIndicator.getElementsByClassName(
-        'bible-version-indicator'
-      )[0]
-      el.innerHTML = this.getStatusBatLabel()
-    }
+    // setText rather than innerHTML, to match the createEl above and to keep
+    // the label out of the HTML parser. The span is missing on mobile, where
+    // there is no status bar to add it to.
+    const el = this.statusBarIndicator?.querySelector<HTMLElement>(
+      '.bible-version-indicator'
+    )
+    el?.setText(this.getStatusBatLabel())
   }
 }
