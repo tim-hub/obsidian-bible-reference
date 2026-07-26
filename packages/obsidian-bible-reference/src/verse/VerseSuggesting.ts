@@ -98,10 +98,20 @@ export class VerseSuggesting extends BaseVerseFormatter {
   /**
    * Render for use in editor/modal suggest
    */
-  public renderSuggestion(el: HTMLElement) {
+  public renderSuggestion(el: HTMLElement, linkOnly = false) {
     const outer = el.createDiv({ cls: 'obr-suggester-container' })
     // @ts-ignore
-    outer.createDiv({ cls: 'obr-shortcode' }).setText(this.bodyContent)
+    outer
+      .createDiv({ cls: 'obr-shortcode' })
+      .setText(linkOnly ? this.linkOnlyContent : this.bodyContent)
+  }
+
+  /**
+   * A bare markdown link to the reference - no verse text, no callout, no tags.
+   * Never fetches, so it works offline.
+   */
+  public get linkOnlyContent(): string {
+    return `[${this.getReferenceLabel()}](${this.getUrlForReference()})`
   }
 
   public async fetchAndSetVersesText(): Promise<void> {
@@ -304,14 +314,20 @@ export class VerseSuggesting extends BaseVerseFormatter {
     }
   }
 
-  protected getVerseReferenceLink(): string {
-    // For cross-chapter and multi-segment references, use centralized getReferenceHead
+  /**
+   * The human readable reference, ex. `John 3:16 - KJV`
+   * For cross-chapter and multi-segment references, use centralized getReferenceHead
+   */
+  private getReferenceLabel(): string {
     const head = getReferenceHead(this.verseReference)
-
     const version = this.settings?.showVerseTranslation
       ? ` - ${this.bibleVersion.toUpperCase()}`
       : ''
-    const label = `${head}${version}`
+    return `${head}${version}`
+  }
+
+  protected getVerseReferenceLink(): string {
+    const label = this.getReferenceLabel()
 
     // keep the original leading space that the previous implementation returned
     const leading = ' '

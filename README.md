@@ -31,6 +31,8 @@
 
 You can also get a "verse of the day" by typing `--vod`.
 
+To insert **just a link** to a passage instead of the verse text, enable **Link Only** in the settings, or run the **Insert Bible Reference Link** command. This never fetches, so it works offline.
+
 Polish translations are available as well, including **UBG** (Uwspółcześniona Biblia Gdańska) and **BG** (Biblia gdańska).
 
 > Read more about [How to use](https://github.com/tim-hub/obsidian-bible-reference/blob/master/docs/howto.md)
