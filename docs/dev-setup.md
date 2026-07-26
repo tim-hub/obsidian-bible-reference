@@ -13,6 +13,7 @@
 
 ```bash
 bun install         # install all workspace dependencies
+bun build:packages  # build dependencies
 bun run dev         # watch mode (incremental build of the plugin)
 bun run build       # production build (type-check + bundle -> main.js at repo root)
 bun test            # run all package tests (bun test)
