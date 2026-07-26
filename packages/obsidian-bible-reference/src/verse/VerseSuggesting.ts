@@ -9,6 +9,7 @@ import { buildProvider } from '../provider/buildProvider'
 import { BaseBibleAPIProvider } from '../provider/BaseBibleAPIProvider'
 import { BaseVerseFormatter } from './BaseVerseFormatter'
 import { getBLBUrl } from '../utils/referenceBLBAltLinking'
+import { getLiteralWordUrl } from '../utils/referenceLiteralWordLinking'
 import {
   getLogosUrl,
   getLogosTranslation,
@@ -263,6 +264,13 @@ export class VerseSuggesting extends BaseVerseFormatter {
           chapterNumber,
           verseNumber,
           verseNumberEnd
+        ),
+      literalword: () =>
+        getLiteralWordUrl(
+          this.bibleVersion,
+          bookName,
+          chapterNumber,
+          verseNumber
         ),
       logos: () =>
         getLogosUrl(

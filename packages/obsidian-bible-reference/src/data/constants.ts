@@ -63,6 +63,7 @@ export interface BibleReferencePluginSettings {
     | 'original'
     | 'blb'
     | 'biblegateway'
+    | 'literalword'
     | 'logos'
     | 'stepbible'
   bookNameLanguage?: BookNameLanguageEnum
