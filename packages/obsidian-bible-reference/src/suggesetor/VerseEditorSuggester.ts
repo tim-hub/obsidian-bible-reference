@@ -34,6 +34,10 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
     this.settings = settings
   }
 
+  private get isLinkOnly(): boolean {
+    return !!this.settings?.linkOnlyMode
+  }
+
   private getBookVerseAndTranslation(queryContent: string) {
     let bookVerseQuery = queryContent
     let translationQuery = ''
@@ -119,19 +123,22 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
     const suggestions = await getSuggestionsFromQuery(
       bookVerseQuery,
       this.settings,
-      translationQuery
+      translationQuery,
+      this.isLinkOnly
     )
     return suggestions
   }
 
   renderSuggestion(suggestion: VerseSuggesting, el: HTMLElement): void {
-    suggestion.renderSuggestion(el)
+    suggestion.renderSuggestion(el, this.isLinkOnly)
   }
 
   selectSuggestion(suggestion: VerseSuggesting): void {
     if (this.context) {
       this.context.editor.replaceRange(
-        suggestion.allFormattedContent,
+        this.isLinkOnly
+          ? suggestion.linkOnlyContent
+          : suggestion.allFormattedContent,
         this.context.start,
         this.context.end
       )
