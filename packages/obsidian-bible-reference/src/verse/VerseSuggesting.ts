@@ -23,7 +23,10 @@ import {
   VerseRange,
   VerseReference,
 } from '../utils/splitBibleReference'
-import { getFullBookName } from '../utils/bookNameReference'
+import {
+  getCanonicalBookName,
+  getFullBookName,
+} from '../utils/bookNameReference'
 
 /**
  * Verse Suggesting
@@ -264,13 +267,19 @@ export class VerseSuggesting extends BaseVerseFormatter {
       )
     }
 
+    // The external sources key their book maps on the catalog's English name,
+    // so anything the user may have typed instead - an abbreviation ("Ps"), or
+    // an alternate spelling ("Psalms" for "Psalm") - has to be resolved first
+    // or the lookup misses and the source silently degrades to Bible Gateway.
+    const canonicalBookName = getCanonicalBookName(bookName)
+
     // Each external source builds its own URL; any failure falls back to
     // Bible Gateway. ('biblegateway' and any unknown source ARE the fallback.)
     const urlBuilders: { [source: string]: () => string } = {
       blb: () =>
         getBLBUrl(
           this.bibleVersion,
-          bookName,
+          canonicalBookName,
           chapterNumber,
           verseNumber,
           verseNumberEnd
@@ -278,14 +287,14 @@ export class VerseSuggesting extends BaseVerseFormatter {
       literalword: () =>
         getLiteralWordUrl(
           this.bibleVersion,
-          bookName,
+          canonicalBookName,
           chapterNumber,
           verseNumber
         ),
       logos: () =>
         getLogosUrl(
           getLogosTranslation(this.settings, this.bibleVersion),
-          bookName,
+          canonicalBookName,
           chapterNumber,
           verseNumber,
           verseNumberEnd
@@ -293,7 +302,7 @@ export class VerseSuggesting extends BaseVerseFormatter {
       stepbible: () =>
         getStepbibleUrl(
           this.bibleVersion,
-          bookName,
+          canonicalBookName,
           chapterNumber,
           verseNumber,
           verseNumberEnd,

@@ -27,6 +27,7 @@ export const logosBookAbbreviations: { [key: string]: string } = {
   Esther: 'Es',
   Job: 'Job',
   Psalms: 'Ps',
+  Psalm: 'Ps',
   Proverbs: 'Pr',
   Ecclesiastes: 'Ec',
   'Song of Solomon': 'So',

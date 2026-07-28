@@ -71,3 +71,19 @@ export const getFullBookName = (
     return Reference.bookEnglishFullNameFromId(bookId)
   }
 }
+
+/**
+ * Like getFullBookName, but returns the name as written when the catalog does
+ * not recognize it instead of throwing. For callers that only need a lookup key
+ * and already handle unknown books themselves.
+ */
+export const getCanonicalBookName = (
+  name: string,
+  languageCode: string = 'en'
+): string => {
+  try {
+    return getFullBookName(name, languageCode)
+  } catch {
+    return name
+  }
+}
