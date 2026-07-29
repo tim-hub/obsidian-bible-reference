@@ -35,6 +35,22 @@ describe('verseMatch', () => {
     expect(verseMatch(reference)).toBe(reference)
   })
 
+  // Song of Songs goes by more names than any other book, and every one of
+  // these was reported as not matching. See issue #347.
+  test.each([
+    'Song of Songs 1:1',
+    'SongofSongs1:1',
+    'songofsongs1:1',
+    'Song of Solomon 1:1',
+    'Songs1:1',
+    'Sg1:1',
+    'SS1:1',
+    'Canticles 1:1',
+    'SOS1:1',
+  ])('matches %s', (reference) => {
+    expect(verseMatch(reference)).toBe(reference)
+  })
+
   test.each([...DASH_CHARS])(
     'returns the whole range rather than truncating at %s',
     (dash) => {

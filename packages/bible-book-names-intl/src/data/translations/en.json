@@ -107,7 +107,15 @@
   },
   "22": {
     "name": "Song of Solomon",
-    "shortNames": ["SOS", "Song of Songs", "SongOfSongs"],
+    "shortNames": [
+      "SOS",
+      "Song of Songs",
+      "SongOfSongs",
+      "Songs",
+      "Sg",
+      "SS",
+      "Canticles"
+    ],
     "startNumber": 0
   },
   "23": {

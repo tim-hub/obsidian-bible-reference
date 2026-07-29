@@ -28,6 +28,8 @@
 3. Select the suggestion
 
 > Type `--John1:a` to insert **all verses in a chapter** (`a` = the whole chapter).
+> A chapter on its own (`--John1`) does not suggest anything - it is treated as a
+> reference you are still typing, so add `:1` or `:a` to finish it.
 
 You can also get a "verse of the day" by typing `--vod`.
 
