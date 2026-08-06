@@ -85,12 +85,13 @@ export const BOOK_VERSE_REG = new RegExp(
 
 export const BOOK_REG = new RegExp(`${BOOK_ORDINAL}\\s*(${BOOK_NAME})`, 'isu')
 
+/**
+ * The version key of the inline suffix a reference can carry, "John 3:16@esv".
+ * The separator is "@" and nothing else: the dash is already the verse range
+ * separator in "John 3:16-17", so it cannot also introduce a version without
+ * the parser guessing at which one was meant.
+ */
 export const TRANSLATION_VERSION_KEY_REG = /^[a-zA-Z]+-?[a-zA-Z0-9]*$/isu
-
-export const BOOK_VERSE_WITH_TRANSLATION_REG = new RegExp(
-  `(${BOOK_VERSE_REG.source})[@-](${TRANSLATION_VERSION_KEY_REG.source.slice(1, -1)})`,
-  'isu'
-) // todo maybe this is a better option
 
 // export const BOOK_REG = /[123]*\s*[A-Z\[\\\]^_`a-z]{2,}/
 

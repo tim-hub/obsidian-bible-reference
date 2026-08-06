@@ -1,15 +1,14 @@
 import { VerseEditorSuggester } from './VerseEditorSuggester'
 import { DEFAULT_SETTINGS } from '../data/constants'
 
-const newSuggester = () =>
-  new VerseEditorSuggester(
-    {
-      app: {},
-      settings: { ...DEFAULT_SETTINGS },
-      saveSettings: () => {},
-    } as never,
-    DEFAULT_SETTINGS
-  )
+const newPlugin = () => ({
+  app: {},
+  settings: { ...DEFAULT_SETTINGS },
+  saveSettings: () => {},
+})
+
+const newSuggester = (plugin = newPlugin()) =>
+  new VerseEditorSuggester(plugin as never, DEFAULT_SETTINGS)
 
 const triggerOn = (line: string, cursorCh: number = line.length) =>
   newSuggester().onTrigger(
@@ -94,5 +93,45 @@ describe('VerseEditorSuggester.onTrigger', () => {
     '--123 John 1:1',
   ])('does not trigger on %s', (line) => {
     expect(triggerOn(line)).toBeNull()
+  })
+})
+
+describe('VerseEditorSuggester inline version', () => {
+  const triggerWithPlugin = (line: string) => {
+    const plugin = newPlugin()
+    const info = newSuggester(plugin).onTrigger(
+      { line: 0, ch: line.length },
+      { getLine: () => line } as never,
+      null as never
+    )
+    return { info, plugin }
+  }
+
+  // "@" names the version, and the key is written in either case.
+  test.each([
+    ['--John 3:16@esv', 'John 3:16@esv', 'esv'],
+    ['--John 3:16@ESV', 'John 3:16@esv', 'esv'],
+    ['--john3:16-17@kjv', 'john3:16-17@kjv', 'kjv'],
+    ['--john3:16-17@KJV', 'john3:16-17@kjv', 'kjv'],
+    // A version key with a dash of its own must survive whole.
+    ['--John 3:16@oeb-cw', 'John 3:16@oeb-cw', 'oeb-cw'],
+  ])('%s picks the version', (line, query, version) => {
+    const { info, plugin } = triggerWithPlugin(line)
+    expect(info?.query).toBe(query)
+    expect(plugin.settings.bibleVersion).toBe(version)
+  })
+
+  // The dash stays the range separator, it never names a version.
+  test.each(['--John 3:16-18', '--Hebrews 9:1-10:14', '--John 3:a'])(
+    '%s leaves the version alone',
+    (line) => {
+      const { info, plugin } = triggerWithPlugin(line)
+      expect(info).not.toBeNull()
+      expect(plugin.settings.bibleVersion).toBe(DEFAULT_SETTINGS.bibleVersion)
+    }
+  )
+
+  test('the dash form is not a version suffix', () => {
+    expect(triggerOn('--John 3:16-esv')).toBeNull()
   })
 })
