@@ -31,6 +31,11 @@
 > A chapter on its own (`--John1`) does not suggest anything - it is treated as a
 > reference you are still typing, so add `:1` or `:a` to finish it.
 
+> To pull a reference from another translation, add `@` and the version key:
+> `--John1:1@esv`. Keys are the ones listed under **Default Bible Version** in the
+> settings, and they are not case sensitive. The version you name is kept for later
+> lookups too, so it also switches the default.
+
 You can also get a "verse of the day" by typing `--vod`.
 
 To insert **just a link** to a passage instead of the verse text, enable **Link Only** in the settings, or run the **Insert Bible Reference Link** command. This never fetches, so it works offline.
