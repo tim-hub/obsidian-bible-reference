@@ -75,6 +75,34 @@ describe('Cross-language numbered book resolution (bookIdFromName)', () => {
   })
 })
 
+describe('Spanish aliases', () => {
+  test.each([
+    ['Genesis', 1],
+    ['Hechos', 44],
+    ['Zacarías', 38],
+    ['Zacarias', 38],
+    ['Exodo', 2],
+    ['Levitico', 3],
+    ['Numeros', 4],
+    ['Josue', 6],
+    ['1 Cronicas', 13],
+    ['2 Cronicas', 14],
+    ['Nehemias', 16],
+    ['Eclesiastes', 21],
+    ['Isaias', 23],
+    ['Jeremias', 24],
+    ['Amos', 30],
+    ['Abdias', 31],
+    ['Jonas', 32],
+    ['Nahum', 34],
+    ['Galatas', 48],
+    ['Filemon', 57],
+  ])('resolves %s through Spanish and cross-language lookups', (name, id) => {
+    expect(Reference.bookIdFromTranslationAndName('sp', name)).toBe(id)
+    expect(Reference.bookIdFromName(name)).toBe(id)
+  })
+})
+
 // The string constructor has always stripped the periods abbreviations are
 // written with ("Mk. 2"). The static lookups did not, so the plugin - which
 // calls them directly - could not resolve any dotted abbreviation.
