@@ -95,6 +95,8 @@ describe('Spanish aliases', () => {
     ['Abdias', 31],
     ['Jonas', 32],
     ['Nahum', 34],
+    ['Sofonias', 36],
+    ['Malaquias', 39],
     ['Galatas', 48],
     ['Filemon', 57],
   ])('resolves %s through Spanish and cross-language lookups', (name, id) => {
