@@ -464,4 +464,29 @@ describe('BaseVerseFormatter', () => {
     expect(formatter.allFormattedContent).toContain('#Hebrews10')
     expect(formatter.allFormattedContent).toContain('#Hebrews11')
   })
+
+  it('should format verse numbers as pandoc superscript', () => {
+    const settings = {
+      ...DEFAULT_SETTINGS,
+      verseFormatting: BibleVerseFormat.SingleLine,
+      verseNumberFormatting: BibleVerseNumberFormat.PandocSuperScript,
+    }
+    const verseReference: VerseReference = {
+      bookName: 'John',
+      chapterNumber: 3,
+      verseNumber: 16,
+      ranges: [{ chapterNumber: 3, verseNumber: 16 }],
+    }
+    const verses = [
+      {
+        book_id: 'John',
+        book_name: 'John',
+        chapter: 3,
+        verse: 16,
+        text: 'v16',
+      },
+    ]
+    const formatter = new MockFormatter(settings, verseReference, verses)
+    expect(formatter.bodyContent).toBe('> ^16^ v16')
+  })
 })

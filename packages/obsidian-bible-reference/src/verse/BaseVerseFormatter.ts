@@ -247,6 +247,8 @@ export abstract class BaseVerseFormatter {
         return `<sup>**${verseNumberFormatted}**</sup> `
       case BibleVerseNumberFormat.SuperScriptItalic:
         return `<sup>*${verseNumberFormatted}*</sup> `
+      case BibleVerseNumberFormat.PandocSuperScript:
+        return `^${verseNumberFormatted}^ `
       case BibleVerseNumberFormat.Bold:
         return `**${verseNumberFormatted}** `
       case BibleVerseNumberFormat.Italic:

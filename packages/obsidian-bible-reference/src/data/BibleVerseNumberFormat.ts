@@ -7,6 +7,7 @@ export enum BibleVerseNumberFormat {
   SuperScript = '^1',
   SuperScriptBold = '**^1**',
   SuperScriptItalic = '*^1*',
+  PandocSuperScript = '^1^',
   Bold = '**1**',
   Italic = '*1*',
   None = 'None',
@@ -44,6 +45,10 @@ export const BibleVerseNumberFormatCollection = [
   {
     name: BibleVerseNumberFormat.SuperScriptItalic,
     description: '*^1* (italic superscript)',
+  },
+  {
+    name: BibleVerseNumberFormat.PandocSuperScript,
+    description: '^1^ (pandoc superscript)',
   },
   {
     name: BibleVerseNumberFormat.Bold,
