@@ -34,6 +34,21 @@ describe('VerseSuggesting.linkOnlyContent', () => {
     )
   })
 
+  it.each([
+    ['s00', 'SCH2000'],
+    ['sch', 'SCH1951'],
+  ])(
+    'links %s to its Bible Gateway version code %s',
+    (bibleVersion, bibleGatewayKey) => {
+      const content = buildSuggesting('John 3:16', {
+        bibleVersion,
+      }).linkOnlyContent
+      expect(content).toContain(
+        `https://www.biblegateway.com/passage/?search=John+3:16&version=${bibleGatewayKey})`
+      )
+    }
+  )
+
   it('contains no callout, tag or leading whitespace decoration', () => {
     const content = buildSuggesting('John 3:16').linkOnlyContent
     expect(content).not.toContain('> ')
@@ -95,5 +110,15 @@ describe('VerseSuggesting.linkOnlyContent', () => {
     expect(suggesting.linkOnlyContent).toContain(
       'https://www.biblegateway.com/passage/'
     )
+  })
+
+  it('uses the Bible Gateway version code when another source falls back', () => {
+    const suggesting = buildSuggesting('John 3:16', {
+      bibleVersion: 's00',
+      sourceOfReference: 'blb',
+    })
+    // @ts-ignore - force an unmapped book name past the parser
+    suggesting.verseReference.bookName = 'UnknownBook'
+    expect(suggesting.linkOnlyContent).toContain('&version=SCH2000)')
   })
 })

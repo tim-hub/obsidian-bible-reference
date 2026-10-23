@@ -229,11 +229,13 @@ export class VerseSuggesting extends BaseVerseFormatter {
 
     // Helper function to generate Bible Gateway URL as fallback
     const getBibleGatewayFallback = (): string => {
+      const bibleGatewayVersion =
+        getBibleVersion(this.bibleVersion).bibleGatewayKey ?? this.bibleVersion
       let versesString: string
       if (isCrossChapterReference(this.verseReference)) {
         versesString = verseNumber.toString()
         return getBibleGatewayUrl(
-          this.bibleVersion,
+          bibleGatewayVersion,
           bookName,
           chapterNumber,
           versesString,
@@ -246,7 +248,7 @@ export class VerseSuggesting extends BaseVerseFormatter {
         versesString = verseNumber.toString()
       }
       return getBibleGatewayUrl(
-        this.bibleVersion,
+        bibleGatewayVersion,
         bookName,
         chapterNumber,
         versesString

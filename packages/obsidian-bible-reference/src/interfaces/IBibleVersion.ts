@@ -7,5 +7,6 @@ export interface IBibleVersion {
   code?: string
   apiSource: IBibleApiSource
   infoUrl?: string
+  bibleGatewayKey?: string
   apiUrl?: string //deprecated
 }
