@@ -340,6 +340,7 @@ export const BibleVersionCollectionGerman = [
     language: 'German Deutsch',
     code: 'de',
     apiSource: BibleAPISourceCollection.bollsLife,
+    bibleGatewayKey: 'SCH1951',
   },
   {
     key: 's00',
@@ -347,6 +348,7 @@ export const BibleVersionCollectionGerman = [
     language: 'German Deutsch',
     code: 'de',
     apiSource: BibleAPISourceCollection.bollsLife,
+    bibleGatewayKey: 'SCH2000',
   },
 ]
 
