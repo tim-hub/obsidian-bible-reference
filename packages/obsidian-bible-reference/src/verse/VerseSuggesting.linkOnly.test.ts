@@ -111,4 +111,14 @@ describe('VerseSuggesting.linkOnlyContent', () => {
       'https://www.biblegateway.com/passage/'
     )
   })
+
+  it('uses the Bible Gateway version code when another source falls back', () => {
+    const suggesting = buildSuggesting('John 3:16', {
+      bibleVersion: 's00',
+      sourceOfReference: 'blb',
+    })
+    // @ts-ignore - force an unmapped book name past the parser
+    suggesting.verseReference.bookName = 'UnknownBook'
+    expect(suggesting.linkOnlyContent).toContain('&version=SCH2000)')
+  })
 })
