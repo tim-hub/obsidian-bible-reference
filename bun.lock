@@ -43,7 +43,7 @@
     },
     "packages/obsidian-bible-reference": {
       "name": "obsidian-bible-reference",
-      "version": "26.8.7",
+      "version": "26.10.24",
       "dependencies": {
         "bible-reference-toolkit": "workspace:*",
       },
