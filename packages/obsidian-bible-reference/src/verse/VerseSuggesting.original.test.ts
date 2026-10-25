@@ -57,3 +57,40 @@ describe('the original source link', () => {
     )
   })
 })
+
+describe('a cross-chapter reference', () => {
+  const respondWithRequestedVerses = () =>
+    spyOn(globalThis, 'fetch').mockImplementation(async () => {
+      return {
+        json: async () => ({ reference: 'Hebrews', verses: [] }),
+      } as unknown as Response
+    })
+
+  it('requests each chapter with its real last verse, never 999', async () => {
+    const fetchMock = respondWithRequestedVerses()
+    const suggesting = new VerseSuggesting(
+      settings,
+      splitBibleReference('Hebrews 9:27-10:2')
+    )
+    await suggesting.fetchAndSetVersesText()
+    const urls = fetchMock.mock.calls.map(([input]) => String(input))
+    expect(urls).toContain(
+      'https://bible-api.com/Hebrews+9:27-28?translation=kjv'
+    )
+    expect(urls).toContain(
+      'https://bible-api.com/Hebrews+10:1-2?translation=kjv'
+    )
+  })
+
+  it('links the original source to the first chapter from the start verse to its end', async () => {
+    respondWithRequestedVerses()
+    const suggesting = new VerseSuggesting(
+      settings,
+      splitBibleReference('Hebrews 9:27-10:2')
+    )
+    await suggesting.fetchAndSetVersesText()
+    expect(linkOf(suggesting.linkOnlyContent)).toBe(
+      'https://bible-api.com/Hebrews+9:27-28?translation=kjv'
+    )
+  })
+})

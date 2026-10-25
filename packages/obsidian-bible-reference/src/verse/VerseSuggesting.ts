@@ -11,6 +11,7 @@ import {
   sourceUrlFor,
 } from '../provider/verseLookup'
 import { IBibleVersion } from '../interfaces/IBibleVersion'
+import { getVerseCount } from '../data/BibleVerseData'
 import { BaseVerseFormatter } from './BaseVerseFormatter'
 import { getBLBUrl } from '../utils/referenceBLBAltLinking'
 import { getLiteralWordUrl } from '../utils/referenceLiteralWordLinking'
@@ -136,6 +137,9 @@ export class VerseSuggesting extends BaseVerseFormatter {
   }
 
   private passageOf(range: VerseRange): PassageQuery {
+    if (isCrossChapterReference(range)) {
+      return this.chapterPassagesOf(range)[0]
+    }
     return {
       bookId: this.verseReference.bookId,
       chapter: range.chapterNumber,
@@ -145,6 +149,21 @@ export class VerseSuggesting extends BaseVerseFormatter {
     }
   }
 
+  private chapterPassagesOf(range: VerseRange): PassageQuery[] {
+    const { bookId, bookName } = this.verseReference
+    return splitIntoChapterSegments({
+      bookName,
+      ...range,
+    } as VerseReference).map((segment) => ({
+      bookId,
+      chapter: segment.chapterNumber,
+      verses: [
+        segment.verseStart,
+        segment.verseEnd ?? getVerseCount(bookId, segment.chapterNumber),
+      ],
+    }))
+  }
+
   /**
    * Fetch verses from multiple chapters for cross-chapter references
    */
@@ -152,22 +171,11 @@ export class VerseSuggesting extends BaseVerseFormatter {
     bibleVersion: IBibleVersion,
     range: VerseRange
   ): Promise<IVerse[]> {
-    const segments = splitIntoChapterSegments({
-      bookName: this.verseReference.bookName,
-      ...range,
-    } as VerseReference)
+    const passages = this.chapterPassagesOf(range)
 
     // Execute API calls in parallel
     const results = await Promise.allSettled(
-      segments.map((segment) =>
-        lookupVerses(bibleVersion, {
-          bookId: this.verseReference.bookId,
-          chapter: segment.chapterNumber,
-          verses: segment.verseEnd
-            ? [segment.verseStart, segment.verseEnd]
-            : [segment.verseStart, 999], // 999 as upper bound for "to end of chapter"
-        })
-      )
+      passages.map((passage) => lookupVerses(bibleVersion, passage))
     )
 
     const verses: IVerse[] = []
@@ -175,7 +183,7 @@ export class VerseSuggesting extends BaseVerseFormatter {
 
     results.forEach((result, index) => {
       if (result.status === 'fulfilled') {
-        const chapterNumber = segments[index].chapterNumber
+        const chapterNumber = passages[index].chapter
         const versesWithChapter = result.value.map((verse) => ({
           ...verse,
           chapter: chapterNumber,
@@ -184,7 +192,7 @@ export class VerseSuggesting extends BaseVerseFormatter {
       } else {
         hadFailure = true
         console.error(
-          `Failed to fetch chapter ${segments[index].chapterNumber}:`,
+          `Failed to fetch chapter ${passages[index].chapter}:`,
           result.reason
         )
       }
