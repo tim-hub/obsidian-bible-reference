@@ -5,8 +5,12 @@ import {
 } from '../data/constants'
 import { getBibleVersion } from '../data/BibleVersionCollection'
 import { IVerse } from '../interfaces/IVerse'
-import { buildProvider } from '../provider/buildProvider'
-import { BaseBibleAPIProvider } from '../provider/BaseBibleAPIProvider'
+import {
+  lookupVerses,
+  PassageQuery,
+  sourceUrlFor,
+} from '../provider/verseLookup'
+import { IBibleVersion } from '../interfaces/IBibleVersion'
 import { BaseVerseFormatter } from './BaseVerseFormatter'
 import { getBLBUrl } from '../utils/referenceBLBAltLinking'
 import { getLiteralWordUrl } from '../utils/referenceLiteralWordLinking'
@@ -31,7 +35,7 @@ import { bookNameForId } from '../utils/bookNameReference'
  */
 export class VerseSuggesting extends BaseVerseFormatter {
   public bibleVersion: string
-  private bibleProvider: BaseBibleAPIProvider
+  private originalSourceUrl?: string
 
   constructor(
     settings: BibleReferencePluginSettings,
@@ -103,27 +107,14 @@ export class VerseSuggesting extends BaseVerseFormatter {
       console.debug('match to default language plus version')
     }
     const bibleVersion = getBibleVersion(this.bibleVersion)
-    if (
-      !this.bibleProvider ||
-      this.bibleProvider.BibleVersionKey !== bibleVersion?.key
-    ) {
-      // make sure this is only 1 adapter, and it is the same bible version
-      this.bibleProvider = buildProvider(bibleVersion)
-    }
 
     const allVerses: IVerse[] = []
 
     const rangePromises = this.verseReference.ranges.map(async (range) => {
       if (isCrossChapterReference(range)) {
-        return this.getCrossChapterVerses(range)
+        return this.getCrossChapterVerses(bibleVersion, range)
       } else {
-        const verses = await this.bibleProvider.query(
-          bookNameForId(this.verseReference.bookId, 'en'),
-          range.chapterNumber,
-          range?.verseNumberEnd
-            ? [range.verseNumber, range.verseNumberEnd]
-            : [range.verseNumber]
-        )
+        const verses = await lookupVerses(bibleVersion, this.passageOf(range))
         return verses.map((verse) => ({
           ...verse,
           chapter: range.chapterNumber,
@@ -137,13 +128,30 @@ export class VerseSuggesting extends BaseVerseFormatter {
         allVerses.push(...result.value)
       }
     })
+    this.originalSourceUrl = sourceUrlFor(
+      bibleVersion,
+      this.passageOf(this.verseReference.ranges[0])
+    )
     return allVerses
+  }
+
+  private passageOf(range: VerseRange): PassageQuery {
+    return {
+      bookId: this.verseReference.bookId,
+      chapter: range.chapterNumber,
+      verses: range.verseNumberEnd
+        ? [range.verseNumber, range.verseNumberEnd]
+        : [range.verseNumber],
+    }
   }
 
   /**
    * Fetch verses from multiple chapters for cross-chapter references
    */
-  private async getCrossChapterVerses(range: VerseRange): Promise<IVerse[]> {
+  private async getCrossChapterVerses(
+    bibleVersion: IBibleVersion,
+    range: VerseRange
+  ): Promise<IVerse[]> {
     const segments = splitIntoChapterSegments({
       bookName: this.verseReference.bookName,
       ...range,
@@ -152,13 +160,13 @@ export class VerseSuggesting extends BaseVerseFormatter {
     // Execute API calls in parallel
     const results = await Promise.allSettled(
       segments.map((segment) =>
-        this.bibleProvider.query(
-          bookNameForId(this.verseReference.bookId, 'en'),
-          segment.chapterNumber,
-          segment.verseEnd
+        lookupVerses(bibleVersion, {
+          bookId: this.verseReference.bookId,
+          chapter: segment.chapterNumber,
+          verses: segment.verseEnd
             ? [segment.verseStart, segment.verseEnd]
-            : [segment.verseStart, 999] // 999 as upper bound for "to end of chapter"
-        )
+            : [segment.verseStart, 999], // 999 as upper bound for "to end of chapter"
+        })
       )
     )
 
@@ -231,18 +239,8 @@ export class VerseSuggesting extends BaseVerseFormatter {
       )
     }
 
-    // 'original' resolves through the API provider, not a URL template.
     if (sourceOfReference === 'original') {
-      if (!this.bibleProvider) {
-        const bibleVersion = getBibleVersion(this.bibleVersion)
-        if (bibleVersion) {
-          this.bibleProvider = buildProvider(bibleVersion)
-        }
-      }
-      return (
-        this.bibleProvider?.getOriginalVerseReferenceLink() ||
-        getBibleGatewayFallback()
-      )
+      return this.originalSourceUrl || getBibleGatewayFallback()
     }
 
     // Each external source builds its own URL; any failure falls back to
