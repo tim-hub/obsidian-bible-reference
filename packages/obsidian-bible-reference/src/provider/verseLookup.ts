@@ -3,7 +3,7 @@ import { IBibleVersion } from '../interfaces/IBibleVersion'
 import { IVerse } from '../interfaces/IVerse'
 import { BibleAPISourceCollection } from '../data/BibleApiSourceCollection'
 import { bookNameForId } from '../utils/bookNameReference'
-import { PassageQuery, VerseSource, versesQueryString } from './verseSource'
+import { PassageQuery, VerseSource } from './verseSource'
 import { bibleApiSource } from './bibleApiSource'
 import { bollsLifeSource } from './bollsLifeSource'
 import { bibleSuperSearchSource } from './bibleSuperSearchSource'
@@ -45,7 +45,14 @@ export const sourceUrlFor = (
   query: PassageQuery
 ): string =>
   isOffline(version)
-    ? `https://bible-api.com/${bookNameForId(query.bookId, 'en')}+${query.chapter}:${versesQueryString(query.verses)}?translation=web`
+    ? bibleApiSource.sourceUrl(
+        {
+          ...version,
+          key: 'web',
+          apiSource: BibleAPISourceCollection.bibleApi,
+        },
+        query
+      )
     : sourceFor(version).sourceUrl(version, query)
 
 export const lookupVerses = async (

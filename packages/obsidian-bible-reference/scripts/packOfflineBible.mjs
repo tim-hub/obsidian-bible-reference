@@ -10,11 +10,18 @@ const bibleJsonPath = path.resolve(
 	'../src/data/offlineBible.web.json'
 )
 
-export const packedOfflineBibleModule = () => {
+const packModule = () => {
 	const bible = JSON.parse(fs.readFileSync(bibleJsonPath, 'utf8'))
 	const text = bible
 		.map((book) => book.map((chapter) => chapter.join('\n')).join('\x1e'))
 		.join('\x1d')
 	const base64 = gzipSync(text, { level: 9 }).toString('base64')
 	return `export default ${JSON.stringify(base64)}`
+}
+
+let packedModule
+
+export const packedOfflineBibleModule = () => {
+	packedModule ??= packModule()
+	return packedModule
 }
