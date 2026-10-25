@@ -169,7 +169,7 @@ export abstract class BaseBibleAPIProvider {
       console.error('error while querying', e)
       // Graceful degrade: fall back to the bundled WEB text for this lookup.
       // Not written to verseCache, so the selected version's cache stays clean.
-      const offline = offlineLookup(bookName, chapter, verse)
+      const offline = await offlineLookup(bookName, chapter, verse)
       if (offline.length) {
         console.debug('falling back to bundled offline WEB verses')
         return offline

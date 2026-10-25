@@ -23,11 +23,11 @@ const bible = offlineBible as string[][][]
  *
  * Returns the verses that exist; `[]` when the book/chapter is out of range.
  */
-export const offlineLookup = (
+export const offlineLookup = async (
   bookName: string,
   chapter: number,
   verse: number[]
-): IVerse[] => {
+): Promise<IVerse[]> => {
   let bookId: number
   try {
     bookId = getBookIdFromBookName(bookName)

@@ -20,7 +20,7 @@ export class OfflineProvider extends BaseBibleAPIProvider {
     this.buildRequestURL(bookName, chapter, verse)
     this.updateOriginalReferenceUrl()
     this._bibleReferenceHead = `${bookName} ${chapter}:${verse.join('-')}`
-    return offlineLookup(bookName, chapter, verse)
+    return await offlineLookup(bookName, chapter, verse)
   }
 
   public buildRequestURL(
