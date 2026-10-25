@@ -1,5 +1,6 @@
 import { IVerse } from '../interfaces/IVerse'
 import { bookNameForId } from '../utils/bookNameReference'
+import { gunzipSync, strFromU8 } from 'fflate'
 import packedBible from 'offline-bible-packed'
 
 const BOOK_SEPARATOR = '\x1d'
@@ -11,14 +12,11 @@ const VERSE_SEPARATOR = '\n'
  *   offlineBible[bookId-1][chapter-1][verse-1] = verse text
  * Canonical 66-book Protestant order (aligned to getTranslationBooks('en')).
  */
-let bible: Promise<string[][][]> | undefined
+let bible: string[][][] | undefined
 
-const decodeBible = async (): Promise<string[][][]> => {
+const decodeBible = (): string[][][] => {
   const bytes = Uint8Array.from(atob(packedBible), (char) => char.charCodeAt(0))
-  const text = await new Response(
-    new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'))
-  ).text()
-  return text
+  return strFromU8(gunzipSync(bytes))
     .split(BOOK_SEPARATOR)
     .map((book) =>
       book
@@ -43,7 +41,7 @@ export const offlineLookup = async (
   verse: number[]
 ): Promise<IVerse[]> => {
   bible ??= decodeBible()
-  const chapterVerses = (await bible)[bookId - 1]?.[chapter - 1]
+  const chapterVerses = bible[bookId - 1]?.[chapter - 1]
   if (!chapterVerses) {
     return []
   }
