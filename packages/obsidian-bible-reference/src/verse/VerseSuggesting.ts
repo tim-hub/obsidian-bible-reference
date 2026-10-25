@@ -23,10 +23,7 @@ import {
   VerseRange,
   VerseReference,
 } from '../utils/splitBibleReference'
-import {
-  getCanonicalBookName,
-  getFullBookName,
-} from '../utils/bookNameReference'
+import { bookNameForId } from '../utils/bookNameReference'
 
 /**
  * Verse Suggesting
@@ -38,31 +35,9 @@ export class VerseSuggesting extends BaseVerseFormatter {
 
   constructor(
     settings: BibleReferencePluginSettings,
-    bookName: string,
-    chapterNumber: number,
-    verseNumber: number,
-    verseNumberEnd?: number,
-    chapterNumberEnd?: number,
-    verseNumberEndChapter?: number,
-    ranges?: VerseRange[]
+    verseReference: VerseReference
   ) {
-    super(settings, {
-      bookName: bookName,
-      chapterNumber: chapterNumber,
-      verseNumber: verseNumber,
-      verseNumberEnd: verseNumberEnd,
-      chapterNumberEnd: chapterNumberEnd,
-      verseNumberEndChapter: verseNumberEndChapter,
-      ranges: ranges || [
-        {
-          chapterNumber,
-          verseNumber,
-          verseNumberEnd,
-          chapterNumberEnd,
-          verseNumberEndChapter,
-        },
-      ],
-    })
+    super(settings, verseReference)
     this.bibleVersion = settings.bibleVersion
   }
 
@@ -143,7 +118,7 @@ export class VerseSuggesting extends BaseVerseFormatter {
         return this.getCrossChapterVerses(range)
       } else {
         const verses = await this.bibleProvider.query(
-          getFullBookName(this.verseReference.bookName, 'en'),
+          bookNameForId(this.verseReference.bookId, 'en'),
           range.chapterNumber,
           range?.verseNumberEnd
             ? [range.verseNumber, range.verseNumberEnd]
@@ -178,7 +153,7 @@ export class VerseSuggesting extends BaseVerseFormatter {
     const results = await Promise.allSettled(
       segments.map((segment) =>
         this.bibleProvider.query(
-          getFullBookName(this.verseReference.bookName, 'en'),
+          bookNameForId(this.verseReference.bookId, 'en'),
           segment.chapterNumber,
           segment.verseEnd
             ? [segment.verseStart, segment.verseEnd]
@@ -220,6 +195,7 @@ export class VerseSuggesting extends BaseVerseFormatter {
     const sourceOfReference = this.settings.sourceOfReference || 'biblegateway'
     const {
       bookName,
+      bookId,
       chapterNumber,
       verseNumber,
       verseNumberEnd,
@@ -269,42 +245,38 @@ export class VerseSuggesting extends BaseVerseFormatter {
       )
     }
 
-    // The external sources key their book maps on the catalog's English name,
-    // so anything the user may have typed instead - an abbreviation ("Ps"), or
-    // an alternate spelling ("Psalms" for "Psalm") - has to be resolved first
-    // or the lookup misses and the source silently degrades to Bible Gateway.
-    const canonicalBookName = getCanonicalBookName(bookName)
-
     // Each external source builds its own URL; any failure falls back to
     // Bible Gateway. ('biblegateway' and any unknown source ARE the fallback.)
-    const urlBuilders: { [source: string]: () => string } = {
-      blb: () =>
+    const urlBuilders: {
+      [source: string]: (englishBookName: string) => string
+    } = {
+      blb: (englishBookName) =>
         getBLBUrl(
           this.bibleVersion,
-          canonicalBookName,
+          englishBookName,
           chapterNumber,
           verseNumber,
           verseNumberEnd
         ),
-      literalword: () =>
+      literalword: (englishBookName) =>
         getLiteralWordUrl(
           this.bibleVersion,
-          canonicalBookName,
+          englishBookName,
           chapterNumber,
           verseNumber
         ),
-      logos: () =>
+      logos: (englishBookName) =>
         getLogosUrl(
           getLogosTranslation(this.settings, this.bibleVersion),
-          canonicalBookName,
+          englishBookName,
           chapterNumber,
           verseNumber,
           verseNumberEnd
         ),
-      stepbible: () =>
+      stepbible: (englishBookName) =>
         getStepbibleUrl(
           this.bibleVersion,
-          canonicalBookName,
+          englishBookName,
           chapterNumber,
           verseNumber,
           verseNumberEnd,
@@ -318,7 +290,7 @@ export class VerseSuggesting extends BaseVerseFormatter {
       return getBibleGatewayFallback()
     }
     try {
-      return buildUrl()
+      return buildUrl(bookNameForId(bookId, 'en'))
     } catch (error) {
       console.error(`Error generating ${sourceOfReference} URL:`, error)
       return getBibleGatewayFallback()

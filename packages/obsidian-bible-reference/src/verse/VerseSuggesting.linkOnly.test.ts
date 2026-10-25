@@ -13,17 +13,7 @@ const buildSuggesting = (
   overrides: Partial<BibleReferencePluginSettings> = {}
 ): VerseSuggesting => {
   const settings = { ...DEFAULT_SETTINGS, ...overrides }
-  const reference = splitBibleReference(query)
-  return new VerseSuggesting(
-    settings,
-    reference.bookName,
-    reference.chapterNumber,
-    reference.verseNumber,
-    reference.verseNumberEnd,
-    reference.chapterNumberEnd,
-    reference.verseNumberEndChapter,
-    reference.ranges
-  )
+  return new VerseSuggesting(settings, splitBibleReference(query))
 }
 
 describe('VerseSuggesting.linkOnlyContent', () => {
@@ -105,8 +95,8 @@ describe('VerseSuggesting.linkOnlyContent', () => {
       bibleVersion: 'kjv',
       sourceOfReference: 'blb',
     })
-    // @ts-ignore - force an unmapped book name past the parser
-    suggesting.verseReference.bookName = 'UnknownBook'
+    // @ts-ignore
+    suggesting.verseReference.bookId = 0
     expect(suggesting.linkOnlyContent).toContain(
       'https://www.biblegateway.com/passage/'
     )
@@ -117,8 +107,8 @@ describe('VerseSuggesting.linkOnlyContent', () => {
       bibleVersion: 's00',
       sourceOfReference: 'blb',
     })
-    // @ts-ignore - force an unmapped book name past the parser
-    suggesting.verseReference.bookName = 'UnknownBook'
+    // @ts-ignore
+    suggesting.verseReference.bookId = 0
     expect(suggesting.linkOnlyContent).toContain('&version=SCH2000)')
   })
 })
