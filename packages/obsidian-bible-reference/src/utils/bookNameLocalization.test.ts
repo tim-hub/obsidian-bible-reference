@@ -1,3 +1,4 @@
+import { describe, expect, spyOn, test } from 'bun:test'
 import { localizedBookName, bookIdForVersion } from './bookNameLocalization'
 import { getBibleVersion } from '../data/BibleVersionCollection'
 import { BookNameLanguageEnum } from '../data/constants'
@@ -44,6 +45,13 @@ describe('localizedBookName', () => {
     expect(
       localizedBookName('John', undefined, BookNameLanguageEnum.VersionSpecific)
     ).toBe('John')
+  })
+
+  test('an uncatalogued version locale does not log a catalog error', () => {
+    const consoleError = spyOn(console, 'error')
+    localizedBookName('John', polish, BookNameLanguageEnum.VersionSpecific)
+    expect(consoleError).not.toHaveBeenCalled()
+    consoleError.mockRestore()
   })
 })
 

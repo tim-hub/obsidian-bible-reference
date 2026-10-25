@@ -254,7 +254,7 @@ Versions whose **Book-name locale** has no catalog (`ar`, `nl`, `pl`, `ru`, …)
 In `packages/obsidian-bible-reference/src/utils/bookNameLocalization.test.ts`, add as the first line:
 
 ```ts
-import { spyOn } from 'bun:test'
+import { describe, expect, spyOn, test } from 'bun:test'
 ```
 
 and add inside `describe('localizedBookName', () => { ... })`:

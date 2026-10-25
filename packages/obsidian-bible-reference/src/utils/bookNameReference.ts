@@ -1,9 +1,23 @@
-import Reference from 'bible-reference-toolkit'
+import Reference, { SupportedLanguages } from 'bible-reference-toolkit'
+
+const isCatalogLocale = (languageCode: string): boolean =>
+  SupportedLanguages.includes(languageCode.toLowerCase())
+
+export const bookNameForId = (
+  bookId: number,
+  languageCode: string = 'en'
+): string =>
+  isCatalogLocale(languageCode)
+    ? Reference.bookNameFromTranslationAndId(languageCode, bookId)
+    : Reference.bookEnglishFullNameFromId(bookId)
 
 export const getBookIdFromBookName = (
   bookName: string,
   languageCode: string = 'en'
 ): number => {
+  if (!isCatalogLocale(languageCode)) {
+    return Reference.bookIdFromName(bookName)
+  }
   try {
     return Reference.bookIdFromTranslationAndName(languageCode, bookName)
   } catch {
@@ -63,13 +77,7 @@ export const getFullBookName = (
   languageCode: string = 'en'
 ): string => {
   console.debug('getFullBookName', name, languageCode)
-  const bookId = getBookIdFromBookName(name, languageCode)
-
-  try {
-    return Reference.bookNameFromTranslationAndId(languageCode, bookId)
-  } catch {
-    return Reference.bookEnglishFullNameFromId(bookId)
-  }
+  return bookNameForId(getBookIdFromBookName(name, languageCode), languageCode)
 }
 
 /**
