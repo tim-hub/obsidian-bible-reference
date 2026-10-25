@@ -7,7 +7,7 @@ src/
   main.ts           # lifecycle only (onload, onunload, addCommand)
   settings.ts       # settings interface + defaults
   data/             # constants, collections, version data
-  provider/         # Bible API provider classes
+  provider/         # verse lookup, verse source adapters, verse cache
   ui/               # modals, settings tab, views
   utils/            # pure utility functions
   verse/            # verse formatting, suggesting logic

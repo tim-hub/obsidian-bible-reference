@@ -54,7 +54,7 @@ export const lookupVerses = async (
 ): Promise<IVerse[]> => {
   const bookName = bookNameForId(query.bookId, 'en')
   if (isOffline(version)) {
-    return await offlineLookup(bookName, query.chapter, query.verses)
+    return await offlineLookup(query.bookId, query.chapter, query.verses)
   }
 
   const source = sourceFor(version)
@@ -99,7 +99,11 @@ export const lookupVerses = async (
     return hits.length ? hits : fetched
   } catch (error) {
     console.error('error while querying', error)
-    const offline = await offlineLookup(bookName, query.chapter, query.verses)
+    const offline = await offlineLookup(
+      query.bookId,
+      query.chapter,
+      query.verses
+    )
     if (offline.length) {
       console.debug('falling back to bundled offline WEB verses')
       return offline

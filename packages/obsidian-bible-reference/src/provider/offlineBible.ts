@@ -1,5 +1,5 @@
 import { IVerse } from '../interfaces/IVerse'
-import { getBookIdFromBookName } from '../utils/bookNameReference'
+import { bookNameForId } from '../utils/bookNameReference'
 import packedBible from 'offline-bible-packed'
 
 const BOOK_SEPARATOR = '\x1d'
@@ -30,11 +30,7 @@ const decodeBible = async (): Promise<string[][][]> => {
 /**
  * Resolve verses from the in-memory bundled WEB text — no network.
  *
- * `bookName` may be in any supported language; it is normalized to a canonical
- * book id so the English bundle resolves even when a version renders non-English
- * book names.
- *
- * `verse` mirrors the query verse[] semantics used across providers:
+ * `verse` mirrors the query verse[] semantics:
  *   [n]          -> verse n
  *   [a, b]       -> a..b
  *   [a, 999]     -> a..end of chapter (open-ended sentinel)
@@ -42,16 +38,10 @@ const decodeBible = async (): Promise<string[][][]> => {
  * Returns the verses that exist; `[]` when the book/chapter is out of range.
  */
 export const offlineLookup = async (
-  bookName: string,
+  bookId: number,
   chapter: number,
   verse: number[]
 ): Promise<IVerse[]> => {
-  let bookId: number
-  try {
-    bookId = getBookIdFromBookName(bookName)
-  } catch {
-    return []
-  }
   bible ??= decodeBible()
   const chapterVerses = (await bible)[bookId - 1]?.[chapter - 1]
   if (!chapterVerses) {
@@ -70,7 +60,12 @@ export const offlineLookup = async (
   for (let n = start; n <= end; n++) {
     const text = chapterVerses[n - 1]
     if (text) {
-      verses.push({ book_name: bookName, chapter, verse: n, text })
+      verses.push({
+        book_name: bookNameForId(bookId, 'en'),
+        chapter,
+        verse: n,
+        text,
+      })
     }
   }
   return verses

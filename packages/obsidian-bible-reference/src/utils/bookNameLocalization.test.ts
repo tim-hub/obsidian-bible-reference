@@ -1,11 +1,10 @@
 import { describe, expect, spyOn, test } from 'bun:test'
-import { localizedBookName, bookIdForVersion } from './bookNameLocalization'
+import { localizedBookName } from './bookNameLocalization'
 import { getBibleVersion } from '../data/BibleVersionCollection'
 import { BookNameLanguageEnum } from '../data/constants'
 
 const traditional = getBibleVersion('cuv') // code: zh_tw
 const simplified = getBibleVersion('cunps') // code: zh_cn
-const english = getBibleVersion('bbe') // code: en
 const polish = getBibleVersion('ubg') // code: pl — no catalog
 
 describe('localizedBookName', () => {
@@ -44,15 +43,5 @@ describe('localizedBookName', () => {
     localizedBookName(43, polish, BookNameLanguageEnum.VersionSpecific)
     expect(consoleError).not.toHaveBeenCalled()
     consoleError.mockRestore()
-  })
-})
-
-describe('bookIdForVersion', () => {
-  test('resolves a localized (Traditional) name to its book id', () => {
-    expect(bookIdForVersion('約翰福音', traditional!)).toBe(43)
-  })
-
-  test('resolves an English name via the all-language fallback', () => {
-    expect(bookIdForVersion('John', english!)).toBe(43)
   })
 })
