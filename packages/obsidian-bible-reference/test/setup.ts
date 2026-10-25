@@ -1,4 +1,19 @@
 import { mock } from 'bun:test'
+import { plugin } from 'bun'
+import {
+  OFFLINE_BIBLE_MODULE,
+  packedOfflineBibleModule,
+} from '../scripts/packOfflineBible.mjs'
+
+plugin({
+  name: OFFLINE_BIBLE_MODULE,
+  setup(build) {
+    build.module(OFFLINE_BIBLE_MODULE, () => ({
+      contents: packedOfflineBibleModule(),
+      loader: 'js',
+    }))
+  },
+})
 
 // The `obsidian` package is a types-only dependency with no runtime entry point,
 // so importing any plugin module that pulls in `obsidian` fails under `bun test`.

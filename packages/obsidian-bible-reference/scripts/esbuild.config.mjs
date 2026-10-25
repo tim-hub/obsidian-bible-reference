@@ -5,6 +5,21 @@ import path from "path";
 import fs from "fs/promises";
 import { watch } from "fs";
 import { fileURLToPath } from "url";
+import { OFFLINE_BIBLE_MODULE, packedOfflineBibleModule } from "./packOfflineBible.mjs";
+
+const offlineBiblePlugin = {
+	name: OFFLINE_BIBLE_MODULE,
+	setup(build) {
+		build.onResolve({ filter: new RegExp(`^${OFFLINE_BIBLE_MODULE}$`) }, () => ({
+			path: OFFLINE_BIBLE_MODULE,
+			namespace: OFFLINE_BIBLE_MODULE,
+		}));
+		build.onLoad({ filter: /.*/, namespace: OFFLINE_BIBLE_MODULE }, () => ({
+			contents: packedOfflineBibleModule(),
+			loader: "js",
+		}));
+	},
+};
 
 const banner =
 `/*
@@ -83,6 +98,7 @@ const context = await esbuild.context({
 	treeShaking: true,
 	outdir: resolvedOutDir,
 	minify: prod,
+	plugins: [offlineBiblePlugin],
 });
 
 if (prod) {

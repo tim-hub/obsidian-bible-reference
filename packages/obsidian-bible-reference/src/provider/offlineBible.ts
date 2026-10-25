@@ -1,13 +1,31 @@
 import { IVerse } from '../interfaces/IVerse'
 import { getBookIdFromBookName } from '../utils/bookNameReference'
-import offlineBible from '../data/offlineBible.web.json'
+import packedBible from 'offline-bible-packed'
+
+const BOOK_SEPARATOR = '\x1d'
+const CHAPTER_SEPARATOR = '\x1e'
+const VERSE_SEPARATOR = '\n'
 
 /**
  * Bundled World English Bible (public domain), indexed by position:
  *   offlineBible[bookId-1][chapter-1][verse-1] = verse text
  * Canonical 66-book Protestant order (aligned to getTranslationBooks('en')).
  */
-const bible = offlineBible as string[][][]
+let bible: Promise<string[][][]> | undefined
+
+const decodeBible = async (): Promise<string[][][]> => {
+  const bytes = Uint8Array.from(atob(packedBible), (char) => char.charCodeAt(0))
+  const text = await new Response(
+    new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'))
+  ).text()
+  return text
+    .split(BOOK_SEPARATOR)
+    .map((book) =>
+      book
+        .split(CHAPTER_SEPARATOR)
+        .map((chapter) => chapter.split(VERSE_SEPARATOR))
+    )
+}
 
 /**
  * Resolve verses from the in-memory bundled WEB text — no network.
@@ -34,7 +52,8 @@ export const offlineLookup = async (
   } catch {
     return []
   }
-  const chapterVerses = bible[bookId - 1]?.[chapter - 1]
+  bible ??= decodeBible()
+  const chapterVerses = (await bible)[bookId - 1]?.[chapter - 1]
   if (!chapterVerses) {
     return []
   }

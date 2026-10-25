@@ -1,5 +1,7 @@
 import { describe, it, expect } from 'bun:test'
 import { offlineLookup } from './offlineBible'
+import Reference from 'bible-reference-toolkit'
+import bible from '../data/offlineBible.web.json'
 
 describe('offlineLookup (bundled WEB)', () => {
   it('returns a promise', () => {
@@ -40,5 +42,24 @@ describe('offlineLookup (bundled WEB)', () => {
 
   it('returns [] for an out-of-range chapter', async () => {
     expect(await offlineLookup('John', 999, [1])).toEqual([])
+  })
+})
+
+describe('offlineLookup returns the whole bundled WEB text', () => {
+  it('matches every chapter of the source JSON', async () => {
+    const source = bible as string[][][]
+    for (let bookIndex = 0; bookIndex < source.length; bookIndex++) {
+      const bookName = Reference.bookEnglishFullNameFromId(bookIndex + 1)
+      for (
+        let chapterIndex = 0;
+        chapterIndex < source[bookIndex].length;
+        chapterIndex++
+      ) {
+        const verses = await offlineLookup(bookName, chapterIndex + 1, [1, 999])
+        expect(verses.map((v) => v.text)).toEqual(
+          source[bookIndex][chapterIndex].filter((text) => text)
+        )
+      }
+    }
   })
 })
