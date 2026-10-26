@@ -19,9 +19,24 @@ live in `bible-book-names-intl/src/data/translations/*.json`, keyed by their
 **Book-name localization** — turning `(rawBookName, version, bookNameLanguage setting)`
 into a displayed book name, and a localized name back into a book id for API URLs.
 Owned by the `bookNameLocalization` module (`utils/bookNameLocalization.ts`):
-`localizedBookName` for display, `bookIdForVersion` for the API path. The
+`localizedBookName(bookId, version, setting)` for display. The
 English-vs-version-specific decision and the English fallback live here, once —
-callers pass a Version, not a raw locale string.
+callers pass a Version and a book id, not a raw locale string or a name.
+
+**Book id** — the canonical 1–66 number of a book (Protestant order). Resolved
+once from the typed name by `splitBibleReference` and carried on
+`VerseReference.bookId`; every later step (verse counts, verse lookup, links,
+offline text) works from the id, and names are produced from it only for display.
+
+**Verse lookup** — fetching the text of a passage for a Version. Owned by
+`provider/verseLookup.ts`: `lookupVerses(version, passage)` (verse cache, fetch
+of the missing verses, bundled-WEB fallback) and `sourceUrlFor(version, passage)`
+(the "original" link).
+
+**Verse source** — one Bible API behind the verse lookup (bible-api.com, Bolls
+Life, Bible SuperSearch). Each is a stateless `VerseSource` adapter: request URL,
+source URL, response parsing. The bundled offline Version is not a verse source;
+the verse lookup reads it directly.
 
 **Verse-text localization** — comes from Version selection → `apiSource` → provider,
 not from `code`. `code` affects book-name display only.

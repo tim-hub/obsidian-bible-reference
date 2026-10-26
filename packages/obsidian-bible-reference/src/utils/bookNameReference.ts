@@ -1,9 +1,23 @@
-import Reference from 'bible-reference-toolkit'
+import Reference, { SupportedLanguages } from 'bible-reference-toolkit'
+
+const isCatalogLocale = (languageCode: string): boolean =>
+  SupportedLanguages.includes(languageCode.toLowerCase())
+
+export const bookNameForId = (
+  bookId: number,
+  languageCode: string = 'en'
+): string =>
+  isCatalogLocale(languageCode)
+    ? Reference.bookNameFromTranslationAndId(languageCode, bookId)
+    : Reference.bookEnglishFullNameFromId(bookId)
 
 export const getBookIdFromBookName = (
   bookName: string,
   languageCode: string = 'en'
 ): number => {
+  if (!isCatalogLocale(languageCode)) {
+    return Reference.bookIdFromName(bookName)
+  }
   try {
     return Reference.bookIdFromTranslationAndName(languageCode, bookName)
   } catch {
@@ -55,35 +69,5 @@ export const isKnownBookName = (
     return true
   } catch {
     return false
-  }
-}
-
-export const getFullBookName = (
-  name: string,
-  languageCode: string = 'en'
-): string => {
-  console.debug('getFullBookName', name, languageCode)
-  const bookId = getBookIdFromBookName(name, languageCode)
-
-  try {
-    return Reference.bookNameFromTranslationAndId(languageCode, bookId)
-  } catch {
-    return Reference.bookEnglishFullNameFromId(bookId)
-  }
-}
-
-/**
- * Like getFullBookName, but returns the name as written when the catalog does
- * not recognize it instead of throwing. For callers that only need a lookup key
- * and already handle unknown books themselves.
- */
-export const getCanonicalBookName = (
-  name: string,
-  languageCode: string = 'en'
-): string => {
-  try {
-    return getFullBookName(name, languageCode)
-  } catch {
-    return name
   }
 }

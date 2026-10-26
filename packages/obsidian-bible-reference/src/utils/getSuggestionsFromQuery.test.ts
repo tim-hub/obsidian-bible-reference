@@ -1,10 +1,6 @@
 import { getSuggestionsFromQuery } from './getSuggestionsFromQuery'
 import { DEFAULT_SETTINGS } from '../data/constants'
 
-// splitBibleReference does not reject an unknown book - resolveBookName hands
-// the candidate back unchanged - so the throw comes out of localizedBookName
-// instead. That call used to sit outside the try, which turned every keystroke
-// on a line like "--Notabook 1:1" into an unhandled promise rejection.
 describe('getSuggestionsFromQuery with a book that does not exist', () => {
   test.each([
     'Notabook 1:1',

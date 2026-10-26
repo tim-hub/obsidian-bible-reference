@@ -1,6 +1,6 @@
 import { IBibleVersion } from '../interfaces/IBibleVersion'
 import { BookNameLanguageEnum } from '../data/constants'
-import { getFullBookName, getBookIdFromBookName } from './bookNameReference'
+import { bookNameForId } from './bookNameReference'
 
 /**
  * The book-name catalog locale for a version. The "English" setting forces
@@ -17,22 +17,11 @@ const bookNameLocale = (
     : (version?.code ?? 'en')
 
 /**
- * Localized full book name for display, e.g. 'John' -> '約翰福音' for a zh_tw
- * version. Resolves the display locale from the version and the user's
+ * Localized full book name for display. Resolves the display locale from the version and the user's
  * book-name-language setting, then renders the book name in that locale.
  */
 export const localizedBookName = (
-  rawBookName: string,
+  bookId: number,
   version: IBibleVersion | undefined,
   bookNameLanguage: BookNameLanguageEnum | undefined
-): string =>
-  getFullBookName(rawBookName, bookNameLocale(version, bookNameLanguage))
-
-/**
- * Book id for a version's API URL, resolving the (already-localized) book name
- * in the version's own catalog locale.
- */
-export const bookIdForVersion = (
-  bookName: string,
-  version: IBibleVersion
-): number => getBookIdFromBookName(bookName, version.code)
+): string => bookNameForId(bookId, bookNameLocale(version, bookNameLanguage))

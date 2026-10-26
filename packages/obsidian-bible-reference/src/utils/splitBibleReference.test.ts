@@ -217,9 +217,9 @@ test('splitBibleReference - hybrid space pattern (space after number, no space b
   })
 })
 
-test('splitBibleReference - throws error for invalid chapter number', () => {
+test('splitBibleReference - a non-numeric chapter reads as part of an unknown book name', () => {
   expect(() => splitBibleReference('John abc:16')).toThrow(
-    'Invalid chapter number'
+    'Unknown book: "John abc"'
   )
 })
 
@@ -291,7 +291,7 @@ test('splitBibleReference - throws error for non-existent end verse in same chap
 
 test('splitBibleReference - throws error when "a" indicator cannot be resolved due to missing metadata', () => {
   expect(() => splitBibleReference('NonExistentBook 1:a')).toThrow(
-    'Could not resolve "a" indicator'
+    'Unknown book: "NonExistentBook"'
   )
 })
 
@@ -484,6 +484,29 @@ describe('splitBibleReference - unicode dashes in verse ranges', () => {
   test('validation applies across a unicode dash too', () => {
     expect(() => splitBibleReference('John 3:16–500')).toThrow(
       'Invalid end verse'
+    )
+  })
+})
+
+describe('splitBibleReference resolves the book id once', () => {
+  test.each([
+    ['John 3:16', 43],
+    ['Juan 3:16', 43],
+    ['1 Cor 13:4', 46],
+    ['Eph. 2:8', 49],
+    ['Song of Songs 1:1', 22],
+    ['約翰福音 3:16', 43],
+  ])('%s has book id %i', (query, bookId) => {
+    expect(splitBibleReference(query).bookId).toBe(bookId)
+  })
+
+  test('keeps the book name as typed', () => {
+    expect(splitBibleReference('Juan 3:16').bookName).toBe('Juan')
+  })
+
+  test('rejects a book no catalog knows', () => {
+    expect(() => splitBibleReference('Notabook 1:1')).toThrow(
+      'Unknown book: "Notabook"'
     )
   })
 })

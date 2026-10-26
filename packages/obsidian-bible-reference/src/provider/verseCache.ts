@@ -151,7 +151,7 @@ export const verseCache = new VerseCache()
  * is unknowable (open-ended `[n,999]`) so the caller always fetches.
  *   [n]         -> [n]
  *   [a,b] b<999 -> [a..b]
- *   [a,999]     -> null   (whole-chapter-to-end sentinel; matches getCrossChapterVerses)
+ *   [a,999]     -> null   (whole-chapter-to-end sentinel)
  */
 export function expandRequestedVerses(verse: number[]): number[] | null {
   if (verse.length === 1) {

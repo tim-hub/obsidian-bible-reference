@@ -1,5 +1,4 @@
 import Reference from 'bible-reference-toolkit'
-import { getBookIdFromBookName } from '../utils/bookNameReference'
 
 /**
  * Chapter/verse counts for range validation. Backed by bible-reference-toolkit
@@ -8,38 +7,26 @@ import { getBookIdFromBookName } from '../utils/bookNameReference'
 
 /**
  * Get the number of verses in a specific chapter of a book.
- * @param bookName Standard book name
+ * @param bookId Canonical book id, 1-66
  * @param chapterNumber 1-indexed chapter number
- * @returns Number of verses, or 0 if the book/chapter is unknown
+ * @returns Number of verses, or 0 if the chapter is unknown
  */
 export const getVerseCount = (
-  bookName: string,
+  bookId: number,
   chapterNumber: number
 ): number => {
-  try {
-    const bookId = getBookIdFromBookName(bookName)
-    if (
-      chapterNumber < 1 ||
-      chapterNumber > Reference.chaptersInBookId(bookId)
-    ) {
-      return 0
-    }
-    const chapterId = Reference.chaptersUpToBookId(bookId) + chapterNumber
-    return Reference.versesInChapterId(chapterId)
-  } catch {
+  if (chapterNumber < 1 || chapterNumber > Reference.chaptersInBookId(bookId)) {
     return 0
   }
+  return Reference.versesInChapterId(
+    Reference.chaptersUpToBookId(bookId) + chapterNumber
+  )
 }
 
 /**
  * Get the total number of chapters in a book.
- * @param bookName Standard book name
- * @returns Number of chapters, or 0 if the book is unknown
+ * @param bookId Canonical book id, 1-66
+ * @returns Number of chapters
  */
-export const getChapterCount = (bookName: string): number => {
-  try {
-    return Reference.chaptersInBookId(getBookIdFromBookName(bookName))
-  } catch {
-    return 0
-  }
-}
+export const getChapterCount = (bookId: number): number =>
+  Reference.chaptersInBookId(bookId)

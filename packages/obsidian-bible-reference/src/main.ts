@@ -114,6 +114,16 @@ export default class BibleReferencePlugin extends Plugin {
     await this.persistData()
   }
 
+  private async verseOfDayOrNotice(): Promise<VerseOfDaySuggesting | null> {
+    try {
+      return await this.getAndCachedVerseOfDay()
+    } catch (error) {
+      console.error('could not load the verse of the day:', error)
+      new Notice('Bible Reference - could not load the verse of the day')
+      return null
+    }
+  }
+
   private async getAndCachedVerseOfDay(): Promise<VerseOfDaySuggesting> {
     const { ttl, timestamp, verseOfDaySuggesting } =
       this?.cachedVerseOfDaySuggesting || {}
@@ -169,7 +179,10 @@ export default class BibleReferencePlugin extends Plugin {
       name: 'Verse Of The Day - Notice (10 Seconds)',
       callback: async () => {
         // this.verseOfDayModal.open()
-        const verse = await this.getAndCachedVerseOfDay()
+        const verse = await this.verseOfDayOrNotice()
+        if (!verse) {
+          return
+        }
         new Notice(
           `${verse.verseTexts?.join('')} -- ${verse.verseReference.bookName} ${
             verse.verseReference.chapterNumber
@@ -185,8 +198,10 @@ export default class BibleReferencePlugin extends Plugin {
       id: 'obs-vod-insert-verse-of-day',
       name: 'Verse Of The Day - Insert To Current Note',
       editorCallback: async (editor: Editor, view: MarkdownView) => {
-        const vodSuggesting = await this.getAndCachedVerseOfDay()
-        editor.replaceSelection(vodSuggesting.allFormattedContent)
+        const vodSuggesting = await this.verseOfDayOrNotice()
+        if (vodSuggesting) {
+          editor.replaceSelection(vodSuggesting.allFormattedContent)
+        }
       },
     })
   }
