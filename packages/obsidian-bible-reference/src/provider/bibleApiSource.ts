@@ -1,9 +1,15 @@
 import { IVerse } from '../interfaces/IVerse'
 import { bookNameForId } from '../utils/bookNameReference'
-import { VerseSource, versesQueryString } from './verseSource'
+import { getVerseCount } from '../data/BibleVerseData'
+import { PassageQuery, VerseSource, versesQueryString } from './verseSource'
+
+const versesWithRealEnd = (query: PassageQuery): number[] =>
+  query.verses[1] === 999
+    ? [query.verses[0], getVerseCount(query.bookId, query.chapter)]
+    : query.verses
 
 const requestUrl: VerseSource['requestUrl'] = (version, query) =>
-  `${version.apiSource.apiUrl}/${bookNameForId(query.bookId, 'en')}+${query.chapter}:${versesQueryString(query.verses)}?translation=${version.key}`
+  `${version.apiSource.apiUrl}/${bookNameForId(query.bookId, 'en')}+${query.chapter}:${versesQueryString(versesWithRealEnd(query))}?translation=${version.key}`
 
 export const bibleApiSource: VerseSource = {
   readsWholeChapter: false,

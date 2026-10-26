@@ -2,6 +2,7 @@ import { Notice } from 'obsidian'
 import { IBibleVersion } from '../interfaces/IBibleVersion'
 import { IVerse } from '../interfaces/IVerse'
 import { BibleAPISourceCollection } from '../data/BibleApiSourceCollection'
+import { getBibleVersion } from '../data/BibleVersionCollection'
 import { bookNameForId } from '../utils/bookNameReference'
 import { PassageQuery, VerseSource } from './verseSource'
 import { bibleApiSource } from './bibleApiSource'
@@ -11,6 +12,8 @@ import { verseCache, expandRequestedVerses } from './verseCache'
 import { offlineLookup } from './offlineBible'
 
 export type { PassageQuery } from './verseSource'
+
+const WEB_VERSION = getBibleVersion('web')
 
 const isOffline = (version: IBibleVersion): boolean =>
   version.apiSource === BibleAPISourceCollection.offline
@@ -45,14 +48,7 @@ export const sourceUrlFor = (
   query: PassageQuery
 ): string =>
   isOffline(version)
-    ? bibleApiSource.sourceUrl(
-        {
-          ...version,
-          key: 'web',
-          apiSource: BibleAPISourceCollection.bibleApi,
-        },
-        query
-      )
+    ? bibleApiSource.sourceUrl(WEB_VERSION, query)
     : sourceFor(version).sourceUrl(version, query)
 
 export const lookupVerses = async (
@@ -95,7 +91,7 @@ export const lookupVerses = async (
     const fetched = source.parse(await response.json(), version, fetchQuery)
     verseCache.putVerses(version.key, bookName, query.chapter, fetched)
     if (!requested) {
-      return fetched
+      return fetched.filter((verse) => verse.verse >= query.verses[0])
     }
     const { hits } = verseCache.getVerses(
       version.key,

@@ -94,3 +94,33 @@ describe('a cross-chapter reference', () => {
     )
   })
 })
+
+describe('a cross-chapter reference on a version with its own versification', () => {
+  it('keeps the verses past the KJV chapter length', async () => {
+    spyOn(globalThis, 'fetch').mockImplementation(async (input) => {
+      const lastVerse = String(input).includes('/19/51/') ? 21 : 11
+      return {
+        json: async () =>
+          Array.from({ length: lastVerse }, (_, index) => ({
+            book: 19,
+            chapter: String(input).includes('/19/51/') ? 51 : 52,
+            verse: index + 1,
+            text: `wlc ${index + 1}`,
+          })),
+      } as unknown as Response
+    })
+    const suggesting = new VerseSuggesting(
+      { ...settings, bibleVersion: 'wlc' },
+      splitBibleReference('Psalm 51:18-52:2')
+    )
+    const verses = await suggesting.getVerses()
+    expect(verses.map((verse) => `${verse.chapter}:${verse.verse}`)).toEqual([
+      '51:18',
+      '51:19',
+      '51:20',
+      '51:21',
+      '52:1',
+      '52:2',
+    ])
+  })
+})

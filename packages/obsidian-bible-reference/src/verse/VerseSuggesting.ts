@@ -11,7 +11,6 @@ import {
   sourceUrlFor,
 } from '../provider/verseLookup'
 import { IBibleVersion } from '../interfaces/IBibleVersion'
-import { getVerseCount } from '../data/BibleVerseData'
 import { BaseVerseFormatter } from './BaseVerseFormatter'
 import { getBLBUrl } from '../utils/referenceBLBAltLinking'
 import { getLiteralWordUrl } from '../utils/referenceLiteralWordLinking'
@@ -157,10 +156,7 @@ export class VerseSuggesting extends BaseVerseFormatter {
     } as VerseReference).map((segment) => ({
       bookId,
       chapter: segment.chapterNumber,
-      verses: [
-        segment.verseStart,
-        segment.verseEnd ?? getVerseCount(bookId, segment.chapterNumber),
-      ],
+      verses: [segment.verseStart, segment.verseEnd ?? 999],
     }))
   }
 
