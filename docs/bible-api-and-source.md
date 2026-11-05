@@ -24,7 +24,7 @@ This plugin Bible Verse Query Functionality is currently powered by
   - **RCCV**: Romanian Corrected Cornilescu Version (Book Names Are In English, Bible Verses Are In Romanian)
 - Bolls Life
   - **MEV**: Modern English Version (Bolls Life)
-  - **NIV**: New International Version, 1984 (Bolls Life)
+  - **CSB**: Christian Standard Bible, 2017 (Bolls Life)
   - **NKJV**: New King James Version (Bolls Life)
   - **CUV**: China Union Version (Bolls Life) (Book Names Are In English, Bible Verses Are In Chinese)
   - **ESV**: English Standard Version (Bolls Life)
