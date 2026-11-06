@@ -27,6 +27,9 @@ export function getStepbibleUrl(
   if (stepbibleVersion === 'NIV2011') {
     stepbibleVersion = 'NIV'
   }
+  if (stepbibleVersion === 'CSB17') {
+    stepbibleVersion = 'CSB'
+  }
 
   // Build reference string
   let reference = `${bookCode}.${chapterNumber}.${verseNumber}`

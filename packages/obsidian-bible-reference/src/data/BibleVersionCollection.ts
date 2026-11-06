@@ -53,6 +53,7 @@ export const BibleVersionCollectionEnglish = [
     code: 'en',
     apiSource: BibleAPISourceCollection.bollsLife,
     infoURL: 'https://en.wikipedia.org/wiki/Christian_Standard_Bible',
+    bibleGatewayKey: 'CSB',
   },
   {
     key: 'drb',

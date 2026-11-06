@@ -37,6 +37,7 @@ describe('VerseSuggesting.linkOnlyContent', () => {
   it.each([
     ['s00', 'SCH2000'],
     ['sch', 'SCH1951'],
+    ['csb17', 'CSB'],
   ])(
     'links %s to its Bible Gateway version code %s',
     (bibleVersion, bibleGatewayKey) => {

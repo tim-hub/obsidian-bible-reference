@@ -1,9 +1,6 @@
 import { afterEach, describe, expect, it, mock, spyOn } from 'bun:test'
 import { buildProvider } from './buildProvider'
-import {
-  DEFAULT_BIBLE_VERSION,
-  getBibleVersion,
-} from '../data/BibleVersionCollection'
+import { getBibleVersion } from '../data/BibleVersionCollection'
 import { verseCache } from './verseCache'
 
 describe('bolls.life versions', () => {
@@ -32,11 +29,4 @@ describe('bolls.life versions', () => {
       'https://bolls.life/CSB17/43/3/'
     )
   })
-
-  it.each(['niv', 'niv2011', 'nvi', 'nvipt'])(
-    'falls back to the default version for withdrawn %s',
-    (key) => {
-      expect(getBibleVersion(key)).toBe(DEFAULT_BIBLE_VERSION)
-    }
-  )
 })

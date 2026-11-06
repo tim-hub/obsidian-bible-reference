@@ -36,6 +36,13 @@ describe('getStepbibleUrl', () => {
     )
   })
 
+  test('generates correct URL for csb17 (maps to CSB)', () => {
+    const url = getStepbibleUrl('csb17', 'John', 3, 16)
+    expect(url).toBe(
+      'https://www.stepbible.org/?q=version=CSB|reference=John.3.16&skipwelcome'
+    )
+  })
+
   test('generates correct URL with verse range', () => {
     const url = getStepbibleUrl('KJV', 'Romans', 8, 28, 30)
     expect(url).toBe(
