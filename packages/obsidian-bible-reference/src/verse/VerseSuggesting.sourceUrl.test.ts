@@ -4,23 +4,14 @@ import {
   DEFAULT_SETTINGS,
 } from '../data/constants'
 import { splitBibleReference } from '../utils/splitBibleReference'
+import { getSuggestionsFromQuery } from '../utils/getSuggestionsFromQuery'
 
 const buildSuggesting = (
   query: string,
   overrides: Partial<BibleReferencePluginSettings> = {}
 ): VerseSuggesting => {
   const settings = { ...DEFAULT_SETTINGS, ...overrides }
-  const reference = splitBibleReference(query)
-  return new VerseSuggesting(
-    settings,
-    reference.bookName,
-    reference.chapterNumber,
-    reference.verseNumber,
-    reference.verseNumberEnd,
-    reference.chapterNumberEnd,
-    reference.verseNumberEndChapter,
-    reference.ranges
-  )
+  return new VerseSuggesting(settings, splitBibleReference(query))
 }
 
 const urlFor = (
@@ -81,10 +72,27 @@ describe('the external source URL for a book name the user typed', () => {
       bibleVersion: 'kjv',
       sourceOfReference: 'literalword',
     })
-    // @ts-ignore - force an unmapped book name past the parser
-    suggesting.verseReference.bookName = 'UnknownBook'
+    // @ts-ignore
+    suggesting.verseReference.bookId = 0
     expect(suggesting.linkOnlyContent).toContain(
       'https://www.biblegateway.com/passage/'
     )
+  })
+})
+
+describe('the external source URL for a localized book name', () => {
+  it('links a Chinese display name to the English Literal Word book', async () => {
+    const [suggesting] = await getSuggestionsFromQuery(
+      'John 3:16',
+      {
+        ...DEFAULT_SETTINGS,
+        bibleVersion: 'cuv',
+        sourceOfReference: 'literalword',
+      },
+      undefined,
+      true
+    )
+    expect(suggesting.linkOnlyContent).toContain('約翰福音 3:16')
+    expect(suggesting.linkOnlyContent).toContain('https://app.literalword.com/')
   })
 })

@@ -1,6 +1,6 @@
 import {
+  bookNameForId,
   getBookIdFromBookName,
-  getFullBookName,
   resolveBookName,
 } from './bookNameReference'
 
@@ -46,32 +46,36 @@ describe('test bookNameReference', () => {
   })
 })
 
-describe('test getFullBookName', () => {
+describe('test bookNameForId', () => {
   it('should return full book name in English', () => {
-    expect(getFullBookName('Gen', 'en')).toBe('Genesis')
+    expect(bookNameForId(1, 'en')).toBe('Genesis')
   })
 
   it('should return full book name for numbered books', () => {
-    expect(getFullBookName('1 John', 'en')).toBe('1 John')
+    expect(bookNameForId(62, 'en')).toBe('1 John')
   })
 
   it('should return Hindi book name when language is hi', () => {
-    expect(getFullBookName('Genesis', 'hi')).toBe('उत्पत्ति')
-    expect(getFullBookName('Psalms', 'hi')).toBe('भजन संहिता')
+    expect(bookNameForId(1, 'hi')).toBe('उत्पत्ति')
+    expect(bookNameForId(19, 'hi')).toBe('भजन संहिता')
   })
 
   it('should fallback to English name for unsupported language', () => {
-    // When language code is invalid, it should fallback to English
-    const result = getFullBookName('Genesis', 'invalidCode')
-    expect(result).toBe('Genesis')
+    expect(bookNameForId(1, 'invalidCode')).toBe('Genesis')
   })
 
   it('should return Philippians for php in English', () => {
-    expect(getFullBookName('php', 'en')).toBe('Philippians')
+    expect(bookNameForId(getBookIdFromBookName('php'), 'en')).toBe(
+      'Philippians'
+    )
   })
 
   it('should return Isaiah for isa in English', () => {
-    expect(getFullBookName('isa', 'en')).toBe('Isaiah')
+    expect(bookNameForId(getBookIdFromBookName('isa'), 'en')).toBe('Isaiah')
+  })
+
+  it('should throw for an id outside the canon', () => {
+    expect(() => bookNameForId(0, 'en')).toThrow('Book id out of range')
   })
 })
 
@@ -88,8 +92,10 @@ describe('book names written with an abbreviating period', () => {
   })
 
   it('should return the full name for a dotted abbreviation', () => {
-    expect(getFullBookName('Eph.', 'en')).toBe('Ephesians')
-    expect(getFullBookName('1 Cor.', 'en')).toBe('1 Corinthians')
+    expect(bookNameForId(getBookIdFromBookName('Eph.'), 'en')).toBe('Ephesians')
+    expect(bookNameForId(getBookIdFromBookName('1 Cor.'), 'en')).toBe(
+      '1 Corinthians'
+    )
   })
 
   it('should tolerate extra whitespace around the ordinal', () => {

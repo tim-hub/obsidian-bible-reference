@@ -1,4 +1,4 @@
-import { buildProvider } from './buildProvider'
+import { lookupVerses } from './verseLookup'
 import { splitBibleReference } from '../utils/splitBibleReference'
 import { getBibleVersion } from '../data/BibleVersionCollection'
 import { IVerse } from '../interfaces/IVerse'
@@ -53,17 +53,15 @@ export const getEnhancedVod = async (
       return vodResponse
     }
 
-    const provider = buildProvider(userBibleVersion)
-
     const verses = parsedReference.verseNumberEnd
       ? [parsedReference.verseNumber, parsedReference.verseNumberEnd]
       : [parsedReference.verseNumber]
 
-    const enhancedVerse = await provider.query(
-      parsedReference.bookName,
-      parsedReference.chapterNumber,
-      verses
-    )
+    const enhancedVerse = await lookupVerses(userBibleVersion, {
+      bookId: parsedReference.bookId,
+      chapter: parsedReference.chapterNumber,
+      verses,
+    })
 
     return {
       ...vodResponse,

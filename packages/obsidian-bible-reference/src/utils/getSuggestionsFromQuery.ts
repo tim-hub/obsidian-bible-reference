@@ -28,16 +28,12 @@ export const getSuggestionsFromQuery = async (
   // Parse first, then localize the book name it resolved. Deriving the book
   // name separately here used to let a reference parse while its book name
   // resolved differently (or not at all).
-  // Both calls sit inside the try. splitBibleReference does not reject an
-  // unknown book - resolveBookName hands the candidate back unchanged - so the
-  // throw for "Notabook 1:1" comes out of localizedBookName instead. Leaving it
-  // outside turned every such keystroke into an unhandled promise rejection.
   let verseRef
   let bookName
   try {
     verseRef = splitBibleReference(queryWithoutPrefix)
     bookName = localizedBookName(
-      verseRef.bookName,
+      verseRef.bookId,
       getBibleVersion(translation ? translation : settings.bibleVersion),
       settings.bookNameLanguage
     )
@@ -51,35 +47,13 @@ export const getSuggestionsFromQuery = async (
   }
   console.debug('selected bookName', bookName)
 
-  const {
-    chapterNumber,
-    verseNumber,
-    verseNumberEnd,
-    chapterNumberEnd,
-    verseNumberEndChapter,
-    ranges,
-  } = verseRef
-
   // todo get bibleVersion and language from settings
-  const suggestingVerse = new VerseSuggesting(
-    settings,
+  const suggestingVerse = new VerseSuggesting(settings, {
+    ...verseRef,
     bookName,
-    chapterNumber,
-    verseNumber,
-    verseNumberEnd,
-    chapterNumberEnd,
-    verseNumberEndChapter,
-    ranges
-  )
+  })
 
-  console.debug(
-    bookName,
-    chapterNumber,
-    verseNumber,
-    verseNumberEnd,
-    suggestingVerse,
-    settings
-  )
+  console.debug(bookName, suggestingVerse, settings)
   if (!linkOnly) {
     await suggestingVerse.fetchAndSetVersesText()
   }

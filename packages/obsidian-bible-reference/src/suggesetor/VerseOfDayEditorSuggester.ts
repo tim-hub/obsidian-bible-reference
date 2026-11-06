@@ -31,7 +31,13 @@ export class VerseOfDayEditorSuggester extends EditorSuggest<VerseOfDaySuggestin
   ): Promise<VerseOfDaySuggesting[]> {
     const vodResp = await getEnhancedVod(this.settings.defaultBibleVersion)
 
-    const reference = splitBibleReference(vodResp.verse.details.reference)
+    let reference
+    try {
+      reference = splitBibleReference(vodResp.verse.details.reference)
+    } catch (error) {
+      console.debug('could not parse the verse of the day reference:', error)
+      return []
+    }
 
     // Use enhanced verse text if available, otherwise fall back to NIV
     const verseTexts = vodResp.enhancedVerse

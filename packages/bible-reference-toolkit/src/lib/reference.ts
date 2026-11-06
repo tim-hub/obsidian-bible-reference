@@ -5,6 +5,8 @@ import {
 import { generateOrdinalNameVariations } from './utils'
 import { AllBibleBooksInAllSupportedLanguages as AllBooks } from './books'
 
+const bookIndexes = new WeakMap<BookWithAbbreviations[], Map<string, number>>()
+
 // Internally, no strings are stored - only numbers.
 //
 // "id"s are UIDs, numbers are relative to parent unit; e.g.
@@ -250,48 +252,62 @@ export class Reference implements IReference {
     return value.replace(/\./g, '').replace(/\s+/g, ' ').trim().toLowerCase()
   }
 
-  private static getBookIdFromTranslationAndName(
-    books: BookWithAbbreviations[],
-    name: string
-  ): number {
+  private static bookIndexFor(
+    books: BookWithAbbreviations[]
+  ): Map<string, number> {
+    const cached = bookIndexes.get(books)
+    if (cached) {
+      return cached
+    }
+    const index = new Map<string, number>()
     // Both sides go through normalizeBookName, never just the query: several
     // catalog entries carry periods of their own (German "1. Mose", Romanian
     // "F. Ap."), and those books have startNumber 0, so the exact pass is their
     // only chance to match.
-    const lowerName = Reference.normalizeBookName(name)
+    const addName = (name: string, bookId: number): void => {
+      const key = Reference.normalizeBookName(name)
+      if (!index.has(key)) {
+        index.set(key, bookId)
+      }
+    }
 
     // Exact pass first: a real name/abbreviation must win over a generated
     // ordinal variant. Otherwise e.g. "Isa" (Isaiah) loses to the "I"+"Sa"
     // variant of 1 Samuel, which sorts earlier.
-    const exactMatch = books.find((book) => {
+    books.forEach((book, bookIndex) => {
       const exactNames =
         book?.startNumber && book.startNumber > 0
           ? [book.fullName] // numbered books resolve their bare names via the ordinal pass
           : [book.fullName, book.name, ...book.abbreviations]
-      return exactNames.map(Reference.normalizeBookName).indexOf(lowerName) > -1
+      exactNames.forEach((name) => addName(name, bookIndex + 1))
     })
-    if (exactMatch) {
-      return books.indexOf(exactMatch) + 1
-    }
 
     // Fall back to ordinal variations for numbered books ("1 John", "I John"…).
-    const ordinalMatch = books.find((book) => {
+    books.forEach((book, bookIndex) => {
       if (!book?.startNumber || book.startNumber <= 0) {
-        return false
+        return
       }
-      return (
-        generateOrdinalNameVariations(book.startNumber, [
-          book.name,
-          ...book.abbreviations,
-        ])
-          .map(Reference.normalizeBookName)
-          .indexOf(lowerName) > -1
-      )
+      generateOrdinalNameVariations(book.startNumber, [
+        book.name,
+        ...book.abbreviations,
+      ]).forEach((name) => addName(name, bookIndex + 1))
     })
-    if (ordinalMatch) {
-      return books.indexOf(ordinalMatch) + 1
+
+    bookIndexes.set(books, index)
+    return index
+  }
+
+  private static getBookIdFromTranslationAndName(
+    books: BookWithAbbreviations[],
+    name: string
+  ): number {
+    const bookId = Reference.bookIndexFor(books).get(
+      Reference.normalizeBookName(name)
+    )
+    if (bookId === undefined) {
+      throw new Error(`No book matched "${name}"`)
     }
-    throw new Error(`No book matched "${name}"`)
+    return bookId
   }
 
   // Is a Chapter level reference (no verse)
