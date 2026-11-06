@@ -16,6 +16,11 @@ describe('getBLBUrl', () => {
     expect(url).toBe('https://www.blueletterbible.org/niv/psa/23/1/')
   })
 
+  test('generates correct URL for csb17 (maps to csb)', () => {
+    const url = getBLBUrl('csb17', 'John', 3, 16)
+    expect(url).toBe('https://www.blueletterbible.org/csb/jhn/3/16/')
+  })
+
   test('generates correct URL with verse range', () => {
     const url = getBLBUrl('KJV', 'Psalm', 23, 1, 6)
     expect(url).toBe('https://www.blueletterbible.org/kjv/psa/23/1-6/')

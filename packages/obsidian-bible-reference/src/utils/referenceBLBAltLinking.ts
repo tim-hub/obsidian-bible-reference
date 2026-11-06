@@ -23,6 +23,9 @@ export function getBLBUrl(
   if (blbVersion === 'niv2011') {
     blbVersion = 'niv'
   }
+  if (blbVersion === 'csb17') {
+    blbVersion = 'csb'
+  }
 
   let url = `https://www.blueletterbible.org/${blbVersion}/${bookCode.toLowerCase()}/${chapterNumber}/${verseNumber}`
   if (verseNumberEnd) {

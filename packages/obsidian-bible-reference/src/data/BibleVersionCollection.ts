@@ -47,6 +47,15 @@ export const BibleVersionCollectionEnglish = [
       'https://en.wikipedia.org/wiki/Messianic_Bible_translations#Complete_Jewish_Bible_(CJB)',
   },
   {
+    key: 'csb17',
+    versionName: 'Christian Standard Bible, 2017',
+    language: 'English',
+    code: 'en',
+    apiSource: BibleAPISourceCollection.bollsLife,
+    infoURL: 'https://en.wikipedia.org/wiki/Christian_Standard_Bible',
+    bibleGatewayKey: 'CSB',
+  },
+  {
     key: 'drb',
     versionName: 'Douay-Rheims Bible',
     language: 'English',
@@ -137,20 +146,6 @@ export const BibleVersionCollectionEnglish = [
     code: 'en',
     apiSource: BibleAPISourceCollection.bollsLife,
     infoURL: 'https://en.wikipedia.org/wiki/New_English_Translation',
-  },
-  {
-    key: 'niv',
-    versionName: 'New International Version, 1984',
-    language: 'English',
-    code: 'en',
-    apiSource: BibleAPISourceCollection.bollsLife,
-  },
-  {
-    key: 'niv2011',
-    versionName: 'New International Version, 2011',
-    language: 'English',
-    code: 'en',
-    apiSource: BibleAPISourceCollection.bollsLife,
   },
   {
     key: 'njb1985',
@@ -262,13 +257,6 @@ export const BibleVersionCollectionPortuguese = [
   {
     key: 'arc09',
     versionName: 'Almeida Revista e Corrigida 2009 @Bolls Life',
-    language: 'Portuguese',
-    code: 'pt',
-    apiSource: BibleAPISourceCollection.bollsLife,
-  },
-  {
-    key: 'nvipt',
-    versionName: 'Nova Versão Internacional Português @Bolls Life',
     language: 'Portuguese',
     code: 'pt',
     apiSource: BibleAPISourceCollection.bollsLife,
@@ -464,13 +452,6 @@ export const BibleVersionCollectionSpanish = [
   {
     key: 'ntv',
     versionName: 'Nueva Traduccion Viviente, 2009',
-    language: 'Spanish',
-    code: 'sp',
-    apiSource: BibleAPISourceCollection.bollsLife,
-  },
-  {
-    key: 'nvi',
-    versionName: 'Nueva Version Internacional',
     language: 'Spanish',
     code: 'sp',
     apiSource: BibleAPISourceCollection.bollsLife,

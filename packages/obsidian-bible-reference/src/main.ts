@@ -21,6 +21,7 @@ import {
 import { pluginEvent } from './obsidian/PluginEvent'
 import { BibleReferenceAPI } from './api/PluginAPI'
 import { verseCache } from './provider/verseCache'
+import { withAvailableVersions } from './data/withAvailableVersions'
 
 export default class BibleReferencePlugin extends Plugin {
   settings: BibleReferencePluginSettings
@@ -82,7 +83,9 @@ export default class BibleReferencePlugin extends Plugin {
       string,
       unknown
     >
-    this.settings = Object.assign({}, DEFAULT_SETTINGS, settingsData)
+    this.settings = withAvailableVersions(
+      Object.assign({}, DEFAULT_SETTINGS, settingsData)
+    )
     // Offline Mode forces the bundled WEB version; defaultBibleVersion is left
     // intact so turning Offline Mode off restores the user's prior version.
     if (this.settings.offlineMode) {
