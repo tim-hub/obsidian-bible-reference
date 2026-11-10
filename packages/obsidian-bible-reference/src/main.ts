@@ -86,9 +86,11 @@ export default class BibleReferencePlugin extends Plugin {
     this.settings = withAvailableVersions(
       Object.assign({}, DEFAULT_SETTINGS, settingsData)
     )
-    // Offline Mode forces the bundled WEB version; defaultBibleVersion is left
-    // intact so turning Offline Mode off restores the user's prior version.
-    if (this.settings.offlineMode) {
+    // Offline Mode switches to the bundled WEB version when it is turned on
+    // (see the settings toggle). It must not force it again on every load:
+    // that silently discarded any translation the user picked afterwards
+    // ("@s00", the switch command) as soon as Obsidian restarted.
+    if (this.settings.offlineMode && !this.settings.bibleVersion) {
       this.settings.bibleVersion = OFFLINE_VERSION_KEY
     }
     verseCache.setPersist(() => {
