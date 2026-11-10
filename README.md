@@ -27,9 +27,11 @@
 2. In a note, for example type `--John1:1`
 3. Select the suggestion
 
-> Type `--John1:a` to insert **all verses in a chapter** (`a` = the whole chapter).
-> A chapter on its own (`--John1`) does not suggest anything - it is treated as a
-> reference you are still typing, so add `:1` or `:a` to finish it.
+> Type `--John1` or `--John1:a` to insert **all verses in a chapter** (`a` = the whole chapter).
+> Leave the end of a range open to run to the end of the chapter: `--John3:16-`.
+> The comma notation used in German and other languages works too, as long as the
+> reference has no colon: `--Ps 2,4-6` (chapter 2, verses 4 to 6), `--Ps 2,4-`,
+> `--Ps 2,4.8` (verses 4 and 8), `--Ps 2,4-3,5` (across chapters).
 
 > To pull a reference from another translation, add `@` and the version key:
 > `--John1:1@esv`. Keys are the ones listed under **Default Bible Version** in the

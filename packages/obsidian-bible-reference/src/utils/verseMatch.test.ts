@@ -1,24 +1,5 @@
-import {
-  hasExplicitVerse,
-  verseMatch,
-  isIncompleteReference,
-} from './verseMatch'
+import { verseMatch, isIncompleteReference } from './verseMatch'
 import { DASH_CHARS } from './regs'
-
-describe('hasExplicitVerse', () => {
-  test.each([
-    ['John 1', false],
-    ['1 John 1', false],
-    ['John 1:', false],
-    ['John 1:1', true],
-    ['John 1:a', true],
-    ['Genesis 1:a', true],
-    ['John 3:16-4:2', true],
-    ['John 3:16,19', true],
-  ])('%s -> %s', (reference, expected) => {
-    expect(hasExplicitVerse(reference)).toBe(expected)
-  })
-})
 
 describe('verseMatch', () => {
   // verseMatch hands back a literal substring of what was typed rather than a
@@ -31,6 +12,11 @@ describe('verseMatch', () => {
     '1 Cor. 13:4-7',
     'Song of Solomon 1:1',
     'Hebrews 9:1-10:14',
+    'Ps 2',
+    'Ps 23',
+    'Ps 2,4-',
+    'Ps 2,4-6.8',
+    'John 3:16-',
   ])('returns %s unchanged', (reference) => {
     expect(verseMatch(reference)).toBe(reference)
   })
@@ -93,15 +79,19 @@ describe('verseMatch', () => {
 })
 
 describe('isIncompleteReference', () => {
-  // Typing "John 3:16-18" passes through "John 3:16-", which must not be
-  // reported as a broken range.
+  // Typing "John 3:16,19" passes through "John 3:16,", which must not be
+  // reported as a broken reference. A trailing dash is an open-ended range.
   test.each([
-    ['John 3:16-', true],
-    ['John 3:16- ', true],
     ['John 3:16,', true],
+    ['John 3:16, ', true],
     ['John 3:16;', true],
     ['John 3:', true],
     ['John 3:16-4:', true],
+    ['Ps 2,', true],
+    ['Ps 2,4.', true],
+    ['John 3:16-', false],
+    ['Ps 2,4-', false],
+    ['Ps 2', false],
     ['John 3:16', false],
     ['John 3:16-18', false],
     ['John 3:16-4:2', false],
@@ -109,9 +99,5 @@ describe('isIncompleteReference', () => {
     ['Song of Solomon 1:1', false],
   ])('%s -> %s', (reference, expected) => {
     expect(isIncompleteReference(reference)).toBe(expected)
-  })
-
-  test.each([...DASH_CHARS])('treats a trailing %s as incomplete', (dash) => {
-    expect(isIncompleteReference(`John 3:16${dash}`)).toBe(true)
   })
 })

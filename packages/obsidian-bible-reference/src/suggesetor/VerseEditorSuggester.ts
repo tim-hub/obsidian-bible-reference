@@ -10,7 +10,6 @@ import BibleReferencePlugin from '../main'
 import {
   verseMatch,
   matchTriggerPrefix,
-  hasExplicitVerse,
   isIncompleteReference,
 } from '../utils/verseMatch'
 import { VerseSuggesting } from '../verse/VerseSuggesting'
@@ -94,12 +93,11 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
       // quick-translation hotkey). When no version is specified, the fallback to
       // settings.bibleVersion happens in getSuggestionsFromQuery.
 
-      if (!hasExplicitVerse(bookVerseQuery)) {
-        return null // bare chapter is a transient typing state; wait for ":<verse>" or ":a"
-      }
-
+      // A bare chapter ("Ps 2") is a whole-chapter lookup and a trailing dash
+      // ("Ps 2,4-") an open-ended range, so both trigger. Only a dangling
+      // separator like "John 3:" or "John 3:16," waits for more input.
       if (isIncompleteReference(bookVerseQuery)) {
-        return null // half-typed range like "John 3:16-"; wait for the end of it
+        return null
       }
 
       console.debug('trigger on', queryContent)

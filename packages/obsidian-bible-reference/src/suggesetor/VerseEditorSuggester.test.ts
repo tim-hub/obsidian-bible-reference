@@ -75,8 +75,8 @@ describe('VerseEditorSuggester.onTrigger', () => {
 
   test.each([
     'Genesis 1:1', // no trigger prefix
-    '--John 3:16-', // half-typed range
-    '--John 3', // bare chapter
+    '--John 3:', // dangling chapter colon
+    '--John 3:16,', // dangling segment separator
     '--', // prefix alone
     // Prose in front of the reference. The pattern spans whitespace so
     // multi-word book names survive, which made "am reading Genesis" a
@@ -93,6 +93,16 @@ describe('VerseEditorSuggester.onTrigger', () => {
     '--123 John 1:1',
   ])('does not trigger on %s', (line) => {
     expect(triggerOn(line)).toBeNull()
+  })
+
+  test.each([
+    '--John 3', // whole chapter
+    '--Ps 2', // whole chapter, short book name
+    '--John 3:16-', // open-ended range
+    '--Ps 2,4-', // comma notation, open-ended range
+    '--Ps 2,4-6.8',
+  ])('triggers on %s', (line) => {
+    expect(triggerOn(line)).not.toBeNull()
   })
 })
 

@@ -77,9 +77,11 @@ const BOOK_ORDINAL = '([1-5]\\.?)?'
  * John 3:16–18
  * 1. Mose 1:1
  * F. Ap. 2:1
+ * Ps 2
+ * Ps 2,4-6.8
  */
 export const BOOK_VERSE_REG = new RegExp(
-  `${BOOK_ORDINAL}\\s*(${BOOK_NAME})\\s*\\d{1,3}(?:[\\d:;,\\s${DASH_CLASS_BODY}]|a(?!\\p{L}))*`,
+  `${BOOK_ORDINAL}\\s*(${BOOK_NAME})\\s*\\d{1,3}(?:[\\d:;,.\\s${DASH_CLASS_BODY}]|a(?!\\p{L}))*`,
   'isu'
 )
 
