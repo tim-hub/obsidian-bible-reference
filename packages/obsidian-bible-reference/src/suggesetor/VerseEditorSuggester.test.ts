@@ -1,5 +1,6 @@
 import { VerseEditorSuggester } from './VerseEditorSuggester'
 import { DEFAULT_SETTINGS } from '../data/constants'
+import { OFFLINE_VERSION_KEY } from '../data/BibleVersionCollection'
 
 const newPlugin = () => ({
   app: {},
@@ -143,5 +144,17 @@ describe('VerseEditorSuggester inline version', () => {
 
   test('the dash form is not a version suffix', () => {
     expect(triggerOn('--John 3:16-esv')).toBeNull()
+  })
+  test('Offline Mode keeps the bundled version when an online one is named', () => {
+    const plugin = newPlugin()
+    plugin.settings.offlineMode = true
+    plugin.settings.bibleVersion = OFFLINE_VERSION_KEY
+    const info = newSuggester(plugin).onTrigger(
+      { line: 0, ch: 15 },
+      { getLine: () => '--John 3:16@esv' } as never,
+      null as never
+    )
+    expect(info?.query).toBe('John 3:16@')
+    expect(plugin.settings.bibleVersion).toBe(OFFLINE_VERSION_KEY)
   })
 })

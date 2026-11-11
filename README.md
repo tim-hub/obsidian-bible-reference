@@ -31,12 +31,15 @@
 > Leave the end of a range open to run to the end of the chapter: `--John3:16-`.
 > The comma notation used in German and other languages works too, as long as the
 > reference has no colon: `--Ps 2,4-6` (chapter 2, verses 4 to 6), `--Ps 2,4-`,
-> `--Ps 2,4.8` (verses 4 and 8), `--Ps 2,4-3,5` (across chapters).
+> `--Ps 2,4.8` (verses 4 and 8), `--Ps 2,4-3,5` (across chapters), `--Ps 2,4; 5`
+> (verse 2:4 and all of chapter 5).
+> A period between chapter and verse works like a colon: `--John 3.16`.
 
 > To pull a reference from another translation, add `@` and the version key:
 > `--John1:1@esv`. Keys are the ones listed under **Default Bible Version** in the
 > settings, and they are not case sensitive. The version you name is kept for later
-> lookups too, so it also switches the default.
+> lookups too, so it also switches the default. With **Offline Mode** on, only the
+> bundled offline translation can be selected.
 
 You can also get a "verse of the day" by typing `--vod`.
 

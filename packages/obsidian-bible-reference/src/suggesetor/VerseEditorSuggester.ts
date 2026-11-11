@@ -4,6 +4,7 @@ import {
   EditorSuggest,
   EditorSuggestContext,
   EditorSuggestTriggerInfo,
+  Notice,
   TFile,
 } from 'obsidian'
 import BibleReferencePlugin from '../main'
@@ -17,6 +18,10 @@ import { BibleReferencePluginSettings } from '../data/constants'
 import { getSuggestionsFromQuery } from '../utils/getSuggestionsFromQuery'
 import { versionSelectionMatch } from '../utils/versionSelectionMatch'
 import { getBibleVersion } from '../data/BibleVersionCollection'
+import {
+  isTranslationAllowed,
+  offlineModeBlockedMessage,
+} from '../utils/offlineMode'
 
 /**
  * Extend the EditorSuggest to suggest bible verses.
@@ -24,6 +29,7 @@ import { getBibleVersion } from '../data/BibleVersionCollection'
 export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
   plugin: BibleReferencePlugin
   settings: BibleReferencePluginSettings
+  private lastBlockedTranslation = ''
 
   constructor(
     plugin: BibleReferencePlugin,
@@ -76,7 +82,7 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
       this.getBookVerseAndTranslation(queryContent)
 
     const verseMatchResult = verseMatch(bookVerseQuery)
-    const versionSelectionMatchResult = versionSelectionMatch(translationQuery)
+    let versionSelectionMatchResult = versionSelectionMatch(translationQuery)
 
     if (verseMatchResult && verseMatchResult.length > 0) {
       if (
@@ -84,9 +90,24 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
         getBibleVersion(versionSelectionMatchResult).key ==
           versionSelectionMatchResult
       ) {
-        console.log(`set version : ${versionSelectionMatchResult}`)
-        this.plugin.settings.bibleVersion = versionSelectionMatchResult // pick a version
-        this.plugin.saveSettings() //todo this is an async function, so it may not be saved before the getSuggestions is called
+        if (
+          isTranslationAllowed(
+            this.plugin.settings,
+            versionSelectionMatchResult
+          )
+        ) {
+          console.log(`set version : ${versionSelectionMatchResult}`)
+          this.plugin.settings.bibleVersion = versionSelectionMatchResult // pick a version
+          this.plugin.saveSettings() //todo this is an async function, so it may not be saved before the getSuggestions is called
+        } else {
+          // Offline Mode: keep the current (bundled) version. onTrigger runs on
+          // every keystroke, so tell the user only once per blocked version.
+          if (this.lastBlockedTranslation !== versionSelectionMatchResult) {
+            this.lastBlockedTranslation = versionSelectionMatchResult
+            new Notice(offlineModeBlockedMessage(versionSelectionMatchResult))
+          }
+          versionSelectionMatchResult = ''
+        }
       }
       // When a version IS specified in the query, update the plugin's bibleVersion setting
       // so that version persists across subsequent lookups (including those from the

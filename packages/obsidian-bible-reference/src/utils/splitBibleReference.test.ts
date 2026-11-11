@@ -538,4 +538,56 @@ describe('splitBibleReference - chapter only and open-ended ranges', () => {
   test('a colon keeps the comma as segment separator', () => {
     expect(splitBibleReference('John 3:16,19').ranges).toHaveLength(2)
   })
+
+  // John 3 has 36 verses. "3.16" is not the whole chapter.
+  test.each([
+    [
+      'John 3.16',
+      [{ chapterNumber: 3, verseNumber: 16, verseNumberEnd: undefined }],
+    ],
+    [
+      'John 3.16-18',
+      [{ chapterNumber: 3, verseNumber: 16, verseNumberEnd: 18 }],
+    ],
+    [
+      'John 3.16-4.2',
+      [
+        {
+          chapterNumber: 3,
+          verseNumber: 16,
+          chapterNumberEnd: 4,
+          verseNumberEndChapter: 2,
+        },
+      ],
+    ],
+  ])('period notation %s reads chapter.verse', (reference, ranges) => {
+    expect(splitBibleReference(reference).ranges).toEqual(ranges)
+  })
+
+  // Psalm 5 has 12 verses, Psalm 7 has 17.
+  test('comma notation: a bare number after a semicolon is a chapter', () => {
+    expect(splitBibleReference('Ps 2,4; 5').ranges).toEqual([
+      { chapterNumber: 2, verseNumber: 4, verseNumberEnd: undefined },
+      { chapterNumber: 5, verseNumber: 1, verseNumberEnd: 12 },
+    ])
+  })
+
+  test('comma notation: a bare range after a semicolon is a chapter range', () => {
+    expect(splitBibleReference('Ps 2,4; 5-7').ranges).toEqual([
+      { chapterNumber: 2, verseNumber: 4, verseNumberEnd: undefined },
+      {
+        chapterNumber: 5,
+        verseNumber: 1,
+        chapterNumberEnd: 7,
+        verseNumberEndChapter: 17,
+      },
+    ])
+  })
+
+  test('colon notation keeps a number after a semicolon as a verse', () => {
+    expect(splitBibleReference('John 3:16; 18').ranges).toEqual([
+      { chapterNumber: 3, verseNumber: 16, verseNumberEnd: undefined },
+      { chapterNumber: 3, verseNumber: 18, verseNumberEnd: undefined },
+    ])
+  })
 })

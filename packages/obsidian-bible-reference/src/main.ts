@@ -22,6 +22,10 @@ import { pluginEvent } from './obsidian/PluginEvent'
 import { BibleReferenceAPI } from './api/PluginAPI'
 import { verseCache } from './provider/verseCache'
 import { withAvailableVersions } from './data/withAvailableVersions'
+import {
+  isTranslationAllowed,
+  offlineModeBlockedMessage,
+} from './utils/offlineMode'
 
 export default class BibleReferencePlugin extends Plugin {
   settings: BibleReferencePluginSettings
@@ -86,11 +90,11 @@ export default class BibleReferencePlugin extends Plugin {
     this.settings = withAvailableVersions(
       Object.assign({}, DEFAULT_SETTINGS, settingsData)
     )
-    // Offline Mode switches to the bundled WEB version when it is turned on
-    // (see the settings toggle). It must not force it again on every load:
-    // that silently discarded any translation the user picked afterwards
-    // ("@s00", the switch command) as soon as Obsidian restarted.
-    if (this.settings.offlineMode && !this.settings.bibleVersion) {
+    // Offline Mode forces the bundled WEB version; defaultBibleVersion is left
+    // intact so turning Offline Mode off restores the user's prior version.
+    // Switching to an online translation is blocked while Offline Mode is on
+    // (see isTranslationAllowed), so this never discards a valid choice.
+    if (this.settings.offlineMode) {
       this.settings.bibleVersion = OFFLINE_VERSION_KEY
     }
     verseCache.setPersist(() => {
@@ -197,6 +201,10 @@ export default class BibleReferencePlugin extends Plugin {
   }
 
   public switchToTranslation(versionKey: string): void {
+    if (!isTranslationAllowed(this.settings, versionKey)) {
+      new Notice(offlineModeBlockedMessage(versionKey))
+      return
+    }
     this.settings.bibleVersion = versionKey
     this.saveSettings()
     pluginEvent.trigger('bible-reference:settings:version', [versionKey])

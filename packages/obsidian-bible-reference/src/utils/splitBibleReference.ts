@@ -48,18 +48,48 @@ export type ChapterQuerySegment = {
 }
 
 /**
- * Rewrite the comma-separated notation common in German and other European
- * languages ("Ps 2,4-6.8; 3,1") into the colon form the parser understands
- * ("Ps 2:4-6,8; 3:1"). It only applies when the reference carries no colon at
- * all: once a colon is present, a comma keeps its meaning as segment separator
- * ("John 3:16,19"). Without a colon a comma after the chapter had no useful
- * meaning before (it read "Ps 2,4" as all of Psalm 2 plus verse 4 again).
+ * In comma notation a bare number after ";" names a chapter, not a verse:
+ * "Ps 2,4; 5" is verse 2:4 and all of chapter 5, "Ps 2,4; 5-7" chapters 5 to 7.
+ * Rewrite those parts into colon form ("5:a", "5:1-7:a") so the parser does
+ * not carry chapter 2 over and read them as verses.
+ */
+const bareChapterSegmentToColonForm = (segment: string) => {
+  const trimmed = segment.trim()
+  if (/^\d+$/.test(trimmed)) {
+    return `${trimmed}:a`
+  }
+  const chapterRange = trimmed.match(/^(\d+)\s*-\s*(\d+)$/)
+  if (chapterRange) {
+    return `${chapterRange[1]}:1-${chapterRange[2]}:a`
+  }
+  return segment
+}
+
+/**
+ * Rewrite the chapter/verse notations the parser does not read natively into
+ * the colon form it does:
+ * - Comma notation, common in German and other European languages:
+ *   "Ps 2,4-6.8; 3,1" becomes "Ps 2:4-6,8; 3:1", and a bare number after ";"
+ *   is a chapter ("Ps 2,4; 5" becomes "2:4; 5:a").
+ * - Period notation, common in English (UK) usage: "John 3.16" becomes
+ *   "John 3:16".
+ * Neither applies once a colon is present, so a comma keeps its meaning as
+ * segment separator ("John 3:16,19"). Without a colon a comma after the
+ * chapter had no useful meaning before (it read "Ps 2,4" as all of Psalm 2
+ * plus verse 4 again), and "3.16" read as the whole of chapter 3.
  */
 export const normalizeChapterVerseNotation = (chapterVersePart: string) => {
-  if (chapterVersePart.includes(':') || !chapterVersePart.includes(',')) {
+  if (chapterVersePart.includes(':')) {
     return chapterVersePart
   }
-  return chapterVersePart.replace(/,/g, ':').replace(/\./g, ',')
+  if (!chapterVersePart.includes(',')) {
+    return chapterVersePart.replace(/\./g, ':')
+  }
+  const [first, ...rest] = chapterVersePart
+    .replace(/,/g, ':')
+    .replace(/\./g, ',')
+    .split(';')
+  return [first, ...rest.map(bareChapterSegmentToColonForm)].join(';')
 }
 
 /**
