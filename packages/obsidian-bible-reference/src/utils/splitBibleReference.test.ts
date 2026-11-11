@@ -560,6 +560,13 @@ describe('splitBibleReference - chapter only and open-ended ranges', () => {
         },
       ],
     ],
+    [
+      'John 3.16,19',
+      [
+        { chapterNumber: 3, verseNumber: 16, verseNumberEnd: undefined },
+        { chapterNumber: 3, verseNumber: 19, verseNumberEnd: undefined },
+      ],
+    ],
   ])('period notation %s reads chapter.verse', (reference, ranges) => {
     expect(splitBibleReference(reference).ranges).toEqual(ranges)
   })

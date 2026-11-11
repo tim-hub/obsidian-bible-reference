@@ -71,8 +71,10 @@ const bareChapterSegmentToColonForm = (segment: string) => {
  * - Comma notation, common in German and other European languages:
  *   "Ps 2,4-6.8; 3,1" becomes "Ps 2:4-6,8; 3:1", and a bare number after ";"
  *   is a chapter ("Ps 2,4; 5" becomes "2:4; 5:a").
- * - Period notation, common in English (UK) usage: "John 3.16" becomes
- *   "John 3:16".
+ * - Period notation, common in English (UK) usage: "John 3.16,19" becomes
+ *   "John 3:16,19".
+ * The separator right after the chapter decides which one a reference uses:
+ * a period first is the period notation, a comma first the comma notation.
  * Neither applies once a colon is present, so a comma keeps its meaning as
  * segment separator ("John 3:16,19"). Without a colon a comma after the
  * chapter had no useful meaning before (it read "Ps 2,4" as all of Psalm 2
@@ -82,7 +84,11 @@ export const normalizeChapterVerseNotation = (chapterVersePart: string) => {
   if (chapterVersePart.includes(':')) {
     return chapterVersePart
   }
-  if (!chapterVersePart.includes(',')) {
+  const firstPeriod = chapterVersePart.indexOf('.')
+  const firstComma = chapterVersePart.indexOf(',')
+  const periodNotation =
+    firstComma === -1 || (firstPeriod !== -1 && firstPeriod < firstComma)
+  if (periodNotation) {
     return chapterVersePart.replace(/\./g, ':')
   }
   const [first, ...rest] = chapterVersePart
