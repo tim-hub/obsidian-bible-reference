@@ -29,3 +29,14 @@ export const getBibleGatewayUrl = (
   }
   return `https://www.biblegateway.com/passage/?search=${searchString}&version=${versionKey}`
 }
+
+/**
+ * Bible Gateway URL for a passage that is already written out, such as the
+ * segment list "119:4,5,9" or "3:16,4:1-2" of a multi-segment reference.
+ */
+export const getBibleGatewayPassageUrl = (
+  versionKey: string,
+  bookName: string,
+  passage: string
+): string =>
+  `https://www.biblegateway.com/passage/?search=${encodeURIComponent(bookName)}+${passage}&version=${versionKey}`

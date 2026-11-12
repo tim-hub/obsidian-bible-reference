@@ -116,9 +116,16 @@ export abstract class BaseVerseFormatter {
         // Remove the last <br/> tag that appears in LSB verses.
         singleVerseText = singleVerseText.slice(0, -5)
       }
+      // A verse number at the start of a line ("> 9. ") is Markdown list
+      // syntax, and Obsidian renumbers lists consecutively ("4. 5. 9."
+      // becomes "4. 5. 6."), so those numbers get their period escaped.
+      const startsLine =
+        this.settings?.verseFormatting !== BibleVerseFormat.Paragraph ||
+        text.endsWith('>')
       const verseNumberFormatted = this.formatVerseNumber(
         verse.verse,
-        verse.chapter
+        verse.chapter,
+        startsLine
       )
       if (this.settings?.verseFormatting === BibleVerseFormat.Paragraph) {
         text +=
@@ -222,21 +229,28 @@ export abstract class BaseVerseFormatter {
     }
   }
 
+  /**
+   * @param startsLine the number opens a line, where "9. " and "9) " would
+   * start a Markdown ordered list; their punctuation is escaped there.
+   */
   protected formatVerseNumber(
     verseNumber: number | string,
-    chapterNumber: number
+    chapterNumber: number,
+    startsLine = false
   ): string {
     const verseNumStr2 = verseNumber.toString()
     const verseNumLink = this.getVerseLink(Number(verseNumber), chapterNumber)
     const verseNumberFormatted = verseNumLink || verseNumStr2
+    // Only a bare number forms a list marker; a link ("[[...|9]]. ") does not.
+    const escape = startsLine && !verseNumLink ? '\\' : ''
 
     switch (this.settings.verseNumberFormatting) {
       case BibleVerseNumberFormat.Period:
-        return verseNumberFormatted + '. '
+        return verseNumberFormatted + escape + '. '
       case BibleVerseNumberFormat.PeriodParenthesis:
         return verseNumberFormatted + '.) '
       case BibleVerseNumberFormat.Parenthesis:
-        return verseNumberFormatted + ') '
+        return verseNumberFormatted + escape + ') '
       case BibleVerseNumberFormat.Dash:
         return verseNumberFormatted + ' - '
       case BibleVerseNumberFormat.NumberOnly:
@@ -254,7 +268,7 @@ export abstract class BaseVerseFormatter {
       case BibleVerseNumberFormat.None:
         return ' '
       default:
-        return verseNumberFormatted + '. '
+        return verseNumberFormatted + escape + '. '
     }
   }
 }
