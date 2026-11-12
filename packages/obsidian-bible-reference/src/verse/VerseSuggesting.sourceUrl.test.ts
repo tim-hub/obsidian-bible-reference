@@ -88,3 +88,21 @@ describe('the external source URL for a book name the user typed', () => {
     )
   })
 })
+
+describe('the Bible Gateway link for a reference with several segments', () => {
+  it.each([
+    ['Psalm 119:4,5,9', 'Psalm+119:4,5,9'],
+    ['Psalm 119:4-5,9', 'Psalm+119:4-5,9'],
+    ['John 3:16; 4:1-2', 'John+3:16,4:1-2'],
+  ])('%s links every segment', (query, search) => {
+    expect(urlFor(query, { bibleVersion: 's00' })).toBe(
+      `https://www.biblegateway.com/passage/?search=${search}&version=SCH2000`
+    )
+  })
+
+  it('a single segment links as before', () => {
+    expect(urlFor('Psalm 119:4-5', { bibleVersion: 's00' })).toBe(
+      'https://www.biblegateway.com/passage/?search=Psalm+119:4-5&version=SCH2000'
+    )
+  })
+})

@@ -14,7 +14,10 @@ import {
   getLogosUrl,
   getLogosTranslation,
 } from '../utils/referenceLogosLinking'
-import { getBibleGatewayUrl } from '../utils/referenceLink'
+import {
+  getBibleGatewayPassageUrl,
+  getBibleGatewayUrl,
+} from '../utils/referenceLink'
 import { getStepbibleUrl } from '../utils/referenceStepbibleLinking'
 import {
   isCrossChapterReference,
@@ -231,6 +234,13 @@ export class VerseSuggesting extends BaseVerseFormatter {
     const getBibleGatewayFallback = (): string => {
       const bibleGatewayVersion =
         getBibleVersion(this.bibleVersion).bibleGatewayKey ?? this.bibleVersion
+      if (this.verseReference.ranges.length > 1) {
+        // "Psalm 119:4, 5, 9" - link every segment, not just the first one.
+        const passage = getReferenceHead(this.verseReference)
+          .slice(bookName.length + 1)
+          .replace(/\s+/g, '')
+        return getBibleGatewayPassageUrl(bibleGatewayVersion, bookName, passage)
+      }
       let versesString: string
       if (isCrossChapterReference(this.verseReference)) {
         versesString = verseNumber.toString()

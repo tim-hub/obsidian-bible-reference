@@ -49,7 +49,7 @@ describe('BaseVerseFormatter', () => {
       { book_id: 'John', book_name: 'John', chapter: 4, verse: 1, text: 'v1' },
     ]
     const formatter = new MockFormatter(settings, verseReference, verses)
-    const expected = '> 36. v36\n>\n> ---\n> 4\n> ---\n> 1. v1'
+    const expected = '> 36\\. v36\n>\n> ---\n> 4\n> ---\n> 1\\. v1'
     expect(formatter.bodyContent).toBe(expected)
   })
 
@@ -77,7 +77,7 @@ describe('BaseVerseFormatter', () => {
       { book_id: 'John', book_name: 'John', chapter: 4, verse: 1, text: 'v1' },
     ]
     const formatter = new MockFormatter(settings, verseReference, verses)
-    const expected = '> 36. v36\n>\n> ---\n> 1. v1'
+    const expected = '> 36\\. v36\n>\n> ---\n> 1\\. v1'
     expect(formatter.bodyContent).toBe(expected)
   })
 
@@ -99,7 +99,7 @@ describe('BaseVerseFormatter', () => {
       { book_id: 'John', book_name: 'John', chapter: 4, verse: 1, text: 'v1' },
     ]
     const formatter = new MockFormatter(settings, verseReference, verses)
-    const expected = '> 5. v5\n>\n> ---\n> 4\n> ---\n> 1. v1'
+    const expected = '> 5\\. v5\n>\n> ---\n> 4\n> ---\n> 1\\. v1'
     expect(formatter.bodyContent).toBe(expected)
   })
 
@@ -134,7 +134,7 @@ describe('BaseVerseFormatter', () => {
       },
     ]
     const formatter = new MockFormatter(settings, verseReference, verses)
-    const expected = '> 16. v16\n>\n> ---\n> 19. v19'
+    const expected = '> 16\\. v16\n>\n> ---\n> 19\\. v19'
     expect(formatter.bodyContent).toBe(expected)
   })
 
@@ -169,7 +169,7 @@ describe('BaseVerseFormatter', () => {
       },
     ]
     const formatter = new MockFormatter(settings, verseReference, verses)
-    const expected = '> 16. v16\n>\n> ---\n> 19. v19'
+    const expected = '> 16\\. v16\n>\n> ---\n> 19\\. v19'
     expect(formatter.bodyContent).toBe(expected)
   })
 
@@ -463,5 +463,81 @@ describe('BaseVerseFormatter', () => {
     expect(formatter.allFormattedContent).toContain('#Hebrews9')
     expect(formatter.allFormattedContent).toContain('#Hebrews10')
     expect(formatter.allFormattedContent).toContain('#Hebrews11')
+  })
+})
+
+describe('BaseVerseFormatter verse numbers are not a Markdown list', () => {
+  // "> 4. … > 5. … > 9. …" is an ordered list, and Obsidian renumbers lists
+  // consecutively, so verse 9 showed up (and got saved) as "6.".
+  const psalmVerses = [4, 5, 9].map((verse) => ({
+    book_name: 'Psalm',
+    chapter: 119,
+    verse,
+    text: `v${verse}`,
+  }))
+  const reference: VerseReference = {
+    bookName: 'Psalm',
+    chapterNumber: 119,
+    verseNumber: 4,
+    ranges: [{ chapterNumber: 119, verseNumber: 4 }],
+  }
+  const format = (overrides: Partial<BibleReferencePluginSettings>) =>
+    new MockFormatter(
+      {
+        ...DEFAULT_SETTINGS,
+        verseSegmentSeparatorFormat:
+          BibleVerseSegmentSeparatorFormat.SingleBlock,
+        ...overrides,
+      },
+      reference,
+      psalmVerses
+    ).bodyContent
+
+  test('single line: every verse number is escaped', () => {
+    expect(
+      format({
+        verseFormatting: BibleVerseFormat.SingleLine,
+        verseNumberFormatting: BibleVerseNumberFormat.Period,
+      })
+    ).toBe('> 4\\. v4\n> 5\\. v5\n> 9\\. v9')
+  })
+
+  test('single line: "1) " is escaped too', () => {
+    expect(
+      format({
+        verseFormatting: BibleVerseFormat.SingleLine,
+        verseNumberFormatting: BibleVerseNumberFormat.Parenthesis,
+      })
+    ).toBe('> 4\\) v4\n> 5\\) v5\n> 9\\) v9')
+  })
+
+  test('paragraph: only the number that opens the line is escaped', () => {
+    expect(
+      format({
+        verseFormatting: BibleVerseFormat.Paragraph,
+        verseNumberFormatting: BibleVerseNumberFormat.Period,
+      })
+    ).toBe('> 4\\. v4 5. v5 9. v9')
+  })
+
+  test('formats that are no list marker stay as they were', () => {
+    expect(
+      format({
+        verseFormatting: BibleVerseFormat.SingleLine,
+        verseNumberFormatting: BibleVerseNumberFormat.PeriodParenthesis,
+      })
+    ).toBe('> 4.) v4\n> 5.) v5\n> 9.) v9')
+  })
+
+  test('a linked verse number is not escaped', () => {
+    expect(
+      format({
+        verseFormatting: BibleVerseFormat.SingleLine,
+        verseNumberFormatting: BibleVerseNumberFormat.Period,
+        internalLinkingFormat: '[[Book Chapter#^Verse|Verse]]',
+      })
+    ).toBe(
+      '> [[Psalm 119#^4|4]]. v4\n> [[Psalm 119#^5|5]]. v5\n> [[Psalm 119#^9|9]]. v9'
+    )
   })
 })
