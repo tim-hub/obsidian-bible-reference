@@ -1,16 +1,17 @@
 import { MarkdownView, SuggestModal } from 'obsidian'
-import {
-  verseMatch,
-  hasExplicitVerse,
-  isIncompleteReference,
-} from '../utils/verseMatch'
+import { verseMatch, isIncompleteReference } from '../utils/verseMatch'
 import { BibleReferencePluginSettings } from '../data/constants'
 import { VerseSuggesting } from '../verse/VerseSuggesting'
 import { getSuggestionsFromQuery } from '../utils/getSuggestionsFromQuery'
 import BibleReferencePlugin from '../main'
+import { debounceLookup } from '../utils/debounceLookup'
 
 export class VerseLookupSuggestModal extends SuggestModal<VerseSuggesting> {
   settings: BibleReferencePluginSettings
+  // Only the reference the user stops typing on is fetched (see debounceLookup).
+  private lookup = debounceLookup((query: string) =>
+    getSuggestionsFromQuery(query, this.settings, undefined, this.isLinkOnly)
+  )
 
   constructor(
     plugin: BibleReferencePlugin,
@@ -37,19 +38,19 @@ export class VerseLookupSuggestModal extends SuggestModal<VerseSuggesting> {
     super.onOpen()
   }
 
+  public onClose() {
+    this.lookup.cancel()
+    super.onClose()
+  }
+
   async getSuggestions(query: string): Promise<VerseSuggesting[]> {
     const match = verseMatch(query)
-    if (!hasExplicitVerse(query) || isIncompleteReference(query)) {
+    if (isIncompleteReference(query)) {
       return []
     }
     if (match) {
       console.debug('trigger on', query)
-      return getSuggestionsFromQuery(
-        `${query}`,
-        this.settings,
-        undefined,
-        this.isLinkOnly
-      )
+      return this.lookup(query)
     }
     return []
   }

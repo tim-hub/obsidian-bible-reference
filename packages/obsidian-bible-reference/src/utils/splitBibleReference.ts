@@ -48,10 +48,63 @@ export type ChapterQuerySegment = {
 }
 
 /**
+ * In comma notation a bare number after ";" names a chapter, not a verse:
+ * "Ps 2,4; 5" is verse 2:4 and all of chapter 5, "Ps 2,4; 5-7" chapters 5 to 7.
+ * Rewrite those parts into colon form ("5:a", "5:1-7:a") so the parser does
+ * not carry chapter 2 over and read them as verses.
+ */
+const bareChapterSegmentToColonForm = (segment: string) => {
+  const trimmed = segment.trim()
+  if (/^\d+$/.test(trimmed)) {
+    return `${trimmed}:a`
+  }
+  const chapterRange = trimmed.match(/^(\d+)\s*-\s*(\d+)$/)
+  if (chapterRange) {
+    return `${chapterRange[1]}:1-${chapterRange[2]}:a`
+  }
+  return segment
+}
+
+/**
+ * Rewrite the chapter/verse notations the parser does not read natively into
+ * the colon form it does:
+ * - Comma notation, common in German and other European languages:
+ *   "Ps 2,4-6.8; 3,1" becomes "Ps 2:4-6,8; 3:1", and a bare number after ";"
+ *   is a chapter ("Ps 2,4; 5" becomes "2:4; 5:a").
+ * - Period notation, common in English (UK) usage: "John 3.16,19" becomes
+ *   "John 3:16,19".
+ * The separator right after the chapter decides which one a reference uses:
+ * a period first is the period notation, a comma first the comma notation.
+ * Neither applies once a colon is present, so a comma keeps its meaning as
+ * segment separator ("John 3:16,19"). Without a colon a comma after the
+ * chapter had no useful meaning before (it read "Ps 2,4" as all of Psalm 2
+ * plus verse 4 again), and "3.16" read as the whole of chapter 3.
+ */
+export const normalizeChapterVerseNotation = (chapterVersePart: string) => {
+  if (chapterVersePart.includes(':')) {
+    return chapterVersePart
+  }
+  const firstPeriod = chapterVersePart.indexOf('.')
+  const firstComma = chapterVersePart.indexOf(',')
+  const periodNotation =
+    firstComma === -1 || (firstPeriod !== -1 && firstPeriod < firstComma)
+  if (periodNotation) {
+    return chapterVersePart.replace(/\./g, ':')
+  }
+  const [first, ...rest] = chapterVersePart
+    .replace(/,/g, ':')
+    .replace(/\./g, ',')
+    .split(';')
+  return [first, ...rest.map(bareChapterSegmentToColonForm)].join(';')
+}
+
+/**
  * Split Bible Reference to book name and segments, for example:
  * John 3:16,19 => { bookName: 'John', ..., ranges: [{ch:3, v:16}, {ch:3, v:19}] }
  * John 3:16-a => { bookName: 'John', ..., ranges: [{ch:3, v:16, vEnd: last}] }
  * Hebrews 9:1-10:14 => { bookName: 'Hebrews', ..., ranges: [{ch:9, v:1, chEnd:10, vEndCh:14}] }
+ * Ps 2 => whole chapter 2
+ * Ps 2,4- => { bookName: 'Ps', ..., ranges: [{ch:2, v:4, vEnd: last}] } (open-ended, same as "2:4-a")
  */
 export const splitBibleReference = (reference: string): VerseReference => {
   // Fold en/em dashes and friends to the ASCII hyphen up front so every range
@@ -76,6 +129,7 @@ export const splitBibleReference = (reference: string): VerseReference => {
     bookName = resolveBookName(parts.slice(0, length - 1).join(' '))
     chapterVersePart = parts[length - 1]
   }
+  chapterVersePart = normalizeChapterVerseNotation(chapterVersePart)
 
   // Normalize the book name for metadata lookups only (e.g. "1 cor" -> "1 Corinthians").
   // The returned reference keeps the raw bookName; only the verse-count/chapter guards
@@ -140,18 +194,15 @@ export const splitBibleReference = (reference: string): VerseReference => {
     if (versePart.includes('-')) {
       const rangeParts = versePart.split('-')
 
-      if (
-        rangeParts.length !== 2 ||
-        !rangeParts[0].trim() ||
-        !rangeParts[1].trim()
-      ) {
+      if (rangeParts.length !== 2 || !rangeParts[0].trim()) {
         throw new Error(
           `Invalid verse range "${versePart}". Expected format "start-end".`
         )
       }
 
       const startStr = rangeParts[0].trim().toLowerCase()
-      const endStr = rangeParts[1].trim().toLowerCase()
+      // An open end ("16-") runs to the end of the chapter, like "16-a".
+      const endStr = rangeParts[1].trim().toLowerCase() || 'a'
 
       // Check for cross-chapter in the end part: "16-4:2"
       if (endStr.includes(':')) {

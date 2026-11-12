@@ -44,6 +44,10 @@ import {
 } from '../data/constants'
 import { pluginEvent } from '../obsidian/PluginEvent'
 import { getBookTag, getChapterTag } from '../utils/getTags'
+import {
+  isTranslationAllowed,
+  offlineModeBlockedMessage,
+} from '../utils/offlineMode'
 
 function escapeHtml(unsafe: string) {
   return unsafe
@@ -366,6 +370,11 @@ Obsidian Bible Reference  is proudly powered by
         dropdown
           .setValue(this.plugin.settings.bibleVersion)
           .onChange(async (value) => {
+            if (!isTranslationAllowed(this.plugin.settings, value)) {
+              dropdown.setValue(this.plugin.settings.bibleVersion)
+              new Notice(offlineModeBlockedMessage(value))
+              return
+            }
             this.plugin.settings.bibleVersion = value
             this.plugin.settings.defaultBibleVersion = value
             console.debug('Default Bible Version: ' + value)

@@ -4,13 +4,13 @@ import {
   EditorSuggest,
   EditorSuggestContext,
   EditorSuggestTriggerInfo,
+  Notice,
   TFile,
 } from 'obsidian'
 import BibleReferencePlugin from '../main'
 import {
   verseMatch,
   matchTriggerPrefix,
-  hasExplicitVerse,
   isIncompleteReference,
 } from '../utils/verseMatch'
 import { VerseSuggesting } from '../verse/VerseSuggesting'
@@ -18,6 +18,11 @@ import { BibleReferencePluginSettings } from '../data/constants'
 import { getSuggestionsFromQuery } from '../utils/getSuggestionsFromQuery'
 import { versionSelectionMatch } from '../utils/versionSelectionMatch'
 import { getBibleVersion } from '../data/BibleVersionCollection'
+import {
+  isTranslationAllowed,
+  offlineModeBlockedMessage,
+} from '../utils/offlineMode'
+import { debounceLookup } from '../utils/debounceLookup'
 
 /**
  * Extend the EditorSuggest to suggest bible verses.
@@ -25,6 +30,18 @@ import { getBibleVersion } from '../data/BibleVersionCollection'
 export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
   plugin: BibleReferencePlugin
   settings: BibleReferencePluginSettings
+  private lastBlockedTranslation = ''
+  // Only the reference the user stops typing on is fetched: a bare chapter is
+  // a valid lookup, so "Ps 119" would otherwise fetch Ps 1 and Ps 11 first.
+  private lookup = debounceLookup(
+    ({ bookVerse, translation }: { bookVerse: string; translation: string }) =>
+      getSuggestionsFromQuery(
+        bookVerse,
+        this.settings,
+        translation,
+        this.isLinkOnly
+      )
+  )
 
   constructor(
     plugin: BibleReferencePlugin,
@@ -77,7 +94,7 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
       this.getBookVerseAndTranslation(queryContent)
 
     const verseMatchResult = verseMatch(bookVerseQuery)
-    const versionSelectionMatchResult = versionSelectionMatch(translationQuery)
+    let versionSelectionMatchResult = versionSelectionMatch(translationQuery)
 
     if (verseMatchResult && verseMatchResult.length > 0) {
       if (
@@ -85,21 +102,35 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
         getBibleVersion(versionSelectionMatchResult).key ==
           versionSelectionMatchResult
       ) {
-        console.log(`set version : ${versionSelectionMatchResult}`)
-        this.plugin.settings.bibleVersion = versionSelectionMatchResult // pick a version
-        this.plugin.saveSettings() //todo this is an async function, so it may not be saved before the getSuggestions is called
+        if (
+          isTranslationAllowed(
+            this.plugin.settings,
+            versionSelectionMatchResult
+          )
+        ) {
+          console.log(`set version : ${versionSelectionMatchResult}`)
+          this.plugin.settings.bibleVersion = versionSelectionMatchResult // pick a version
+          this.plugin.saveSettings() //todo this is an async function, so it may not be saved before the getSuggestions is called
+        } else {
+          // Offline Mode: keep the current (bundled) version. onTrigger runs on
+          // every keystroke, so tell the user only once per blocked version.
+          if (this.lastBlockedTranslation !== versionSelectionMatchResult) {
+            this.lastBlockedTranslation = versionSelectionMatchResult
+            new Notice(offlineModeBlockedMessage(versionSelectionMatchResult))
+          }
+          versionSelectionMatchResult = ''
+        }
       }
       // When a version IS specified in the query, update the plugin's bibleVersion setting
       // so that version persists across subsequent lookups (including those from the
       // quick-translation hotkey). When no version is specified, the fallback to
       // settings.bibleVersion happens in getSuggestionsFromQuery.
 
-      if (!hasExplicitVerse(bookVerseQuery)) {
-        return null // bare chapter is a transient typing state; wait for ":<verse>" or ":a"
-      }
-
+      // A bare chapter ("Ps 2") is a whole-chapter lookup and a trailing dash
+      // ("Ps 2,4-") an open-ended range, so both trigger. Only a dangling
+      // separator like "John 3:" or "John 3:16," waits for more input.
       if (isIncompleteReference(bookVerseQuery)) {
-        return null // half-typed range like "John 3:16-"; wait for the end of it
+        return null
       }
 
       console.debug('trigger on', queryContent)
@@ -131,13 +162,15 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
     const { bookVerseQuery, translationQuery } =
       this.getBookVerseAndTranslation(context.query)
 
-    const suggestions = await getSuggestionsFromQuery(
-      bookVerseQuery,
-      this.settings,
-      translationQuery,
-      this.isLinkOnly
-    )
-    return suggestions
+    return this.lookup({
+      bookVerse: bookVerseQuery,
+      translation: translationQuery,
+    })
+  }
+
+  close(): void {
+    this.lookup.cancel()
+    super.close()
   }
 
   renderSuggestion(suggestion: VerseSuggesting, el: HTMLElement): void {

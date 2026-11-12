@@ -6,6 +6,21 @@ import { mock } from 'bun:test'
 // mock here in a preload (see bunfig.toml) — before any test imports resolve.
 mock.module('obsidian', () => ({
   Notice: mock(),
+  // Same contract as Obsidian's debounce with resetTimer: only the last call
+  // within `timeout` runs.
+  debounce: <T extends unknown[]>(cb: (...args: T) => unknown, timeout = 0) => {
+    let timer: ReturnType<typeof setTimeout> | undefined
+    const debounced = (...args: T) => {
+      clearTimeout(timer)
+      timer = setTimeout(() => cb(...args), timeout)
+      return debounced
+    }
+    debounced.cancel = () => {
+      clearTimeout(timer)
+      return debounced
+    }
+    return debounced
+  },
   // The suggesters extend these at runtime, so a bare stub is enough to let a
   // test instantiate one and drive it directly. MarkdownView is a value, not
   // just a type, in VerseLookupSuggestModal - without it that module cannot be
@@ -16,6 +31,7 @@ mock.module('obsidian', () => ({
     constructor(app: unknown) {
       this.app = app
     }
+    close() {}
   },
   SuggestModal: class {
     app: unknown
@@ -24,5 +40,6 @@ mock.module('obsidian', () => ({
     }
     setInstructions() {}
     onOpen() {}
+    onClose() {}
   },
 }))
