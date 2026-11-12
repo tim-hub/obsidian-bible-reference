@@ -22,6 +22,7 @@ import {
   isTranslationAllowed,
   offlineModeBlockedMessage,
 } from '../utils/offlineMode'
+import { debounceLookup } from '../utils/debounceLookup'
 
 /**
  * Extend the EditorSuggest to suggest bible verses.
@@ -30,6 +31,17 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
   plugin: BibleReferencePlugin
   settings: BibleReferencePluginSettings
   private lastBlockedTranslation = ''
+  // Only the reference the user stops typing on is fetched: a bare chapter is
+  // a valid lookup, so "Ps 119" would otherwise fetch Ps 1 and Ps 11 first.
+  private lookup = debounceLookup(
+    ({ bookVerse, translation }: { bookVerse: string; translation: string }) =>
+      getSuggestionsFromQuery(
+        bookVerse,
+        this.settings,
+        translation,
+        this.isLinkOnly
+      )
+  )
 
   constructor(
     plugin: BibleReferencePlugin,
@@ -150,13 +162,15 @@ export class VerseEditorSuggester extends EditorSuggest<VerseSuggesting> {
     const { bookVerseQuery, translationQuery } =
       this.getBookVerseAndTranslation(context.query)
 
-    const suggestions = await getSuggestionsFromQuery(
-      bookVerseQuery,
-      this.settings,
-      translationQuery,
-      this.isLinkOnly
-    )
-    return suggestions
+    return this.lookup({
+      bookVerse: bookVerseQuery,
+      translation: translationQuery,
+    })
+  }
+
+  close(): void {
+    this.lookup.cancel()
+    super.close()
   }
 
   renderSuggestion(suggestion: VerseSuggesting, el: HTMLElement): void {
