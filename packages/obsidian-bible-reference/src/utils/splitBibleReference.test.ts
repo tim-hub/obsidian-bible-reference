@@ -487,3 +487,25 @@ describe('splitBibleReference - unicode dashes in verse ranges', () => {
     )
   })
 })
+
+describe('splitBibleReference - 3 John 1:15', () => {
+  // The regression these guard: the verse-count table carried the KJV count of
+  // 14 for 3 John 1, where verses 14 and 15 are merged. ESV, NIV and AMP all
+  // number 15 verses, so verse 15 was rejected and "a" stopped at verse 14.
+  test('accepts verse 15', () => {
+    expect(splitBibleReference('3 John 1:15')).toMatchObject({
+      bookName: '3 John',
+      chapterNumber: 1,
+      verseNumber: 15,
+    })
+  })
+
+  test('the "a" indicator reaches verse 15', () => {
+    expect(splitBibleReference('3 John 1:a')).toMatchObject({
+      bookName: '3 John',
+      chapterNumber: 1,
+      verseNumber: 1,
+      verseNumberEnd: 15,
+    })
+  })
+})
